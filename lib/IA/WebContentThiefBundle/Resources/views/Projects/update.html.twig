@@ -1,0 +1,60 @@
+{% extends "layout.html.twig" %}
+
+{% block head_styles %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('css/browser') }}
+{% endblock %}
+
+{# Import Macros #}
+{% from 'SyliusResourceBundle:Macros:actions.html.twig' import update %}
+
+{% block title %}{{ parent() }} :: Edit Project{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> Edit Project{% endblock %}
+{% block content %}
+    <div class="row">   
+        <div class="col-lg-12">
+            {% if(resource.getId()) %}
+
+                <section class="panel">
+                    <div class="panel-body">
+                        <a class="btn btn-primary btnRunProject" data-resourceId="{{ resource.getId() }}" 
+                           href="{{ path('ia_web_content_thief_parser_run_project', {'projectId': resource.getId()}) }}">
+                            Run Project
+                        </a>
+                        <a class="btn  btn-warning btnPreviewProject" data-resourceId="{{ resource.getId() }}" href="javascript:;">
+                            Preview Project
+                        </a>
+                        <a class="btn  btn-danger btnCopyProject" data-resourceId="{{ resource.getId() }}" href="javascript:;">
+                            Copy Project
+                        </a>
+                    </div>
+                </section>
+            {% endif %}
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+            {{ form_widget(form._token) }}
+
+            {% if form_errors(form) is not empty %}
+                <div class="alert alert-block alert-danger fade in">
+                    <button type="button" class="close close-sm" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <strong>Error!</strong> {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
+            <section class="panel">
+                {% include 'IAWebContentThiefBundle:Projects:_form.html.twig' %}
+            </section>
+
+            {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
+            {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block endDocumentScripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('build/jquery-duplicate-fields.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/projects-edit.js') }}"></script>
+{% endblock %}

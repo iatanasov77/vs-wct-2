@@ -1,0 +1,3 @@
+ia_web_content_thief_api_parsed_items:
+    path:     /items/{projectId}
+    defaults: { _controller: IAWebContentThiefBundle/API:ParsedItems:getItems }

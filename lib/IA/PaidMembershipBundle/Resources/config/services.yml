@@ -1,0 +1,17 @@
+parameters:
+#    ia_paid_membership.example.class: IAPaidMembershipBundle\Example
+
+services:
+#    ia_paid_membership.example:
+#        class: %ia_paid_membership.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    ia_paid_membership.form.type.packages:
+            class: IAPaidMembershipBundle\Form\PackageFormType
+            tags:
+                - { name: form.type, alias: 'ia_paid_membership_packages' }
+            arguments: ['@doctrine']
+    ia_paid_membership.form.type.plans:
+            class: IAPaidMembershipBundle\Form\PlanFormType
+            tags:
+                - { name: form.type, alias: 'ia_paid_membership_plans' }
+            arguments: ['@doctrine']

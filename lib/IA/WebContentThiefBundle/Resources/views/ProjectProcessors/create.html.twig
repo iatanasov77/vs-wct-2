@@ -1,0 +1,49 @@
+{# This Template is called with AJAX only. #}
+{{ form_errors(form) }}
+{{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_widget(form.projectId) }}
+    <div class="form-inline">
+        <div class="form-group">
+            {{ form_label(form.title, null, {}) }}:
+            {{ form_widget(form.title, {'attr': {'class': 'form-control sm-input'}}) }}
+        </div>
+        <div class="form-group" style="width: 30px;"></div>
+        <div class="form-group">
+            {{ form_label(form.class, null, {}) }}:
+            {{ form_widget(form.class, {'attr': {'class': 'form-control sm-input', 'data-url': path('ia_web_content_thief_project_processors_get_options_form') }}) }}
+        </div>
+    </div>
+    <fieldset style="min-height:100px;">
+        <legend>Processor Options</legend>
+        <div id="boxProcessorOptions" class="form-horizontal"></div>
+    </fieldset>
+            
+    {{ form_widget(form.btnAdd, {'attr': {'class': 'btn btn-primary', 'id':'btnAddProcessor'}}) }}
+    {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancelProcessor'}}) }}
+{{ form_end(form, {'render_rest': false}) }}
+<script>
+    $('#ia_web_content_thief_project_processors_class').on('change', function() {
+        var url = $(this).attr('data-url');
+        var data = {'class': $(this).val()};
+        $.get(url, data, function(data) {
+            $('#boxProcessorOptions').html(data);
+        });
+    });
+    
+    $('form[name="ia_web_content_thief_project_processors"]').on('submit', function(e) {
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                $('#boxProcessorOptions').html(data);
+            }, 
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#boxProcessorOptions').html('<p>FATAL ERROR!!!</p>' + $('#boxProcessorOptions').html());
+            }
+        });
+        
+        e.preventDefault();
+    });
+</script>

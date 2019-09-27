@@ -1,0 +1,25 @@
+<div class="modal fade" id="dialogAddProcessor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Subscription Dialog</h4>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    // Load Form on dialog open.
+    $("#dialogAddProcessor").on("show.bs.modal", function(e) {
+        var link = $(e.relatedTarget);
+        $(this).find(".modal-body").load(link.attr("href"));
+    });
+    
+    // Set Project ID when the modal form is shown.
+    $("#dialogAddProcessor").on("shown.bs.modal", function(e) {
+        $('#ia_web_content_thief_project_processors_projectId').val("{{ resource.id }}");
+    });
+});
+</script>

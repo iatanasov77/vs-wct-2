@@ -1,0 +1,5 @@
+<form method="POST" action="{{ path('ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement', {'planId': packagePlan.id}) }}">
+    <p>{{ packagePlan.description }}</p>
+
+    <input type="submit" value="Subscribe" />
+</form>

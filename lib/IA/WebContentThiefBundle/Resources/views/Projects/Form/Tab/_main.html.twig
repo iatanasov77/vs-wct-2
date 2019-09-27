@@ -1,0 +1,168 @@
+
+
+<div class="tab-pane active" id="main">
+    <div class="form-group">    
+        {{ form_label(form.enabled, null, {
+                            'label_attr': {'class': 'control-label col-lg-1'}
+                            }) 
+        }}
+        <div class="col-lg-10">
+            <div class="checkbox">
+                {{ form_widget(form.enabled) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.title, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-10">
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        {{ form_label(form.parseCountMax, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-2">
+            {{ form_widget(form.parseCountMax, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.url, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-10">
+            {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+
+        </div>
+
+
+        {% set url=resource.getUrl() %}
+        {% if(url is empty) %}
+            {% set url='#' %}
+        {% endif %}
+        <input class="btn btnBrowse" type="button" value="Browse" data-urlInput="#ia_web_content_thief_projects_url" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" />
+
+        <div class="col-sm-1">&nbsp;</div>
+
+        <div class="col-sm-12" style="margin: 20px 0 20px 0;">
+            <div id="loader">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
+        </div>
+
+        {{ form_label(form.xquery, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-6">
+            {{ form_widget(form.xquery, {'attr': {'class': 'form-control'}}) }}
+
+        </div>
+        {{ form_label(form.xqueryField, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-2">
+            {{ form_widget(form.xqueryField, {'attr': {'class': 'form-control xquery-field-select'}}) }}
+
+        </div> 
+        <div class="col-sm-1">
+            <input class="btn" id="btnSetXquery" type="button" value="Set Xquery" />
+        </div>
+
+
+    </div>
+
+    {% if(resource.getId()) %}
+        <div class="form-group">
+            {{ form_label(form.detailsPage, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+            }}
+            <div class="col-sm-8">
+                {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <input class="btn btnBrowse" type="button" value="Browse" data-urlInput="#ia_web_content_thief_projects_detailsPage" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" />
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_label(form.detailsLink, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-10">
+            {{ form_widget(form.detailsLink, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.pagerLink, null, {
+                            'label_attr': {'class': 'col-sm-1 control-label'}
+                            }) 
+        }}
+        <div class="col-sm-10">
+            {{ form_widget(form.pagerLink, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <fieldset>
+        <legend> Listing Page Fields</legend>
+        <div class="form-group">
+            {{ form_label(form.fieldset, null, {
+                                'label_attr': {'class': 'col-sm-1 control-label'}
+                                }) 
+            }}
+            <div class="col-sm-4">
+                {{ form_widget(form.fieldset, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="col-sm-1">
+                <input class="btn" id="btnAddFields" type="button" value="Add Fields" data-resourceId="{{ resource.getId() }}" data-addFieldsUrl="{{ path('ia_web_content_projects_add_fields') }}" />
+            </div>
+        </div>
+        <div class="fieldsContainer" data-prototype="{% filter escape %}{% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}">
+            {% for field in form.listingFields %}
+                {% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+
+
+    <fieldset>
+        <legend> Details Page Fields</legend>
+        <div class="form-group">
+            {{ form_label(form.fieldset, null, {
+                                'label_attr': {'class': 'col-sm-1 control-label'}
+                                }) 
+            }}
+            <div class="col-sm-4">
+                {{ form_widget(form.fieldset, {'attr': {'class': 'form-control'}}) }}
+
+            </div>
+            <div class="col-sm-1">
+                <input class="btn" id="btnAddFields" type="button" value="Add Fields" data-resourceId="{{ resource.getId() }}" data-addFieldsUrl="{{ path('ia_web_content_projects_add_fields') }}" />
+            </div>
+        </div>
+        <div class="fieldsContainer" data-prototype="{% filter escape %}{% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}">
+            {% for field in form.detailsFields %}
+                {% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+
+    </fieldset> 
+</div>
+

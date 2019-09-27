@@ -1,0 +1,13 @@
+{{ form_widget(form._token) }}
+
+{% for child in form.children if not child.isRendered %}
+    <div class="form-group">
+        <div class="col-sm-2" style="text-align: right; padding-top: 9px;">
+            {{ form_label(child) }}:
+        </div>
+        <div class="col-sm-6">
+            {{ form_widget(child, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>        
+{% endfor %}
+

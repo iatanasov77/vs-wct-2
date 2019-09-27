@@ -1,0 +1,18 @@
+{# @TODO Apply Form Theming 
+{% form_theme form 'SyliusWebBundle:Backend:forms.html.twig' %}
+#}
+
+{{ form_errors(form) }}
+<header class="panel-heading tab-bg-primary">
+    {% include 'IAWebContentThiefBundle:Projects/Form:_tabs.html.twig' %}
+</header>
+<div class="panel-body">
+    <div class="tab-content">
+        {% include 'IAWebContentThiefBundle:Projects/Form/Tab:_main.html.twig' %}
+        {% include 'IAWebContentThiefBundle:Projects/Form/Tab:_fields.html.twig' %}
+        {% include 'IAWebContentThiefBundle:Projects/Form/Tab:_mappings.html.twig' %}
+    </div>
+</div>
+
+{{ form_widget(form._token) }}
+

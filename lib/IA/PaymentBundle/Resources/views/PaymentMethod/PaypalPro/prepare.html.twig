@@ -1,0 +1,40 @@
+{{ form_start(form) }}
+
+    <div class="form-group">    
+        {{ form_label(form.acct, null, {
+            'label_attr': {'class': 'control-label col-lg-1'}
+            }) 
+        }}
+        <div class="col-lg-10">
+            <div class="checkbox">
+                {{ form_widget(form.acct) }}
+            </div>
+        </div>
+    </div>
+            
+    <div class="form-group">    
+        {{ form_label(form.exp_date, null, {
+            'label_attr': {'class': 'control-label col-lg-1'}
+            }) 
+        }}
+        <div class="col-lg-10">
+            <div class="checkbox">
+                {{ form_widget(form.exp_date.month) }} / {{ form_widget(form.exp_date.year) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">    
+        {{ form_label(form.cvv, null, {
+            'label_attr': {'class': 'control-label col-lg-1'}
+            }) 
+        }}
+        <div class="col-lg-10">
+            <div class="checkbox">
+                {{ form_widget(form.cvv) }}
+            </div>
+        </div>
+    </div>
+            
+    <input type="submit" value="Pay" />
+{{ form_end(form, {'render_rest': false}) }}    

@@ -1,0 +1,15 @@
+parameters:
+#    ia_api.example.class: IA\Bundle\ApiBundle\Example
+
+services:
+    ia_taxonomy.form.type.vocabulary:
+        class: IATaxonomyBundle\Form\VocabularyForm
+        tags:
+            - { name: form.type, alias: 'ia_taxonomy_vocabularies' }
+        arguments: ['@doctrine']
+        
+    ia_taxonomy.form.type.term:
+        class: IATaxonomyBundle\Form\TermForm
+        tags:
+            - { name: form.type, alias: 'ia_taxonomy_terms' }
+        arguments: ['@doctrine']

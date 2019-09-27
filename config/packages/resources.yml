@@ -1,0 +1,62 @@
+sylius_resource:
+    #translation:
+        #default_locale: '%locale%'
+        #locale_provider: sylius.translation.locale_provider.contextual
+        #available_locales_provider: sylius.translation.locales_provider
+    resources:
+        ia_web_content_thief.fieldsets:
+            driver: doctrine/orm
+            classes:
+                model:      IA\WebContentThiefBundle\Entity\Fieldset
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\WebContentThiefBundle\Controller\FieldsetsController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                
+        ia_web_content_thief.projects:
+            driver: doctrine/orm
+            classes:
+                model:      IA\WebContentThiefBundle\Entity\Project
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\WebContentThiefBundle\Controller\ProjectsController
+                repository: IA\WebContentThiefBundle\Entity\Repository\ProjectsRepository
+                      
+        ia_paid_membership.packages:
+            driver: doctrine/orm
+            classes:
+                model:      IA\PaidMembershipBundle\Entity\Package
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\PaidMembershipBundle\Controller\MembershipPackagesController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                
+        ia_paid_membership.plans:
+            driver: doctrine/orm
+            classes:
+                model:      IA\PaidMembershipBundle\Entity\Plan
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\PaidMembershipBundle\Controller\MembershipPlansController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                
+        ia_cms.pages:
+            driver: doctrine/orm
+            classes:
+                model:      IA\CmsBundle\Entity\Page
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\CmsBundle\Controller\PagesController
+                repository: IA\CmsBundle\Entity\Repository\PagesRepository
+                
+        ia_taxonomy.vocabularies:
+            driver: doctrine/orm
+            classes:
+                model:      IA\TaxonomyBundle\Entity\Vocabulary
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\TaxonomyBundle\Controller\VocabulariesController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                
+        ia_taxonomy.terms:
+            driver: doctrine/orm
+            classes:
+                model:      IA\TaxonomyBundle\Entity\Term
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\TaxonomyBundle\Controller\TermsController
+                repository: IA\TaxonomyBundle\Entity\Repository\TermsRepository
+

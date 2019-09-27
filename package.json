@@ -1,0 +1,26 @@
+{
+    "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.8.2",
+        "@symfony/webpack-encore": "^0.27.0",
+        "bootstrap": "^4.3.1",
+        "core-js": "^3.0.0",
+        "jquery": "^3.4.1",
+        "node-sass": "^4.12.0",
+        "popper": "^1.0.1",
+        "popper.js": "^1.15.0",
+        "sass-loader": "^7.0.1",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "./node_modules/@symfony/webpack-encore/bin/encore.js dev",
+        "watch": "./node_modules/@symfony/webpack-encore/bin/encore.js dev --watch",
+        "build": "./node_modules/@symfony/webpack-encore/bin/encore.js production --progress"
+    },
+    "dependencies": {
+        "jquery-ui-dist": "^1.12.1",
+        "jquery.nicescroll": "^3.7.6"
+    }
+}

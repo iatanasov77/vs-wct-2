@@ -1,0 +1,9 @@
+<div class="tab-pane active" id="mappings">
+    <a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogAddProcessor" href="{{ path('ia_web_content_thief_project_processors_create') }}"> Add Processor </a>
+       
+    <div class="container">
+        {% for processor in resource.processors %}
+            <div class="boxProjectMapping" data-processorId="{{ processor.id }}" data-formUrl="{{ path('ia_web_content_thief_project_processors_get_mappings_form') }}"></div>
+        {% endfor %}
+    </div>
+</div>

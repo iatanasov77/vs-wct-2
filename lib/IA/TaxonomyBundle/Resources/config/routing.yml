@@ -1,0 +1,50 @@
+# Vocabularies Controller
+ia_taxonomy_vocabularies:
+    resource: |
+        alias: ia_taxonomy.vocabularies
+        except: ['show']
+        path: /vocabularies
+        templates: "IATaxonomyBundle:Vocabularies"
+    type: sylius.resource
+
+ia_taxonomy_vocabularies_update:
+    path: /vocabularies/{id}/edit
+    methods: [GET, POST]
+    defaults:
+        _controller: ia_taxonomy.controller.vocabularies:updateAction
+        _sylius:
+            template: IATaxonomyBundle:Vocabularies:update.html.twig
+            
+# Terms Controller
+ia_taxonomy_terms:
+    resource: |
+        alias: ia_taxonomy.terms
+        except: ['show']
+        path: /{vocabularyId}/terms
+        templates: "IATaxonomyBundle:Terms"
+    type: sylius.resource
+
+ia_taxonomy_terms_create:
+    path: /{vocabularyId}/terms/new
+    methods: [GET, POST]
+    defaults:
+        _controller: ia_taxonomy.controller.terms:createAction
+        _sylius:
+            template: IATaxonomyBundle:Terms:create.html.twig
+            factory:
+                method: createNewTerm
+                arguments: [$vocabularyId]
+                
+                
+ia_taxonomy_api_terms_get_json_tree:
+    path:     /api/{vocabularyId}/terms
+    defaults: { _controller: IATaxonomyBundle:API/Terms:getJsonTree }
+    
+ia_taxonomy_api_terms_get_json_gtree_table:
+    path:     /api/{vocabularyId}/terms
+    defaults: { _controller: IATaxonomyBundle:API/Terms:getJsonGTreeTableAction }   
+    
+ia_taxonomy_test_set_parent:
+    path:     /{vocabularyId}/test/set-parent
+    defaults: { _controller: IATaxonomyBundle:Test:setParent }
+                

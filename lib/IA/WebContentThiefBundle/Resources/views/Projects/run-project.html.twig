@@ -1,0 +1,14 @@
+{% extends "layout.html.twig" %}
+{% block title %}{{ parent() }} :: List Projects{% endblock %}
+
+{% block content %}
+<div class="row">   
+<div>
+    <pre>
+    <?php if(isset($this->sDebug)): ?>
+            <?php echo $this->sDebug; ?>
+    <?php endif; ?>
+    </pre>
+</div>
+</div>
+{% endblock %}

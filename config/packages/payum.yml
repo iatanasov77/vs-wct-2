@@ -1,0 +1,27 @@
+payum:
+    storages:
+        IA\PaymentBundle\Entity\AgreementDetails: { doctrine: orm }
+        IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
+
+    security:
+        token_storage:
+            IA\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
+
+    dynamic_gateways:
+        config_storage:
+            IA\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }
+
+    gateways:
+        offline:
+            factory: offline
+
+ia_payment:
+    payment_methods:
+        paypal_pro_checkout:
+            name: 'Credit Card'
+            factory: paypal_pro_checkout
+            route: ia_payment_paypal_prepare
+        paypal_express_checkout_recurring_payment:
+            name: 'PayPal'
+            factory: paypal_express_checkout
+            route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
