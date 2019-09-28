@@ -26,6 +26,7 @@ return [
     IA\CmsBundle\IACmsBundle::class => ['all' => true],
     IA\PaidMembershipBundle\IAPaidMembershipBundle::class => ['all' => true],
     IA\TaxonomyBundle\IATaxonomyBundle::class => ['all' => true],
+    IA\UsersBundle\IAUsersBundle::class => ['all' => true],
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],

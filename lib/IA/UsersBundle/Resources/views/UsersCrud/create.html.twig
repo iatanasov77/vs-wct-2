@@ -1,0 +1,43 @@
+{% extends "IAApplicationBundle::layout.html.twig" %}
+{% block head_styles %}
+    {{ parent() }}
+    {% stylesheets filter='uglifycss, cssrewrite' output="assets/build/wct.css"
+        'bundles/iawebcontentthief/css/styles.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block title %}{{ parent() }} :: Create User{% endblock %}
+
+{% block pageTitle %}<i class="icon_genius"></i> Create User{% endblock %}
+
+{% block content %}
+    <div class="row">   
+    <div class="col-lg-12">
+        
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+            {{ form_widget(form._token) }}
+            
+            {% if form_errors(form) is not empty %}
+                <div class="alert alert-block alert-danger fade in">
+                    <button type="button" class="close close-sm" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <strong>Error!</strong> {{ form_errors(form) }}
+                </div>
+            {% endif %}
+            <section class="panel">
+                <header class="panel-heading"> Create User </header>
+                <div class="panel-body">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+            </section>
+            {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
+            {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
+        {{ form_end(form, {'render_rest': false}) }}
+            
+    </div>
+    </div>
+{% endblock content %}

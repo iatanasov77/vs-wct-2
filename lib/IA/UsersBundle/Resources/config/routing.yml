@@ -1,0 +1,46 @@
+ia_users_profile_show:
+    path:     /profile
+    defaults: { _controller: IAUsersBundle:Profile:show }
+
+ia_users_users_crud:
+    resource: |
+        alias: ia_users.users
+        path: /manage
+        templates: "IAUsersBundle:UsersCrud"
+    type: sylius.resource
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /change-password
+
+
+ia_users_api_index:
+    path:     /api/users
+    defaults: { _controller: IAUsersBundle:Api:index }
+    
+ia_users_api_detail:
+    path:     /api/users/detail/{id}
+    defaults: { _controller: IAUsersBundle:Api:detail}
+
+ia_users_api_delete:
+    path:     /api/users/delete/{id}
+    defaults: { _controller: IAUsersBundle:Api:delete }
+
+ia_users_api_save:
+    path:     /api/users/save
+    defaults: { _controller: IAUsersBundle:Api:save }
+    requirements:
+        _method:  POST
+

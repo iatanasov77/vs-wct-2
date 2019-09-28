@@ -1,0 +1,13 @@
+form:
+    cancel: 'Отмени'
+
+registration:
+    firstName: 'Име'
+    lastName: 'Фамилия'
+    yourCountry: 'Държава'
+    yourBirthday: 'Дата на раждане'
+    occupation: 'Професия'
+    mobile: 'Мобилен телефон'
+    websiteUrl: 'Уеб сайт'
+    createAccount: 'Създай Акаунт'
+    

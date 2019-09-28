@@ -17,25 +17,21 @@ security:
                     - App\Security\TokenAuthenticator
         main:
             anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
-                    
             form_login:
-                login_path: /app/login  # instead of fos_user_security_login
-                failure_path: /app/login
                 check_path: /login_check
                 username_parameter: _username
                 password_parameter: _password
                 always_use_default_target_path: false
                 default_target_path:  /projects
             logout:
-                path:   /app/logout
-                target: /app/login
+                path:   /logout
+                target: /login
                 invalidate_session: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/app/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+      - { path: ^/resetting/send-email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/resetting/request, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/, roles: ROLE_USER }

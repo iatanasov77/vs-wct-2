@@ -6,8 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function index()
     {
-        return $this->render('index.html.twig', array('name' => $name));
+        // For Testing Only
+        return $this->render( '@IAWebContentThief/Projects/index.html.twig', [
+            'items' => []
+        ]);
     }
 }

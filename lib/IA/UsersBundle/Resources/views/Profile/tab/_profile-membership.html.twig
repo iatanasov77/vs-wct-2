@@ -1,0 +1,43 @@
+<section class="panel">
+    <div class="bio-graph-heading">
+        Hello I’m Jenifer Smith, a leading expert in interactive and creative design specializing in the mobile medium. My graduation from Massey University with a Bachelor of Design majoring in visual communication.
+    </div>
+    <div class="panel-body bio-graph-info">
+        <h1>Available Packages and Plans</h1>
+        <div class="row">
+            {% for pack in packages %}
+            <div class="bio-row">
+                <fieldset>
+                    <legend>{{ pack.title }} </legend>
+                    {% for plan in pack.getPlans() %}
+                        <div class="row">
+                            <div class="col-lg-4 col-lg-offset-1">
+                                <span>{{ plan.getPlan() }} </span>: {{ plan.getPrice() }}
+                            </div>
+                            <a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" 
+                               href="{{ path('ia_paid_membership_checkout_select_method', {'planId': plan.getId()}) }}"> 
+                                Subscribe 
+                            </a>
+                            {#<a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" 
+                               href="{{ path('ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement') }}"> 
+                                Subscribe 
+                            </a>#}
+                            
+                            {#<a class="btn btn-primary" data-planId="{{ plan.getId() }}"
+                               href="{{ path('ia_paid_membership_subscription_subscribe', { 'planId': plan.getId() } ) }}"> 
+                                Subscribe 
+                            </a>#}
+                       
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<section>
+    <div class="row">
+    </div>
+</section>
+

@@ -4,6 +4,14 @@ sylius_resource:
         #locale_provider: sylius.translation.locale_provider.contextual
         #available_locales_provider: sylius.translation.locales_provider
     resources:
+        ia_users.users:
+            driver: doctrine/orm
+            classes:
+                model:      IA\UsersBundle\Entity\User
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\UsersBundle\Controller\UsersCrudController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                
         ia_web_content_thief.fieldsets:
             driver: doctrine/orm
             classes:

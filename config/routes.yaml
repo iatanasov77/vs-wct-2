@@ -1,4 +1,21 @@
+fos_user_security_login:
+    path: /login
+    controller: App\Controller\AuthController::login
+fos_user_security_logout:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+app_logout:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+    
 home:
     path: /
-    controller: App\Controller\DefaultController::indexAction
+    controller: App\Controller\DefaultController::index
+ 
+ia_users:
+    resource: "@IAUsersBundle/Resources/config/routing.yml"
+    prefix:   /profile/
+ia_web_content_thief:
+    resource: "@IAWebContentThiefBundle/Resources/config/routing.yml"
+    prefix:   /
     
