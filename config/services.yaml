@@ -7,6 +7,8 @@ parameters:
     locale: 'bg'
     siteTitle: 'VS WebContentThief'
     mailer_user: 'wct@example.com'
+    wct_template: 'new-template'
+
     # settings:
         # minuteBonus: 20     # In Percents
         # minutePrice: 0.065

@@ -13,4 +13,9 @@ class DefaultController extends Controller
             'items' => []
         ]);
     }
+    
+    public function testTemplate()
+    {
+        return $this->render( 'new-template/pages/projects-list.html.twig' );
+    }
 }

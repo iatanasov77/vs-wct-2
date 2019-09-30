@@ -1,125 +1,96 @@
-var Encore = require('@symfony/webpack-encore');
+var Encore = require( '@symfony/webpack-encore' );
 
 Encore
-    // directory where compiled assets will be stored
-    .setOutputPath('public/build/')
-    // public path used by the web server to access the output path
-    .setPublicPath('/build')
-    // only needed for CDN's or sub-directory deploy
-    //.setManifestKeyPrefix('build/')
-    
+    .setOutputPath( 'public/assets/build/old-template/' )
+    .setPublicPath( '/assets/build/old-template' )
     .copyFiles({
-         from: './assets/img',
-
-         // optional target path, relative to the output dir
-         //to: 'images/[path][name].[ext]',
-
-         // if versioning is enabled, add the file hash too
+         from: './assets/old-template/img',
          to: 'img/[path][name].[hash:8].[ext]',
-
-         // only copy files matching this pattern
-         //pattern: /\.(png|jpg|jpeg)$/
      })
     
-    
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
-
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
-    /*
-     * FEATURE CONFIG
-     *
-     * Enable & configure other features below. For a full
-     * list of features, see:
-     * https://symfony.com/doc/current/frontend.html#adding-more-features
-     */
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
-
-    // enables @babel/preset-env polyfills
-//    .configureBabel(() => {}, {
-//        useBuiltIns: 'usage',
-//        corejs: 3
-//    })
-
-    // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
-    
+
     .addLoader({
         test: /jsrouting-bundle\/Resources\/public\/js\/router.js$/,
         loader: "exports-loader?router=window.Routing"
     })
-    
-    // see https://symfony.com/doc/current/frontend/encore/bootstrap.html
     .enableSassLoader(function(sassOptions) {}, {
         resolveUrlLoader: true
     })
-
-    // add hash after file name
     .configureFilenames({
         js: '[name].js?[contenthash]',
         css: '[name].css?[contenthash]',
         images: 'images/[name].[ext]?[hash:8]',
         fonts: 'fonts/[name].[ext]?[hash:8]'
     })
-
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
-
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes()
-
-    // uncomment if you use API Platform Admin (composer req api-admin)
-    //.enableReactPreset()
-    //.addEntry('admin', './assets/js/admin.js')
     
-    /*
-     * ENTRY CONFIG
-     *
-     * Add 1 entry for each "page" of your app
-     * (including one that's included on every page - e.g. "app")
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
-     */
-    .addEntry('app', './assets/js/app.js')
-    .addEntry('main', './assets/js/main.js')
-    .addEntry('jquery-duplicate-fields', './assets/vendor/jquery-duplicate-fields/jquery.duplicateFields.js')
-    .addEntry('fieldsets', './assets/js/pages/fieldsets.js')
-    .addEntry('projects', './assets/js/pages/projects.js')
-    .addEntry('projects-edit', './assets/js/pages/projects-edit.js')
-    .addEntry('taxonomy-vocabolarities', './assets/js/pages/taxonomy-vocabolarities.js')
+    .addEntry('app', './assets/old-template/js/app.js')
+    .addEntry('main', './assets/old-template/js/main.js')
+    
+    .addEntry('jquery-duplicate-fields', './assets/old-template/vendor/jquery-duplicate-fields/jquery.duplicateFields.js')
+    .addEntry('fieldsets', './assets/old-template/js/pages/fieldsets.js')
+    
+    .addEntry('projects', './assets/old-template/js/pages/projects.js')
+    .addEntry('projects-edit', './assets/old-template/js/pages/projects-edit.js')
+    .addEntry('taxonomy-vocabolarities', './assets/old-template/js/pages/taxonomy-vocabolarities.js')
 
-    .addStyleEntry( 'css/global', './assets/css/app.css')
-    .addStyleEntry( 'css/browser', './assets/css/browser.css')
+    .addStyleEntry( 'css/global', './assets/old-template/css/app.css')
+    .addStyleEntry( 'css/browser', './assets/old-template/css/browser.css')
+    .addStyleEntry( 'css/wct', './assets/old-template/css/wct.css')
 ;
 
-const config = Encore.getWebpackConfig();
+const oldTemplate = Encore.getWebpackConfig();
+oldTemplate.name = 'oldTemplate';
 
-config.watchOptions = {
+oldTemplate.watchOptions = {
     poll: true,
     ignored: /node_modules/
 };
 
 var path = require('path');
-config.resolve.alias	= {
+oldTemplate.resolve.alias	= {
     // Force all modules to use the same jquery version.
     'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery'),
     'router': __dirname + '/assets/js/fos_js_routing.js'
 };
-//var CopyWebpackPlugin = require('copy-webpack-plugin');
-//config.plugins.push(
-//    new CopyWebpackPlugin([
-//    	{ from: 'node_modules/gijgo/fonts', to: 'fonts' } 
-//    ]) 
-//);
 
-module.exports = config;
 
+//reset Encore to build the second config
+Encore.reset();
+Encore
+    .setOutputPath( 'public/assets/build/new-template/' )
+    .setPublicPath( '/assets/build/new-template' )
+    
+    .addEntry( 'app', './assets/new-template/js/app.js' )
+    .addStyleEntry( 'css/global', './assets/new-template/css/main.scss' )
+    
+    .autoProvidejQuery()
+    .enableSassLoader(function(sassOptions) {}, {
+        resolveUrlLoader: true
+    })
+    .configureFilenames({
+        js: '[name].js?[contenthash]',
+        css: '[name].css?[contenthash]',
+        images: 'images/[name].[ext]?[hash:8]',
+        fonts: 'fonts/[name].[ext]?[hash:8]'
+    })
+    .enableSingleRuntimeChunk()
+    .enableVersioning(Encore.isProduction())
+    .enableSourceMaps( !Encore.isProduction() )
+;
+
+// build the second configuration
+const newTemplate = Encore.getWebpackConfig();
+newTemplate.name = 'newTemplate';
+
+
+// export the final configuration as an array of multiple configurations
+module.exports = [oldTemplate, newTemplate];

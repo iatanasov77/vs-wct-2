@@ -28,6 +28,11 @@ class FieldsetsController extends ResourceController
         return $this->editAction($request);
     }
     
+    public function updateAction(Request $request) : Response
+    {
+        return $this->editAction($request);
+    }
+    
     public function editAction(Request $request)
     {
         $id     = \App\Component\Url::GetParameter( 'id' );
@@ -40,7 +45,7 @@ class FieldsetsController extends ResourceController
         if($request->isMethod('POST')) {
             $form->handleRequest($request);
             if($form->isValid()) {
-                // Валидацията гърми
+                // Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ�Ñ‚Ð° Ð³ÑŠÑ€Ð¼Ð¸
             }
             
             $em = $this->getDoctrine()->getManager();

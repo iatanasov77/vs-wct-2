@@ -43,8 +43,9 @@ class ProjectsController extends ResourceController
              */
             $browser = new Browser();
             $html = $browser->browseUrl($oProject->getUrl());
-            $crawler = new Crawler($html);
-            $detailsLink = $crawler->filterXPath($oProject->getDetailsLink())->attr('href');
+            //$crawler = new Crawler($html);
+            //$detailsLink = $crawler->filterXPath($oProject->getDetailsLink())->attr('href');
+            $detailsLink = $oProject->getDetailsLink();
             $form->get('detailsPage')->setData($detailsLink);
         } else {
             $detailsLink = '';
@@ -54,7 +55,7 @@ class ProjectsController extends ResourceController
         if($request->isMethod('POST') || $request->isMethod('PUT')) {
             $form->handleRequest($request);
             if($form->isValid()) {
-                // Валидацията гърми
+                // Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ�Ñ‚Ð° Ð³ÑŠÑ€Ð¼Ð¸
             }
             
             $em = $this->getDoctrine()->getManager();
@@ -151,38 +152,4 @@ class ProjectsController extends ResourceController
         $oProjectCopy->save();
         $this->_helper->redirector('list', 'index');
     }
-    
-    function addFieldsAction()
-    {
-        $request = $this->get('request');
-        $projectId = $request->request->get('projectId');
-        $fieldsetId = $request->request->get('fieldsetId');
-        
-        $fr = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:Fieldset');
-        $oFieldset = $fieldsetId ? $fr->findOneBy(array('id' => $fieldsetId)) : null;
-        if(!$oFieldset) {
-            throw new \Exception('Fieldset not found!');
-        }
-        
-        $pr = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:Project');
-        $oProject = $projectId ? $pr->findOneBy(array('id' => $projectId)) : null;
-        if(!$oProject) {
-            throw new \Exception('Project not found!');
-        }
-        
-        foreach($oFieldset->getFields() as $field) {
-            $projectField = new ProjectField();
-            $projectField->setTitle($field->getTitle());
-            $projectField->setType($field->getType());
-            $projectField->setXquery('');
-            $oProject->addField($projectField);
-        }
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($oProject);
-        $em->flush();
-
-        return new Response();
-    }
-
-
 }

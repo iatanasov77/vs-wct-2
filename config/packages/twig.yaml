@@ -1,4 +1,6 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
+    default_path: '%kernel.project_dir%/templates/%wct_template%'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+       wct_template: '%wct_template%'

@@ -18,4 +18,23 @@ ia_users:
 ia_web_content_thief:
     resource: "@IAWebContentThiefBundle/Resources/config/routing.yml"
     prefix:   /
+ 
+ia_taxonomy:
+    resource: "@IATaxonomyBundle/Resources/config/routing.yml"
+    prefix: /taxonomy
+ia_cms:
+    resource: "@IACmsBundle/Resources/config/routing.yml"
+    prefix:   /cms
+    
+ia_paid_membership:
+    resource: "@IAPaidMembershipBundle/Resources/config/routing.yml"
+    prefix:   /membership
+    
+ia_payment:
+    resource: "@IAPaymentBundle/Resources/config/routing.yml"
+    prefix:   /payment
+      
+test_template_tabs:
+    path: /test-template-tabs
+    controller: App\Controller\TestTemplateController::tabs
     

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+	<head>
+        <title>{% block title %}.:: Web Content Thief{% endblock %}</title>
+
+        {% block head_meta %}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        {% endblock %}
+
+        {% block head_styles %}
+            {{ encore_entry_link_tags('css/global', null, 'new-template') }}
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+        {% endblock %}
+
+        {% block head_scripts %}
+            {{ encore_entry_script_tags('app', null, 'new-template') }}
+        {% endblock %}
+    </head>
+    <body>
+    	<!-- ============================================================== -->
+        <!-- main wrapper -->
+        <!-- ============================================================== -->
+        <div class="dashboard-main-wrapper">
+           <!-- ============================================================== -->
+            <!-- navbar -->
+            <!-- ============================================================== -->
+            <div class="dashboard-header">
+                {% include 'top.html.twig' %}
+            </div>
+            <!-- ============================================================== -->
+            <!-- end navbar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- left sidebar -->
+            <!-- ============================================================== -->
+            <div class="nav-left-sidebar sidebar-dark">
+                <div class="menu-list">
+                	{% include 'side.html.twig' %}
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end left sidebar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- wrapper  -->
+            <!-- ============================================================== -->
+            <div class="dashboard-wrapper">
+            	{% block content %}{% endblock %}
+            	{% include 'footer.html.twig' %}
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end main wrapper -->
+        <!-- ============================================================== -->
+        <!-- Optional JavaScript -->
+        <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+        <script src="assets/libs/js/main-js.js"></script>
+    </body>
+</html>
+                	

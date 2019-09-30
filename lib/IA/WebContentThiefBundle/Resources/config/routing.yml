@@ -46,9 +46,10 @@ ia_web_content_thief_projects:
         path: /projects
         templates: "IAWebContentThiefBundle:Projects"
     type: sylius.resource
+    
 ia_web_content_projects_add_fields:
     path:     /projects/add-fields
-    defaults: { _controller: IAWebContentThiefBundle:Projects:addFields }
+    defaults: { _controller: IAWebContentThiefBundle:ProjectsJson:addFields }
     
 # Parser Controller
 ia_web_content_thief_parser_run_project:

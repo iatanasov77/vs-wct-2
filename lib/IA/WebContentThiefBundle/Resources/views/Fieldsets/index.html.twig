@@ -20,7 +20,7 @@
                                 {{ item.getId() }}
                             </td>
                             <td>
-                                <a href="{{ path('ia_web_content_thief_fieldsets_update', {'id': item.getId()}) }}">
+                                <a href="{{ path('ia_web_content_thief_fieldsets_update', {'id': item.getId()}) }}?id={{ item.getId() }}">
                                     {{ item.getTitle() }}
                                 </a>
                             </td>

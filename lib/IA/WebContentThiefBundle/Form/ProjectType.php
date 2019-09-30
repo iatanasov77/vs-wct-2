@@ -37,7 +37,7 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setMethod( 'PUT' )
+            ->setMethod( 'POST' )
             
             ->add('enabled', CheckboxType::class, array('label' => 'Enabled'))
             ->add('title', TextType::class, array('label' => 'Title'))
@@ -58,7 +58,14 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
             ->add('detailsLink', TextType::class, array('label'=> 'Details Link'))
             ->add('pagerLink', TextType::class, array('label'=> 'Pager Link'))
                 
-            ->add('fieldset', EntityType::class, array(
+            ->add('fieldsetListing', EntityType::class, array(
+                'class' => 'IA\WebContentThiefBundle\Entity\Fieldset',
+                'choice_label' => 'title',
+                "mapped" => false,
+                'required' => false
+            ))
+            
+            ->add('fieldsetDetails', EntityType::class, array(
                 'class' => 'IA\WebContentThiefBundle\Entity\Fieldset',
                 'choice_label' => 'title',
                 "mapped" => false,

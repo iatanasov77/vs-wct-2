@@ -22,17 +22,17 @@ class Project implements ResourceInterface
     
     
     /**
-     * @ORM\OneToMany(targetEntity="ProjectListingField", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="IA\WebContentThiefBundle\Entity\ProjectListingField", mappedBy="project", cascade={"persist"})
      */
     public $listingFields;
     
     /**
-     * @ORM\OneToMany(targetEntity="ProjectDetailsField", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="IA\WebContentThiefBundle\Entity\ProjectDetailsField", mappedBy="project", cascade={"persist"})
      */
     public $detailsFields;
     
     /**
-     * @ORM\OneToMany(targetEntity="ProjectProcessor", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="IA\WebContentThiefBundle\Entity\ProjectProcessor", mappedBy="project", cascade={"persist"})
      */
     public $processors;
 
@@ -129,8 +129,6 @@ class Project implements ResourceInterface
      */
     private $picturecropleft;
 
-    
-
     /**
      * Constructor
      */
@@ -150,11 +148,11 @@ class Project implements ResourceInterface
         return $this->id;
     }
 
-    function getParseCountMax() {
+    public function getParseCountMax() {
         return $this->parseCountMax;
     }
     
-    function setParseCountMax($parseCountMax) {
+    public function setParseCountMax($parseCountMax) {
         $this->parseCountMax = $parseCountMax;
         return $this;
     }
@@ -253,25 +251,24 @@ class Project implements ResourceInterface
         return $this->title;
     }
 
-    function getDetailsLink()
+    public function getDetailsLink()
     {
         return $this->detailsLink;
     }
 
-    function setDetailsLink($detailsLink)
+    public function setDetailsLink($detailsLink)
     {
         $this->detailsLink = $detailsLink;
         return $this;
     }
     
-    function getPagerLink()
+    public function getPagerLink()
     {
         return $this->pagerLink;
     }
 
     
-
-    function setPagerLink($pagerLink)
+    public function setPagerLink($pagerLink)
     {
         $this->pagerLink = $pagerLink;
         return $this;
@@ -415,7 +412,7 @@ class Project implements ResourceInterface
         return $this->active;
     }
 
-    function getListingFields()
+    public function getListingFields()
     {
         return $this->listingFields->toArray();
     }
@@ -439,7 +436,7 @@ class Project implements ResourceInterface
         return $this;
     }
     
-    function getDetailsFields()
+    public function getDetailsFields()
     {
         return $this->detailsFields->toArray();
     }
@@ -464,7 +461,7 @@ class Project implements ResourceInterface
     }
     
     
-    function getProcessors()
+    public function getProcessors()
     {
         return $this->processors->toArray();
     }
