@@ -69,6 +69,11 @@ Encore
     .setOutputPath( 'public/assets/build/new-template/' )
     .setPublicPath( '/assets/build/new-template' )
     
+    .copyFiles({
+         from: './assets/new-template/images',
+         to: 'images/[path][name].[hash:8].[ext]',
+     })
+    
     .addEntry( 'app', './assets/new-template/js/app.js' )
     .addStyleEntry( 'css/global', './assets/new-template/css/main.scss' )
     
