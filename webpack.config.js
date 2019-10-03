@@ -76,6 +76,7 @@ Encore
     
     .addEntry( 'app', './assets/new-template/js/app.js' )
     .addStyleEntry( 'css/global', './assets/new-template/css/main.scss' )
+    .addStyleEntry( 'css/browser', './assets/new-template/css/browser.css' )
     
     .autoProvidejQuery()
     .enableSassLoader(function(sassOptions) {}, {
