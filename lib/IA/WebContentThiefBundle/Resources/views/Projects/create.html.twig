@@ -40,7 +40,7 @@
             <!-- ============================================================== -->
             <!-- basic tabs  -->
             <!-- ============================================================== -->
-            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
                 <div class="section-block">
                     <h5 class="section-title">{{ item.getTitle() }}</h5>
                     <p>Edit project details.</p>
@@ -98,7 +98,7 @@
     
                                 <div class="form-group">
                                     {{ form_label(form.parseCountMax, null, {
-                                        'label_attr': {'class': 'col-sm-1 control-label'}
+                                        'label_attr': {'class': 'col-sm-3 control-label'}
                                         }) 
                                     }}
                                     <div class="col-sm-2">
@@ -106,25 +106,29 @@
                                     </div>
                                 </div>
     						</p>
+    					</div>
                         <div class="tab-pane fade" id="project-list" role="tabpanel">
                             <h3>Project Parse Listing</h3>
                             <p>
                             	<div class="form-group">
+                            		
+                            		{% set url=item.getUrl() %}
+                                    {% if(url is empty) %}
+                                        {% set url='#' %}
+                                    {% endif %}
                                     {{ form_label(form.url, null, {
                                         'label_attr': {'class': 'col-sm-1 control-label'}
                                         }) 
                                     }}
-                                    <div class="col-sm-10">
-                                        {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
-            
-                                    </div>
-
-
-                                    {% set url=item.getUrl() %}
-                                    {% if(url is empty) %}
-                                        {% set url='#' %}
-                                    {% endif %}
-                                    <input class="btn btnBrowse" type="button" value="Browse" data-urlInput="#project_url" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" />
+                                    <div class="input-group mb-3">
+                                        <div class="col-sm-10">
+                                            {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+                
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary btnBrowse" data-urlInput="#project_url" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}">Browse</button>
+                                        </div>
+									</div>
             
                                     <div class="col-sm-1">&nbsp;</div>
 
@@ -140,42 +144,31 @@
                                         <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
                                     </div>
 
-                                    {{ form_label(form.xquery, null, {
-                                        'label_attr': {'class': 'col-sm-1 control-label'}
-                                        }) 
-                                    }}
-                                    <div class="col-sm-6">
-                                        {{ form_widget(form.xquery, {'attr': {'class': 'form-control'}}) }}
-            
-                                    </div>
-                                    {{ form_label(form.xqueryField, null, {
-                                        'label_attr': {'class': 'col-sm-1 control-label'}
-                                        }) 
-                                    }}
-                                    <div class="col-sm-2">
-                                        {{ form_widget(form.xqueryField, {'attr': {'class': 'form-control xquery-field-select'}}) }}
-            
-                                    </div> 
-                                    <div class="col-sm-1">
-                                        <input class="btn" id="btnSetXquery" type="button" value="Set Xquery" />
-                                    </div>
-
+									<div class="input-group">
+									
+                                        {{ form_label(form.xquery, null, {
+                                            'label_attr': {'class': 'col-sm-1 control-label'}
+                                            }) 
+                                        }}
+                                        <div class="col-sm-6">
+                                            {{ form_widget(form.xquery, {'attr': {'class': 'form-control'}}) }}
+                
+                                        </div>
+                                        {{ form_label(form.xqueryField, null, {
+                                            'label_attr': {'class': 'col-sm-1 control-label'}
+                                            }) 
+                                        }}
+                                        <div class="col-sm-2">
+                                            {{ form_widget(form.xqueryField, {'attr': {'class': 'form-control xquery-field-select'}}) }}
+                
+                                        </div> 
+                                        <div class="col-sm-1">
+                                        	<button type="button" id="btnSetXquery" class="btn btn-primary btnBrowse">Set Xquery</button>
+                                        </div>
+									</div>
 
                     			</div>
-
-                                {% if(item.getId()) %}
-                                    <div class="form-group">
-                                        {{ form_label(form.detailsPage, null, {
-                                        'label_attr': {'class': 'col-sm-1 control-label'}
-                                        }) 
-                                        }}
-                                        <div class="col-sm-8">
-                                            {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <input class="btn btnBrowse" type="button" value="Browse" data-urlInput="#project_detailsPage" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" />
-                                    </div>
-                                {% endif %}
-
+                    			
                                 <div class="form-group">
                                     {{ form_label(form.detailsLink, null, {
                                         'label_attr': {'class': 'col-sm-1 control-label'}
@@ -198,7 +191,7 @@
 
                                 <fieldset>
                                     <legend> Listing Page Fields</legend>
-                                    <div class="form-group">
+                                    <div class="input-group">
                                         {{ form_label(form.fieldsetListing, null, {
                                             'label_attr': {'class': 'col-sm-1 control-label'}
                                             }) 
@@ -225,6 +218,20 @@
                         <div class="tab-pane fade" id="project-details" role="tabpanel">
                             <h3>Project Parse Details</h3>
                             <p>
+                            	{% if(item.getId()) %}
+                                    <div class="form-group">
+                                        {{ form_label(form.detailsPage, null, {
+                                        'label_attr': {'class': 'col-sm-1 control-label'}
+                                        }) 
+                                        }}
+                                        <div class="col-sm-8">
+                                            {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <input class="btn btnBrowse" type="button" value="Browse" data-urlInput="#project_detailsPage" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" />
+                                    </div>
+                                {% endif %}
+                                
+                                
                             	<fieldset>
                                     <legend> Details Page Fields</legend>
                                     <div class="form-group">
@@ -261,14 +268,11 @@
     </div> 
 {% endblock %}
 
-{% block endDocumentScripts %}
+{% block body_scripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('build/jquery-duplicate-fields.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/build/new-template/jquery-duplicate-fields.js') }}"></script>
     
-    <!-- USE BELOW SCRIPT FOR DEVELOPEMENT 
-    <script type="text/javascript" src="{{ asset('build/projects-edit.js') }}"></script>
-    -->
-    <script type="text/javascript" src="{{ asset('assets/projects-edit.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/build/new-template/projects-edit.js') }}"></script>
     
 {% endblock %}
 

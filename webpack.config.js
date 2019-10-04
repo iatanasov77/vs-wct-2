@@ -71,7 +71,7 @@ Encore
     
     .copyFiles({
          from: './assets/new-template/images',
-         to: 'images/[path][name].[hash:8].[ext]',
+         to: 'images/[path][name].[ext]',
      })
     
     .addEntry( 'app', './assets/new-template/js/app.js' )
@@ -91,6 +91,14 @@ Encore
     .enableSingleRuntimeChunk()
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps( !Encore.isProduction() )
+    
+    
+    .addEntry('jquery-duplicate-fields', './assets/new-template/js/jquery-duplicate-fields/jquery.duplicateFields.js')
+    .addEntry('fieldsets', './assets/new-template/js/pages/fieldsets.js')
+    
+    .addEntry('projects', './assets/new-template/js/pages/projects.js')
+    .addEntry('projects-edit', './assets/new-template/js/pages/projects-edit.js')
+    .addEntry('taxonomy-vocabolarities', './assets/new-template/js/pages/taxonomy-vocabolarities.js')
 ;
 
 // build the second configuration
