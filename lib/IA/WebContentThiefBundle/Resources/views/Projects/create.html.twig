@@ -36,6 +36,28 @@
         <!-- end pageheader -->
         <!-- ============================================================== -->
         
+        
+        <div class="row">
+        	{% if(item.getId()) %}
+                <section class="panel">
+                    <div class="panel-body">
+                        <a class="btn btn-primary btnRunProject" data-resourceId="{{ item.getId() }}" 
+                           href="{{ path('ia_web_content_thief_parser_run_project', {'projectId':item.getId()}) }}">
+                            Run Project
+                        </a>
+                        <a class="btn  btn-warning btnPreviewProject" data-resourceId="{{ item.getId() }}" href="javascript:;">
+                            Preview Project
+                        </a>
+                        <a class="btn  btn-danger btnCopyProject" data-resourceId="{{ item.getId() }}" href="javascript:;">
+                            Copy Project
+                        </a>
+                    </div>
+                </section>
+            {% endif %}
+        </div>
+        
+        
+        
         <div class="row">
             <!-- ============================================================== -->
             <!-- basic tabs  -->

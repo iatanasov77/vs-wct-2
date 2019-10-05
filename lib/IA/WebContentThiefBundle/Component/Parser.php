@@ -75,12 +75,25 @@ class Parser
     
     protected function _getItemUrls()
     {
+        // /html/body/main/div[3]/div/div/div/div[3]/ul/li[1]/a
+        //$testCrawler = $this->crawler->filterXPath("html/body/main/div[3]/div/div/div/div/ul/li")->text();
+//         $testCrawler = $this->crawler->filter("ul.paging li a.active")->text();
+//         var_dump($testCrawler);  die;
+        
         /*
          * Fetch Pages Urls
          */
-        $pageUrls = $this->crawler->filterXPath($this->project->getPagerLink())->each(function (Crawler $node, $i) {
-            return $node->attr('href');
-        });
+        if ( $this->project->getParseMode() == 'xpath' ) {
+            $pageUrls = $this->crawler->filterXPath($this->project->getPagerLink())->each(function (Crawler $node, $i) {
+                return $node->attr('href');
+            });
+        } elseif( $this->project->getParseMode() == 'css' ) {
+            $pageUrls = $this->crawler->filter($this->project->getPagerLink())->each(function (Crawler $node, $i) {
+                return $node->attr('href');
+            });
+        } else {
+            throw new \Exception( 'Unknown Parse Mode' );
+        }
         
         $itemUrls = $this->_getPageItemUrls();
         if(count($itemUrls) >= $this->project->getParseCountMax())

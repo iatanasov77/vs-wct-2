@@ -37,8 +37,6 @@ ia_web_content_thief_fieldsets_index:
 #    path:     /fieldsets/edit/{id}
 #    defaults: { _controller: IAWebContentThiefBundle:Fieldsets:edit }
     
-# Projects Controller
-    
 ia_web_content_thief_projects:
     resource: |
         alias: ia_web_content_thief.projects

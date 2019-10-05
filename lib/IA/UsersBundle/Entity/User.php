@@ -72,7 +72,7 @@ class User extends BaseUser implements ResourceInterface
     protected $occupation;
     
     /**
-     * @ORM\OneToOne(targetEntity="IA\Bundle\PaidMembershipBundle\Entity\UserSubscription", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="IA\PaidMembershipBundle\Entity\UserSubscription", inversedBy="user")
      * @ORM\JoinColumn(name="subscriptionId", referencedColumnName="id")
      */
     protected $subscription;

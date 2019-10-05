@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 use Sylius\Component\Resource\Model\ToggleableTrait;
-use Sylius\Component\Resource\Model\TranslatableTrait;
+//use Sylius\Component\Resource\Model\TranslatableTrait;
 
 /**
  * Project
@@ -51,6 +51,13 @@ class Project implements ResourceInterface
      * @ORM\Column(name="parseCountMax", type="integer", length=8, nullable=false, options={"default" = 100})
      */
     private $parseCountMax;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parseMode", type="string", columnDefinition="enum('css', 'xpath')")
+     */
+    private $parseMode;
 
     /**
      * @var string
@@ -157,7 +164,17 @@ class Project implements ResourceInterface
         return $this;
     }
 
-
+    public function setParseMode($parseMode)
+    {
+        $this->parseMode = $parseMode;
+        
+        return $this;
+    }
+    
+    public function getParseMode()
+    {
+        return $this->parseMode;
+    }
     
     /**
      * Set url

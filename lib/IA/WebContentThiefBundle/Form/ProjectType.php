@@ -37,7 +37,7 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setMethod( 'POST' )
+            ->setMethod( 'PUT' )
             
             ->add('enabled', CheckboxType::class, array('label' => 'Enabled'))
             ->add('title', TextType::class, array('label' => 'Title'))
