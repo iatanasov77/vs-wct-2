@@ -19,7 +19,7 @@ class ParserController extends Controller
         
         $parser = new Parser($oProject, $this->getDoctrine()->getManager());
         $runSession = $parser->parse();
-        
+ 
         return new Response();
     }
     

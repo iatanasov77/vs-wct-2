@@ -53,9 +53,9 @@ ia_web_content_projects_add_fields:
 ia_web_content_thief_parser_run_project:
     path:     /parser/run/{projectId}
     defaults: { _controller: 'IAWebContentThiefBundle:Parser:runProject' }
-ia_web_content_thief_parser_run_processor:
-    path:     /parser/run/{processorId}
-    defaults: { _controller: 'IAWebContentThiefBundle:Parser:runProcessor' }
+#ia_web_content_thief_parser_run_processor:
+#    path:     /parser/run/{processorId}
+#    defaults: { _controller: 'IAWebContentThiefBundle:Parser:runProcessor' }
                 
 # Project Processor Controller
 ia_web_content_thief_project_processors_create:

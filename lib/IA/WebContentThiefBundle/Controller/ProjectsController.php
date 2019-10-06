@@ -35,29 +35,11 @@ class ProjectsController extends ResourceController
         $er = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:Project');
         $oProject = $id ? $er->find($id) : new Project();
         
-        $form = $this->createForm(ProjectType::class, $oProject, ['data' => $oProject]);
-        if($oProject->getId()) {
-            
-            /*
-             *  Fetch and populate First Details Page Link 
-             */
-            $browser = new Browser();
-            $html = $browser->browseUrl($oProject->getUrl());
-            //$crawler = new Crawler($html);
-            //$detailsLink = $crawler->filterXPath($oProject->getDetailsLink())->attr('href');
-            $detailsLink = $oProject->getDetailsLink();
-            $form->get('detailsPage')->setData($detailsLink);
-        } else {
-            $detailsLink = '';
-        }
+        $form = $this->createForm(ProjectType::class, $oProject, ['data' => $oProject]); 
         
         //if($form->isSubmitted()) {
         if($request->isMethod('POST') || $request->isMethod('PUT')) {
             $form->handleRequest($request);
-            if($form->isValid()) {
-                // Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ�Ñ‚Ð° Ð³ÑŠÑ€Ð¼Ð¸
-            }
-            
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
@@ -68,7 +50,6 @@ class ProjectsController extends ResourceController
         $tplVars = array(
             'form'          => $form->createView(),
             'item'          => $oProject,
-            'detailsPageUrl'=> $detailsLink
         );
         return $this->render('IAWebContentThiefBundle:Projects:create.html.twig', $tplVars);
     }

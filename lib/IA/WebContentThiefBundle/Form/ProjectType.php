@@ -54,7 +54,7 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
                 //'choices' => $this->getXqueryFieldChoices($options['data'])
             ))    
             
-            ->add('detailsPage', TextType::class, array('label'=> 'Details Page', "mapped" => false, 'required' => false))
+            ->add('detailsPage', TextType::class, array('label'=> 'Details Page', 'required' => false))
             ->add('detailsLink', TextType::class, array('label'=> 'Details Link'))
             ->add('pagerLink', TextType::class, array('label'=> 'Pager Link'))
                 

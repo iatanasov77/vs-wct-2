@@ -34,7 +34,8 @@
             <!-- ============================================================== -->
             <div class="nav-left-sidebar sidebar-dark">
                 <div class="menu-list">
-                	{% include 'side.html.twig' %}
+                    {{ knp_menu_render('main', {'template': 'side.html.twig'}) }}
+                	
                 </div>
             </div>
             <!-- ============================================================== -->

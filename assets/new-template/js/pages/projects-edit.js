@@ -10,14 +10,32 @@ $(function () {
     	showSpinner();
     	
         var browserUrl = $(this).attr('data-browserUrl');
+        var browserFrame = $(this).attr('data-browserFrame');
         var url = $($(this).attr('data-urlInput')).val();
-        
         if(url.length) {
-            $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
+            $( browserFrame ).attr('src', browserUrl + '?url=' + encodeURIComponent(url));
         }
     });
 
-    $('#remoteBrowser').on('load', function () {
+    $('#remoteBrowserListing').on('load', function () {
+        var cssUrl = $(this).attr('data-browserCss');
+        var head = $(this).contents().find("head");
+        head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));
+
+        $('*', this.contentWindow.document).click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            $('.parserMarker').removeClass('parserMarker');
+            $(this).addClass('parserMarker');
+
+            var xpath = getXPath(this);
+            
+            $("#project_xquery", parent.document).val(xpath);
+        });
+    });
+    
+    $('#remoteBrowserDetails').on('load', function () {
         var cssUrl = $(this).attr('data-browserCss');
         var head = $(this).contents().find("head");
         head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));

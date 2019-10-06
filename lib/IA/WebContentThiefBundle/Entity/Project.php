@@ -65,6 +65,13 @@ class Project implements ResourceInterface
      * @ORM\Column(name="url", type="string", length=128, nullable=false)
      */
     private $url;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detailsPage", type="string", length=128, nullable=true)
+     */
+    private $detailsPage;
 
     /**
      * @var integer
@@ -199,6 +206,18 @@ class Project implements ResourceInterface
         return $this->url;
     }
 
+    public function setDetailsPage($detailsPage)
+    {
+        $this->detailsPage = $detailsPage;
+        
+        return $this;
+    }
+   
+    public function getDetailsPage()
+    {
+        return $this->detailsPage;
+    }
+    
     /**
      * Set categoryid
      *
