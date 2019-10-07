@@ -95,9 +95,9 @@ class MenuBuilder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root');
         
-        $menu->addChild('My Profile', array('route' => 'ia_users_profile_show', 'attributes' => array('iconClass' => 'icon_profile')));
-        $menu->addChild('Log Out', array('route' => 'app_logout', 'attributes' => array('iconClass' => 'icon_key_alt')));
-        $menu->addChild('Documentation', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_key_alt')));
+        $menu->addChild('My Profile', array('route' => 'ia_users_profile_show', 'attributes' => array('iconClass' => 'fas fa-user mr-2')));
+        $menu->addChild('Log Out', array('route' => 'app_logout', 'attributes' => array('iconClass' => 'fas fa-power-off mr-2')));
+        $menu->addChild('Documentation', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'fas fa-cog mr-2')));
         
         return $menu;
     }

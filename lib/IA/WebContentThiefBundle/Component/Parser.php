@@ -36,47 +36,43 @@ class Parser
             array_unshift( $pages, $this->project->getUrl() );
         }
   
-        $count = 0;
-        $i = 0;
+        $page = 0;
         $parsedFields = [];
         foreach ( $pages as $url ) {
+            $page++;
             $this->_createCrawler( $url );
-            
-            $parsedFields[++$i] = [];
         
             foreach($this->project->getListingFields() as $field)
             {
                 $parsedField = $this->crawler->filterXPath($field->getXquery());
-                if ( $parsedField->count() > $count ) {
-                    $count = $parsedField->count();
-                }
                 
                 if($parsedField->count()) {
                     if($field->getType()->getId() == FieldType::Text) {
-                        $parsedFields[$i][$field->getSlug()] = $parsedField->each( function ( Crawler $node, $i )
+                        $parsedField->each( function ( Crawler $node, $i ) use ( &$parsedFields, $page, $field )
                         {
-                            return $node->text();
+                            $parsedFields[$page][$i][$field->getSlug()] = $node->text();
                         });
 
                     } elseif($field->getType()->getId() == FieldType::Link) {
-                        $parsedFields[$i][$field->getSlug()] = $parsedField->each( function ( Crawler $node, $i )
+                        $parsedField->each( function ( Crawler $node, $i ) use ( &$parsedFields, $page, $field )
                         {
-                            return $node->attr('href');
+                            $parsedFields[$page][$i][$field->getSlug()] = $node->attr('href');
                         });
                     } elseif($field->getType()->getId() == FieldType::Picture) {
-                        $parsedFields[$i][$field->getSlug()] = $parsedField->each( function ( Crawler $node, $i )
+                        $parsedField->each( function ( Crawler $node, $i ) use ( &$parsedFields, $page, $field )
                         {
-                            return $node->attr('srcf');
+                            $parsedFields[$page][$i][$field->getSlug()] = $node->attr('src');
                         });
                         //@TODO download picture
                     }
                 }
             }
             
-            if( $count >= $this->project->getParseCountMax() )
+            
+            if( count( $parsedFields ) >= $this->project->getParseCountMax() )
                 break;
         }
-        
+
         if ( ! empty( $parsedFields ) ) {
             $this->_saveLocaly( $parsedFields, $url );
             $this->em->flush();
@@ -167,22 +163,17 @@ class Parser
     
     protected function _getItemUrls()
     {
-        // /html/body/main/div[3]/div/div/div/div[3]/ul/li[1]/a
-        //$testCrawler = $this->crawler->filterXPath("html/body/main/div[3]/div/div/div/div/ul/li")->text();
-//         $testCrawler = $this->crawler->filter("ul.paging li a.active")->text();
-//         var_dump($testCrawler);  die;
-        
         $pageUrls   = $this->_getPagesUrls();
         
-        $itemUrls = $this->_getPageItemUrls();
-        if(count($itemUrls) >= $this->project->getParseCountMax())
+        $itemUrls   = $this->_getPageItemUrls();
+        if( count( $itemUrls ) >= $this->project->getParseCountMax() )
             return $itemUrls;
       
-        foreach($pageUrls as $pUrl) {
-            $this->_createCrawler($pUrl);
+        foreach( $pageUrls as $pUrl ) {
+            $this->_createCrawler( $pUrl );
             
-            $itemUrls = array_unique(array_merge($itemUrls, $this->_getPageItemUrls()));
-            if(count($itemUrls) >= $this->project->getParseCountMax())
+            $itemUrls   = array_unique( array_merge( $itemUrls, $this->_getPageItemUrls() ) );
+            if( count( $itemUrls ) >= $this->project->getParseCountMax() )
                 break;
         }
 
@@ -194,7 +185,8 @@ class Parser
         /*
          * Fetch Item Urls ( ... and Listing Page Fields may be ... )
          */
-        $itemUrls = $this->crawler->filterXPath($this->project->getDetailsLink())->each(function (Crawler $node, $i) {
+        $itemUrls   = $this->crawler->filterXPath($this->project->getDetailsLink())->each( function ( Crawler $node, $i )
+        {
             return $node->attr('href');
         });
       
@@ -212,12 +204,12 @@ class Parser
     
     protected function _generateSessionId()
     {
-        return md5(uniqid(rand(), true));
+        return md5( uniqid( rand(), true ) );
     }
     
     protected function _parse( $parsedFields )
     {
-        foreach($this->project->getProcessors() as $processor) {
+        foreach( $this->project->getProcessors() as $processor ) {
             $prClass    = $processor->getClass();
             $pr         = new $prClass;
             $pr->process( $parsedFields );
