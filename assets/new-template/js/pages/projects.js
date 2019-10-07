@@ -1,15 +1,18 @@
-jQuery("#btnDelete").on("click", function (e) {
-    var link = this;
-    e.preventDefault();
+$( function ()
+{
+	$(".btnDelete").on( "click", function ( e ) 
+	{
+	    e.preventDefault();
 
-    jQuery("<div>Do you want to delete this Project?</div>").dialog({
-        buttons: {
-            "Ok": function () {
-                window.location = link.href;
-            },
-            "Cancel": function () {
-                jQuery(this).dialog("close");
-            }
-        }
-    });
+	    $( "<div>Do you want to delete this Project?</div>" ).dialog({
+	        buttons: {
+	            "Ok": function () {
+	                window.location = $(this).href;
+	            },
+	            "Cancel": function () {
+	                $(this).dialog( "close" );
+	            }
+	        }
+	    });
+	});
 });

@@ -32,7 +32,7 @@
         <!-- ============================================================== -->
         <!-- end pageheader -->
         <!-- ============================================================== -->
-        
+
         <div class="row">
             <!-- ============================================================== -->
             <!-- basic tabs  -->
@@ -57,10 +57,10 @@
                                 <td>
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <a class="btn btn-primary" href="{{ path('ia_web_content_thief_projects_update', {'id': item.id}) }}?id={{ item.id }}">
+                                            <a class="btn btn-primary btnEdit" href="{{ path('ia_web_content_thief_projects_update', {'id': item.id}) }}?id={{ item.id }}">
                                                 <i class="glyphicon glyphicon-pencil"></i>
                                             </a>
-                                            <a class="btn btn-danger btnDelete" href="{{ path('ia_web_content_thief_projects_delete', {'id': item.id}) }}">
+                                            <a class="btn btn-danger btnDelete" href="#" data-url="{{ path('ia_web_content_thief_projects_delete', {'id': item.id}) }}">
                                                 <i class="icon_close_alt2"></i>
                                             </a>
                                         </div>
@@ -79,10 +79,8 @@
     </div>
 {% endblock %}
 
-
-
-
-{% block endDocumentScripts %}
+{% block body_scripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('build/projects.js') }}"></script>
+    
+    {{ encore_entry_script_tags( 'projects', null, 'new-template' ) }}
 {% endblock %}
