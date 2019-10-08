@@ -5,6 +5,7 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 use Knp\Menu\Matcher\Voter\RouteVoter;
 
@@ -18,7 +19,9 @@ class MenuBuilder implements ContainerAwareInterface
     
     protected $isAdmin;
     
-    public function __construct(AuthorizationChecker $securityContext) {
+    public function __construct( AuthorizationChecker $securityContext, RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
         $this->securityContext = $securityContext;
         $this->isLoggedIn = $this->securityContext->isGranted('IS_AUTHENTICATED_FULLY');
         $this->isAdmin = $this->securityContext->isGranted('ROLE_ADMIN');
@@ -26,15 +29,19 @@ class MenuBuilder implements ContainerAwareInterface
     
     public function mainMenu(FactoryInterface $factory)
     {
-        $menu = $factory->createItem('root');
+        $request    = $this->requestStack->getCurrentRequest();
+        $menu       = $factory->createItem('root');
         
         //Projects
         $menu->addChild('Projects', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_document_alt')));
         $menu['Projects']->addChild('List Projects', array('route' => 'ia_web_content_thief_projects_index'));
         $menu['Projects']->addChild('Create New Project', array(
-            'route' => 'ia_web_content_thief_projects_create',
-            'routeParameters' => array('id' => 0)
+            'route' => 'ia_web_content_thief_projects_create'
         ));
+        if ( $request->get( '_route' ) == 'ia_web_content_thief_projects_update' ) {
+            $menu['Projects']->addChild('Edit Project', ['route' => 'ia_web_content_thief_projects_update', 'routeParameters' => ['id' => $request->query->get('id')]]);
+        }
+        
         
         // Fieldsets
         $menu->addChild('Fieldsets', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_table')));
