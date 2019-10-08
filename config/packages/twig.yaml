@@ -4,3 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
        wct_template: '%wct_template%'
+       siteTitle: '%siteTitle%'
