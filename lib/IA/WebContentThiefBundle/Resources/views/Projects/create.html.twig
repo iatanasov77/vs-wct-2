@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="page-header">
-                    <h2 class="pageheader-title">Edit Project</h2>
+                    <h2 class="pageheader-title">Edit:	{{ item.getTitle() }}</h2>
                     <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
                     <div class="page-breadcrumb">
                     	<nav aria-label="breadcrumb">
@@ -48,22 +48,19 @@
                         <a class="btn  btn-danger btnCopyProject" data-resourceId="{{ item.getId() }}" href="javascript:;">
                             Copy Project
                         </a>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreateProject">Create New Project</button>
                     </div>
                 </section>
             {% endif %}
         </div>
         
-        
+        <div class="row">&nbsp;</div>
         
         <div class="row">
             <!-- ============================================================== -->
             <!-- basic tabs  -->
             <!-- ============================================================== -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
-                <div class="section-block">
-                    <h5 class="section-title">{{ item.getTitle() }}</h5>
-                    <p>Edit project details.</p>
-                </div>
                 
                 {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
                     {{ form_widget(form._token) }}
@@ -145,47 +142,14 @@
                 
                                         </div>
                                         <div class="input-group-append">
+                                        	<button type="button" class="btn btn-primary btnBrowse" data-toggle="modal" data-target="#modalBrowser" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" data-urlInput="#project_url">
+                                        		Browse
+                                        	</button>
+                                        	<!-- 
                                             <button type="button" class="btn btn-primary btnBrowse" data-browserFrame="#remoteBrowserListing" data-urlInput="#project_url" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}">Browse</button>
+                                        	 -->
                                         </div>
-									</div>
-            
-                                    <div class="col-sm-1">&nbsp;</div>
-
-                                    <div class="col-sm-12" style="margin: 20px 0 20px 0;">
-                                        <div id="loader">
-                                            <div class="d-flex justify-content-center">
-                                                <div class="spinner-border" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <iframe id="remoteBrowserListing" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
-                                    </div>
-
-									<div class="input-group">
-									
-                                        {{ form_label(form.xquery, null, {
-                                            'label_attr': {'class': 'col-sm-1 control-label'}
-                                            }) 
-                                        }}
-                                        <div class="col-sm-6">
-                                            {{ form_widget(form.xquery, {'attr': {'class': 'form-control'}}) }}
-                
-                                        </div>
-                                        {{ form_label(form.xqueryField, null, {
-                                            'label_attr': {'class': 'col-sm-1 control-label'}
-                                            }) 
-                                        }}
-                                        <div class="col-sm-2">
-                                            {{ form_widget(form.xqueryField, {'attr': {'class': 'form-control xquery-field-select'}}) }}
-                
-                                        </div> 
-                                        <div class="col-sm-1">
-                                        	<button type="button" id="btnSetXquery" class="btn btn-primary btnBrowse">Set Xquery</button>
-                                        </div>
-									</div>
-
+									</div>									
                     			</div>
                     			
                                 <div class="form-group">
@@ -249,7 +213,9 @@
                                             {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary btnBrowse" data-browserFrame="#remoteBrowserDetails" data-urlInput="#project_detailsPage" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}">Browse</button>
+                                        	<button type="button" class="btn btn-primary btnBrowse" data-toggle="modal" data-target="#modalBrowser" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" data-urlInput="#project_detailsPage" data-browserFrame="#remoteBrowser">
+                                        		Browse
+                                        	</button>
                                         </div>
 									</div>
             
@@ -262,9 +228,7 @@
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <iframe id="remoteBrowserDetails" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
+                                        </div> 
                                     </div>
                             {% endif %}
                            
@@ -297,12 +261,15 @@
 				</div>
             </div>
         
-
             {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
             {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
             {{ form_end(form, {'render_rest': false}) }}
         </div>
     </div> 
+{% endblock %}
+
+{% block modals %}
+    {% include 'IAWebContentThiefBundle:Projects:Modals/browser.html.twig' %}
 {% endblock %}
 
 {% block body_scripts %}

@@ -5,10 +5,11 @@
     <!-- login page  -->
     <!-- ============================================================== -->
     <div class="card-header text-center">
-    	<a href="../index.html">
-    		<img class="logo-img" src="{{ asset('assets/build/new-template/images/logo.png') }}" alt="logo">
+    	<a class="navbar-brand" href="/">
+    		{{ siteTitle }}
+    		<!-- <img class="logo-img" src="{{ asset('assets/build/new-template/images/logo.png') }}" alt="logo"> -->
     	</a>
-    	<span class="splash-description">Please enter your user information.</span>
+    	<span class="splash-description">Please enter your username and password.</span>
     </div>
     <div class="card-body">
         {% if error %}

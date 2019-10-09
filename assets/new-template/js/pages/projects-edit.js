@@ -8,12 +8,10 @@ $(function () {
     $('.btnBrowse').on('click', function ()
     {
     	showSpinner();
-    	
         var browserUrl = $(this).attr('data-browserUrl');
-        var browserFrame = $(this).attr('data-browserFrame');
         var url = $($(this).attr('data-urlInput')).val();
         if(url.length) {
-            $( browserFrame ).attr('src', browserUrl + '?url=' + encodeURIComponent(url));
+            $( '#remoteBrowser' ).attr('src', browserUrl + '?url=' + encodeURIComponent(url));
         }
     });
 
