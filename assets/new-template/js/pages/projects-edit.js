@@ -4,18 +4,47 @@ function showSpinner()
 	//$( '#remoteBrowser' ).before( html );
 }
 
-$(function () { 
+$( function () 
+{ 
+	$( "#btnSaveFieldsXquery" ).on( "click", function( e )
+	{
+		e.preventDefault(); // prevent de default action, which is to submit
+	  
+		// Copy fields
+		$( '#fieldsContainer' ).find( 'input' ).each( function ()
+		{
+			$( $(this).attr( 'data-target' ) ).val( $(this).val() );
+		});
+	  
+		$( '#btnCloseBrowser' ).click();
+	});
+	
     $('.btnBrowse').on('click', function ()
     {
     	showSpinner();
         var browserUrl = $(this).attr('data-browserUrl');
         var url = $($(this).attr('data-urlInput')).val();
-        if(url.length) {
-            $( '#remoteBrowser' ).attr('src', browserUrl + '?url=' + encodeURIComponent(url));
+
+        if (url.length) {
+          $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
         }
+        
+        var fields		= JSON.parse($(this).attr('data-fields'));
+        var prototype	= '';
+        var options		= '';
+        for (var i = 0; i < fields.length; i++) {
+          prototype += '<div class="input-group">' + '<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + '<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id_source + '" data-target="#' + fields[i].id_target + '" /></div>' + '</div>';
+          options	+= '<option value="' + fields[i].id_source + '">' + fields[i].title + '</option>';
+        }
+
+        $('#fieldsContainer').html('');
+        $('#fieldsContainer').append(prototype);
+        
+        $('#project_xqueryField').html('');
+        $('#project_xqueryField').html(options);
     });
 
-    $('#remoteBrowserListing').on('load', function () {
+    $('#remoteBrowser').on('load', function () {
         var cssUrl = $(this).attr('data-browserCss');
         var head = $(this).contents().find("head");
         head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));
@@ -29,25 +58,8 @@ $(function () {
 
             var xpath = getXPath(this);
             
-            $("#project_xquery", parent.document).val(xpath);
-        });
-    });
-    
-    $('#remoteBrowserDetails').on('load', function () {
-        var cssUrl = $(this).attr('data-browserCss');
-        var head = $(this).contents().find("head");
-        head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));
-
-        $('*', this.contentWindow.document).click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            $('.parserMarker').removeClass('parserMarker');
-            $(this).addClass('parserMarker');
-
-            var xpath = getXPath(this);
-            
-            $("#project_xquery", parent.document).val(xpath);
+            var whereToSet	= $('#project_xqueryField').val();
+            $("#" + whereToSet, parent.document).val( xpath );
         });
     });
     

@@ -46,14 +46,6 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
             
             ->add('url', TextType::class, array('label' => 'Url')) // , array("mapped" => false)
             
-            ->add('xquery', TextType::class, array('label' => 'XQuery', "mapped" => false, 'required' => false))
-            ->add('xqueryField', ChoiceType::class, array(
-                'label' => 'Set to field:',
-                'required' => false,
-                'mapped' => false,
-                //'choices' => $this->getXqueryFieldChoices($options['data'])
-            ))    
-            
             ->add('detailsPage', TextType::class, array('label'=> 'Details Page', 'required' => false))
             ->add('detailsLink', TextType::class, array('label'=> 'Details Link'))
             ->add('pagerLink', TextType::class, array('label'=> 'Pager Link'))
@@ -119,11 +111,11 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
         
         $i = 0;
         foreach($project->getListingFields() as $field) {
-            $choices['FormProject_listingFields_'.$i++.'_xquery'] = $field->getTitle();
+            $choices[$field->getTitle()] = 'FormProject_listingFields_'.$i++.'_xquery';
         }
         $i = 0;
         foreach($project->getDetailsFields() as $field) {
-            $choices['FormProject_detailsFields_'.$i++.'_xquery'] = $field->getTitle();
+            $choices[$field->getTitle()] = 'FormProject_detailsFields_'.$i++.'_xquery';
         }
         
         

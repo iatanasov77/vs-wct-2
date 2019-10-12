@@ -141,8 +141,14 @@
                                             {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
                 
                                         </div>
+                                       
                                         <div class="input-group-append">
-                                        	<button type="button" class="btn btn-primary btnBrowse" data-toggle="modal" data-target="#modalBrowser" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" data-urlInput="#project_url">
+                                        	<button type="button" class="btn btn-primary btnBrowse" 
+                                        		data-toggle="modal" data-target="#modalBrowser" 
+                                        		data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" 
+                                        		data-urlInput="#project_url"
+                                        		data-fields="{{ listingFieldsDef }}"
+                                        	>
                                         		Browse
                                         	</button>
                                         	<!-- 
@@ -187,7 +193,7 @@
                                             <input class="btn" id="btnAddFieldsListing" type="button" value="Add Fields" data-resourceId="{{ item.getId() }}" data-addFieldsUrl="{{ path('ia_web_content_projects_add_fields') }}" />
                                         </div>
                                     </div>
-                                    <div class="fieldsContainer" data-prototype="{% filter escape %}{% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}">
+                                    <div class="fields	Container" data-prototype="{% filter escape %}{% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}">
                                         {% for field in form.listingFields %}
                                             {% include 'IAWebContentThiefBundle:Projects/Form/Collection:project-field.html.twig' with {'form': field} %}
                                         {% endfor %}
@@ -213,7 +219,14 @@
                                             {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="input-group-append">
-                                        	<button type="button" class="btn btn-primary btnBrowse" data-toggle="modal" data-target="#modalBrowser" data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" data-urlInput="#project_detailsPage" data-browserFrame="#remoteBrowser">
+                                        	<button type="button" class="btn btn-primary btnBrowse" 
+                                        		data-toggle="modal" 
+                                        		data-target="#modalBrowser" 
+                                        		data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" 
+                                        		data-urlInput="#project_detailsPage" 
+                                        		data-browserFrame="#remoteBrowser"
+                                        		data-fields="{{ detailsFieldsDef }}"
+                                        	>
                                         		Browse
                                         	</button>
                                         </div>

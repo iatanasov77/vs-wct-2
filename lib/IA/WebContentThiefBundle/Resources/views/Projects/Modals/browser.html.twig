@@ -9,46 +9,33 @@
       </div>
       <div class="modal-body">
         <div class="col-sm-12" style="margin: 20px 0 20px 0;">
-        <div id="loader">
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+            <div id="loader">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
+            
+            <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
         </div>
         
         <div class="col-sm-1">&nbsp;</div>
         
         <div class="input-group">
-									
-        {{ form_label(form.xquery, null, {
-            'label_attr': {'class': 'col-sm-1 control-label'}
-            }) 
-        }}
-        <div class="col-sm-6">
-            {{ form_widget(form.xquery, {'attr': {'class': 'form-control'}}) }}
-        
-        </div>
-        {{ form_label(form.xqueryField, null, {
-            'label_attr': {'class': 'col-sm-1 control-label'}
-            }) 
-        }}
-        <div class="col-sm-2">
-            {{ form_widget(form.xqueryField, {'attr': {'class': 'form-control xquery-field-select'}}) }}
-        
-            </div> 
-            <div class="col-sm-1">
-            	<button type="button" id="btnSetXquery" class="btn btn-primary btnBrowse">Set Xquery</button>
+        	<label for="project_xqueryField">Set to Field: </label>
+        	<div class="col-sm-6"> 
+            	<select id="project_xqueryField" name="project[xqueryField]" class="form-control xquery-field-select"></select>
             </div>
         </div>
         
+        <fiv class="row"><hr /></fiv>
+        <div id="fieldsContainer"></div>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseBrowser">Close</button>
+        <button type="button" class="btn btn-primary" id="btnSaveFieldsXquery">Save changes</button>
       </div>
     </div>
   </div>

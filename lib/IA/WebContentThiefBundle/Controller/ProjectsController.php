@@ -50,6 +50,8 @@ class ProjectsController extends ResourceController
         $tplVars = array(
             'form'          => $form->createView(),
             'item'          => $oProject,
+            'listingFieldsDef'  => json_encode( $this->listingFieldsDefinition( $oProject ) ),
+            'detailsFieldsDef'  => json_encode( $this->detailsFieldsDefinition( $oProject ) ),
         );
         return $this->render('IAWebContentThiefBundle:Projects:create.html.twig', $tplVars);
     }
@@ -133,4 +135,50 @@ class ProjectsController extends ResourceController
         $oProjectCopy->save();
         $this->_helper->redirector('list', 'index');
     }
+    
+    protected function listingFieldsDefinition( $project )
+    {
+        $fields = [
+            [
+                'title'     => 'Pager Link',
+                'id_target' => 'project_pagerLink',
+                'id_source' => 'project_pagerLink_source'
+            ],
+            [
+                'title'     => 'Details Link',
+                'id_target' => 'project_detailsLink',
+                'id_source' => 'project_detailsLink_source'
+            ],
+        ];
+        
+        $i      = 0;
+        foreach ( $project->getListingFields() as $field ) {
+            $fields[]   = [
+                'title'     => ucfirst( $field->getTitle() ),
+                'id_target' => 'project_listingFields_' . $i . '_xquery',
+                'id_source' => 'project_listingFields_' . $i . '_xquery_source'
+            ];
+            $i++;
+        }
+        
+        return $fields;
+    }
+    
+    protected function detailsFieldsDefinition( $project )
+    {
+        $fields = [];
+        
+        $i      = 0;
+        foreach ( $project->getListingFields() as $field ) {
+            $fields[]   = [
+                'title'     => ucfirst( $field->getTitle() ),
+                'id_target' => 'project_detailsFields_' . $i . '_xquery',
+                'id_source' => 'project_detailsFields_' . $i . '_xquery_source'
+            ];
+            $i++;
+        }
+        
+        return $fields;
+    }
 }
+
