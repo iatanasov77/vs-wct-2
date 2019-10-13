@@ -36,7 +36,9 @@ Encore
     .addEntry('main', './assets/old-template/js/main.js')
     
     .addEntry('jquery-duplicate-fields', './assets/old-template/vendor/jquery-duplicate-fields/jquery.duplicateFields.js')
+    
     .addEntry('fieldsets', './assets/old-template/js/pages/fieldsets.js')
+    .addEntry('fieldsets-edit', './assets/old-template/js/pages/fieldsets-edit.js')
     
     .addEntry('projects', './assets/old-template/js/pages/projects.js')
     .addEntry('projects-edit', './assets/old-template/js/pages/projects-edit.js')
@@ -94,10 +96,13 @@ Encore
     
     
     .addEntry('jquery-duplicate-fields', './assets/new-template/js/jquery-duplicate-fields/jquery.duplicateFields.js')
+    
     .addEntry('fieldsets', './assets/new-template/js/pages/fieldsets.js')
+    .addEntry('fieldsets-edit', './assets/new-template/js/pages/fieldsets-edit.js')
     
     .addEntry('projects', './assets/new-template/js/pages/projects.js')
     .addEntry('projects-edit', './assets/new-template/js/pages/projects-edit.js')
+    
     .addEntry('taxonomy-vocabolarities', './assets/new-template/js/pages/taxonomy-vocabolarities.js')
 ;
 

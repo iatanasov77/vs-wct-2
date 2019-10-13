@@ -1,6 +1,4 @@
-<?php
-
-namespace IA\PaidMembershipBundle\Entity;
+<?php namespace IA\PaidMembershipBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ToggleableTrait;

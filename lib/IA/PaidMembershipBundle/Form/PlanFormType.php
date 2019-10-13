@@ -3,13 +3,21 @@
 namespace IA\PaidMembershipBundle\Form;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\AbstractType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Payum\Paypal\ExpressCheckout\Nvp\Api;
 
-use IAPaidMembershipBundle\Form\Type\PackagePlanType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
-class PlanFormType extends AbstractResourceType
+use IA\PaidMembershipBundle\Form\Type\PackagePlanType;
+
+class PlanFormType extends AbstractType
 {
 
     public function getName()
@@ -20,10 +28,10 @@ class PlanFormType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
         $builder
-            ->add('enabled', 'checkbox', array('label' => 'Enabled'))
-            ->add('title', 'text', array('label' => 'Title'))
+        ->add('enabled', CheckboxType::class, array('label' => 'Enabled'))
+        ->add('title', TextType::class, array('label' => 'Title'))
                 
-            ->add('subscriptionPeriod', 'choice', 
+        ->add('subscriptionPeriod', ChoiceType::class, 
                     array('label'=>'Subscription Period', 
                         'choices'=>array(
                             ''                           => ' -- Choose a period -- ',
@@ -36,8 +44,8 @@ class PlanFormType extends AbstractResourceType
                     )
             )
             
-            ->add('btnSave', 'submit', array('label' => 'Save'))
-            ->add('btnCancel', 'button', array('label' => 'Cancel'))
+            ->add('btnSave', SubmitType::class, array('label' => 'Save'))
+            ->add('btnCancel', ButtonType::class, array('label' => 'Cancel'))
         ;
     }
 

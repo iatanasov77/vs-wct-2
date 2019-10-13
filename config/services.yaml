@@ -9,11 +9,13 @@ parameters:
     mailer_user: 'wct@example.com'
     wct_template: 'new-template'
 
-    # settings:
-        # minuteBonus: 20     # In Percents
-        # minutePrice: 0.065
+    # Map Processors Register
+    ia_web_content_thief.map_processors:
+        'ia_web_content_thief.processor.prestashop15': 'PrestaShop 1.5'
 
 services:
+   
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -24,13 +26,15 @@ services:
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-
+        autowire: false
+        
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-
+        autowire: false
+        
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     
@@ -60,3 +64,38 @@ services:
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu, alias: breadcrumbs }
+              
+    # Sylius Resource Form Services
+    ia_web_content_thief.form.type.fieldsets:
+        class: App\Form\FieldsetType
+        tags:
+            - { name: form.type, alias: 'ia_web_content_thief_fieldsets' }
+        #arguments: [@doctrine]
+    ia_web_content_thief.form.type.projects:
+        class: App\Form\ProjectType
+        tags:
+            - { name: form.type, alias: 'ia_web_content_thief_projects' }
+        #arguments: [@doctrine]
+        calls:
+          #- [ setContainer,[ @service_container ] ]
+          
+        
+#    ia_web_content_thief.form.type.mappers:
+#        class: IAWebContentThiefBundle\Form\MapperType
+#        calls:
+#          - [ setContainer,[ @service_container ] ]
+#        tags:
+#            - { name: form.type, alias: 'ia_web_content_thief_mappers' }
+#        arguments: [@doctrine]
+          
+    
+    # Map Processor Forms
+    ia_web_content_thief.processor_form.prestashop15:
+        class: App\Component\MapProcessor\Form\Prestashop15Type
+    
+    # Map Processors Services
+    ia_web_content_thief.processor.prestashop15:
+        class: App\Component\MapProcessor\Processor\Prestashop15
+        #arguments: [ @service_container ]
+        calls:
+            #- [setForm, [ @ia_web_content_thief.processor_form.prestashop15 ]]

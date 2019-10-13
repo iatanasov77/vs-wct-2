@@ -22,7 +22,6 @@ return [
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
     IA\PaymentBundle\IAPaymentBundle::class => ['all' => true],
-    IA\WebContentThiefBundle\IAWebContentThiefBundle::class => ['all' => true],
     IA\CmsBundle\IACmsBundle::class => ['all' => true],
     IA\PaidMembershipBundle\IAPaidMembershipBundle::class => ['all' => true],
     IA\TaxonomyBundle\IATaxonomyBundle::class => ['all' => true],
@@ -33,4 +32,6 @@ return [
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    
+    //IA\WebContentThiefBundle\IAWebContentThiefBundle::class => ['all' => true],
 ];

@@ -1,12 +1,5 @@
-{% extends "IAApplicationBundle::layout.html.twig" %}
-{% block head_styles %}
-    {{ parent() }}
-    {% stylesheets filter='uglifycss, cssrewrite' output="assets/build/wct.css"
-        'bundles/iawebcontentthief/css/styles.css'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
+{% extends "layout.html.twig" %}
+
 {% block title %}{{ parent() }} :: Create User{% endblock %}
 
 {% block pageTitle %}<i class="icon_genius"></i> Create User{% endblock %}

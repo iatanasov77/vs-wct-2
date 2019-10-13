@@ -1,4 +1,4 @@
-{% extends "IAApplicationBundle::layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block title %}{{ parent() }} :: Create New Package{% endblock %}
 
@@ -63,23 +63,10 @@
     </div>   
 {% endblock content %}
 
-{% block endDocumentScripts %}
+{% block body_scripts %}
     {{ parent() }}
-    {#<script type="text/javascript">
-        jQuery(function () {
-            jQuery("#btnAddField").on('click', function (e) {
-                jQuery("#popup").dialog({modal: true}).dialog('open').load("{{ path('ia_web_content_thief_fieldsets_add_field') }}");
-            });
-        });
+   
+    {{ encore_entry_script_tags( 'jquery-duplicate-fields', null, 'new-template' ) }}
+    {{ encore_entry_script_tags( 'fieldsets-edit', null, 'new-template' ) }}
+{% endblock %}
 
-    
-    </script>#}
-
-    {% javascripts filter="?uglifyjs2" output="assets/build/webcontentthief.js"
-            '@IAWebContentThiefBundle/Resources/public/vendor/jquery-duplicate-fields/jquery.duplicateFields.js'
-            '@IAWebContentThiefBundle/Resources/public/js/fieldsets-edit.js' 
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-{% endblock endDocumentScripts %}

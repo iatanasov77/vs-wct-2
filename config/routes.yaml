@@ -15,13 +15,11 @@ home:
 ia_users:
     resource: "@IAUsersBundle/Resources/config/routing.yml"
     prefix:   /profile/
-ia_web_content_thief:
-    resource: "@IAWebContentThiefBundle/Resources/config/routing.yml"
-    prefix:   /
  
 ia_taxonomy:
     resource: "@IATaxonomyBundle/Resources/config/routing.yml"
     prefix: /taxonomy
+    
 ia_cms:
     resource: "@IACmsBundle/Resources/config/routing.yml"
     prefix:   /cms

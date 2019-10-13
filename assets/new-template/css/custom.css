@@ -2,3 +2,13 @@
 .splash-container {
     max-width: 450px !important;
 }
+
+.fieldset-project-fields {
+	border: 1px solid black !important;
+	padding: 20px;
+}
+
+.project-fields-left {
+	border-right: 1px solid black !important;
+	padding-right: 30px;
+}

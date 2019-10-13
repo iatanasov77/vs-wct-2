@@ -15,18 +15,18 @@ sylius_resource:
         ia_web_content_thief.fieldsets:
             driver: doctrine/orm
             classes:
-                model:      IA\WebContentThiefBundle\Entity\Fieldset
+                model:      App\Entity\Fieldset
                 interface:  Sylius\Component\Resource\Model\ResourceInterface
-                controller: IA\WebContentThiefBundle\Controller\FieldsetsController
+                controller: App\Controller\FieldsetsController
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 
         ia_web_content_thief.projects:
             driver: doctrine/orm
             classes:
-                model:      IA\WebContentThiefBundle\Entity\Project
+                model:      App\Entity\Project
                 interface:  Sylius\Component\Resource\Model\ResourceInterface
-                controller: IA\WebContentThiefBundle\Controller\ProjectsController
-                repository: IA\WebContentThiefBundle\Entity\Repository\ProjectsRepository
+                controller: App\Controller\ProjectsController
+                repository: App\Entity\Repository\ProjectsRepository
                       
         ia_paid_membership.packages:
             driver: doctrine/orm

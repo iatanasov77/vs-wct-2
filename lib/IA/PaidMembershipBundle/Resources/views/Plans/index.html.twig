@@ -1,4 +1,4 @@
-{% extends "IAApplicationBundle::layout.html.twig" %}
+{% extends "layout.html.twig" %}
 {% block title %}{{ parent() }} :: List Fieldsets{% endblock %}
 
 {% block pageTitle %}<i class="icon_genius"></i> List Fieldsets{% endblock %}
@@ -20,7 +20,7 @@
                                 {{ item.getId() }}
                             </td>
                             <td>
-                                <a href="{{ path('ia_paid_membership_plans_update', {'id': item.getId()}) }}">
+                                <a href="{{ path('ia_paid_membership_plans_update', {'id': item.getId()}) }}?id={{ item.id }}">
                                     {{ item.getTitle() }}
                                 </a>
                             </td>

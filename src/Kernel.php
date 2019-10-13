@@ -30,6 +30,16 @@ class Kernel extends BaseKernel
         return \dirname(__DIR__);
     }
 
+    public function getCacheDir()
+    {
+        return '/var/www/wct2/cache';
+    }
+    
+    public function getLogDir()
+    {
+        return '/var/www/wct2/log';
+    }
+    
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));

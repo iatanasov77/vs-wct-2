@@ -22,14 +22,18 @@ $( function ()
     $('.btnBrowse').on('click', function ()
     {
     	showSpinner();
-        var browserUrl = $(this).attr('data-browserUrl');
-        var url = $($(this).attr('data-urlInput')).val();
-
-        if (url.length) {
-          $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
+    	
+        var browserUrl	= $(this).attr('data-browserUrl');
+        var url			= $($(this).attr('data-urlInput')).val();
+        var fields		= JSON.parse($(this).attr('data-fields'));
+        if ( ! url.length || ! fields.length ) {
+        	
+        	alert( 'URL or Fields are not defined!' );
+        	return false;
         }
         
-        var fields		= JSON.parse($(this).attr('data-fields'));
+        $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
+        
         var prototype	= '';
         var options		= '';
         for (var i = 0; i < fields.length; i++) {

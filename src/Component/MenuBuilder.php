@@ -56,9 +56,9 @@ class MenuBuilder implements ContainerAwareInterface
         if($this->isAdmin) {
             // Users
             $menu->addChild('Users', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_genius')));
-            $menu['Users']->addChild('List Users', array());
+            $menu['Users']->addChild('List Users', array('route' => 'ia_users_users_index'));
             $menu['Users']->addChild('Create New User', array(
-                //'route' => 'ia_users_users_create',
+                'route' => 'ia_users_users_create',
                 'routeParameters' => array('id' => 0)
             ));
             

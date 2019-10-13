@@ -25,6 +25,13 @@ class User extends BaseUser implements ResourceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="api_token", type="string", length=128, nullable=false)
+     */
+    protected $apiKey;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="firstName", type="string", length=128, nullable=false)
      */
     protected $firstName;
@@ -90,7 +97,17 @@ class User extends BaseUser implements ResourceInterface
         return $this;
     }
 
-
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+    
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+        
+        return $this;
+    }
     
     public function setEmail($email) 
     {
