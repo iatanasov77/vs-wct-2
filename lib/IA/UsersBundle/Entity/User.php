@@ -22,12 +22,10 @@ class User extends BaseUser implements ResourceInterface
      */
     protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="api_token", type="string", length=128, nullable=false)
+        /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
-    protected $apiKey;
+    protected $apiToken;
     
     /**
      * @var string
@@ -97,14 +95,14 @@ class User extends BaseUser implements ResourceInterface
         return $this;
     }
 
-    public function getApiKey()
+    public function getApiToekn()
     {
-        return $this->apiKey;
+        return $this->apiToken;
     }
     
-    public function setApiKey($apiKey)
+    public function setApiToken($apiToken)
     {
-        $this->apiKey = $apiKey;
+        $this->apiToken = $apiToken;
         
         return $this;
     }

@@ -8,9 +8,6 @@ class DefaultController extends Controller
 {
     public function index()
     {
-        // For Testing Only
-        return $this->render( '@IAWebContentThief/Projects/index.html.twig', [
-            'items' => []
-        ]);
+        return $this->redirect($this->generateUrl( 'ia_web_content_thief_projects_index' ) );
     }
 }

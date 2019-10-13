@@ -1,13 +1,14 @@
 security:
     encoders:
-        App\Entity\User:
+        IA\UsersBundle\Entity\User:
             algorithm: argon2i
             
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         app_user_provider:
             entity:
-                class: App\Entity\User
+                #class: App\Entity\User
+                class: IA\UsersBundle\Entity\User
                 property: username
     firewalls:
         api:

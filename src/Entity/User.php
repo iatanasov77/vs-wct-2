@@ -1,7 +1,7 @@
 <?php
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use IA\UsersBundle\Entity\User as BaseUser;
 //use Uecode\Bundle\ApiKeyBundle\Model\ApiKeyUser as BaseUser;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,11 +20,6 @@ class User extends BaseUser implements ResourceInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-    /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
-     */
-    protected $apiToken;
 
     /**
      * @var string
@@ -99,8 +94,6 @@ class User extends BaseUser implements ResourceInterface
         return $this;
     }
 
-
-    
     public function setEmail($email) 
     {
         parent::setEmail($email);
