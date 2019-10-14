@@ -4,50 +4,133 @@
 {% block pageTitle %}<i class="fa fa-user-md"></i> My Profile{% endblock %}
 
 {% block content %}
-    {% include 'IAUsersBundle:Profile/partial:_profile-header.html.twig' %}
-    <div class="row">
-        <div class="col-lg-12">
-            <section class="panel">
-                <header class="panel-heading tab-bg-info">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="#recent-activity" data-toggle="tab">
-                                <i class="icon-home"></i>Activity
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#profile" data-toggle="tab">
-                                <i class="icon-user"></i>Membership
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#edit-profile" data-toggle="tab">
-                                <i class="icon-envelope"></i>Edit Profile
-                            </a>
-                        </li>
-                    </ul>
-                </header>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div class="tab-pane" id="recent-activity">
-                            {% include 'IAUsersBundle:Profile/tab:_profile-activity.html.twig' %}
-                        </div>
-                        <!-- profile -->
-                        <div class="tab-pane" id="profile">
-                            {% include 'IAUsersBundle:Profile/tab:_profile-membership.html.twig' %}
-                        </div>
-                        <!-- edit-profile -->
-                        <div class="tab-pane" id="edit-profile">
-                            {% include 'IAUsersBundle:Profile/tab:_profile-edit-form.html.twig' %}
+    {# {% include 'IAUsersBundle:Profile/partial:_profile-header.html.twig' %} #}
+    <div class="container-fluid  dashboard-content">
+    	<!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Profile</h2>
+                    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            {{ knp_menu_render('breadcrumbs', {'template': 'menu/breadcrumb.html.twig'}) }}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+                
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- basic tabs  -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                	<h5 class="card-header">My Profile</h5>
+                	<div class="card-body">
+                		<div class="tab-regular">
+                            <ul class="nav nav-tabs " id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true">Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="membership-tab" data-toggle="tab" href="#membership" role="tab" aria-controls="profile" aria-selected="false">Membership</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="contact" aria-selected="false">Activity</a>
+                                </li>
+                            </ul>
+                    		<div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="home-tab">
+                                    {% include 'IAUsersBundle:Profile/tab:_profile-edit-form.html.twig' %}
+                                </div>
+                                <div class="tab-pane fade" id="membership" role="tabpanel" aria-labelledby="profile-tab">
+                                    {% include 'IAUsersBundle:Profile/tab:_profile-membership.html.twig' %}
+                                </div>
+                                <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="contact-tab">
+                               
+                                    {% include 'IAUsersBundle:Profile/tab:_profile-activity.html.twig' %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 {% endblock content %}
-{% block endDocumentScripts %}
-    {{ parent() }}
 
-    {% include 'IAUsersBundle:Dialog:select-payment.html.twig' %}
+{% block modals %}
+	<div class="modal fade" id="dialogSelectPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+            		<h5 class="modal-title" id="exampleModalLabel">Select Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    	<span aria-hidden="true">&times;</span>
+                    </button>
+          		</div>
+                <div class="modal-body">
+                	<fieldset id="paymentMethodOptions" class="fieldset-project-fields" style="min-height:100px;>
+                        {#<legend>Payment Method Options</legend>#}
+                        <div id="boxPaymentMethodOptions" class="form-horizontal">
+                    
+                            {% for key,method in paymentMethods %}
+                            <div class="form-group">
+                                <label class="custom-control custom-radio">
+                                    <input class="custom-control-input selectPaymentMethod" type="radio" name="paymentMethod" data-url="{{ path(method.route, {'planId': 1}) }}" value="{{ key }}" />
+                                    <span class="custom-control-label">{{ method.name }}</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body_scripts %}
+	{{ parent() }}
+	
+    {{ encore_entry_script_tags( 'profile', null, 'new-template' ) }}
+    
+    <script>
+        $( function()
+        {
+        	$('.selectPaymentMethod').on('change', function() {
+                var url = $(this).attr('data-url');
+                alert( url );
+                var data = {'class': $(this).val()};
+                $.get(url, data, function(data) {
+                    $('#boxPaymentMethodOptions').html(data);
+                    $('#paymentMethodOptions').show();
+                });
+            });
+            
+            $('form[name="ia_web_content_thief_project_processors"]').on('submit', function(e) {
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#boxProcessorOptions').html(data);
+                    }, 
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $('#boxProcessorOptions').html('<p>FATAL ERROR!!!</p>' + $('#boxProcessorOptions').html());
+                    }
+                });
+                
+                e.preventDefault();
+            });
+        });  
+    </script>   
 {% endblock %}

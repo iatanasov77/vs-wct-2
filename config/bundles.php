@@ -21,11 +21,14 @@ return [
     WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Sylius\Bundle\ResourceBundle\SyliusResourceBundle::class => ['all' => true],
+    
+    IA\ApplicationCoreBundle\IAApplicationCoreBundle::class => ['all' => true],
     IA\PaymentBundle\IAPaymentBundle::class => ['all' => true],
     IA\CmsBundle\IACmsBundle::class => ['all' => true],
     IA\PaidMembershipBundle\IAPaidMembershipBundle::class => ['all' => true],
     IA\TaxonomyBundle\IATaxonomyBundle::class => ['all' => true],
     IA\UsersBundle\IAUsersBundle::class => ['all' => true],
+    
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],

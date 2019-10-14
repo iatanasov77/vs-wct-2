@@ -22,9 +22,14 @@ class ProfileController extends Controller
 //        $packages = $pr->findBy($search, $order);
         $packages = $pr->findAll();
         
+        $paymentMethods = $this->container->getParameter('ia_payment.methods');
+        
+        $tplVars = array();
+        
         $tplVars = array(
-            'form' => $form->createView(),
-            'packages' => $packages
+            'form'          => $form->createView(),
+            'packages'      => $packages,
+            'paymentMethods'=> $paymentMethods
         );
         return $this->render('IAUsersBundle:Profile:show.html.twig', $tplVars);
     }

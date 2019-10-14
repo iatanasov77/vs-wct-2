@@ -10,7 +10,7 @@ use IA\Component\Utils;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Users")
+ * @ORM\Table(name="IAUM_Users")
  */
 class User extends BaseUser implements ResourceInterface
 {
@@ -95,12 +95,24 @@ class User extends BaseUser implements ResourceInterface
         return $this;
     }
 
-    public function getApiToekn()
+    public function getApiToken()
     {
         return $this->apiToken;
     }
     
     public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
+        
+        return $this;
+    }
+    
+    public function getApiKey()
+    {
+        return $this->apiToken;
+    }
+    
+    public function setApiKey($apiToken)
     {
         $this->apiToken = $apiToken;
         

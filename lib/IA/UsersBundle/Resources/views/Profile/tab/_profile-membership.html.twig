@@ -1,14 +1,11 @@
+<h3>Membership</h3>
 <section class="panel">
-    <div class="bio-graph-heading">
-        Hello I’m Jenifer Smith, a leading expert in interactive and creative design specializing in the mobile medium. My graduation from Massey University with a Bachelor of Design majoring in visual communication.
-    </div>
     <div class="panel-body bio-graph-info">
         <h1>Available Packages and Plans</h1>
         <div class="row">
             {% for pack in packages %}
-            <div class="bio-row">
-                <fieldset>
-                    <legend>{{ pack.title }} </legend>
+                <fieldset class="fieldset-project-fields" style="width: 100%;">
+                    <legend  class="w-auto">{{ pack.title }} </legend>
                     {% for plan in pack.getPlans() %}
                         <div class="row">
                             <div class="col-lg-4 col-lg-offset-1">
@@ -31,7 +28,6 @@
                         </div>
                     {% endfor %}
                 </fieldset>
-            </div>
             {% endfor %}
         </div>
     </div>

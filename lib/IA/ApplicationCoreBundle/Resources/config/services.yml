@@ -1,0 +1,32 @@
+parameters:
+#    ia_application.example.class: IA\Bundle\ApplicationBundle\Example
+
+services:
+    app.menu_builder:
+        class: IA\Bundle\ApplicationBundle\Menu\Builder
+        arguments: ["@security.context"]
+        calls:
+          - [ setContainer,[ @service_container ] ]
+
+    app.main_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@app.menu_builder", mainMenu]
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu, alias: main }
+            
+    app.profile_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@app.menu_builder", profileMenu]
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu, alias: profile }
+    
+    app.breadcrumbs_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@app.menu_builder", breadcrumbsMenu]
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu, alias: breadcrumbs }
+    
+

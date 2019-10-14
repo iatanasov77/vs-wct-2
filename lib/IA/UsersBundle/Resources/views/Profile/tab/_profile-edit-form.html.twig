@@ -1,9 +1,10 @@
 <section class="panel">                                          
     <div class="panel-body bio-graph-info">
         <h1> Profile Info</h1>
-        {% form_theme form with ['IAApplicationBundle:Form:form.html.twig', _self] %}
+        {% form_theme form with ['IAApplicationCoreBundle:Form:form.html.twig', _self] %}
+        
         {% block profile_row %}
-            {{ block('form_widget') }}
+            {# {{ block('form_widget_simple') }} #}
         {% endblock profile_row %}
         
         
@@ -12,4 +13,3 @@
         {{ form_end(form, {'render_rest': false}) }}
     </div>
 </section>
-

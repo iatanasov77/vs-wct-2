@@ -1,0 +1,30 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{# 
+ #  Widgets 
+ #}
+{% block form_label %}
+    {% spaceless %}
+        {% set label_attr = label_attr|merge({'class': label_attr.class|default('col-lg-1') ~ ' control-label'}) %}
+        {{ parent() }}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    {% if 'hidden' == type %}
+        {{ parent() }}
+    {% else %}
+        <div class="col-lg-6">{{ parent() }}</div>
+    {% endif %}
+{% endblock form_widget_simple %}
+
+{% block choice_widget %}
+    <div class="col-lg-6">{{ parent() }}</div>
+{% endblock choice_widget %}
+
+{% block checkbox_widget -%}
+    <div class="col-lg-1"></div>
+    <div class="col-lg-6">{{ parent() }}</div>
+{%- endblock checkbox_widget %}
+

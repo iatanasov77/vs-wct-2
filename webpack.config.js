@@ -94,6 +94,7 @@ Encore
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps( !Encore.isProduction() )
     
+    .addEntry('profile', './assets/new-template/js/pages/profile.js')
     
     .addEntry('jquery-duplicate-fields', './assets/new-template/js/jquery-duplicate-fields/jquery.duplicateFields.js')
     

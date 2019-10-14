@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{% block title %}.:: Web Content Thief{% endblock %}</title>
+
+        {% block head_meta %}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        {% endblock %}
+
+        {% block head_styles %}
+            {% stylesheets filter='uglifycss, cssrewrite' output="assets/build/layout.css"
+
+                'bundles/iaapplication/vendor/bootstrap/dist/css/bootstrap.min.css'
+                'bundles/iaapplication/vendor/bootstrap/dist/css/bootstrap-theme.min.css'
+
+                'bundles/iaapplication/vendor/elegant-icons/css/style.css'
+                'bundles/iaapplication/vendor/components-font-awesome/css/font-awesome.min.css'
+
+                'bundles/iaapplication/css/*'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+
+        {% block head_scripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+            <script>
+                WebFontConfig = {
+                    google: {
+                        families: ['Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic']
+                    }
+                };
+
+                (function (d) {
+                    var wf = d.createElement('script'), s = d.scripts[0];
+                    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';
+                    s.parentNode.insertBefore(wf, s);
+                })(document);
+            </script>
+        {% endblock %}
+    </head>
+    <body>
+        <section id="container" class="">
+            <header class="header dark-bg">
+                
+                <a class="logo" href="{{ path('ia_application_home') }}">
+                    <h1><span style="font-weight: bold;">Web Content Thief</span></h1>
+                </a>
+                
+                <div class="top-nav notification-row">                
+                    <ul class="nav pull-right top-menu">
+                        <li><a href="{{ path('ia_application_auth_login') }}" style="color: #FFFFFF;">login</a></li>
+                        <li><a href="{{ path('fos_user_registration_register') }}" style="color: #FFFFFF;">register</a></li>
+                    </ul>
+                </div>
+                    
+            </header>
+
+            
+            <!--sidebar end-->
+            <section id="wide-content">
+                <section class="wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header">{% block pageTitle %}{% endblock %}</h3>
+                           
+                        </div>
+                    </div>
+                    {% block content %}{% endblock %}
+                </section>
+            </section>  
+            <footer class="container-fluid">
+                {% block footer %}<p>Footer Text</p>{% endblock %}
+            </footer>
+        </section>
+
+        {% block endDocumentScripts %}
+            <div id="popup"></div>
+
+            {% javascripts filter="?uglifyjs2" output="assets/build/layout.js"
+                '@IAApplicationBundle/Resources/public/vendor/jquery/dist/jquery.min.js'
+                '@IAApplicationBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
+                '@IAApplicationBundle/Resources/public/vendor/jquery-ui/jquery-ui.min.js'
+                '@IAApplicationBundle/Resources/public/vendor/jquery.nicescroll/jquery.nicescroll.min.js'
+                '@IAApplicationBundle/Resources/public/js/*' 
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
