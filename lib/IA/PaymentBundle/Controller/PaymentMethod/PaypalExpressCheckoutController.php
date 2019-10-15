@@ -42,6 +42,22 @@
     }
  * 
  * 
+ * 
+    2. Query to Create tokens table
+    ===================================
+    CREATE TABLE `IAP_PaymentTokens`
+    (
+        `id` INTEGER NOT NULL AUTO_INCREMENT,
+        `hash` VARCHAR(255),
+        `details` TEXT,
+        `after_url` VARCHAR(255),
+        `target_url` VARCHAR(255),
+        `gateway_name` VARCHAR(255),
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB;
+ * 
+ * 
+ * 
  */
 namespace IA\PaymentBundle\Controller\PaymentMethod;
 
@@ -130,7 +146,7 @@ class PaypalExpressCheckoutController extends PayumController
         $payment['EMAIL'] = $agreement['EMAIL'];
         $payment['AMT'] = $packagePlan->getPrice();
         $payment['CURRENCYCODE'] = $this->container->getParameter('currency');
-        $payment['BILLINGFREQUENCY'] = $packagePlan->getBillingFrequency(); // пример: 1 ден, 1 месец или 1 година 
+        $payment['BILLINGFREQUENCY'] = $packagePlan->getBillingFrequency(); // Ð¿Ñ€Ð¸Ð¼ÐµÑ€: 1 Ð´ÐµÐ½, 1 Ð¼ÐµÑ�ÐµÑ† Ð¸Ð»Ð¸ 1 Ð³Ð¾Ð´Ð¸Ð½Ð° 
         $payment['PROFILESTARTDATE'] = date(DATE_ATOM);
         $payment['BILLINGPERIOD'] = $packagePlan->getBillingPeriod();
 

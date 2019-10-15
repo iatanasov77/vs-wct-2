@@ -18,7 +18,7 @@ class AgreementDetails extends ArrayObject
     protected $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="IA\UsersBundle\Entity\User")
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     protected $user;
