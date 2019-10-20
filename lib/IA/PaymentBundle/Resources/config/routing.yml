@@ -3,7 +3,11 @@ payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
-
+    
+ia_payment_paypal_express_checkout_create_recurring_payment_capture:
+   path:     /payment/capture/{payum_token}
+   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:capture }
+   
 ia_payment_methods_index:
     path:     /methods
     defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }

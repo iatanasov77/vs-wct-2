@@ -1,5 +1,6 @@
-payum:
+payum:              
     storages:
+        Payum\Core\Model\Payment: { doctrine: orm }
         IA\PaymentBundle\Entity\AgreementDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
 
@@ -7,13 +8,17 @@ payum:
         token_storage:
             IA\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
 
-    dynamic_gateways:
-        config_storage:
-            IA\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }
-
     gateways:
         offline:
             factory: offline
+        paypal_express_checkout_recurring_payment:
+            factory: paypal_express_checkout
+            #username: 'paypal_test@getnada.com'
+            #password: 'Ophth@l@m1@'
+            username: 'sb-ks1wh402232_api1.business.example.com'
+            password: '8PRXKLWZFPYBZDKB'
+            signature: 'Ajqso8A-uDUaXxl-CdVBwnXhzMsTAEdVwItx7t0TyVJeh7oICslAmTot'
+            sandbox: true
 
 ia_payment:
     payment_methods:
