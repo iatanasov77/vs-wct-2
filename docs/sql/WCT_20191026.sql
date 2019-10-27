@@ -509,15 +509,6 @@ ALTER TABLE `IAPM_Plans`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `IAPM_UsersSubscriptions`
---
-ALTER TABLE `IAPM_UsersSubscriptions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_94F499E764B64DCC` (`userId`),
-  ADD UNIQUE KEY `UNIQ_94F499E74C95116F` (`planId`),
-  ADD UNIQUE KEY `UNIQ_94F499E790F41D36` (`paymentDetailsId`);
-
---
 -- Indexes for table `IAP_AgreementDetails`
 --
 ALTER TABLE `IAP_AgreementDetails`
@@ -546,17 +537,7 @@ ALTER TABLE `IAP_PaymentTokens`
 --
 ALTER TABLE `IAUM_UserGroups`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_D52F22C85E237E06` (`name`);
-
---
--- Indexes for table `IAUM_Users`
---
-ALTER TABLE `IAUM_Users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_9E6E7D9192FC23A8` (`username_canonical`),
-  ADD UNIQUE KEY `UNIQ_9E6E7D91A0D96FBF` (`email_canonical`),
-  ADD UNIQUE KEY `UNIQ_9E6E7D91C05FB297` (`confirmation_token`),
-  ADD UNIQUE KEY `UNIQ_9E6E7D91CA77D3A9` (`subscriptionId`);
+  ADD UNIQUE KEY `UNIQ_D52F22C85E237E06` (`name`); 
 
 --
 -- Indexes for table `IAUM_UsersInfo`
@@ -593,20 +574,6 @@ ALTER TABLE `IA_Taxonomy_Vocabularies`
 --
 ALTER TABLE `migration_versions`
   ADD PRIMARY KEY (`version`);
-
---
--- Indexes for table `Users`
---
-ALTER TABLE `Users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_D5428AEDCA77D3A9` (`subscriptionId`);
-
---
--- Indexes for table `user_group`
---
-ALTER TABLE `user_group`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8F02BF9D5E237E06` (`name`);
 
 --
 -- Indexes for table `WCT_Fieldsets`
@@ -698,12 +665,6 @@ ALTER TABLE `IAPM_Plans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `IAPM_UsersSubscriptions`
---
-ALTER TABLE `IAPM_UsersSubscriptions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `IAP_AgreementDetails`
 --
 ALTER TABLE `IAP_AgreementDetails`
@@ -728,12 +689,6 @@ ALTER TABLE `IAUM_UserGroups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `IAUM_Users`
---
-ALTER TABLE `IAUM_Users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `IAUM_UsersInfo`
 --
 ALTER TABLE `IAUM_UsersInfo`
@@ -755,18 +710,6 @@ ALTER TABLE `IA_Taxonomy_Term`
 -- AUTO_INCREMENT for table `IA_Taxonomy_Vocabularies`
 --
 ALTER TABLE `IA_Taxonomy_Vocabularies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `Users`
---
-ALTER TABLE `Users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user_group`
---
-ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -829,31 +772,11 @@ ALTER TABLE `IAPM_Packages_Plans`
   ADD CONSTRAINT `FK_FF096BFCF55D173E` FOREIGN KEY (`packageId`) REFERENCES `IAPM_Packages` (`id`);
 
 --
--- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_UsersSubscriptions`
---
-ALTER TABLE `IAPM_UsersSubscriptions`
-  ADD CONSTRAINT `FK_94F499E74C95116F` FOREIGN KEY (`planId`) REFERENCES `IAPM_Packages_Plans` (`id`),
-  ADD CONSTRAINT `FK_94F499E764B64DCC` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`),
-  ADD CONSTRAINT `FK_94F499E790F41D36` FOREIGN KEY (`paymentDetailsId`) REFERENCES `IAP_PaymentDetails` (`id`);
-
---
--- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_Users`
---
-ALTER TABLE `IAUM_Users`
-  ADD CONSTRAINT `FK_9E6E7D91CA77D3A9` FOREIGN KEY (`subscriptionId`) REFERENCES `IAPM_UsersSubscriptions` (`id`);
-
---
 -- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IA_Taxonomy_Term`
 --
 ALTER TABLE `IA_Taxonomy_Term`
   ADD CONSTRAINT `FK_C6F4ABFC727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `IA_Taxonomy_Term` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_C6F4ABFCAD0E05F6` FOREIGN KEY (`vocabulary_id`) REFERENCES `IA_Taxonomy_Vocabularies` (`id`);
-
---
--- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `Users`
---
-ALTER TABLE `Users`
-  ADD CONSTRAINT `FK_D5428AEDCA77D3A9` FOREIGN KEY (`subscriptionId`) REFERENCES `IAPM_UsersSubscriptions` (`id`);
 
 --
 -- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Fieldsets_Fields`
