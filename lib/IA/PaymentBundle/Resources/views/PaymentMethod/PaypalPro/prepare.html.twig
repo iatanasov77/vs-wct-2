@@ -1,5 +1,7 @@
 {{ form_start(form) }}
-
+	{{ form_widget(form.amt) }}
+	{{ form_widget(form.currency) }}
+	
     <div class="form-group">    
         {{ form_label(form.acct, null, {
             'label_attr': {'class': 'control-label col-lg-1'}
@@ -19,7 +21,8 @@
         }}
         <div class="col-lg-10">
             <div class="checkbox">
-                {{ form_widget(form.exp_date.month) }} / {{ form_widget(form.exp_date.year) }}
+                {{ form_widget(form.exp_date.month) }} / {{ form_widget(form.exp_date.year) }} 
+                {{ form_widget(form.exp_date.day, {'attr': {'style': 'display:none'}}) }}
             </div>
         </div>
     </div>
@@ -36,5 +39,5 @@
         </div>
     </div>
             
-    <input type="submit" value="Pay" />
+    {{ form_widget(form.btnPay) }}
 {{ form_end(form, {'render_rest': false}) }}    

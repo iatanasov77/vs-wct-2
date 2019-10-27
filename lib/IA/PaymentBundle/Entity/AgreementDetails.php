@@ -5,8 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\ArrayObject;
 
 /*
- ALTER TABLE `IAP_AgreementDetails` ADD `number` VARCHAR(64) NOT NULL AFTER `planId`, ADD `currencyCode` VARCHAR(64) NOT NULL AFTER `number`, ADD `totalAmount` VARCHAR(64) NOT NULL AFTER `currencyCode`, ADD `description` VARCHAR(64) NOT NULL AFTER `totalAmount`, ADD `clientId` VARCHAR(64) NOT NULL AFTER `description`, ADD `clientEmail` VARCHAR(64) NOT NULL AFTER `clientId`; 
- * 
+  CREATE TABLE IAP_AgreementDetails (id INT AUTO_INCREMENT NOT NULL, details JSON NOT NULL COMMENT '(DC2Type:json_array)', number VARCHAR(64) NOT NULL, currencyCode VARCHAR(64) NOT NULL, totalAmount VARCHAR(64) NOT NULL, description VARCHAR(64) NOT NULL, clientId VARCHAR(64) NOT NULL, clientEmail VARCHAR(64) NOT NULL, userId INT DEFAULT NULL, planId INT DEFAULT NULL, PRIMARY KEY(id)) ENGINE = InnoDB;
  */
 
 /**

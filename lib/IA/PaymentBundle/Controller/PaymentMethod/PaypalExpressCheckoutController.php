@@ -215,13 +215,17 @@ class PaypalExpressCheckoutController extends PayumController
         $payment['PROFILESTARTDATE'] = date(DATE_ATOM);
         $payment['BILLINGPERIOD'] = $packagePlan->getBillingPeriod();
 
+        $em = $this->getDoctrine()->getManager();
+        $em->persist( $payment );
+        //$em->flush();
+        
         //$gateway->execute(new CreateRecurringPaymentProfile($payment));
         //$gateway->execute(new Sync($payment));
 
-        $recurringPaymentStatus = new GetHumanStatus($payment);
-        $gateway->execute($recurringPaymentStatus);
+        //$recurringPaymentStatus = new GetHumanStatus($payment);
+        //$gateway->execute($recurringPaymentStatus);
 
-        return $this->redirect($this->generateUrl('ia_paid_membership_subscription_create', array('paymentId' => $payment->getId())));
+        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', array( 'paymentId' => 1 ) ) );
     }
 
     public function viewRecurringPaymentDetailsAction($gatewayName, $billingAgreementId, $recurringPaymentId, Request $request)

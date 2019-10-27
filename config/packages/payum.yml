@@ -1,6 +1,7 @@
 payum:              
     storages:
         Payum\Core\Model\Payment: { doctrine: orm }
+        Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\AgreementDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
 
@@ -19,14 +20,37 @@ payum:
             password: '8PRXKLWZFPYBZDKB'
             signature: 'Ajqso8A-uDUaXxl-CdVBwnXhzMsTAEdVwItx7t0TyVJeh7oICslAmTot'
             sandbox: true
+        paypal_rest:
+            factory:  "paypal_rest"
+            client_id: "ARn-1kRVAW23BEB0RAeZ5O3pt8jblMs-J75ijDIpLwpG8httmIjnxB-rvKhjqTdG-FHSfeVDFLUUBjWz"
+            client_secret: "ECF4KlmFaeIHsgjKGN9Ql2Sbvc3DCDwIeEprbXT3pgFEdsOEk0tajI0Nu9U_HlC89UHXmNuILDx6zTg5"
+            config_path: '%kernel.root_dir%/sdk_config.ini'
+        stripe_checkout_gateway:
+            factory: stripe_checkout
+            publishable_key: 'pk_test_4usJseX4BL8ZuSa9efnggWj800U21erI5Y'
+            secret_key:      'sk_test_QHNIIAE1D7L5oqy54cxM4pXD00GO1NH64K'
+        paypal_pro_checkout_credit_card:
+            factory: paypal_pro_checkout
+            #username: 'sb-wqxm3403839_api1.business.example.com'
+            #password: 'SZY67BELKDNT9NAY'
+            username: 'sb-5omhg442982_api1.business.example.com'
+            password: 'TR5QB2XTSX6WLQU2'
+            partner:  'EDIT ME'
+            vendor:   'EDIT ME'
+            tender:  C
+            sandbox: true
 
 ia_payment:
     payment_methods:
         paypal_pro_checkout:
-            name: 'Credit Card'
+            name: 'Credit Card (PayPal)'
             factory: paypal_pro_checkout
             route: ia_payment_paypal_prepare
         paypal_express_checkout_recurring_payment:
-            name: 'PayPal'
+            name: 'Recurring Checkout (PayPal)'
             factory: paypal_express_checkout
             route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
+        stripe_checkout:
+            name: 'Credit Card (STRIPE)'
+            factory: stripe_checkout
+            route: ia_payment_stripe_checkout_prepare
