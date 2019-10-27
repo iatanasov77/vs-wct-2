@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 26 окт 2019 в 15:48
--- Версия на сървъра: 5.7.28
+-- Generation Time: 26 Ð¾ÐºÑ‚ 2019 Ð² 15:48
+-- Ð’ÐµÑ€Ñ�Ð¸Ñ� Ð½Ð° Ñ�ÑŠÑ€Ð²ÑŠÑ€Ð°: 5.7.28
 -- PHP Version: 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAPM_Packages`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Packages`
 --
 
 CREATE TABLE `IAPM_Packages` (
@@ -34,7 +34,7 @@ CREATE TABLE `IAPM_Packages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Схема на данните от таблица `IAPM_Packages`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Packages`
 --
 
 INSERT INTO `IAPM_Packages` (`id`, `title`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `IAPM_Packages` (`id`, `title`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAPM_Packages_Plans`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Packages_Plans`
 --
 
 CREATE TABLE `IAPM_Packages_Plans` (
@@ -55,7 +55,7 @@ CREATE TABLE `IAPM_Packages_Plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Схема на данните от таблица `IAPM_Packages_Plans`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Packages_Plans`
 --
 
 INSERT INTO `IAPM_Packages_Plans` (`id`, `price`, `description`, `packageId`, `planId`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `IAPM_Packages_Plans` (`id`, `price`, `description`, `packageId`, `p
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAPM_Plans`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Plans`
 --
 
 CREATE TABLE `IAPM_Plans` (
@@ -74,7 +74,7 @@ CREATE TABLE `IAPM_Plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Схема на данните от таблица `IAPM_Plans`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Plans`
 --
 
 INSERT INTO `IAPM_Plans` (`id`, `title`, `subscription_period`) VALUES
@@ -83,7 +83,7 @@ INSERT INTO `IAPM_Plans` (`id`, `title`, `subscription_period`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAPM_UsersSubscriptions`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_UsersSubscriptions`
 --
 
 CREATE TABLE `IAPM_UsersSubscriptions` (
@@ -97,7 +97,7 @@ CREATE TABLE `IAPM_UsersSubscriptions` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAP_AgreementDetails`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_AgreementDetails`
 --
 
 CREATE TABLE `IAP_AgreementDetails` (
@@ -114,7 +114,7 @@ CREATE TABLE `IAP_AgreementDetails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Схема на данните от таблица `IAP_AgreementDetails`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_AgreementDetails`
 --
 
 INSERT INTO `IAP_AgreementDetails` (`id`, `details`, `number`, `currencyCode`, `totalAmount`, `description`, `clientId`, `clientEmail`, `userId`, `planId`) VALUES
@@ -123,7 +123,7 @@ INSERT INTO `IAP_AgreementDetails` (`id`, `details`, `number`, `currencyCode`, `
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAP_GatewayConfig`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_GatewayConfig`
 --
 
 CREATE TABLE `IAP_GatewayConfig` (
@@ -138,7 +138,7 @@ CREATE TABLE `IAP_GatewayConfig` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAP_PaymentDetails`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_PaymentDetails`
 --
 
 CREATE TABLE `IAP_PaymentDetails` (
@@ -148,7 +148,7 @@ CREATE TABLE `IAP_PaymentDetails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Схема на данните от таблица `IAP_PaymentDetails`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_PaymentDetails`
 --
 
 INSERT INTO `IAP_PaymentDetails` (`id`, `details`, `paymentMethod`) VALUES
@@ -158,7 +158,7 @@ INSERT INTO `IAP_PaymentDetails` (`id`, `details`, `paymentMethod`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAP_PaymentTokens`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_PaymentTokens`
 --
 
 CREATE TABLE `IAP_PaymentTokens` (
@@ -170,7 +170,7 @@ CREATE TABLE `IAP_PaymentTokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Схема на данните от таблица `IAP_PaymentTokens`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAP_PaymentTokens`
 --
 
 INSERT INTO `IAP_PaymentTokens` (`hash`, `details`, `after_url`, `target_url`, `gateway_name`) VALUES
@@ -218,7 +218,7 @@ INSERT INTO `IAP_PaymentTokens` (`hash`, `details`, `after_url`, `target_url`, `
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAUM_UserGroups`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_UserGroups`
 --
 
 CREATE TABLE `IAUM_UserGroups` (
@@ -230,7 +230,7 @@ CREATE TABLE `IAUM_UserGroups` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAUM_Users`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_Users`
 --
 
 CREATE TABLE `IAUM_Users` (
@@ -251,7 +251,7 @@ CREATE TABLE `IAUM_Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Схема на данните от таблица `IAUM_Users`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_Users`
 --
 
 INSERT INTO `IAUM_Users` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `subscriptionId`, `user_info_id`) VALUES
@@ -260,7 +260,7 @@ INSERT INTO `IAUM_Users` (`id`, `username`, `username_canonical`, `email`, `emai
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IAUM_UsersInfo`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_UsersInfo`
 --
 
 CREATE TABLE `IAUM_UsersInfo` (
@@ -276,7 +276,7 @@ CREATE TABLE `IAUM_UsersInfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Схема на данните от таблица `IAUM_UsersInfo`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_UsersInfo`
 --
 
 INSERT INTO `IAUM_UsersInfo` (`id`, `apiToken`, `firstName`, `lastName`, `country`, `birthday`, `mobile`, `website`, `occupation`) VALUES
@@ -285,7 +285,7 @@ INSERT INTO `IAUM_UsersInfo` (`id`, `apiToken`, `firstName`, `lastName`, `countr
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IA_Cms_Pages`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IA_Cms_Pages`
 --
 
 CREATE TABLE `IA_Cms_Pages` (
@@ -298,7 +298,7 @@ CREATE TABLE `IA_Cms_Pages` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IA_Taxonomy_Term`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IA_Taxonomy_Term`
 --
 
 CREATE TABLE `IA_Taxonomy_Term` (
@@ -319,7 +319,7 @@ CREATE TABLE `IA_Taxonomy_Term` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `IA_Taxonomy_Vocabularies`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IA_Taxonomy_Vocabularies`
 --
 
 CREATE TABLE `IA_Taxonomy_Vocabularies` (
@@ -334,7 +334,7 @@ CREATE TABLE `IA_Taxonomy_Vocabularies` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `migration_versions`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `migration_versions`
 --
 
 CREATE TABLE `migration_versions` (
@@ -343,7 +343,7 @@ CREATE TABLE `migration_versions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Схема на данните от таблица `migration_versions`
+-- Ð¡Ñ…ÐµÐ¼Ð° Ð½Ð° Ð´Ð°Ð½Ð½Ð¸Ñ‚Ðµ Ð¾Ñ‚ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `migration_versions`
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
@@ -354,49 +354,7 @@ INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Users`
---
-
-CREATE TABLE `Users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(180) NOT NULL,
-  `username_canonical` varchar(180) NOT NULL,
-  `email` varchar(180) NOT NULL,
-  `email_canonical` varchar(180) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  `salt` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `last_login` datetime DEFAULT NULL,
-  `confirmation_token` varchar(180) DEFAULT NULL,
-  `password_requested_at` datetime DEFAULT NULL,
-  `roles` longtext NOT NULL COMMENT '(DC2Type:array)',
-  `api_token` varchar(255) NOT NULL,
-  `firstName` varchar(128) DEFAULT NULL,
-  `lastName` varchar(128) DEFAULT NULL,
-  `country` varchar(3) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `mobile` int(11) DEFAULT NULL,
-  `website` varchar(64) DEFAULT NULL,
-  `occupation` varchar(64) DEFAULT NULL,
-  `subscriptionId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Структура на таблица `user_group`
---
-
-CREATE TABLE `user_group` (
-  `id` int(11) NOT NULL,
-  `name` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Структура на таблица `WCT_Fieldsets`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Fieldsets`
 --
 
 CREATE TABLE `WCT_Fieldsets` (
@@ -407,7 +365,7 @@ CREATE TABLE `WCT_Fieldsets` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_Fieldsets_Fields`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Fieldsets_Fields`
 --
 
 CREATE TABLE `WCT_Fieldsets_Fields` (
@@ -421,7 +379,7 @@ CREATE TABLE `WCT_Fieldsets_Fields` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_Field_Types`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Field_Types`
 --
 
 CREATE TABLE `WCT_Field_Types` (
@@ -432,7 +390,7 @@ CREATE TABLE `WCT_Field_Types` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_ParcedItems`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ParcedItems`
 --
 
 CREATE TABLE `WCT_ParcedItems` (
@@ -448,7 +406,7 @@ CREATE TABLE `WCT_ParcedItems` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_ProjectDetailsFields`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ProjectDetailsFields`
 --
 
 CREATE TABLE `WCT_ProjectDetailsFields` (
@@ -463,7 +421,7 @@ CREATE TABLE `WCT_ProjectDetailsFields` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_ProjectListingFields`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ProjectListingFields`
 --
 
 CREATE TABLE `WCT_ProjectListingFields` (
@@ -478,7 +436,7 @@ CREATE TABLE `WCT_ProjectListingFields` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_Projects`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Projects`
 --
 
 CREATE TABLE `WCT_Projects` (
@@ -502,7 +460,7 @@ CREATE TABLE `WCT_Projects` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_Projects_Processors`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Projects_Processors`
 --
 
 CREATE TABLE `WCT_Projects_Processors` (
@@ -516,7 +474,7 @@ CREATE TABLE `WCT_Projects_Processors` (
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `WCT_Projects_Processors_Mappings`
+-- Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Projects_Processors_Mappings`
 --
 
 CREATE TABLE `WCT_Projects_Processors_Mappings` (
@@ -860,18 +818,18 @@ ALTER TABLE `WCT_Projects_Processors_Mappings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Ограничения за дъмпнати таблици
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ð´ÑŠÐ¼Ð¿Ð½Ð°Ñ‚Ð¸ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð¸
 --
 
 --
--- Ограничения за таблица `IAPM_Packages_Plans`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_Packages_Plans`
 --
 ALTER TABLE `IAPM_Packages_Plans`
   ADD CONSTRAINT `FK_FF096BFC4C95116F` FOREIGN KEY (`planId`) REFERENCES `IAPM_Plans` (`id`),
   ADD CONSTRAINT `FK_FF096BFCF55D173E` FOREIGN KEY (`packageId`) REFERENCES `IAPM_Packages` (`id`);
 
 --
--- Ограничения за таблица `IAPM_UsersSubscriptions`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAPM_UsersSubscriptions`
 --
 ALTER TABLE `IAPM_UsersSubscriptions`
   ADD CONSTRAINT `FK_94F499E74C95116F` FOREIGN KEY (`planId`) REFERENCES `IAPM_Packages_Plans` (`id`),
@@ -879,59 +837,59 @@ ALTER TABLE `IAPM_UsersSubscriptions`
   ADD CONSTRAINT `FK_94F499E790F41D36` FOREIGN KEY (`paymentDetailsId`) REFERENCES `IAP_PaymentDetails` (`id`);
 
 --
--- Ограничения за таблица `IAUM_Users`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IAUM_Users`
 --
 ALTER TABLE `IAUM_Users`
   ADD CONSTRAINT `FK_9E6E7D91CA77D3A9` FOREIGN KEY (`subscriptionId`) REFERENCES `IAPM_UsersSubscriptions` (`id`);
 
 --
--- Ограничения за таблица `IA_Taxonomy_Term`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `IA_Taxonomy_Term`
 --
 ALTER TABLE `IA_Taxonomy_Term`
   ADD CONSTRAINT `FK_C6F4ABFC727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `IA_Taxonomy_Term` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_C6F4ABFCAD0E05F6` FOREIGN KEY (`vocabulary_id`) REFERENCES `IA_Taxonomy_Vocabularies` (`id`);
 
 --
--- Ограничения за таблица `Users`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `Users`
 --
 ALTER TABLE `Users`
   ADD CONSTRAINT `FK_D5428AEDCA77D3A9` FOREIGN KEY (`subscriptionId`) REFERENCES `IAPM_UsersSubscriptions` (`id`);
 
 --
--- Ограничения за таблица `WCT_Fieldsets_Fields`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Fieldsets_Fields`
 --
 ALTER TABLE `WCT_Fieldsets_Fields`
   ADD CONSTRAINT `FK_FAAA51A52DDE213` FOREIGN KEY (`fieldsetId`) REFERENCES `WCT_Fieldsets` (`id`),
   ADD CONSTRAINT `FK_FAAA51A59BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Ограничения за таблица `WCT_ParcedItems`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ParcedItems`
 --
 ALTER TABLE `WCT_ParcedItems`
   ADD CONSTRAINT `FK_12F343446C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`);
 
 --
--- Ограничения за таблица `WCT_ProjectDetailsFields`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ProjectDetailsFields`
 --
 ALTER TABLE `WCT_ProjectDetailsFields`
   ADD CONSTRAINT `FK_C17CD8136C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`),
   ADD CONSTRAINT `FK_C17CD8139BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Ограничения за таблица `WCT_ProjectListingFields`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_ProjectListingFields`
 --
 ALTER TABLE `WCT_ProjectListingFields`
   ADD CONSTRAINT `FK_A77DA6706C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`),
   ADD CONSTRAINT `FK_A77DA6709BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Ограничения за таблица `WCT_Projects_Processors`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Projects_Processors`
 --
 ALTER TABLE `WCT_Projects_Processors`
   ADD CONSTRAINT `FK_82E8FE4D6C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`);
 
 --
--- Ограничения за таблица `WCT_Projects_Processors_Mappings`
+-- ÐžÐ³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ� Ð·Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° `WCT_Projects_Processors_Mappings`
 --
 ALTER TABLE `WCT_Projects_Processors_Mappings`
   ADD CONSTRAINT `FK_6797DBA4F2C8D75E` FOREIGN KEY (`projectProcessorId`) REFERENCES `WCT_Projects_Processors` (`id`);
