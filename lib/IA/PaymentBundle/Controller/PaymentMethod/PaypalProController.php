@@ -19,16 +19,6 @@ use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
  */
 class PaypalProController extends PayumController
 {
-    public function testAction($planId, Request $request)
-    {
-        die('EHO');
-    }
-    
-    public function indexAction()
-    {
-        
-    }
-    
     public function prepareAction($planId, Request $request)
     {
         $gatewayName = 'paypal_pro_checkout_credit_card';
@@ -57,13 +47,39 @@ class PaypalProController extends PayumController
                 $payment,
                 'ia_payment_paypal_done'
             );
-
+            //$captureToken->setTargetUrl( $this->generateUrl( 'ia_payment_paypal_capture', ['payum_token' => $captureToken->getHash()] ) );
+            
             return $this->redirect( $captureToken->getTargetUrl() );
         }
 
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalPro:prepare.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+    
+    public function captureAction(Request $request)
+    {
+        $payum          = $this->getPayum();
+        
+        /** @var \Payum\Core\Payum $payum */
+        $token = $payum->getHttpRequestVerifier()->verify( $request );
+        
+        $gateway = $payum->getGateway( $token->getGatewayName() );
+        
+        /** @var \Payum\Core\GatewayInterface $gateway */
+        if ($reply = $gateway->execute( new Capture($token), true)) {
+            if ($reply instanceof HttpRedirect) {
+                header("Location: ".$reply->getUrl());
+                die();
+            }
+            
+            throw new \LogicException('Unsupported reply', null, $reply);
+        }
+        
+        /** @var \Payum\Core\Payum $payum */
+        //$payum->getHttpRequestVerifier()->invalidate($token);
+        
+        return $this->redirect( $token->getAfterUrl() );
     }
     
     public function doneAction( Request $request )

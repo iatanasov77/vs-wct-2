@@ -42,7 +42,11 @@ ia_payment_methods_config:
 ia_payment_paypal_prepare:
     path:     /paypal/prepare/{planId}
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:prepare }
-    
+
+ia_payment_paypal_capture:
+   path:     /paypal/capture/{payum_token}
+   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:capture }
+       
 ia_payment_paypal_done:
     path:     /paypal/done
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:done }
