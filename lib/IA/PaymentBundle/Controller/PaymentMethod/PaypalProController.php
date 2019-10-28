@@ -1,11 +1,13 @@
-<?php
-namespace IA\PaymentBundle\Controller\PaymentMethod;
+<?php namespace IA\PaymentBundle\Controller\PaymentMethod;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Range;
 
 use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Range;
+
 use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
+use IA\PaymentBundle\Entity\PaymentDetails
 
 /*
  * TEST CARDS
@@ -17,6 +19,9 @@ use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
  Visa       | 4263982640269299  |   04/2023  |  738
  
  */
+
+// https://github.com/Payum/Payum/blob/master/docs/symfony/custom-purchase-examples/paypal-pro-checkout.md
+
 class PaypalProController extends PayumController
 {
     public function prepareAction($planId, Request $request)
@@ -31,7 +36,7 @@ class PaypalProController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $data = $form->getData();
-            $storage = $this->getPayum()->getStorage( 'IA\PaymentBundle\Entity\PaymentDetails' );
+            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
 
             $payment = $storage->create();
             $payment['ACCT']        = new SensitiveValue( $data['acct'] );
@@ -66,6 +71,17 @@ class PaypalProController extends PayumController
         
         $gateway = $payum->getGateway( $token->getGatewayName() );
         
+        $agreementStatus = new GetHumanStatus( $token );
+        $gateway->execute( $agreementStatus );
+        // var_dump( $agreementStatus->isCaptured() ); die;
+        
+        if ( false == $agreementStatus->isPending() ) {
+            //if ( false == $agreementStatus->isCaptured() ) {
+            throw new HttpException(400, 'Billing agreement status is not success.');
+        }
+        
+        
+        
         /** @var \Payum\Core\GatewayInterface $gateway */
         if ($reply = $gateway->execute( new Capture($token), true)) {
             if ($reply instanceof HttpRedirect) {
@@ -73,7 +89,7 @@ class PaypalProController extends PayumController
                 die();
             }
             
-            throw new \LogicException('Unsupported reply', null, $reply);
+            throw new \LogicException( 'Unsupported reply', null, $reply );
         }
         
         /** @var \Payum\Core\Payum $payum */
@@ -84,6 +100,18 @@ class PaypalProController extends PayumController
     
     public function doneAction( Request $request )
     {
-        echo 'DONE';
+        $gatewayName = 'paypal_pro_checkout_credit_card';
+        
+        $payum  = $this->getPayum();
+        
+        /** @var \Payum\Core\Payum $payum */
+        $storage = $payum->getStorage( PaymentDetails::class );
+        
+        $payment = $storage->create();
+        $storage->update( $payment );
+        
+        $captureToken = $payum->getTokenFactory()->createCaptureToken( $gatewayName, $payment, 'create_recurring_payment.php' );
+        
+        return $this->redirect( $captureToken->getTargetUrl() );
     }
 }
