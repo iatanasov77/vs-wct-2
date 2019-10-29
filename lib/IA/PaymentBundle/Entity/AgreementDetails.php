@@ -78,6 +78,13 @@ class AgreementDetails extends ArrayObject
     /**
      * @var string
      *
+     * @ORM\Column(name="paymentMethod", type="string", length=64, nullable=false)
+     */
+    protected $paymentMethod;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="details", type="string", length=64, nullable=false)
      */
     //protected $details;
@@ -188,6 +195,12 @@ class AgreementDetails extends ArrayObject
         return $this;
     }
 
-
-
+    function getPaymentMethod() {
+        return $this->paymentMethod;
+    }
+    
+    function setPaymentMethod($paymentMethod) {
+        $this->paymentMethod = $paymentMethod;
+        return $this;
+    }
 }

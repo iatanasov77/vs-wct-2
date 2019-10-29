@@ -7,16 +7,20 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
 
 use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
-use IA\PaymentBundle\Entity\PaymentDetails
+use IA\PaymentBundle\Entity\AgreementDetailsDetails;
 
 /*
  * TEST CARDS
  * ===========
 
- Card Type  |	Card Number	    |  Exp. Date | CVV Code
+ Card Type  |	Card Number	    |  Exp. Date  | CVV Code
  --------------------------------------------------------
- Visa       | 4263982640269299  |   02/2023  |  837
- Visa       | 4263982640269299  |   04/2023  |  738
+ Visa       | 4242424242424242  |   Any future| Any 3 
+            |                   |      date   | digits
+---------------------------------------------------------
+ Visa       | 4263982640269299  |   02/2023   |  837
+ --------------------------------------------------------
+ Visa       | 4263982640269299  |   04/2023   |  738
  
  */
 
@@ -36,7 +40,7 @@ class PaypalProController extends PayumController
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $data = $form->getData();
-            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
+            $storage = $this->getPayum()->getStorage( AgreementDetailsDetails::class );
 
             $payment = $storage->create();
             $payment['ACCT']        = new SensitiveValue( $data['acct'] );
@@ -105,7 +109,7 @@ class PaypalProController extends PayumController
         $payum  = $this->getPayum();
         
         /** @var \Payum\Core\Payum $payum */
-        $storage = $payum->getStorage( PaymentDetails::class );
+        $storage = $payum->getStorage( AgreementDetailsDetails::class );
         
         $payment = $storage->create();
         $storage->update( $payment );

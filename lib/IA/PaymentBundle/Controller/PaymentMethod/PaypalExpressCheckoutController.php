@@ -145,6 +145,7 @@ class PaypalExpressCheckoutController extends PayumController
             $agreement->setPlan( $packagePlan );
             
             /* */
+            $agreement->setPaymentMethod( 'paypal_express_checkout' );
             $agreement->setNumber( uniqid() );
             $agreement->setCurrencyCode( 'EUR' );
             $agreement->setTotalAmount( 123 ); // 1.23 EUR
@@ -225,7 +226,7 @@ class PaypalExpressCheckoutController extends PayumController
         //$recurringPaymentStatus = new GetHumanStatus($payment);
         //$gateway->execute($recurringPaymentStatus);
 
-        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', array( 'paymentId' => 1 ) ) );
+        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', ['planId' => $packagePlan->getId()] ) );
     }
 
     public function viewRecurringPaymentDetailsAction($gatewayName, $billingAgreementId, $recurringPaymentId, Request $request)
