@@ -11,20 +11,14 @@
                             <div class="col-lg-4 col-lg-offset-1">
                                 <span>{{ plan.getPlan() }} </span>: {{ plan.getPrice() }}
                             </div>
-                            <a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" data-price="{{ plan.getPrice() }}"
-                               href="{{ path('ia_paid_membership_checkout_select_method', {'planId': plan.getId()}) }}"> 
-                                Subscribe 
-                            </a>
-                            {#<a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" 
-                               href="{{ path('ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement') }}"> 
-                                Subscribe 
-                            </a>#}
-                            
-                            {#<a class="btn btn-primary" data-planId="{{ plan.getId() }}"
-                               href="{{ path('ia_paid_membership_subscription_subscribe', { 'planId': plan.getId() } ) }}"> 
-                                Subscribe 
-                            </a>#}
-                       
+                            {% if ( subscription ) %}
+                                <span style="color:red; font-weight: bold;">Subscribed</span>
+                            {% else %}
+                                <a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" data-price="{{ plan.getPrice() }}"
+                                   href="{{ path('ia_paid_membership_checkout_select_method', {'planId': plan.getId()}) }}"> 
+                                    Subscribe
+                                </a>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </fieldset>
