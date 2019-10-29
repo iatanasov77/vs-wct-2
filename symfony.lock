@@ -231,6 +231,9 @@
     "pagerfanta/pagerfanta": {
         "version": "v2.1.2"
     },
+    "paypal/rest-api-sdk-php": {
+        "version": "1.14.0"
+    },
     "payum/core": {
         "version": "1.5.1"
     },
@@ -243,8 +246,17 @@
     "payum/paypal-express-checkout-nvp": {
         "version": "1.5.1"
     },
+    "payum/paypal-pro-checkout-nvp": {
+        "version": "1.5.1"
+    },
+    "payum/paypal-rest": {
+        "version": "1.5.1"
+    },
     "payum/payum-bundle": {
         "version": "2.3.3"
+    },
+    "payum/stripe": {
+        "version": "1.5.1"
     },
     "php-http/guzzle6-adapter": {
         "version": "v2.0.1"
@@ -329,6 +341,9 @@
             "version": "1.2",
             "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
         }
+    },
+    "stripe/stripe-php": {
+        "version": "v4.13.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"

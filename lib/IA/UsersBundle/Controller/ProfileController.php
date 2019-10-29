@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     public function showAction(Request $request)
     {
-        $form = $this->createForm( ProfileFormType::class, $this->getUser() );
+        $form = $this->createForm( ProfileFormType::class, $this->getUser()->getUserInfo() );
         
         /*
          * Fetch Available Packages

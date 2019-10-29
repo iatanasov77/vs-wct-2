@@ -30,6 +30,7 @@ return [
     IA\UsersBundle\IAUsersBundle::class => ['all' => true],
     
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
+    
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],

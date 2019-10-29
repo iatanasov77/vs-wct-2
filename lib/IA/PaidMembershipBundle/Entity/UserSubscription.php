@@ -25,7 +25,7 @@ class UserSubscription
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="subscription")
+     * @ORM\OneToOne(targetEntity="IA\UsersBundle\Entity\User", mappedBy="subscription")
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $user;
@@ -92,7 +92,7 @@ class UserSubscription
         return $this;
     }
 
-    function setDate(type $date)
+    function setDate($date)
     {
         $this->date = $date;
         

@@ -85,3 +85,4 @@ yarn-error.log
 ###< symfony/web-server-bundle ###
 
 /docs/TechnicalDocumentation/VisualParadigm/wct2.vpp.bak*
+/docs/TechnicalDocumentation/VisualParadigm/.wct2.vpp.lck

@@ -77,8 +77,9 @@
                     </button>
           		</div>
                 <div class="modal-body">
-                	<fieldset id="paymentMethodOptions" class="fieldset-project-fields" style="min-height:100px;>
+                	<fieldset id="paymentMethodOptions" class="fieldset-project-fields" style="min-height:100px;" >
                         {#<legend>Payment Method Options</legend>#}
+                        <div><span>Price:</span> <span class="price"></span></div>
                         <div id="boxPaymentMethodOptions" class="form-horizontal">
                     
                             {% for key,method in paymentMethods %}
@@ -92,6 +93,9 @@
 
                         </div>
                     </fieldset>
+                    <fieldset id="paymentMethodOptions2" class="fieldset-project-fields" style="min-height:100px; display:none;" >
+                    	<div id="boxPaymentMethodOptions2" class="form-horizontal"></div>
+                    </fieldset>
                 </div>
             </div>
         </div>
@@ -101,36 +105,5 @@
 {% block body_scripts %}
 	{{ parent() }}
 	
-    {{ encore_entry_script_tags( 'profile', null, 'new-template' ) }}
-    
-    <script>
-        $( function()
-        {
-        	$('.selectPaymentMethod').on('change', function() {
-                var url = $(this).attr('data-url');
-                alert( url );
-                var data = {'class': $(this).val()};
-                $.get(url, data, function(data) {
-                    $('#boxPaymentMethodOptions').html(data);
-                    $('#paymentMethodOptions').show();
-                });
-            });
-            
-            $('form[name="ia_web_content_thief_project_processors"]').on('submit', function(e) {
-                $.ajax({
-                    type: $(this).attr('method'),
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        $('#boxProcessorOptions').html(data);
-                    }, 
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        $('#boxProcessorOptions').html('<p>FATAL ERROR!!!</p>' + $('#boxProcessorOptions').html());
-                    }
-                });
-                
-                e.preventDefault();
-            });
-        });  
-    </script>   
+    {{ encore_entry_script_tags( 'profile', null, 'new-template' ) }}  
 {% endblock %}

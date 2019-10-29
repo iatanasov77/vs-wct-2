@@ -4,30 +4,59 @@
 {% block pageTitle %}<i class="icon_genius"></i> Users Management{% endblock %}
 
 {% block content %}
-    <div class="row">   
-        <div class="col-lg-12">
-            <section class="panel">
-                <table class="table table-striped table-advance table-hover">
-                    <tr>
-                        <th width="50">N</th>
-                        <th>Name</th>
-                        <th width="150">Action</th>
-                    </tr>
-                    {% for item in users %}
+    {# {% include 'IAUsersBundle:Profile/partial:_profile-header.html.twig' %} #}
+    <div class="container-fluid  dashboard-content">
+    	<!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Users</h2>
+                    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            {{ knp_menu_render('breadcrumbs', {'template': 'menu/breadcrumb.html.twig'}) }}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+        
+        <div class="row">   
+            <div class="col-lg-12">
+                <section class="panel">
+                    <table class="table table-striped table-advance table-hover">
                         <tr>
-                            <td>
-                                <input type="checkbox" name="active[{{ item.getId() }}]" />
-                                {{ item.getId() }}
-                            </td>
-                            <td>
-                                <a href="{{ path('ia_users_users_update', {'id': item.getId()}) }}">
-                                    {{ item.getFullName() }}
-                                </a>
-                            </td>
+                            <th width="50">N</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            <th>Name</th>
+                            <th width="150">Action</th>
                         </tr>
-                    {% endfor %}
-                </table>
-            </section>
+                        {% for item in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="active[{{ item.getId() }}]" />
+                                    {{ item.getId() }}
+                                </td>
+                                <td>{{ item.username  }}</td>
+                                <td>{{ item.email  }}</td>
+                                <td>{{ item.roles | join(' , ')  }}</td>
+                                <td>
+                                    <a href="{{ path('ia_users_users_update', {'id': item.getId()}) }}">
+                                        {{ item.userInfo.getFullName() }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </section>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -5,9 +5,10 @@ namespace IA\PaidMembershipBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use IAPaidMembershipBundle\Entity\UserSubscription;
+use IA\PaidMembershipBundle\Entity\UserSubscription;
+use IA\PaidMembershipBundle\Entity\PackagePlan;
 /**
- * @TODO Да се преместят контролерите за плащането в този бъндъл (като например RecurringPaymentController).
+ * @TODO Ð”Ð° Ñ�Ðµ Ð¿Ñ€ÐµÐ¼ÐµÑ�Ñ‚Ñ�Ñ‚ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÐµÑ€Ð¸Ñ‚Ðµ Ð·Ð° Ð¿Ð»Ð°Ñ‰Ð°Ð½ÐµÑ‚Ð¾ Ð² Ñ‚Ð¾Ð·Ð¸ Ð±ÑŠÐ½Ð´ÑŠÐ» (ÐºÐ°Ñ‚Ð¾ Ð½Ð°Ð¿Ñ€Ð¸Ð¼ÐµÑ€ RecurringPaymentController).
  */
 class SubscriptionController extends Controller
 {
@@ -20,7 +21,7 @@ class SubscriptionController extends Controller
     
     public function createAction($paymentId, Request $request)
     {
-        $pdr = $this->getDoctrine()->getRepository('IA\Budle\PaymentBundle\Entity\PaymentDetails');
+        $pdr = $this->getDoctrine()->getRepository('IA\PaymentBundle\Entity\PaymentDetails');
         $paymentDetails = $pdr->find($paymentId);
         if(!$paymentDetails) {
             throw new Exception('Error with payment.');
@@ -28,10 +29,11 @@ class SubscriptionController extends Controller
 
         $subscription = new UserSubscription();
         $subscription->setPaymentDetails($paymentDetails);
+        $subscription->setDate( new \DateTime() );
+        $subscription->setPlan( $this->getDoctrine()->getRepository( PackagePlan::class )->find( $paymentId ) );
         
         $user = $this->getUser();
         $user->setSubscription($subscription);
-        
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($subscription);

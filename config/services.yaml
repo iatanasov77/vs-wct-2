@@ -12,6 +12,11 @@ parameters:
     # Map Processors Register
     ia_web_content_thief.map_processors:
         'ia_web_content_thief.processor.prestashop15': 'PrestaShop 1.5'
+        
+    payment_methods:
+        # payment_method: gateway_factory
+        #paypal_pro_checkout: paypal_pro_checkout
+        #paypal_express_checkout_recurring_payment: paypal_express_checkout
 
 services:
    
