@@ -58,6 +58,6 @@ class User extends BaseUser implements ResourceInterface
 
     public function __toString()
     {
-        return ( string ) $this->userInfo->getFullName();
+        return ( string ) $this->userInfo ? $this->userInfo->getFullName() : '';
     }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Spatie\Url\Url as SpatieUrl;
 
 use IA\UsersBundle\Entity\User;
+use IA\UsersBundle\Entity\UserInfo;
 use IA\UsersBundle\Form\UserCrudFormType;
 
 class UsersCrudController extends ResourceController
@@ -30,23 +31,36 @@ class UsersCrudController extends ResourceController
         $id = $this->getId();
         
         $er = $this->getDoctrine()->getRepository( 'IA\UsersBundle\Entity\User' );
-        $oPackage = $id ? $er->find($id) : new User();
+        $user = $id ? $er->find($id) : new User();
         
-        $form = $this->createForm(UserCrudFormType::class, $oPackage, ['data' => $oPackage]);
+        $form = $this->createForm( UserCrudFormType::class, $user, ['data' => $user] );
         
         //if($form->isSubmitted()) {
         if($request->isMethod('POST') || $request->isMethod('PUT')) {
             $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
+            $formUser   = $form->getData();
+            
+            $email   = $formUser->getEmail();
+            $username   = $formUser->getUserName();
+            $password   = $formUser->getPassword();
+            
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->createUser();
+            $user->setUsername( $username );
+            $user->setEmail( $email );
+            $user->setEmailCanonical( $email );
+            //$user->setLocked( 0 ); // don't lock the user
+            $user->setEnabled( 1 ); // enable the user or enable it later with a confirmation token in the email
+            // this method will encrypt the password with the default settings :)
+            $user->setPlainPassword( $password );
+            $userManager->updateUser( $user );
             
             return $this->redirect($this->generateUrl('ia_users_users_crud_index'));
         }
         
         $tplVars = array(
             'form'          => $form->createView(),
-            'item'          => $oPackage,
+            'item'          => $user,
         );
         return $tplVars;
     }

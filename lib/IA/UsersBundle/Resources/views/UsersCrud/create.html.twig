@@ -5,32 +5,57 @@
 {% block pageTitle %}<i class="icon_genius"></i> Create User{% endblock %}
 
 {% block content %}
-    <div class="row">   
-    <div class="col-lg-12">
-        
-        {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
-            {{ form_widget(form._token) }}
-            
-            {% if form_errors(form) is not empty %}
-                <div class="alert alert-block alert-danger fade in">
-                    <button type="button" class="close close-sm" data-dismiss="alert">
-                        <i class="icon-remove"></i>
-                    </button>
-                    <strong>Error!</strong> {{ form_errors(form) }}
-                </div>
-            {% endif %}
-            <section class="panel">
-                <header class="panel-heading"> Create User </header>
-                <div class="panel-body">
-                    <div class="form-group">
-                        
+	<div class="container-fluid  dashboard-content">
+    	<!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Create User</h2>
+                    <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            {{ knp_menu_render('breadcrumbs', {'template': 'menu/breadcrumb.html.twig'}) }}
+                        </nav>
                     </div>
                 </div>
-            </section>
-            {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
-            {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
-        {{ form_end(form, {'render_rest': false}) }}
-            
-    </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+        
+        
+        <div class="row">   
+            <div class="col-lg-12">
+                <section class="panel">
+ 
+        
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
+                        {{ form_widget(form._token) }}
+                        
+                        {% if form_errors(form) is not empty %}
+                            <div class="alert alert-block alert-danger fade in">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <strong>Error!</strong> {{ form_errors(form) }}
+                            </div>
+                        {% endif %}
+                        <section class="panel">
+                            <header class="panel-heading"> Create User </header>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    {{ form_widget(form) }}
+                                </div>
+                            </div>
+                        </section>
+                        {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
+                        {{ form_widget(form.btnCancel, {'attr': {'class': 'btn btn-default', 'id':'btnCancel'}}) }}
+                    {{ form_end(form, {'render_rest': false}) }}
+            	</section>
+    		</div>
+    	</div>
     </div>
 {% endblock content %}
