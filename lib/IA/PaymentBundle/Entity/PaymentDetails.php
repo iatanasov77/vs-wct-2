@@ -32,13 +32,28 @@ class PaymentDetails extends ArrayObject
         return $this->id;
     }
     
-    function getPaymentMethod() {
+    public function getPaymentMethod() {
         return $this->paymentMethod;
     }
 
-    function setPaymentMethod($paymentMethod) {
+    public function setPaymentMethod($paymentMethod) {
         $this->paymentMethod = $paymentMethod;
         return $this;
     }
     
+    /* 
+     * @NOTE Not need i think but see more on Payum\Core\Model\ArrayObject
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+    }
+    
+    /*
+     * @NOTE Not need i think but see more on Payum\Core\Model\ArrayObject
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
 }

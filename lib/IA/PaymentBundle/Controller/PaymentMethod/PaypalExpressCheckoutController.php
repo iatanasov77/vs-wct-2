@@ -130,35 +130,42 @@ class PaypalExpressCheckoutController extends PayumController
             throw new \Exception('Invalid Request!!!');
         }
 
-
         if ($request->isMethod('POST')) {
             
             $payum          = $this->configPayum();
             //$storage = $payum->getStorage( Payment::class );
-            $storage = $payum->getStorage('IA\PaymentBundle\Entity\AgreementDetails');
-            
+            $storage = $payum->getStorage('IA\PaymentBundle\Entity\PaymentDetails');
 
             /** @var $agreement AgreementDetails */
             $agreement = $storage->create();
             
-            $agreement->setUser( $this->getUser() );
-            $agreement->setPlan( $packagePlan );
-            
             /* */
             $agreement->setPaymentMethod( 'paypal_express_checkout' );
-            $agreement->setNumber( uniqid() );
-            $agreement->setCurrencyCode( 'EUR' );
-            $agreement->setTotalAmount( 123 ); // 1.23 EUR
-            $agreement->setDescription( 'A description' );
-            $agreement->setClientId( 'anId' );
-            $agreement->setClientEmail( 'sb-wsp2g401218@personal.example.com' );
             
-            
+            /*
+            &L_PAYMENTREQUEST_0_NAME0=10% Decaf Kona Blend Coffee
+            &L_PAYMENTREQUEST_0_NUMBER0=623083
+            &L_PAYMENTREQUEST_0_DESC0=Size: 8.8-oz
+            &L_PAYMENTREQUEST_0_AMT0=9.95
+            &L_PAYMENTREQUEST_0_QTY0=2
+            &L_PAYMENTREQUEST_0_NAME1=Coffee Filter bags
+            &L_PAYMENTREQUEST_0_NUMBER1=623084
+            &L_PAYMENTREQUEST_0_DESC1=Size: Two 24-piece boxes
+            &L_PAYMENTREQUEST_0_AMT1=39.70
+            &L_PAYMENTREQUEST_0_QTY1=2
+            &PAYMENTREQUEST_0_ITEMAMT=99.30
+            &PAYMENTREQUEST_0_TAXAMT=2.58
+            &PAYMENTREQUEST_0_SHIPPINGAMT=3.00
+            &PAYMENTREQUEST_0_HANDLINGAMT=2.99
+            &PAYMENTREQUEST_0_SHIPDISCAMT=-3.00
+            &PAYMENTREQUEST_0_INSURANCEAMT=1.00
+            &PAYMENTREQUEST_0_AMT=105.87
+            &PAYMENTREQUEST_0_CURRENCYCODE=USD 
+            */
             $details    = [
-                // put here any fields in a gateway format.
-                // for example if you use Paypal ExpressCheckout you can define a description of the first item:
-                // 'L_PAYMENTREQUEST_0_DESC0' => 'A desc',
-                'PAYMENTREQUEST_0_AMT'  => 123
+                'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice(),
+                'PAYMENTREQUEST_0_CURRENCYCODE' => $packagePlan->getCurrency(),
+                'PAYMENTREQUEST_0_DESC'         => $packagePlan->getDescription()
             ];
             $agreement->setDetails( $details );
             
@@ -192,8 +199,9 @@ class PaypalExpressCheckoutController extends PayumController
 
         $agreementStatus = new GetHumanStatus( $token );
         $gateway->execute( $agreementStatus );
-        // var_dump( $agreementStatus->isCaptured() ); die;
         
+        //var_dump( $agreementStatus->getValue() ); die;
+        // var_dump( $agreementStatus->isCaptured() ); die;
         if ( false == $agreementStatus->isPending() ) {
         //if ( false == $agreementStatus->isCaptured() ) {
             throw new HttpException(400, 'Billing agreement status is not success.');
@@ -201,30 +209,6 @@ class PaypalExpressCheckoutController extends PayumController
 
         $agreement = $agreementStatus->getModel();
         $packagePlan = $agreement->getPlan();
-        
-        //var_dump( $agreement ); die;
-        $storage = $this->getPayum()->getStorage('IA\PaymentBundle\Entity\PaymentDetails');
-
-        $payment = $storage->create();
-        $payment->setPaymentMethod($gateway);
-        $payment['TOKEN'] = $agreement['TOKEN'];
-        //$payment['DESC'] = $agreement['L_BILLINGAGREEMENTDESCRIPTION0'];
-        $payment['EMAIL'] = $agreement['EMAIL'];
-        $payment['AMT'] = $packagePlan->getPrice();
-        $payment['CURRENCYCODE'] = $agreement['CURRENCYCODE'];
-        $payment['BILLINGFREQUENCY'] = $packagePlan->getBillingFrequency(); // Ð¿Ñ€Ð¸Ð¼ÐµÑ€: 1 Ð´ÐµÐ½, 1 Ð¼ÐµÑ�ÐµÑ† Ð¸Ð»Ð¸ 1 Ð³Ð¾Ð´Ð¸Ð½Ð° 
-        $payment['PROFILESTARTDATE'] = date(DATE_ATOM);
-        $payment['BILLINGPERIOD'] = $packagePlan->getBillingPeriod();
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist( $payment );
-        //$em->flush();
-        
-        //$gateway->execute(new CreateRecurringPaymentProfile($payment));
-        //$gateway->execute(new Sync($payment));
-
-        //$recurringPaymentStatus = new GetHumanStatus($payment);
-        //$gateway->execute($recurringPaymentStatus);
 
         return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', ['planId' => $packagePlan->getId()] ) );
     }

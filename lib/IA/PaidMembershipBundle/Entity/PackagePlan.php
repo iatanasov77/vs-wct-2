@@ -44,6 +44,14 @@ class PackagePlan implements CheckoutOrderInterface
     /**
      *
      * @var string
+     *
+     *  @ORM\Column(name="currency", type="text", length=4, nullable=false)
+     */
+    private $currency;
+    
+    /**
+     *
+     * @var string
      * 
      *  @ORM\Column(name="description", type="text", length=256, nullable=false)
      */
@@ -118,6 +126,18 @@ class PackagePlan implements CheckoutOrderInterface
         return $this;
     }
 
+    function getCurrency()
+    {
+        return $this->currency;
+    }
+    
+    function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        
+        return $this;
+    }
+    
     function getDescription()
     {
         return $this->description;
@@ -128,11 +148,6 @@ class PackagePlan implements CheckoutOrderInterface
         $this->description = $description;
         
         return $this;
-    }
-    
-    public function getCurrency()
-    {
-        return 'EUR';
     }
     
     public function getBillingPeriod()
