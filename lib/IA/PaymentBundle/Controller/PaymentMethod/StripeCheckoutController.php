@@ -7,7 +7,7 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
 use Payum\Core\Request\GetHumanStatus;
 
-use IA\PaymentBundle\Entity\AgreementDetails;
+use IA\PaymentBundle\Entity\PaymentDetails;
 
 class StripeCheckoutController extends PayumController
 {
@@ -15,7 +15,7 @@ class StripeCheckoutController extends PayumController
     {
         $gatewayName = 'stripe_checkout_gateway';
         
-        $storage = $this->getPayum()->getStorage( AgreementDetails::class );
+        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
      
         $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
         $packagePlan = $ppr->find( $planId );
@@ -24,26 +24,24 @@ class StripeCheckoutController extends PayumController
         }
         
         /** @var PaymentDetails $details */
-        $details = $storage->create();
-        $details["amount"] = 100;
-        $details["currency"] = 'USD';
-        $details["description"] = 'a description';
+        $payment = $storage->create();
+   
+        $payment->setPaymentMethod( 'stripe' );
+        $payment->setPackagePlan( $packagePlan );
         
-        $details->setPaymentMethod( 'stripe' );
-        $details->setPlan( $packagePlan );
+        $details    = [
+            'amount'        => $packagePlan->getPrice(),
+            'currency'      => $packagePlan->getCurrency(),
+            'description'   => $packagePlan->getDescription(),
+            'NOSHIPPING'    => 1
+        ];
+        //$payment->setDetails( $details );
         
-        $details->setNumber( uniqid() );
-        $details->setCurrencyCode( 'EUR' );
-        $details->setTotalAmount( 123 ); // 1.23 EUR
-        $details->setDescription( 'A description' );
-        $details->setClientId( 'anId' );
-        $details->setClientEmail( 'sb-wsp2g401218@personal.example.com' );
-        
-        $storage->update($details);
+        $storage->update($payment);
         
         $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(
             $gatewayName,
-            $details,
+            $payment,
             'ia_payment_stripe_checkout_done' // the route to redirect after capture;
         );
         

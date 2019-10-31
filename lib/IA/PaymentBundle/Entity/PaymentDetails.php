@@ -3,6 +3,7 @@ namespace IA\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\ArrayObject;
+use IA\PaidMembershipBundle\Entity\PackagePlan;
 
 /**
  * @ORM\Table(name="IAP_PaymentDetails")
@@ -16,6 +17,13 @@ class PaymentDetails extends ArrayObject
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+    
+    /**
+     * 
+     * @ORM\ManyToOne(targetEntity="IA\PaidMembershipBundle\Entity\PackagePlan", inversedBy="payments")
+     * @ORM\JoinColumn(name="packagePlanId", referencedColumnName="id")
+     */
+    protected $packagePlan;
     
     /**
      * @var string
@@ -32,11 +40,25 @@ class PaymentDetails extends ArrayObject
         return $this->id;
     }
     
-    public function getPaymentMethod() {
+    public function getPackagePlan()
+    {
+        return $this->packagePlan;
+    }
+    
+    public function setPackagePlan( PackagePlan $packagePlan )
+    {
+        $this->packagePlan = $packagePlan;
+        
+        return $this;
+    }
+    
+    public function getPaymentMethod()
+    {
         return $this->paymentMethod;
     }
 
-    public function setPaymentMethod($paymentMethod) {
+    public function setPaymentMethod($paymentMethod)
+    {
         $this->paymentMethod = $paymentMethod;
         return $this;
     }

@@ -50,19 +50,35 @@ ia_payment_paypal_capture:
 ia_payment_paypal_done:
     path:     /paypal/done
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:done }
+
+
+
+
+ia_payment_paypal_express_checkout_prepare:
+    path:     /paypal_express_checkout/prepare/{planId}
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:prepare }
+     
+ia_payment_paypal_express_checkout_done:
+    path:     /paypal_express_checkout/recurring_payment/done
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:done }
     
+ia_payment_paypal_express_checkout_cancel:
+    path:     /paypal_express_checkout/recurring_payment/cancel
+    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/PaypalExpressCheckout:cancel }       
+     
+     
 ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement:
-    path:     /paypal_express_checkout/recurring_payment/prepare_agreement/{planId}
-    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement }
-    
+    path:     /paypal_express_checkout/recurring_payment/prepare/{planId}
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:prepare }
+
 ia_payment_paypal_express_checkout_create_recurring_payment:
-    path:     /paypal_express_checkout/recurring_payment/create_recurring_payment
-    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createRecurringPayment }
-    
-ia_payment_paypal_express_checkout_view_recurring_payment_details:
-    path:     /paypal_express_checkout/recurring_payment/details/{gatewayName}/{billingAgreementId}/{recurringPaymentId}
-    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/RecurringPayment:viewRecurringPaymentDetails }
+    path:     /paypal_express_checkout/recurring_payment/create
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:createRecurringPayment }
+       
+ia_payment_paypal_express_checkout_done_recurring_payment:
+    path:     /paypal_express_checkout/recurring_payment/done
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:done }
     
 ia_payment_paypal_express_checkout_cancel_recurring_payment:
-    path:     /paypal_express_checkout/recurring_payment/cancel_recurring_payment
-    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/RecurringPayment:cancelRecurringPayment }
+    path:     /paypal_express_checkout/recurring_payment/cancel
+    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/PaypalExpressCheckoutRecurring:cancel }

@@ -4,6 +4,7 @@ payum:
         Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\AgreementDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
+        IA\PaymentBundle\Entity\RecurringPaymentDetails: { doctrine: orm }
 
     security:
         token_storage:
@@ -46,6 +47,10 @@ ia_payment:
             name: 'Credit Card (PayPal)'
             factory: paypal_pro_checkout
             route: ia_payment_paypal_prepare
+        paypal_express_checkout:
+            name: 'Express Checkout (PayPal)'
+            factory: paypal_express_checkout
+            route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
         paypal_express_checkout_recurring_payment:
             name: 'Recurring Checkout (PayPal)'
             factory: paypal_express_checkout
