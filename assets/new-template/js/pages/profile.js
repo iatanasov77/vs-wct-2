@@ -2,14 +2,20 @@ $( function()
 {
 	$( '#dialogSelectPayment' ).on( 'show.bs.modal', function ( e )
 	{
-			var price	= e.relatedTarget.dataset.price;
+			var price			= e.relatedTarget.dataset.price;
+			var packagePlanId	= e.relatedTarget.dataset.planid;
+			
 			$( e.target ).find( '.price' ).text( price );
+			$( '#packagePlanId' ).val( packagePlanId );
 	});
 
 	$( '.selectPaymentMethod' ).on( 'change', function()
 	{
         var url		= $(this).attr( 'data-url' );
-        var data	= { 'class': $(this).val() };
+        var data	= {
+        	'class':			$(this).val(),
+        	'packagePlanId': 	$( '#packagePlanId' ).val()
+        };
         
         $.get( url, data, function( data ) 
         {

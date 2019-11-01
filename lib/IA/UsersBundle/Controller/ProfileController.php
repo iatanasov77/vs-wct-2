@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $paymentMethods = $this->container->getParameter( 'ia_payment.methods' );
         
         return $this->render( 'IAUsersBundle:Profile:show.html.twig', [
-            'subscription'  => $this->getUser()->getSubscription() ,
+            'subscription'  => $this->getUser()->getSubscription(), 
             'form'          => $form->createView(),
             'packages'      => $packages,
             'paymentMethods'=> $paymentMethods

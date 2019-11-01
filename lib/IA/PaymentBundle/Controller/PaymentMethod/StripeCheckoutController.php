@@ -7,18 +7,19 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
 use Payum\Core\Request\GetHumanStatus;
 
-use IA\PaymentBundle\Entity\PaymentDetails;
+use IA\PaymentBundle\Entity\PaymentModel;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StripeCheckoutController extends PayumController
 {
-    public function prepareAction( $planId, Request $request )
+    public function prepareAction( Request $request )
     {
         $gatewayName = 'stripe_checkout_gateway';
         
-        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
+        $storage = $this->getPayum()->getStorage( PaymentModel::class );
      
         $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
-        $packagePlan = $ppr->find( $planId );
+        $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
         if (!$packagePlan) {
             throw new \Exception('Invalid Request!!!');
         }
@@ -29,15 +30,14 @@ class StripeCheckoutController extends PayumController
         $payment->setPaymentMethod( 'stripe' );
         $payment->setPackagePlan( $packagePlan );
         
-        $details    = [
-            'amount'        => $packagePlan->getPrice(),
-            'currency'      => $packagePlan->getCurrency(),
-            'description'   => $packagePlan->getDescription(),
-            'NOSHIPPING'    => 1
-        ];
-        //$payment->setDetails( $details );
+        $payment->setNumber( uniqid() );
+        $payment->setCurrencyCode( $packagePlan->getCurrency() );
+        $payment->setTotalAmount( $packagePlan->getPrice() );
+        $payment->setDescription( $packagePlan->getDescription() );
+        $payment->setClientId( 'anId' );
+        $payment->setClientEmail( 'foo@example.com' );
         
-        $storage->update($payment);
+        $storage->update( $payment );
         
         $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(
             $gatewayName,
@@ -54,17 +54,16 @@ class StripeCheckoutController extends PayumController
         
         $gateway = $this->getPayum()->getGateway( $token->getGatewayName() );
         
-        $agreementStatus = new GetHumanStatus( $token );
-        $gateway->execute( $agreementStatus );
-        if ( false == $agreementStatus->isCaptured() ) {
+        $status = new GetHumanStatus( $token );
+        $gateway->execute( $status );
+        $payment = $status->getFirstModel();
+        
+        if ( ! $status->isCaptured() ) {
             throw new HttpException(400, 'Billing agreement status is not success.');
         }
         
-        $agreement = $agreementStatus->getModel();
-        $packagePlan = $agreement->getPlan();
-        
         return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [
-            'paymentId' => $packagePlan->getId()
+            'paymentId' => $payment->getId()
         ]));
     }
 }

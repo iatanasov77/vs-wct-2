@@ -81,7 +81,7 @@
                         {#<legend>Payment Method Options</legend>#}
                         <div><span>Price:</span> <span class="price"></span></div>
                         <div id="boxPaymentMethodOptions" class="form-horizontal">
-                    
+                            <input type="hidden" name="packagePlanId" id="packagePlanId" value="" />
                             {% for key,method in paymentMethods %}
                             <div class="form-group">
                                 <label class="custom-control custom-radio">

@@ -13,11 +13,24 @@
                             </div>
                             {% if ( subscription ) %}
                                 <span style="color:red; font-weight: bold;">Subscribed</span>
+                                
+                                {#
+                                {% if subscription.getPaymentMethod() == 'paypal_express_checkout_recurring_payment' %}
+                                    <a class="btn btn-primary" >Cancel Recurring Payment</a>
+                                {% endif %}
+                                #}
+                                
                             {% else %}
-                                <a class="btn btn-primary" data-remote="false"  data-toggle="modal" data-target="#dialogSelectPayment" data-price="{{ plan.getPrice() }}"
-                                   href="{{ path('ia_paid_membership_checkout_select_method', {'planId': plan.getId()}) }}"> 
-                                    Subscribe
-                                </a>
+                                <a class="btn btn-primary" 
+                                    data-remote="false"  
+                                    data-toggle="modal" 
+                                    data-target="#dialogSelectPayment" 
+                                    
+                                    data-price="{{ plan.getPrice() }}"
+                                    data-planid="{{ plan.getId() }}"
+                                    
+                                    href="{{ path('ia_paid_membership_checkout_select_method', {'planId': plan.getId()}) }}"
+                                >Subscribe</a>
                             {% endif %}
                         </div>
                     {% endfor %}

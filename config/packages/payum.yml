@@ -2,9 +2,9 @@ payum:
     storages:
         Payum\Core\Model\Payment: { doctrine: orm }
         Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
-        IA\PaymentBundle\Entity\AgreementDetails: { doctrine: orm }
+        
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
-        IA\PaymentBundle\Entity\RecurringPaymentDetails: { doctrine: orm }
+        IA\PaymentBundle\Entity\PaymentModel: { doctrine: orm }
 
     security:
         token_storage:
@@ -45,17 +45,17 @@ ia_payment:
     payment_methods:
         paypal_pro_checkout:
             name: 'Credit Card (PayPal)'
-            factory: paypal_pro_checkout
+            gateway: paypal_express_checkout_recurring_payment
             route: ia_payment_paypal_prepare
         paypal_express_checkout:
             name: 'Express Checkout (PayPal)'
-            factory: paypal_express_checkout
+            gateway: paypal_express_checkout
             route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
         paypal_express_checkout_recurring_payment:
             name: 'Recurring Checkout (PayPal)'
-            factory: paypal_express_checkout
+            gateway: paypal_express_checkout
             route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
         stripe_checkout:
             name: 'Credit Card (STRIPE)'
-            factory: stripe_checkout
+            gateway: stripe_checkout
             route: ia_payment_stripe_checkout_prepare

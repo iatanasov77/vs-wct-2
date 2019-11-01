@@ -28,9 +28,7 @@ ia_payment_paypal_credit_card_done:
    path:     /paypal_rest/credit_card/done
    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalCreditCard:done }
    
-ia_payment_paypal_express_checkout_create_recurring_payment_capture:
-   path:     /payment/capture/{payum_token}
-   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:capture }
+
    
 ia_payment_methods_index:
     path:     /methods
@@ -40,7 +38,7 @@ ia_payment_methods_config:
     defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
 
 ia_payment_paypal_prepare:
-    path:     /paypal/prepare/{planId}
+    path:     /paypal/prepare
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:prepare }
 
 ia_payment_paypal_capture:
@@ -53,26 +51,22 @@ ia_payment_paypal_done:
 
 
 
-
 ia_payment_paypal_express_checkout_prepare:
-    path:     /paypal_express_checkout/prepare/{planId}
+    path:     /paypal_express_checkout/prepare
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:prepare }
+
      
 ia_payment_paypal_express_checkout_done:
-    path:     /paypal_express_checkout/recurring_payment/done
+    path:     /paypal_express_checkout/done
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:done }
     
-ia_payment_paypal_express_checkout_cancel:
-    path:     /paypal_express_checkout/recurring_payment/cancel
-    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/PaypalExpressCheckout:cancel }       
-     
      
 ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement:
-    path:     /paypal_express_checkout/recurring_payment/prepare/{planId}
+    path:     /paypal_express_checkout/recurring_payment/prepare
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:prepare }
 
 ia_payment_paypal_express_checkout_create_recurring_payment:
-    path:     /paypal_express_checkout/recurring_payment/create
+    path:     /paypal_express_checkout/recurring_payment/create/{packagePlanId}
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:createRecurringPayment }
        
 ia_payment_paypal_express_checkout_done_recurring_payment:

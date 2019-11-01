@@ -22,12 +22,23 @@ class PaypalCreditCardController extends PayumController
 {
     public function prepareAction( Request $request )
     {
+        $packagePlanId  = $request->query->get( 'packagePlanId' );
+        $packagePlan = $ppr->find( $packagePlanId );
+        if ( ! $packagePlan ) {
+            throw new \Exception('Invalid Request!!!');
+        }
+        
         $payum  = $this->configPayum();
         
         /** @var \Payum\Core\Payum $payum */
         $storage = $payum->getStorage( PaymentDetails::class );
         
         $payment = $storage->create();
+        
+        $payment->setType( PaymentDetails::TYPE_AGREEMENT );
+        $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
+        $payment->setPackagePlan( $packagePlan );
+        
         $storage->update($payment);
         
         $payer = new Payer();

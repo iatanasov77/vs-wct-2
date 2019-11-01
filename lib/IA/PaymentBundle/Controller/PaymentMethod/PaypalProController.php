@@ -7,7 +7,7 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
 
 use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
-use IA\PaymentBundle\Entity\AgreementDetailsDetails;
+use IA\PaymentBundle\Entity\PaymentDetails;
 
 /*
  * TEST CARDS
@@ -28,21 +28,34 @@ use IA\PaymentBundle\Entity\AgreementDetailsDetails;
 
 class PaypalProController extends PayumController
 {
-    public function prepareAction($planId, Request $request)
+    public function prepareAction( Request $request )
     {
         $gatewayName = 'paypal_pro_checkout_credit_card';
 
+        $ppr = $this->getDoctrine()->getRepository( 'IAPaidMembershipBundle:PackagePlan' );
+        
+        $packagePlanId  = $request->query->get( 'packagePlanId' );
+        $packagePlan = $ppr->find( $packagePlanId );
+        if ( ! $packagePlan ) {
+            throw new \Exception('Invalid Request!!!');
+        }
+        
         $form = $this->createForm( CreditCardForm::class, null, [
-            'action' => $this->generateUrl( 'ia_payment_paypal_prepare', ['planId' => $planId] ),
+            'action' => $this->generateUrl( 'ia_payment_paypal_prepare' ) . "?packagePlanId=" . $request->query->get( 'packagePlanId' ),
             'method' => 'POST',
         ]);
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $data = $form->getData();
-            $storage = $this->getPayum()->getStorage( AgreementDetailsDetails::class );
+            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
 
             $payment = $storage->create();
+            
+            $payment->setType( PaymentDetails::TYPE_AGREEMENT );
+            $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
+            $payment->setPackagePlan( $packagePlan );
+            
             $payment['ACCT']        = new SensitiveValue( $data['acct'] );
             $payment['CVV2']        = new SensitiveValue( $data['cvv'] );
             $payment['EXPDATE']     = new SensitiveValue( $data['exp_date']->format( 'my' ) );

@@ -13,8 +13,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Core\Model\Payment;
 
 use IA\PaymentBundle\Entity\PaymentDetails;
-use IA\PaymentBundle\Entity\AgreementDetails;
-use IA\PaymentBundle\Entity\RecurringPaymentDetails;
 
 /*
  * TEST ACCOUNTS
@@ -24,12 +22,14 @@ use IA\PaymentBundle\Entity\RecurringPaymentDetails;
 class PaypalExpressCheckoutRecurringController extends PayumController
 {
 
-    public function prepareAction( $planId, Request $request )
+    public function prepareAction( Request $request )
     {
         $gatewayName = 'paypal_express_checkout_recurring_payment';
         
         $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
-        $packagePlan = $ppr->find( $planId );
+        
+        $packagePlanId  = $request->query->get( 'packagePlanId' );
+        $packagePlan = $ppr->find( $packagePlanId );
         if ( ! $packagePlan ) {
             throw new \Exception('Invalid Request!!!');
         }
@@ -37,10 +37,14 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         if ( $request->isMethod( 'POST' ) ) {
             
             $payum          = $this->getPayum();
-            $storage = $payum->getStorage( AgreementDetails::class );
+            $storage = $payum->getStorage( PaymentDetails::class );
 
             /** @var $agreement AgreementDetails */
             $payment = $storage->create();
+            
+            $payment->setType( PaymentDetails::TYPE_AGREEMENT );
+            $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
+            $payment->setPackagePlan( $packagePlan );
             
             $details    = [
                 'PAYMENTREQUEST_0_AMT'          => 0,
@@ -53,11 +57,11 @@ class PaypalExpressCheckoutRecurringController extends PayumController
             $storage->update( $payment );
             
             $captureToken = $payum->getTokenFactory()->createCaptureToken(
-                    $gatewayName, $payment, 'ia_payment_paypal_express_checkout_create_recurring_payment'
+                $gatewayName, $payment, 
+                'ia_payment_paypal_express_checkout_create_recurring_payment',
+                ['packagePlanId' => $packagePlanId]
             );
             
-            
-            //$captureToken->setTargetUrl( $this->generateUrl( 'ia_payment_paypal_express_checkout_create_recurring_payment_capture', ['payum_token' => $captureToken->getHash()] ) );
             $storage->update( $payment );
             
             return $this->redirect($captureToken->getTargetUrl());
@@ -70,8 +74,15 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement.html.twig', $tplVars);
     }
 
-    public function createRecurringPaymentAction( Request $request )
+    public function createRecurringPaymentAction( $packagePlanId, Request $request )
     {
+        $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
+        
+        $packagePlan = $ppr->find( $packagePlanId );
+        if ( ! $packagePlan ) {
+            throw new \Exception('Invalid Request!!!');
+        }
+        
         $token          = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
         $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
         $gatewayName    = $token->getGatewayName();
@@ -87,14 +98,15 @@ class PaypalExpressCheckoutRecurringController extends PayumController
             throw new HttpException(400, 'Billing agreement status is not success.');
         }
         
-        $payment        = $status->getModel();
-        //var_dump( $status->getModel() ); die;
+        $payment            = $status->getModel();
+        $storage            = $this->getPayum()->getStorage( PaymentDetails::class );
         
+        $recurringPayment   = $storage->create();
         
+        $recurringPayment->setType( PaymentDetails::TYPE_PAYMENT );
+        $recurringPayment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
+        $recurringPayment->setPackagePlan( $packagePlan );
         
-        $storage    = $this->getPayum()->getStorage( RecurringPaymentDetails::class );
-        
-        $recurringPayment = $storage->create();
         $recurringPayment['TOKEN'] = $payment['TOKEN'];
         $recurringPayment['DESC']   = $payment['L_BILLINGAGREEMENTDESCRIPTION0']; // Desc must match agreement 'L_BILLINGAGREEMENTDESCRIPTION' in prepare.php
         $recurringPayment['EMAIL'] = $payment['EMAIL'];
@@ -108,7 +120,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         $gateway->execute(new Sync($recurringPayment));
         
         /*
-         IF THERE IS AN ERROR ON EXECUTE THE GATEWA SET THISE FIELDS
+         IF THERE IS AN ERROR ON EXECUTE THE GATEWAY SET THISE FIELDS
          =============================================================
          [ACK]	"Failure"	
         [VERSION]	"65.1"	
@@ -129,49 +141,22 @@ class PaypalExpressCheckoutRecurringController extends PayumController
     public function doneAction( Request $request )
     {
         $token      = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
-        //$this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
+        $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
         
         $gateway    = $this->getPayum()->getGateway( $token->getGatewayName() );
         $status     = new GetHumanStatus( $token );
         
         $gateway->execute( $status );
       
-        
         if ( ! $status->isCaptured() ) {
-        //if ( false == $agreementStatus->isCaptured() ) {
-            throw new HttpException(400, 'Billing agreement status is not success.');
+            throw new HttpException( 400, 'Billing agreement status is not success.' );
         }
 
-        $payment        = $status->getModel();
+        $payment            = $status->getModel();
         
-        
-        
-        
-        $storage    = $this->getPayum()->getStorage( RecurringPaymentDetails::class );
-        
-        $recurringPayment = $storage->create();
-        $recurringPayment['TOKEN'] = $agreement['TOKEN'];
-        $recurringPayment['DESC'] = 'Subscribe to weather forecast for a week. It is 0.05$ per day.'; // Desc must match agreement 'L_BILLINGAGREEMENTDESCRIPTION' in prepare.php
-        $recurringPayment['EMAIL'] = $agreement['EMAIL'];
-        $recurringPayment['AMT'] = 0.05;
-        $recurringPayment['CURRENCYCODE'] = 'USD';
-        $recurringPayment['BILLINGFREQUENCY'] = 7;
-        $recurringPayment['PROFILESTARTDATE'] = date(DATE_ATOM);
-        $recurringPayment['BILLINGPERIOD'] = Api::BILLINGPERIOD_DAY;
-        
-        $gateway->execute(new CreateRecurringPaymentProfile($recurringPayment));
-        $gateway->execute(new Sync($recurringPayment));
-        
-        $doneToken = $payum->getTokenFactory()->createToken( $token->getGatewayName(), $recurringPayment, 'done.php' );
-        
-        
-        
-        
-        
-        
-        
-
-        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', ['paymentId' => $payment->getId()] ) );
+        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [
+            'paymentId' => $payment->getId()
+        ]));
     }
 
     public function cancelAction( Request $request )
