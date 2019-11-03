@@ -18,7 +18,7 @@ class StripeCheckoutController extends PayumController
         
         $storage = $this->getPayum()->getStorage( PaymentModel::class );
      
-        $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
+        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
         if (!$packagePlan) {
             throw new \Exception('Invalid Request!!!');

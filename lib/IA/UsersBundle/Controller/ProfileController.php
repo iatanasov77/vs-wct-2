@@ -14,21 +14,29 @@ class ProfileController extends Controller
         /*
          * Fetch Available Packages
          */
-        $pr = $this->getDoctrine()->getRepository( 'IAPaidMembershipBundle:Package' );
-//        $search = array('enabled' => 1);
-//        $order = array();
-//        $packages = $pr->findBy($search, $order);
-        $packages = $pr->findAll();
+        $pr                     = $this->getDoctrine()->getRepository( 'IAUsersBundle:Package' );
+        $packages               = $pr->findAll();
         
-        $paymentMethods = $this->container->getParameter( 'ia_payment.methods' );
+        $paymentMethods         = $this->container->getParameter( 'ia_payment.methods' ); 
+        $subscriptionDetails    = $this->userSubscriptionDetails();
         
         return $this->render( 'IAUsersBundle:Profile:show.html.twig', [
-            'subscription'  => $this->getUser()->getSubscription(), 
-            'form'          => $form->createView(),
-            'packages'      => $packages,
-            'paymentMethods'=> $paymentMethods
+            'subscription'          => $this->getUser()->getSubscription(),
+            'subscriptionDetails'   => $subscriptionDetails,
+            'form'                  => $form->createView(),
+            'packages'              => $packages,
+            'paymentMethods'        => $paymentMethods
         ]);
     }
     
+    private function userSubscriptionDetails()
+    {
+        $sr             = $this->getDoctrine()->getRepository( 'IAUsersBundle:UserSubscription' );
+        $subscription   = $this->getUser()->getSubscription();
+        
+        return [
+            'active'    => $sr->isActive( $subscription )
+        ];
+    }
 }
 

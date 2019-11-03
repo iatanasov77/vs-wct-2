@@ -9,23 +9,19 @@ use Spatie\Url\Url as SpatieUrl;
 
 use IA\UsersBundle\Entity\User;
 use IA\UsersBundle\Entity\UserInfo;
-use IA\UsersBundle\Form\UserCrudFormType;
+use IA\UsersBundle\Form\UserFormType;
+use IA\UsersBundle\Form\Type\UserInfoFormType;
 
 class UsersCrudController extends ResourceController
 {
+    public function indexAction( Request $request ): Response
+    {
+        return $this->render('IAUsersBundle:UsersCrud:index.html.twig', [
+            'users' => $this->getDoctrine()->getRepository( 'IA\UsersBundle\Entity\User' )->findAll()
+        ]);
+    }
+    
     public function createAction( Request $request ): Response
-    {
-        $tplVars    = $this->processRequest( $request );
-        return $this->render('IAUsersBundle:UsersCrud:create.html.twig', $tplVars);
-    }
-    
-    public function updateAction( Request $request ) : Response
-    {
-        $tplVars    = $this->processRequest( $request );
-        return $this->render( 'IAUsersBundle:UsersCrud:create.html.twig', $tplVars );
-    }
-    
-    protected function processRequest( Request $request )
     {
         //$id = Url::ProjectsUrlGetId();
         $id = $this->getId();
@@ -33,7 +29,7 @@ class UsersCrudController extends ResourceController
         $er = $this->getDoctrine()->getRepository( 'IA\UsersBundle\Entity\User' );
         $user = $id ? $er->find($id) : new User();
         
-        $form = $this->createForm( UserCrudFormType::class, $user, ['data' => $user] );
+        $form = $this->createForm( UserFormType::class, $user );
         
         //if($form->isSubmitted()) {
         if($request->isMethod('POST') || $request->isMethod('PUT')) {
@@ -59,16 +55,47 @@ class UsersCrudController extends ResourceController
         }
         
         $tplVars = array(
-            'form'          => $form->createView(),
-            'item'          => $user,
+            'form'      => $form->createView(),
+            'item'      => $user,
         );
-        return $tplVars;
+        return $this->render('IAUsersBundle:UsersCrud:create.html.twig', $tplVars);
+    }
+    
+    public function updateAction( Request $request ) : Response
+    {
+        //$id = Url::ProjectsUrlGetId();
+        $id = $this->getId();
+        
+        $er = $this->getDoctrine()->getRepository( 'IA\UsersBundle\Entity\User' );
+        $user = $id ? $er->find($id) : new User();
+        
+        //$form = $this->createForm( UserFormType::class, $user );
+        $form = $this->createForm( UserInfoFormType::class, $user->getUserInfo() );
+        
+        //if($form->isSubmitted()) {
+        if($request->isMethod('POST') || $request->isMethod('PUT')) {
+            $form->handleRequest($request);
+            $userInfo   = $form->getData();
+            $user->setUserInfo( $userInfo );
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist( $user );
+            $entityManager->flush();
+            
+            return $this->redirect($this->generateUrl('ia_users_users_update', ['id' =>$id]));
+        }
+        
+        $tplVars = array(
+            'form'      => $form->createView(),
+            'item'      => $user,
+        );
+        return $this->render( 'IAUsersBundle:UsersCrud:create.html.twig', $tplVars );
     }
     
     protected function getId()
     {
         $url = SpatieUrl::fromString( $_SERVER['REQUEST_URI'] );
-        return intval( $url->getSegment( 3 ) );
+        return intval( $url->getSegment( 2 ) );
     }
     
 }

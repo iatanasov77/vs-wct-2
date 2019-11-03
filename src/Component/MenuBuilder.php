@@ -64,14 +64,20 @@ class MenuBuilder implements ContainerAwareInterface
             
             // Membership
             $menu->addChild('Membership', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_genius')));
-            $menu['Membership']->addChild('List Packages', array('route' => 'ia_paid_membership_packages_index'));
+            
+            $menu['Membership']->addChild('List Packages', array('route' => 'ia_users_packages_index'));
             $menu['Membership']->addChild('Create New Package', array(
-                'route' => 'ia_paid_membership_packages_create',
+                'route' => 'ia_users_packages_create',
                 'routeParameters' => array('id' => 0)
             ));
-            $menu['Membership']->addChild('List Plans', array('route' => 'ia_paid_membership_plans_index'));
+            $menu['Membership']->addChild('List Plans', array('route' => 'ia_users_plans_index'));
             $menu['Membership']->addChild('Create New Plan', array(
-                'route' => 'ia_paid_membership_plans_create',
+                'route' => 'ia_users_plans_create',
+                'routeParameters' => array('id' => 0)
+            ));
+            $menu['Membership']->addChild('List Package Plans', array('route' => 'ia_users_packageplans_index'));
+            $menu['Membership']->addChild('Create New PackagePlan', array(
+                'route' => 'ia_users_packageplans_create',
                 'routeParameters' => array('id' => 0)
             ));
             

@@ -20,23 +20,31 @@ class User extends BaseUser implements ResourceInterface
     protected $id;
     
     /**
-     * @ORM\OneToOne(targetEntity="UserInfo")
+     * @ORM\OneToOne(targetEntity="IA\UsersBundle\Entity\UserInfo", cascade={"persist"})
      * @ORM\JoinColumn(name="user_info_id", referencedColumnName="id")
      */
     protected $userInfo;
 
     /**
-     * @ORM\OneToOne(targetEntity="IA\PaidMembershipBundle\Entity\UserSubscription", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="IA\UsersBundle\Entity\UserSubscription", inversedBy="user")
      * @ORM\JoinColumn(name="subscriptionId", referencedColumnName="id")
      */
     protected $subscription;
+    
+    // She ti eba i formite
+    public function __get( $var )
+    {
+        if ( property_exists ( 'IA\UsersBundle\Entity\UserInfo' , $var ) ) {
+            return $this->userInfo ? $this->userInfo->$var : null;
+        }
+    }
     
     public function getUserInfo()
     {
         return $this->userInfo;
     }
     
-    public function setUuserInfo( $userInfo )
+    public function setUserInfo( $userInfo )
     {
         $this->userInfo = $userInfo;
         

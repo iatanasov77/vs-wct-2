@@ -74,5 +74,5 @@ ia_payment_paypal_express_checkout_done_recurring_payment:
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:done }
     
 ia_payment_paypal_express_checkout_cancel_recurring_payment:
-    path:     /paypal_express_checkout/recurring_payment/cancel
-    defaults: { _controller: IAPaymentBundle:PaypalExpressCheckout/PaypalExpressCheckoutRecurring:cancel }
+    path:     /paypal_express_checkout/recurring_payment/cancel/{paymentId}
+    defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalExpressCheckoutRecurring:cancel }

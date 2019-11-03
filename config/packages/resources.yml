@@ -28,22 +28,30 @@ sylius_resource:
                 controller: App\Controller\ProjectsController
                 repository: App\Entity\Repository\ProjectsRepository
                       
-        ia_paid_membership.packages:
+        ia_users.packages:
             driver: doctrine/orm
             classes:
-                model:      IA\PaidMembershipBundle\Entity\Package
+                model:      IA\UsersBundle\Entity\Package
                 interface:  Sylius\Component\Resource\Model\ResourceInterface
-                controller: IA\PaidMembershipBundle\Controller\MembershipPackagesController
+                controller: IA\UsersBundle\Controller\MembershipPackagesController
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 
-        ia_paid_membership.plans:
+        ia_users.plans:
             driver: doctrine/orm
             classes:
-                model:      IA\PaidMembershipBundle\Entity\Plan
+                model:      IA\UsersBundle\Entity\Plan
                 interface:  Sylius\Component\Resource\Model\ResourceInterface
-                controller: IA\PaidMembershipBundle\Controller\MembershipPlansController
+                controller: IA\UsersBundle\Controller\MembershipPlansController
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
-                
+        
+        ia_users.packageplans:
+            driver: doctrine/orm
+            classes:
+                model:      IA\UsersBundle\Entity\PackagePlan
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                controller: IA\UsersBundle\Controller\MembershipPackagePlansController
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                        
         ia_cms.pages:
             driver: doctrine/orm
             classes:

@@ -25,7 +25,7 @@ class PaypalExpressCheckoutController extends PayumController
     {
         $gatewayName = 'paypal_express_checkout_recurring_payment';
         
-        $ppr = $this->getDoctrine()->getRepository('IAPaidMembershipBundle:PackagePlan');
+        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
         
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
         if ( ! $packagePlan ) {

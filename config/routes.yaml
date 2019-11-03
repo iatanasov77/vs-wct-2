@@ -14,7 +14,7 @@ home:
  
 ia_users:
     resource: "@IAUsersBundle/Resources/config/routing.yml"
-    prefix:   /profile/
+    prefix:   /users_bundle/
  
 ia_taxonomy:
     resource: "@IATaxonomyBundle/Resources/config/routing.yml"
@@ -23,10 +23,6 @@ ia_taxonomy:
 ia_cms:
     resource: "@IACmsBundle/Resources/config/routing.yml"
     prefix:   /cms
-    
-ia_paid_membership:
-    resource: "@IAPaidMembershipBundle/Resources/config/routing.yml"
-    prefix:   /membership
     
 ia_payment:
     resource: "@IAPaymentBundle/Resources/config/routing.yml"

@@ -2,6 +2,9 @@ form:
     cancel: 'Отмени'
 
 registration:
+    email: 'Емейл'
+    userName: 'Потребителско Име'
+    password: 'Парола'
     firstName: 'Име'
     lastName: 'Фамилия'
     yourCountry: 'Държава'

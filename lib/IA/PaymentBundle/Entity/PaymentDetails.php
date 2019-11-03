@@ -3,7 +3,7 @@ namespace IA\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\ArrayObject;
-use IA\PaidMembershipBundle\Entity\PackagePlan;
+use IA\UsersBundle\Entity\PackagePlan;
 
 /**
  * @ORM\Table(name="IAP_PaymentDetails")
@@ -23,7 +23,7 @@ class PaymentDetails extends ArrayObject
     
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="IA\PaidMembershipBundle\Entity\PackagePlan", inversedBy="payments")
+     * @ORM\ManyToOne(targetEntity="IA\UsersBundle\Entity\PackagePlan", inversedBy="payments")
      * @ORM\JoinColumn(name="packagePlanId", referencedColumnName="id")
      */
     protected $packagePlan;

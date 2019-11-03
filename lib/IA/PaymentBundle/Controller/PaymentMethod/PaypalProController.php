@@ -32,7 +32,7 @@ class PaypalProController extends PayumController
     {
         $gatewayName = 'paypal_pro_checkout_credit_card';
 
-        $ppr = $this->getDoctrine()->getRepository( 'IAPaidMembershipBundle:PackagePlan' );
+        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlanId  = $request->query->get( 'packagePlanId' );
         $packagePlan = $ppr->find( $packagePlanId );

@@ -25,7 +25,7 @@ return [
     IA\ApplicationCoreBundle\IAApplicationCoreBundle::class => ['all' => true],
     IA\PaymentBundle\IAPaymentBundle::class => ['all' => true],
     IA\CmsBundle\IACmsBundle::class => ['all' => true],
-    IA\PaidMembershipBundle\IAPaidMembershipBundle::class => ['all' => true],
+    //IA\PaidMembershipBundle\IAPaidMembershipBundle::class => ['all' => true],
     IA\TaxonomyBundle\IATaxonomyBundle::class => ['all' => true],
     IA\UsersBundle\IAUsersBundle::class => ['all' => true],
     
