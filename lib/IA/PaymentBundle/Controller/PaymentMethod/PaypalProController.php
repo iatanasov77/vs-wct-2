@@ -28,10 +28,10 @@ use IA\PaymentBundle\Entity\PaymentDetails;
 
 class PaypalProController extends PayumController
 {
+    const GATEWAY   = 'paypal_pro_checkout_gateway';
+    
     public function prepareAction( Request $request )
     {
-        $gatewayName = 'paypal_pro_checkout_credit_card';
-
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlanId  = $request->query->get( 'packagePlanId' );
@@ -52,7 +52,7 @@ class PaypalProController extends PayumController
 
             $payment = $storage->create();
             
-            $payment->setType( PaymentDetails::TYPE_AGREEMENT );
+            $payment->setType( PaymentDetails::TYPE_PAYMENT );
             $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
             $payment->setPackagePlan( $packagePlan );
             
@@ -65,11 +65,10 @@ class PaypalProController extends PayumController
             $storage->update($payment);
 
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
-                $gatewayName,
+                self::GATEWAY,
                 $payment,
                 'ia_payment_paypal_done'
             );
-            //$captureToken->setTargetUrl( $this->generateUrl( 'ia_payment_paypal_capture', ['payum_token' => $captureToken->getHash()] ) );
             
             return $this->redirect( $captureToken->getTargetUrl() );
         }
@@ -79,55 +78,13 @@ class PaypalProController extends PayumController
         ));
     }
     
-    public function captureAction(Request $request)
-    {
-        $payum          = $this->getPayum();
-        
-        /** @var \Payum\Core\Payum $payum */
-        $token = $payum->getHttpRequestVerifier()->verify( $request );
-        
-        $gateway = $payum->getGateway( $token->getGatewayName() );
-        
-        $agreementStatus = new GetHumanStatus( $token );
-        $gateway->execute( $agreementStatus );
-        // var_dump( $agreementStatus->isCaptured() ); die;
-        
-        if ( false == $agreementStatus->isPending() ) {
-            //if ( false == $agreementStatus->isCaptured() ) {
-            throw new HttpException(400, 'Billing agreement status is not success.');
-        }
-        
-        
-        
-        /** @var \Payum\Core\GatewayInterface $gateway */
-        if ($reply = $gateway->execute( new Capture($token), true)) {
-            if ($reply instanceof HttpRedirect) {
-                header("Location: ".$reply->getUrl());
-                die();
-            }
-            
-            throw new \LogicException( 'Unsupported reply', null, $reply );
-        }
-        
-        /** @var \Payum\Core\Payum $payum */
-        //$payum->getHttpRequestVerifier()->invalidate($token);
-        
-        return $this->redirect( $token->getAfterUrl() );
-    }
-    
     public function doneAction( Request $request )
     {
-        $gatewayName = 'paypal_pro_checkout_credit_card';
-        
-        $payum  = $this->getPayum();
-        
-        /** @var \Payum\Core\Payum $payum */
-        $storage = $payum->getStorage( AgreementDetailsDetails::class );
-        
+        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
         $payment = $storage->create();
         $storage->update( $payment );
         
-        $captureToken = $payum->getTokenFactory()->createCaptureToken( $gatewayName, $payment, 'create_recurring_payment.php' );
+        $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken( self::GATEWAY, $payment, 'create_recurring_payment.php' );
         
         return $this->redirect( $captureToken->getTargetUrl() );
     }

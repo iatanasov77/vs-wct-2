@@ -4,6 +4,7 @@ payum:
         Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
         
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
+        IA\PaymentBundle\Entity\PaymentRestDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\PaymentModel: { doctrine: orm }
 
     security:
@@ -11,29 +12,20 @@ payum:
             IA\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
 
     gateways:
-        offline:
+        offline_gateway:
             factory: offline
-        paypal_express_checkout_recurring_payment:
+        paypal_express_checkout_gateway:
             factory: paypal_express_checkout
-            #username: 'paypal_test@getnada.com'
-            #password: 'Ophth@l@m1@'
             username: 'sb-ks1wh402232_api1.business.example.com'
             password: '8PRXKLWZFPYBZDKB'
             signature: 'Ajqso8A-uDUaXxl-CdVBwnXhzMsTAEdVwItx7t0TyVJeh7oICslAmTot'
             sandbox: true
-        paypal_rest:
-            factory:  "paypal_rest"
-            client_id: "ARn-1kRVAW23BEB0RAeZ5O3pt8jblMs-J75ijDIpLwpG8httmIjnxB-rvKhjqTdG-FHSfeVDFLUUBjWz"
-            client_secret: "ECF4KlmFaeIHsgjKGN9Ql2Sbvc3DCDwIeEprbXT3pgFEdsOEk0tajI0Nu9U_HlC89UHXmNuILDx6zTg5"
-            config_path: '%kernel.root_dir%/sdk_config.ini'
         stripe_checkout_gateway:
             factory: stripe_checkout
             publishable_key: 'pk_test_4usJseX4BL8ZuSa9efnggWj800U21erI5Y'
             secret_key:      'sk_test_QHNIIAE1D7L5oqy54cxM4pXD00GO1NH64K'
-        paypal_pro_checkout_credit_card:
+        paypal_pro_checkout_gateway:
             factory: paypal_pro_checkout
-            #username: 'sb-wqxm3403839_api1.business.example.com'
-            #password: 'SZY67BELKDNT9NAY'
             username: 'sb-5omhg442982_api1.business.example.com'
             password: 'TR5QB2XTSX6WLQU2'
             partner:  'EDIT ME'
@@ -44,8 +36,8 @@ payum:
 ia_payment:
     payment_methods:
         paypal_pro_checkout:
-            name: 'Credit Card (PayPal)'
-            gateway: paypal_express_checkout_recurring_payment
+            name: 'Credit Card (PayPal Pro)'
+            gateway: paypal_pro_checkout_gateway
             route: ia_payment_paypal_prepare
         paypal_express_checkout:
             name: 'Express Checkout (PayPal)'

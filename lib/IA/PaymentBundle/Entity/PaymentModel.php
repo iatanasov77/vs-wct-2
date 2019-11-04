@@ -1,5 +1,4 @@
-<?php
-namespace IA\PaymentBundle\Entity;
+<?php namespace IA\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\Payment as BasePayment;

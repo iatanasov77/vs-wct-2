@@ -19,12 +19,11 @@ use IA\PaymentBundle\Entity\PaymentDetails;
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
  */
 class PaypalExpressCheckoutController extends PayumController
-{
-
+{   
+    const GATEWAY   = 'paypal_express_checkout_gateway';
+    
     public function prepareAction( Request $request )
     {
-        $gatewayName = 'paypal_express_checkout_recurring_payment';
-        
         $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
         
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
@@ -33,9 +32,7 @@ class PaypalExpressCheckoutController extends PayumController
         }
 
         if ( $request->isMethod( 'POST' ) ) {
-            
-            $payum   = $this->getPayum();
-            $storage = $payum->getStorage( PaymentDetails::class );
+            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
 
             /** @var $agreement AgreementDetails */
             $payment = $storage->create();
@@ -54,8 +51,8 @@ class PaypalExpressCheckoutController extends PayumController
             
             $storage->update( $payment );
             
-            $captureToken = $payum->getTokenFactory()->createCaptureToken(
-                $gatewayName, 
+            $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
+                self::GATEWAY, 
                 $payment,
                 'ia_payment_paypal_express_checkout_done'
             );
@@ -65,7 +62,7 @@ class PaypalExpressCheckoutController extends PayumController
 
         $tplVars = array(
             'packagePlan' => $packagePlan,
-            'gatewayName' => $gatewayName
+            'gatewayName' => self::GATEWAY
         );
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement.html.twig', $tplVars);
     }
@@ -78,8 +75,6 @@ class PaypalExpressCheckoutController extends PayumController
         
         $gateway->execute( $status );
       
-        //var_dump( $agreementStatus->getValue() ); die;
-        // var_dump( $agreementStatus->isCaptured() ); die;
         if ( false == $status->isPending() ) {
             throw new HttpException(400, 'Billing agreement status is not success.');
         }

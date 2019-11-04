@@ -16,20 +16,6 @@ ia_payment_stripe_checkout_done:
    path:     /stripe/checkout/done
    defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:done }
    
-ia_payment_paypal_credit_card_prepare:
-   path:     /paypal_rest/credit_card/prepare
-   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalCreditCard:prepare }
-
-ia_payment_paypal_credit_card_capture:
-   path:     /paypal_rest/credit_card/prepare/capture.php
-   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalCreditCard:capture }
-
-ia_payment_paypal_credit_card_done:
-   path:     /paypal_rest/credit_card/done
-   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalCreditCard:done }
-   
-
-   
 ia_payment_methods_index:
     path:     /methods
     defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
@@ -40,10 +26,6 @@ ia_payment_methods_config:
 ia_payment_paypal_prepare:
     path:     /paypal/prepare
     defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:prepare }
-
-ia_payment_paypal_capture:
-   path:     /paypal/capture/{payum_token}
-   defaults: { _controller: IAPaymentBundle:PaymentMethod/PaypalPro:capture }
        
 ia_payment_paypal_done:
     path:     /paypal/done

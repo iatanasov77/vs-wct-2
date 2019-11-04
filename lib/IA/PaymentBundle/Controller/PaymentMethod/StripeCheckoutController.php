@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StripeCheckoutController extends PayumController
 {
+    const GATEWAY   = 'stripe_checkout_gateway';
+    
     public function prepareAction( Request $request )
     {
-        $gatewayName = 'stripe_checkout_gateway';
-        
         $storage = $this->getPayum()->getStorage( PaymentModel::class );
      
         $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
@@ -24,7 +24,6 @@ class StripeCheckoutController extends PayumController
             throw new \Exception('Invalid Request!!!');
         }
         
-        /** @var PaymentDetails $details */
         $payment = $storage->create();
    
         $payment->setPaymentMethod( 'stripe' );
@@ -40,7 +39,7 @@ class StripeCheckoutController extends PayumController
         $storage->update( $payment );
         
         $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(
-            $gatewayName,
+            self::GATEWAY,
             $payment,
             'ia_payment_stripe_checkout_done' // the route to redirect after capture;
         );
@@ -51,12 +50,11 @@ class StripeCheckoutController extends PayumController
     public function doneAction( Request $request )
     {
         $token = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
-        
         $gateway = $this->getPayum()->getGateway( $token->getGatewayName() );
         
         $status = new GetHumanStatus( $token );
         $gateway->execute( $status );
-        $payment = $status->getFirstModel();
+        $payment = $status->getModel();
         
         if ( ! $status->isCaptured() ) {
             throw new HttpException(400, 'Billing agreement status is not success.');

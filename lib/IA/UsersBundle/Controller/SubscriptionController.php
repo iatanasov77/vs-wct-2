@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use IA\UsersBundle\Entity\UserSubscription;
+use IA\UsersBundle\Entity\UserActivity;
 use IA\UsersBundle\Entity\PackagePlan;
 
 /**
@@ -31,15 +32,30 @@ class SubscriptionController extends Controller
         $subscription->setDate( new \DateTime() );
         $subscription->setPlan( $this->getDoctrine()->getRepository( PackagePlan::class )->find( $paymentId ) );
         
+        $activity   = new UserActivity();
+        $activity->setUser( $this->getUser() );
+        $activity->setDate( new \DateTime() );
+        $activity->setActivity( 
+            sprintf( 'User subscribed to the "%s". Payed with "%s"', 
+                $paymentDetails->getPackagePlan()->getDescription(), 
+                $paymentDetails->getPaymentMethod() 
+            )
+        );
+        
         $user = $this->getUser();
         $user->setSubscription( $subscription );
         
         $em = $this->getDoctrine()->getManager();
-        $em->persist($subscription);
+        $em->persist( $subscription );
+        $em->persist( $activity );
         $em->flush();
         
         return $this->redirect($this->generateUrl('ia_users_profile_show'));
     }
     
+    public function cancelAction( $subscriptionId, Request $request )
+    {
+        
+    }
 }
 

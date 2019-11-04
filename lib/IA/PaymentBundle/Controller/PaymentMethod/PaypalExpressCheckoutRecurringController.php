@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Core\Model\Payment;
 
 use IA\PaymentBundle\Entity\PaymentDetails;
+use IA\UsersBundle\Entity\UserActivity;
 
 /*
  * TEST ACCOUNTS
@@ -22,11 +23,11 @@ use IA\PaymentBundle\Entity\PaymentDetails;
 class PaypalExpressCheckoutRecurringController extends PayumController
 {
 
+    const GATEWAY   = 'paypal_express_checkout_recurring_payment';
+    
     public function prepareAction( Request $request )
     {
-        $gatewayName = 'paypal_express_checkout_recurring_payment';
-        
-        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
+        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlanId  = $request->query->get( 'packagePlanId' );
         $packagePlan = $ppr->find( $packagePlanId );
@@ -36,8 +37,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         
         if ( $request->isMethod( 'POST' ) ) {
             
-            $payum          = $this->getPayum();
-            $storage = $payum->getStorage( PaymentDetails::class );
+            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
 
             /** @var $agreement AgreementDetails */
             $payment = $storage->create();
@@ -56,8 +56,8 @@ class PaypalExpressCheckoutRecurringController extends PayumController
             
             $storage->update( $payment );
             
-            $captureToken = $payum->getTokenFactory()->createCaptureToken(
-                $gatewayName, $payment, 
+            $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
+                self::GATEWAY, $payment, 
                 'ia_payment_paypal_express_checkout_create_recurring_payment',
                 ['packagePlanId' => $packagePlanId]
             );
@@ -69,7 +69,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
 
         $tplVars = array(
             'packagePlan' => $packagePlan,
-            'gatewayName' => $gatewayName
+            'gatewayName' => self::GATEWAY
         );
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement.html.twig', $tplVars);
     }
@@ -126,7 +126,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         [BUILD]	"53779744"	
         [L_ERRORCODE0]	"11581"	
         [L_SHORTMESSAGE0]	"Invalid Data"	
-        [L_LONGMESSAGE0]	"Profile description is invalid"	
+        [L_LONGMESSAGE0]	"Profile description is invalid"
         [L_SEVERITYCODE0]	"Error"	
 
          */
@@ -160,8 +160,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
 
     public function cancelAction( $paymentId, Request $request )
     {
-        $gatewayName = 'paypal_express_checkout_recurring_payment';
-        $gateway = $this->getPayum()->getGateway( $gatewayName );
+        $gateway = $this->getPayum()->getGateway( self::GATEWAY );
         
         $ppr = $this->getDoctrine()->getRepository( 'IAPaymentBundle:PaymentDetails' );
         $payment = $ppr->find( $paymentId );
@@ -175,6 +174,20 @@ class PaypalExpressCheckoutRecurringController extends PayumController
             throw new HttpException(400, 'The model status must be success.');
         }
 
-        //return $this->redirect($token->getAfterUrl());
+        // Add User Activity
+        $activity   = new UserActivity();
+        $activity->setUser( $this->getUser() );
+        $activity->setDate( new \DateTime() );
+        $activity->setActivity(
+            sprintf( 'User cancel recurring payment for "%s".',
+                $payment->getPaymentMethod()
+            )
+        );
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist( $activity );
+        $em->flush();
+        
+        return $this->redirect( $this->generateUrl( 'ia_users_profile_show' ) );
     }
 }
