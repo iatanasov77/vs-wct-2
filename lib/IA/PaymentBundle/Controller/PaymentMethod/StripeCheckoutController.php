@@ -8,6 +8,7 @@ use Payum\Core\Security\SensitiveValue;
 use Payum\Core\Request\GetHumanStatus;
 
 use IA\PaymentBundle\Entity\PaymentModel;
+use IA\PaymentBundle\Entity\PaymentDetails;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StripeCheckoutController extends PayumController
@@ -16,7 +17,8 @@ class StripeCheckoutController extends PayumController
     
     public function prepareAction( Request $request )
     {
-        $storage = $this->getPayum()->getStorage( PaymentModel::class );
+        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
+        //$storage = $this->getPayum()->getStorage( PaymentModel::class );
      
         $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
@@ -25,16 +27,24 @@ class StripeCheckoutController extends PayumController
         }
         
         $payment = $storage->create();
-   
+        
+        $payment->setType( PaymentDetails::TYPE_PAYMENT );
         $payment->setPaymentMethod( 'stripe' );
         $payment->setPackagePlan( $packagePlan );
         
-        $payment->setNumber( uniqid() );
-        $payment->setCurrencyCode( $packagePlan->getCurrency() );
-        $payment->setTotalAmount( $packagePlan->getPrice() );
-        $payment->setDescription( $packagePlan->getDescription() );
-        $payment->setClientId( 'anId' );
-        $payment->setClientEmail( 'foo@example.com' );
+//         $payment->setNumber( uniqid() );
+//         $payment->setCurrencyCode( $packagePlan->getCurrency() );
+//         $payment->setTotalAmount( $packagePlan->getPrice() );
+//         $payment->setDescription( $packagePlan->getDescription() );
+//         $payment->setClientId( 'anId' );
+//         $payment->setClientEmail( 'foo@example.com' );
+
+        $payment['number']          = uniqid();
+        $payment['currencyCode']    = $packagePlan->getCurrency();
+        $payment['totalAmount']     = $packagePlan->getPrice();
+        $payment['description']     = $packagePlan->getDescription();
+        $payment['clientId']        = 'anId';
+        $payment['clientEmail']     = 'foo@example.com';
         
         $storage->update( $payment );
         

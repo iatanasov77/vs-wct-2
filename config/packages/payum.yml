@@ -4,7 +4,6 @@ payum:
         Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
         
         IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
-        IA\PaymentBundle\Entity\PaymentRestDetails: { doctrine: orm }
         IA\PaymentBundle\Entity\PaymentModel: { doctrine: orm }
 
     security:
