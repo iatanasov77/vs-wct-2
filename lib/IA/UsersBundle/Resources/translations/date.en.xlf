@@ -3,61 +3,56 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
-            </trans-unit>
-            
-            <trans-unit id="diff.ago.year">
                 <source>diff.ago.year</source>
-                <target>vor einem Jahr|vor %count% Jahren</target>
+                <target>1 year ago|%count% years ago</target>
             </trans-unit>
-            <trans-unit id="diff.ago.month">
+            <trans-unit id="2">
                 <source>diff.ago.month</source>
-                <target>vor einem Monat|vor %count% Monaten</target>
+                <target>1 month ago|%count% months ago</target>
             </trans-unit>
-            <trans-unit id="diff.ago.day">
+            <trans-unit id="3">
                 <source>diff.ago.day</source>
-                <target>vor %count% Tag|vor %count% Tagen</target>
+                <target>1 day ago|%count% days ago</target>
             </trans-unit>
-            <trans-unit id="diff.ago.hour">
+            <trans-unit id="4">
                 <source>diff.ago.hour</source>
-                <target>vor einer Stunde|vor %count% Stunden</target>
+                <target>1 hour ago|%count% hours ago</target>
             </trans-unit>
-            <trans-unit id="diff.ago.minute">
+            <trans-unit id="5">
                 <source>diff.ago.minute</source>
-                <target>vor einer Minute|vor %count% Minuten</target>
+                <target>1 minute ago|%count% minutes ago</target>
             </trans-unit>
-            <trans-unit id="diff.ago.second">
+            <trans-unit id="6">
                 <source>diff.ago.second</source>
-                <target>vor einer Sekunde|vor %count% Sekunden</target>
+                <target>1 second ago|%count% seconds ago</target>
             </trans-unit>
-            <trans-unit id="diff.empty">
+            <trans-unit id="7">
                 <source>diff.empty</source>
-                <target>jetzt</target>
+                <target>now</target>
             </trans-unit>
-            <trans-unit id="diff.in.second">
+            <trans-unit id="8">
                 <source>diff.in.second</source>
-                <target>in einer Sekunde|in %count% Sekunden</target>
+                <target>in 1 second|in %count% seconds</target>
             </trans-unit>
-            <trans-unit id="diff.in.hour">
+            <trans-unit id="9">
                 <source>diff.in.hour</source>
-                <target>in einer Stunde|in %count% Stunden</target>
+                <target>in 1 hour|in %count% hours</target>
             </trans-unit>
-            <trans-unit id="diff.in.minute">
+            <trans-unit id="10">
                 <source>diff.in.minute</source>
-                <target>in einer Minute|in %count% Minuten</target>
+                <target>in 1 minute|in %count% minutes</target>
             </trans-unit>
-            <trans-unit id="diff.in.day">
+            <trans-unit id="11">
                 <source>diff.in.day</source>
-                <target>in einem Tag|in %count% Tagen</target>
+                <target>in 1 day|in %count% days</target>
             </trans-unit>
-            <trans-unit id="diff.in.month">
+            <trans-unit id="12">
                 <source>diff.in.month</source>
-                <target>in einem Monat|in %count% Monaten</target>
+                <target>in 1 month|in %count% months</target>
             </trans-unit>
-            <trans-unit id="diff.in.year">
+            <trans-unit id="13">
                 <source>diff.in.year</source>
-                <target>in einem Jahr|in %count% Jahren</target>
+                <target>in 1 year|in %count% years</target>
             </trans-unit>
         </body>
     </file>
