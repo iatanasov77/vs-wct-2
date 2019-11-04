@@ -31,6 +31,16 @@ class User extends BaseUser implements ResourceInterface
      */
     protected $subscription;
     
+    /**
+     * @ORM\OneToMany(targetEntity="IA\UsersBundle\Entity\UserActivity", mappedBy="user")
+     */
+    protected $activities;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="IA\UsersBundle\Entity\UserNotification", mappedBy="user")
+     */
+    protected $notifications;
+    
     // She ti eba i formite
     public function __get( $var )
     {
@@ -62,6 +72,22 @@ class User extends BaseUser implements ResourceInterface
         $this->subscription = $subscription;
         
         return $this;
+    }
+    
+    /**
+     * @return Collection|UserActivity[]
+     */
+    public function getActivities()
+    {
+        return $this->activities;
+    }
+    
+    /**
+     * @return Collection|UserActivity[]
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 
     public function __toString()

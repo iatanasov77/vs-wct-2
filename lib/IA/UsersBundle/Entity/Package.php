@@ -7,7 +7,7 @@ use Sylius\Component\Resource\Model\ToggleableTrait;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="IAPM_Packages")
+ * @ORM\Table(name="IAUM_Packages")
  */
 class Package implements ResourceInterface
 {

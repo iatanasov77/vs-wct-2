@@ -21,6 +21,7 @@ class ProfileController extends Controller
         $subscriptionDetails    = $this->userSubscriptionDetails();
         
         return $this->render( 'IAUsersBundle:Profile:show.html.twig', [
+            'user'                  => $this->getUser(),
             'subscription'          => $this->getUser()->getSubscription(),
             'subscriptionDetails'   => $subscriptionDetails,
             'form'                  => $form->createView(),

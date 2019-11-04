@@ -7,7 +7,7 @@ use Sylius\Component\Resource\Model\ToggleableTrait;
 /**
  * Plan
  *
- * @ORM\Table(name="IAPM_Plans")
+ * @ORM\Table(name="IAUM_Plans")
  * @ORM\Entity
  */
 class Plan implements ResourceInterface

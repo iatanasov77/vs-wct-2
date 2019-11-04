@@ -14,3 +14,5 @@ registration:
     websiteUrl: 'Уеб сайт'
     createAccount: 'Създай Акаунт'
     
+diff.ago.hour: vor einer Stunde|vor %count% Stunden
+    

@@ -11,3 +11,5 @@ form:
     enabled: 'Enabled'
     save: 'Save'
     cancel: 'Cancel'
+
+diff.ago.hour: vor einer Stunde|vor %count% Stunden
