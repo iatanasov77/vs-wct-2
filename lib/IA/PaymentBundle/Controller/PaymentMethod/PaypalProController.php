@@ -53,7 +53,7 @@ class PaypalProController extends PayumController
             $payment = $storage->create();
             
             $payment->setType( PaymentDetails::TYPE_PAYMENT );
-            $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
+            $payment->setPaymentMethod( 'paypal_pro_checkout' );
             $payment->setPackagePlan( $packagePlan );
             
             $payment['ACCT']        = new SensitiveValue( $data['acct'] );

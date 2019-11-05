@@ -6,8 +6,12 @@ use IA\UsersBundle\Entity\UserSubscription;
 
 class UserSubscriptionRepository extends EntityRepository
 {
-    public function isActive( UserSubscription $subscription )
+    public function isActive( $subscription )
     {
+        if ( ! $subscription instanceof UserSubscription ) {
+            return false;
+        }
+        
         $payment    = $subscription->getPaymentDetails();
         
         if ( $payment->getPaymentMethod() == 'paypal_express_checkout_recurring_payment' ) {

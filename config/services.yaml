@@ -109,3 +109,12 @@ services:
         #arguments: [ @service_container ]
         calls:
             #- [setForm, [ @ia_web_content_thief.processor_form.prestashop15 ]]
+            
+    ia_payment_builder:
+        public: true
+        autowire: true
+        class: IA\PaymentBundle\Component\Payment\PaymentBuilder
+        arguments: ["@payum"]
+        
+
+        

@@ -13,7 +13,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Payum\Core\Model\Payment;
 
 use IA\PaymentBundle\Entity\PaymentDetails;
+use IA\PaymentBundle\Entity\PaymentModel;
 use IA\UsersBundle\Entity\UserActivity;
+
+use IA\PaymentBundle\Component\PaymentBuilder;
 
 /*
  * TEST ACCOUNTS
@@ -23,7 +26,7 @@ use IA\UsersBundle\Entity\UserActivity;
 class PaypalExpressCheckoutRecurringController extends PayumController
 {
 
-    const GATEWAY   = 'paypal_express_checkout_recurring_payment';
+    const GATEWAY   = 'paypal_express_checkout_gateway';
     
     public function prepareAction( Request $request )
     {
@@ -37,22 +40,14 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         
         if ( $request->isMethod( 'POST' ) ) {
             
-            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
-
-            /** @var $agreement AgreementDetails */
-            $payment = $storage->create();
+            $payment    = $this->get('ia_payment_builder')->build( $this->getUser(), $packagePlan );
             
-            $payment->setType( PaymentDetails::TYPE_AGREEMENT );
-            $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
-            $payment->setPackagePlan( $packagePlan );
-            
-            $details    = [
+            $payment->setDetails([
                 'PAYMENTREQUEST_0_AMT'          => 0,
                 'L_BILLINGTYPE0'                => Api::BILLINGTYPE_RECURRING_PAYMENTS,
                 'L_BILLINGAGREEMENTDESCRIPTION0'=> $packagePlan->getDescription(),
                 'NOSHIPPING'                    => 1
-            ];
-            $payment->setDetails( $details );
+            ]);
             
             $storage->update( $payment );
             
@@ -92,8 +87,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         
         $gateway->execute( $status );
         
-        
-        if ( ! $status->isCaptured() ) {
+        if ( ! $status->isCaptured() && ! $status->isPending() ) {
             throw new HttpException( 400, 'Billing agreement status is not success.' );
         }
         
