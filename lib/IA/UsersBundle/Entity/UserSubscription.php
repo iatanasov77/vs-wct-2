@@ -2,7 +2,7 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
-use IA\PaymentBundle\Entity\PaymentDetails;
+use IA\PaymentBundle\Entity\Payment;
 
 /**
  * Plan
@@ -44,7 +44,7 @@ class UserSubscription
 
 
     /**
-     * @ORM\OneToOne(targetEntity="IA\PaymentBundle\Entity\PaymentDetails", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="IA\PaymentBundle\Entity\Payment", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="paymentDetailsId", referencedColumnName="id", nullable=true)
      */
     private $paymentDetails;
@@ -107,7 +107,7 @@ class UserSubscription
         return $this->paymentDetails;
     }
 
-    function setPaymentDetails(PaymentDetails $paymentDetails)
+    function setPaymentDetails(Payment $paymentDetails)
     {
         $this->paymentDetails = $paymentDetails;
 

@@ -1,18 +1,16 @@
-<?php
-namespace IA\PaymentBundle\Entity;
+<?php namespace IA\PaymentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Payum\Core\Model\ArrayObject;
+use Payum\Core\Model\Payment as BasePayment;
 use IA\UsersBundle\Entity\PackagePlan;
 
 /**
- * @ORM\Table(name="IAP_PaymentDetails")
+ * @ORM\Table(name="IAP_Payments")
  * @ORM\Entity
  */
-class PaymentDetails extends ArrayObject
+class Payment extends BasePayment
 {
-    const TYPE_AGREEMENT    = 'agreement';
-    const TYPE_PAYMENT      = 'payment';
+    
     
     /**
      * @ORM\Column(name="id", type="integer")
@@ -34,13 +32,6 @@ class PaymentDetails extends ArrayObject
      * @ORM\Column(name="paymentMethod", type="string", length=64, nullable=false)
      */
     protected $paymentMethod;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", columnDefinition="enum('agreement', 'payment')")
-     */
-    protected $type;
 
     /**
      * @return int
@@ -87,17 +78,5 @@ class PaymentDetails extends ArrayObject
     public function getDetails()
     {
         return $this->details;
-    }
-    
-    public function setType($type)
-    {
-        $this->type = $type;
-        
-        return $this;
-    }
-    
-    public function getType()
-    {
-        return $this->type;
     }
 }

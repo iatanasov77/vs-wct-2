@@ -13,11 +13,13 @@ class UserSubscriptionRepository extends EntityRepository
         }
         
         $payment    = $subscription->getPaymentDetails();
+        $details    = $payment->getDetails();
         
         if ( $payment->getPaymentMethod() == 'paypal_express_checkout_recurring_payment' ) {
-            return $payment["STATUS"] === "Active";
+            //return $details["STATUS"] === "Active";
+            return $details["STATUS"] !== "Cancelled";
         } else if ( $payment->getPaymentMethod() == 'paypal_express_checkout' ) {
-            return $payment["CHECKOUTSTATUS"] === "PaymentActionCompleted";
+            return $details["CHECKOUTSTATUS"] === "PaymentActionCompleted";
         } elseif ( $payment->getPaymentMethod() == 'paypal_pro_checkout_credit_card' ) {
             return true;
         } else {

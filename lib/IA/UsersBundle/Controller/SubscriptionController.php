@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use IA\UsersBundle\Entity\UserSubscription;
 use IA\UsersBundle\Entity\UserActivity;
 use IA\UsersBundle\Entity\PackagePlan;
-
+use IA\PaymentBundle\Entity\Payment;
 /**
  * @TODO Ã�â€�Ã�Â° Ã‘ï¿½Ã�Âµ Ã�Â¿Ã‘â‚¬Ã�ÂµÃ�Â¼Ã�ÂµÃ‘ï¿½Ã‘â€šÃ‘ï¿½Ã‘â€š Ã�ÂºÃ�Â¾Ã�Â½Ã‘â€šÃ‘â‚¬Ã�Â¾Ã�Â»Ã�ÂµÃ‘â‚¬Ã�Â¸Ã‘â€šÃ�Âµ Ã�Â·Ã�Â° Ã�Â¿Ã�Â»Ã�Â°Ã‘â€°Ã�Â°Ã�Â½Ã�ÂµÃ‘â€šÃ�Â¾ Ã�Â² Ã‘â€šÃ�Â¾Ã�Â·Ã�Â¸ Ã�Â±Ã‘Å Ã�Â½Ã�Â´Ã‘Å Ã�Â» (Ã�ÂºÃ�Â°Ã‘â€šÃ�Â¾ Ã�Â½Ã�Â°Ã�Â¿Ã‘â‚¬Ã�Â¸Ã�Â¼Ã�ÂµÃ‘â‚¬ RecurringPaymentController).
  */
@@ -21,7 +21,7 @@ class SubscriptionController extends Controller
     
     public function createAction( $paymentId, Request $request )
     {
-        $pdr = $this->getDoctrine()->getRepository('IA\PaymentBundle\Entity\PaymentDetails');
+        $pdr = $this->getDoctrine()->getRepository( Payment::class );
         $paymentDetails = $pdr->find($paymentId);
         if(!$paymentDetails) {
             throw new Exception('Error with payment.');

@@ -1,14 +1,11 @@
 payum:              
     storages:
-        Payum\Core\Model\Payment: { doctrine: orm }
-        Payum\Paypal\Rest\Model\PaymentDetails: { doctrine: orm }
-        
-        IA\PaymentBundle\Entity\PaymentDetails: { doctrine: orm }
-        IA\PaymentBundle\Entity\PaymentModel: { doctrine: orm }
+        IA\PaymentBundle\Entity\Agreement: { doctrine: orm }
+        IA\PaymentBundle\Entity\Payment: { doctrine: orm }
 
     security:
         token_storage:
-            IA\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
+            IA\PaymentBundle\Entity\Token: { doctrine: orm }
 
     gateways:
         offline_gateway:

@@ -2,25 +2,42 @@
 
 use Payum\Core\Payum;
 
-use IA\PaymentBundle\Entity\PaymentModel;
+use IA\PaymentBundle\Entity\Agreement;
+use IA\PaymentBundle\Entity\Payment;
 
 class PaymentBuilder
 {
     private $payum;
+    private $storage;
     
     public function __construct( Payum $payum )
     {
         $this->payum   = $payum;
     }
     
-    public function build( $user, $packagePlan ) 
+    public function updateStorage( $model )
     {
-        $storage = $this->payum->getStorage( PaymentModel::class );
+        $this->storage->update( $model );
+    }
+    
+    public function buildAgreement( $user, $packagePlan ) 
+    {
+        $this->storage = $this->payum->getStorage( Agreement::class );
         
         /** @var $agreement AgreementDetails */
-        $payment = $storage->create();
+        $agreement = $this->storage->create();
         
-        $payment->setType( PaymentDetails::TYPE_AGREEMENT );
+        $agreement->setPackagePlan( $packagePlan );
+        
+        return $agreement;
+    }
+    
+    public function buildPayment( $user, $packagePlan )
+    {
+        $this->storage = $this->payum->getStorage( Payment::class );
+        
+        $payment = $this->storage->create();
+        
         $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setPackagePlan( $packagePlan );
         
@@ -28,8 +45,8 @@ class PaymentBuilder
         $payment->setCurrencyCode( $packagePlan->getCurrency() );
         $payment->setTotalAmount( $packagePlan->getPrice() );
         $payment->setDescription( $packagePlan->getCurrency() );
-        $payment->setClientId( $this->getUser()->getId() );
-        $payment->setClientEmail( $this->getUser()->getEmail() );
+        $payment->setClientId( $user->getId() );
+        $payment->setClientEmail( $user->getEmail() );
         
         return $payment;
     }
