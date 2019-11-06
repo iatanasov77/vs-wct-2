@@ -35,7 +35,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         $packagePlanId  = $request->query->get( 'packagePlanId' );
         $packagePlan = $ppr->find( $packagePlanId );
         if ( ! $packagePlan ) {
-            throw new \Exception('Invalid Request!!!');
+            throw new \Exception( 'Invalid Request!!!' );
         }
         
         if ( $request->isMethod( 'POST' ) ) {
@@ -64,10 +64,10 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         }
 
         $tplVars = array(
-            'packagePlan' => $packagePlan,
-            'gatewayName' => self::GATEWAY
+            'formAction'    => $this->generateUrl( 'ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement' ) . '?packagePlanId=' . $packagePlan->getId(),
+            'packagePlan' => $packagePlan
         );
-        return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement.html.twig', $tplVars);
+        return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:CheckoutForm.html.twig', $tplVars);
     }
 
     public function createRecurringPaymentAction( $packagePlanId, Request $request )
@@ -80,7 +80,10 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         }
         
         $token          = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
+        
+        // you can invalidate the token. The url could not be requested any more.
         $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
+        
         $gatewayName    = $token->getGatewayName();
         
         $gateway        = $this->getPayum()->getGateway( $token->getGatewayName() );
@@ -113,7 +116,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         $gateway->execute( new CreateRecurringPaymentProfile( $payment ) );
         $gateway->execute( new Sync( $payment ) );
         
-        $this->runWorkAround( $payment );
+        $this->runWorkаround( $payment );
         
         /*
          IF THERE IS AN ERROR ON EXECUTE THE GATEWAY SET THISE FIELDS
@@ -136,6 +139,8 @@ class PaypalExpressCheckoutRecurringController extends PayumController
     public function doneAction( Request $request )
     {
         $token      = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
+        
+        // you can invalidate the token. The url could not be requested any more.
         $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
         
         $gateway    = $this->getPayum()->getGateway( $token->getGatewayName() );
@@ -187,7 +192,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         return $this->redirect( $this->generateUrl( 'ia_users_profile_show' ) );
     }
     
-    private function runWorkAround( $payment )
+    private function runWorkаround( $payment )
     {
         // WORKAROUND
         $conn = $this->getDoctrine()->getManager()->getConnection();

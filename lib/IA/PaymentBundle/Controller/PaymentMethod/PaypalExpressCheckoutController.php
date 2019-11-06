@@ -1,17 +1,10 @@
 <?php namespace IA\PaymentBundle\Controller\PaymentMethod;
 
-use Payum\Bundle\PayumBundle\Controller\PayumController;
-use Payum\Core\Request\Cancel;
-use Payum\Core\Security\GenericTokenFactoryInterface;
-use Payum\Paypal\ExpressCheckout\Nvp\Request\Api\CreateRecurringPaymentProfile;
-use Payum\Paypal\ExpressCheckout\Nvp\Api;
-use Payum\Core\Request\Sync;
-use Payum\Core\Request\GetHumanStatus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use IA\PaymentBundle\Entity\PaymentDetails;
-
+use Payum\Bundle\PayumBundle\Controller\PayumController;
+use Payum\Core\Request\GetHumanStatus;
 
 /*
  * TEST ACCOUNTS
@@ -24,32 +17,25 @@ class PaypalExpressCheckoutController extends PayumController
     
     public function prepareAction( Request $request )
     {
-        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
+        $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
         
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
         if ( ! $packagePlan ) {
-            throw new \Exception('Invalid Request!!!');
+            throw new \Exception( 'Invalid Request!!!' );
         }
 
         if ( $request->isMethod( 'POST' ) ) {
-            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
-
-            /** @var $agreement AgreementDetails */
-            $payment = $storage->create();
+            $pb         = $this->get( 'ia_payment_builder' );
+            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
             
-            $payment->setType( PaymentDetails::TYPE_PAYMENT );
-            $payment->setPaymentMethod( 'paypal_express_checkout' );
-            $payment->setPackagePlan( $packagePlan );
-            
-            $details    = [
+            $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
+            $payment->setDetails([
                 'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice(),
                 'PAYMENTREQUEST_0_CURRENCYCODE' => $packagePlan->getCurrency(),
                 'PAYMENTREQUEST_0_DESC'         => $packagePlan->getDescription(),
                 'NOSHIPPING'                    => 1
-            ];
-            $payment->setDetails( $details );
-            
-            $storage->update( $payment );
+            ]);
+            $pb->updateStorage( $payment );
             
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
                 self::GATEWAY, 
@@ -61,25 +47,28 @@ class PaypalExpressCheckoutController extends PayumController
         }
 
         $tplVars = array(
-            'packagePlan' => $packagePlan,
-            'gatewayName' => self::GATEWAY
+            'formAction'    => $this->generateUrl( 'ia_payment_paypal_express_checkout_prepare' ) . '?packagePlanId=' . $packagePlan->getId(),
+            'packagePlan'   => $packagePlan
         );
-        return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:createAgreement.html.twig', $tplVars);
+        return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:CheckoutForm.html.twig', $tplVars);
     }
 
     public function doneAction( Request $request )
     {
         $token      = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
+        
+        // you can invalidate the token. The url could not be requested any more.
+        $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
+        
         $gateway    = $this->getPayum()->getGateway( $token->getGatewayName() );
         $status     = new GetHumanStatus( $token );
         
         $gateway->execute( $status );
       
         if ( false == $status->isPending() ) {
-            throw new HttpException(400, 'Billing agreement status is not success.');
+            throw new HttpException( 400, 'Billing agreement status is not success.' );
         }
-
-        $payment        = $status->getModel();
+        $payment        = $status->getFirstModel();
 
         return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', ['paymentId' => $payment->getId()] ) );
     }

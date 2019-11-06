@@ -35,10 +35,10 @@ ia_payment:
             name: 'Credit Card (PayPal Pro)'
             gateway: paypal_pro_checkout_gateway
             route: ia_payment_paypal_prepare
-        paypal_express_checkout:
+        paypal_express_checkout_NOT_recurring_payment:
             name: 'Express Checkout (PayPal)'
             gateway: paypal_express_checkout
-            route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
+            route: ia_payment_paypal_express_checkout_prepare
         paypal_express_checkout_recurring_payment:
             name: 'Recurring Checkout (PayPal)'
             gateway: paypal_express_checkout
