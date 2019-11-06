@@ -16,8 +16,7 @@ class UserSubscriptionRepository extends EntityRepository
         $details    = $payment->getDetails();
         
         if ( $payment->getPaymentMethod() == 'paypal_express_checkout_recurring_payment' ) {
-            //return $details["STATUS"] === "Active";
-            return $details["STATUS"] !== "Cancelled";
+            return $details["STATUS"] === "Active";
         } else if ( $payment->getPaymentMethod() == 'paypal_express_checkout' ) {
             return $details["CHECKOUTSTATUS"] === "PaymentActionCompleted";
         } elseif ( $payment->getPaymentMethod() == 'paypal_pro_checkout_credit_card' ) {
