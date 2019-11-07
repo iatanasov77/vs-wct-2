@@ -28,6 +28,7 @@ class IAPaymentExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         
+        $container->setParameter('ia_payment.accounts', $config['payment_accounts']);
         $container->setParameter('ia_payment.methods', $config['payment_methods']);
     }
     

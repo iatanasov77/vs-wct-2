@@ -21,6 +21,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ia_payment');
 
         $rootNode->children()
+            ->arrayNode('payment_accounts')->isRequired()
+            ->prototype('variable')
+            ->treatNullLike(array())
+        ;
+        
+        $rootNode->children()
             ->arrayNode('payment_methods')->isRequired()
                 ->prototype('variable')
                 ->treatNullLike(array())

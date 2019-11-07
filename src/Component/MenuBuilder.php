@@ -42,7 +42,6 @@ class MenuBuilder implements ContainerAwareInterface
             $menu['Projects']->addChild('Edit Project', ['route' => 'ia_web_content_thief_projects_update', 'routeParameters' => ['id' => $request->query->get('id')]]);
         }
         
-        
         // Fieldsets
         $menu->addChild('Fieldsets', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_table')));
         $menu['Fieldsets']->addChild('List Fieldsets', array('route' => 'ia_web_content_thief_fieldsets_index'));
@@ -50,8 +49,6 @@ class MenuBuilder implements ContainerAwareInterface
             'route' => 'ia_web_content_thief_fieldsets_create',
             'routeParameters' => array('id' => 0)
         ));
-        
-        
         
         if($this->isAdmin) {
             // Users
@@ -81,8 +78,10 @@ class MenuBuilder implements ContainerAwareInterface
                 'routeParameters' => array('id' => 0)
             ));
             
-            // Payment Methods
-            $menu->addChild('Payment Methods', array('route' => 'ia_payment_methods_index', 'attributes' => array('iconClass' => 'icon_genius')));
+            // Payment and Payum Configuration
+            $menu->addChild('Payment', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_genius')));
+            
+            $menu['Payment']->addChild( 'Payment Methods', array('route' => 'ia_payment_methods_index'));
             
             // Taxonomy
             $menu->addChild('Taxonomy', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_genius')));

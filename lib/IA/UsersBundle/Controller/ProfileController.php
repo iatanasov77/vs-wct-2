@@ -17,7 +17,8 @@ class ProfileController extends Controller
         $pr                     = $this->getDoctrine()->getRepository( 'IAUsersBundle:Package' );
         $packages               = $pr->findAll();
         
-        $paymentMethods         = $this->container->getParameter( 'ia_payment.methods' ); 
+        $paymentMethods         = $this->container->getParameter( 'ia_payment.methods' );
+        //var_dump( $this->container->getParameter( 'ia_payment.accounts' ) ); die;
         $subscriptionDetails    = $this->userSubscriptionDetails();
         
         return $this->render( 'IAUsersBundle:Profile:show.html.twig', [

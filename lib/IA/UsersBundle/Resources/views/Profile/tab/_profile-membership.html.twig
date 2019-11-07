@@ -4,25 +4,26 @@
         <h1>Available Packages and Plans</h1>
         <div class="row">
             {% for pack in packages %}
-                <fieldset class="fieldset-project-fields" style="width: 100%;">
-                    <legend  class="w-auto">{{ pack.title }} </legend>
-                    {% for plan in pack.getPlans() %}
+            	{% for plan in pack.getPlans() %}
+	                <fieldset class="fieldset-project-fields" style="width: 100%;">
+	                    <legend  class="w-auto">{{ pack.title }} </legend>
                         <div class="row">
 	                        <div class="d-flex justify-content-between align-items-center">
 	                            <div class="col-lg-12 col-lg-offset-1">
-	                                <span>{{ plan.getPlan() }} </span>: {{ plan.getPrice() }}
+	                                <span>{{ plan.getPlan() }} </span>: {{ plan.getPrice() }} {{ plan.getCurrency() }}
 	                            </div>
 	                            {% if ( subscription and subscriptionDetails.active ) %}
-	                                <span style="color:red; font-weight: bold;">Subscribed</span>
-	                                
-	                                {% if subscription.getPaymentMethod() == 'paypal_express_checkout_recurring_payment' %}
-	                                	<div class="ml-4">
-	                                    	<a class="btn btn-primary btn-sm" href="{{ path( 'ia_payment_paypal_express_checkout_cancel_recurring_payment', {'paymentId': subscription.getPaymentDetails().getId()} ) }}">
-	                                    		Cancel Recurring Payment
-	                                    	</a>
-	                                    </div>
-	                                {% endif %}
-	
+	                            	{% if ( subscription.paymentDetails.packagePlan.id == plan.id ) %}
+		                                <span style="color:red; font-weight: bold;">Subscribed</span>
+		                                
+		                                {% if subscription.getPaymentMethod() == 'paypal_express_checkout_recurring_payment' %}
+		                                	<div class="ml-4">
+		                                    	<a class="btn btn-primary btn-sm" href="{{ path( 'ia_payment_paypal_express_checkout_cancel_recurring_payment', {'paymentId': subscription.getPaymentDetails().getId()} ) }}">
+		                                    		Cancel Recurring Payment
+		                                    	</a>
+		                                    </div>
+		                                {% endif %}
+									{% endif %}
 	                            {% else %}
 	                                <a class="btn btn-primary" 
 	                                    data-remote="false"  
@@ -37,8 +38,9 @@
 	                            {% endif %}
 	                        </div>
                         </div>
-                    {% endfor %}
-                </fieldset>
+	                </fieldset>
+	                <div class="row"><div class="col-lg-12 col-lg-offset-1">&nbsp;</div></div>
+	            {% endfor %}
             {% endfor %}
         </div>
     </div>

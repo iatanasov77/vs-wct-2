@@ -30,20 +30,35 @@ payum:
             sandbox: true
 
 ia_payment:
+    payment_accounts:
+        paypal_us:
+            username: 'sb-ks1wh402232_api1.business.example.com'
+            password: '8PRXKLWZFPYBZDKB'
+            signature: 'Ajqso8A-uDUaXxl-CdVBwnXhzMsTAEdVwItx7t0TyVJeh7oICslAmTot'
+            currency: 'USD'
+        paypal_gr:
+            username: 'sb-5omhg442982_api1.business.example.com'
+            password: 'TR5QB2XTSX6WLQU2'
+            signature: 'AQbpL6L3kklGXOsBTDOVNveW4eb0A5Vl4cT2ufCBKvenYrkodSTAF2Fi'
+            currency: 'EUR'
     payment_methods:
         paypal_pro_checkout:
             name: 'Credit Card (PayPal Pro)'
             gateway: paypal_pro_checkout_gateway
+            factory: paypal_pro_checkout_gateway
             route: ia_payment_paypal_prepare
         paypal_express_checkout_NOT_recurring_payment:
             name: 'Express Checkout (PayPal)'
             gateway: paypal_express_checkout
+            factory: paypal_pro_checkout_gateway
             route: ia_payment_paypal_express_checkout_prepare
         paypal_express_checkout_recurring_payment:
             name: 'Recurring Checkout (PayPal)'
             gateway: paypal_express_checkout
+            factory: paypal_pro_checkout_gateway
             route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
         stripe_checkout:
             name: 'Credit Card (STRIPE)'
             gateway: stripe_checkout
+            factory: paypal_pro_checkout_gateway
             route: ia_payment_stripe_checkout_prepare
