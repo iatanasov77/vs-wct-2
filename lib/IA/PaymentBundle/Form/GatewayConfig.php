@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+
 use IA\PaymentBundle\Form\Type\GatewayConfigType;
 
 /**
@@ -23,15 +28,15 @@ class GatewayConfig extends AbstractType
     {       
         $gatewayConfig = $options['data'];
         $builder
-            ->add('gatewayName', 'hidden')
-            ->add('factoryName', 'hidden')
-            ->add('useSandbox', 'checkbox', array('required'=>false))
+            ->add('gatewayName', HiddenType::class)
+            ->add('factoryName', HiddenType::class)
+            ->add('useSandbox', CheckboxType::class, array('required'=>false))
                 
-            ->add('config', new GatewayConfigType(), array('data' => $gatewayConfig->getConfig(false)))
-            ->add('sandboxConfig', new GatewayConfigType(), array('data' => $gatewayConfig->getSandboxConfig()))
+            ->add('config', GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false)))
+            ->add('sandboxConfig', GatewayConfigType::class, array('data' => $gatewayConfig->getSandboxConfig()))
             
-            ->add('btnSave', 'submit', array('label' => 'Save'))
-            ->add('btnCancel', 'button', array('label' => 'Cancel'))
+            ->add('btnSave', SubmitType::class, array('label' => 'Save'))
+            ->add('btnCancel', ButtonType::class, array('label' => 'Cancel'))
         ;
     }
 

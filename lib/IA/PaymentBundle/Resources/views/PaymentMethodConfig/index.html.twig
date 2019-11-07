@@ -21,7 +21,7 @@
                                 {{ loop.index }}
                             </td>
                             <td>
-                                <a href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': key}) }}">
+                                <a href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': config.gateway}) }}">
                                     {{ key }}
                                 </a>
                             </td>
@@ -29,7 +29,7 @@
                             <td>
                                 <div class="btn-group">
                                     <div class="btn-group">
-                                        <a class="btn btn-primary" href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': key}) }}">
+                                        <a class="btn btn-primary" href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': config.gateway}) }}">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                         </a>
                                         {#<a class="btn btn-danger btnDelete" href="{{ path('ia_payment_methods_config', {'gateway': key}) }}">

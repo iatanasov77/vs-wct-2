@@ -47,7 +47,7 @@ class PaymentMethodConfigController extends PayumController
             $gatewayConfig->setConfig($defaultOptions);
             
         }
-        $form = $this->createForm(new GatewayConfig(), $gatewayConfig);
+        $form = $this->createForm( GatewayConfig::class, $gatewayConfig);
      
         // Form Submit
         $form->handleRequest($request);
