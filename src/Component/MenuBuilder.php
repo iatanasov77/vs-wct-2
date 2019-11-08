@@ -81,6 +81,7 @@ class MenuBuilder implements ContainerAwareInterface
             // Payment and Payum Configuration
             $menu->addChild('Payment', array('uri' => 'javascript:;', 'attributes' => array('iconClass' => 'icon_genius')));
             
+            $menu['Payment']->addChild( 'Payum Gateways', array('route' => 'ia_payment_gateways_index'));
             $menu['Payment']->addChild( 'Payment Methods', array('route' => 'ia_payment_methods_index'));
             
             // Taxonomy

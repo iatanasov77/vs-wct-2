@@ -49,16 +49,16 @@ ia_payment:
             route: ia_payment_paypal_prepare
         paypal_express_checkout_NOT_recurring_payment:
             name: 'Express Checkout (PayPal)'
-            gateway: paypal_express_checkout
+            gateway: paypal_express_checkout_gateway
             factory: paypal_express_checkout
             route: ia_payment_paypal_express_checkout_prepare
         paypal_express_checkout_recurring_payment:
             name: 'Recurring Checkout (PayPal)'
-            gateway: paypal_express_checkout
+            gateway: paypal_express_checkout_gateway
             factory: paypal_express_checkout
             route: ia_payment_paypal_express_checkout_prepare_recurring_payment_agreement
         stripe_checkout:
             name: 'Credit Card (STRIPE)'
-            gateway: stripe_checkout
+            gateway: stripe_checkout_gateway
             factory: stripe_checkout
             route: ia_payment_stripe_checkout_prepare

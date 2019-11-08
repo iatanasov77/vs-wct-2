@@ -1,4 +1,19 @@
-# Payum routes
+# Payment Methods and Payum Gateways Config
+ia_payment_gateways_index:
+    path:     /gateways
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:index }
+ia_payment_gateways_config:
+    path:     /gateways/config/{gatewayName}
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:config }
+ia_payment_methods_index:
+    path:     /methods
+    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
+ia_payment_methods_config:
+    path:     /methods/config/{gatewayFactory}/{gatewayName}
+    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
+ 
+
+# Payum Payments
 payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
 payum_notify:
@@ -12,16 +27,11 @@ ia_payment_stripe_checkout_capture:
    path:     /stripe/checkout/capture
    defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:capture }
 
+
 ia_payment_stripe_checkout_done:
    path:     /stripe/checkout/done
    defaults: { _controller: IAPaymentBundle:PaymentMethod/StripeCheckout:done }
-   
-ia_payment_methods_index:
-    path:     /methods
-    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
-ia_payment_methods_config:
-    path:     /methods/config/{gatewayFactory}/{gatewayName}
-    defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
+
 
 ia_payment_paypal_prepare:
     path:     /paypal/prepare
