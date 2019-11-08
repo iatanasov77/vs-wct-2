@@ -58,7 +58,7 @@ class GatewayConfigController extends PayumController
             $gatewayConfigStorage->update($gatewayConfig);
         }
         
-        return $this->render('IAPaymentBundle:PaymentMethodConfig:config.html.twig', [
+        return $this->render('IAPaymentBundle:GatewayConfig:config.html.twig', [
             'gateway'   => $gatewayName,
             'form'      => $form->createView()
         ]);

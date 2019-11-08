@@ -36,8 +36,6 @@
                 	<div class="card-body">
 			            {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
 			                {{ form_widget(form._token) }}
-			                {{ form_widget(form.gatewayName) }}
-			                {{ form_widget(form.factoryName) }}
 			
 			                {% if form_errors(form) is not empty %}
 			                    <div class="alert alert-block alert-danger fade in">
@@ -51,12 +49,20 @@
 			                    <header class="panel-heading"> Payment Method Config </header>
 			                    <div class="panel-body">
 			                        <div class="form-row">
-			                            <label class="control-label col-lg-2 required">Gateway:</label>
-			                            <div class="col-lg-6" style="margin-top: 7px;">{{ form.gatewayName.vars.value }}</div>
+			                            {{ form_label(form.gatewayName, null, {
+                                            'label_attr': {'class': 'control-label col-lg-2'}
+                                            }) 
+                                        }}
+			                            {{ form_widget(form.gatewayName) }}
+			                            
 			                        </div> 
 			                    
 			                        <div class="form-row">    
-			                            <label class="control-label col-lg-2 required">Factory:</label>
+			                            {{ form_label(form.factoryName, null, {
+                                            'label_attr': {'class': 'control-label col-lg-2'}
+                                            }) 
+                                        }}
+			                            {{ form_widget(form.factoryName) }}
 			                            <div class="col-lg-6">{{ form.factoryName.vars.value }}</div>
 			                        </div>
 			                    {% if form.config.sandbox is defined %}

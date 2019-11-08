@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,8 +30,19 @@ class GatewayConfig extends AbstractType
     {       
         $gatewayConfig = $options['data'];
         $builder
-            ->add('gatewayName', HiddenType::class)
-            ->add('factoryName', HiddenType::class)
+            ->add('gatewayName', TextType::class, array('label' => 'Gateway'))
+            
+            ->add('factoryName', ChoiceType::class, [
+                'label' => 'Factory',
+                'choices'  => [
+                    '-- Select Factory --'  => '',
+                    'offline' => 'offline',
+                    'paypal_express_checkout' => 'paypal_express_checkout',
+                    'paypal_pro_checkout' => 'paypal_pro_checkout',
+                    'stripe_checkout' => 'stripe_checkout',
+                ],
+            ])
+            
             ->add('useSandbox', CheckboxType::class, array('required'=>false))
                 
             ->add('config', GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false)))
