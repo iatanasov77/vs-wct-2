@@ -105,6 +105,8 @@ Encore
     .addEntry('projects-edit', './assets/new-template/js/pages/projects-edit.js')
     
     .addEntry('taxonomy-vocabolarities', './assets/new-template/js/pages/taxonomy-vocabolarities.js')
+    
+    .addEntry('gateway-config', './assets/new-template/js/pages/gateway-config.js')
 ;
 
 // build the second configuration

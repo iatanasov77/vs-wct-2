@@ -1,21 +1,21 @@
-<?php
+<?php namespace IA\PaymentBundle\Controller;
 
-namespace IA\PaymentBundle\Controller;
-
-use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Symfony\Component\HttpFoundation\Request;
+use Payum\Bundle\PayumBundle\Controller\PayumController;
 
-use IA\PaymentBundle\Form\GatewayConfig;
+use IA\PaymentBundle\Form\PaymentMethod as PaymentMethodForm;
+use IA\PaymentBundle\Entity\PaymentMethod;
 
-use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
-
-class PaymentMethodConfigController extends PayumController 
+class PaymentMethodConfigController extends PayumController
 {
     
-    public function indexAction(Request $request)
-    {        
-        $tplVars = array('methods' => $this->container->getParameter('ia_payment.methods'));
-        return $this->render('IAPaymentBundle:PaymentMethodConfig:index.html.twig', $tplVars);
+    public function indexAction( Request $request )
+    {
+        $er     = $this->getDoctrine()->getRepository( PaymentMethod::class );
+        
+        return $this->render( 'IAPaymentBundle:PaymentMethodConfig:index.html.twig', [
+            'methods' => $er->findAll()
+        ]);
     }
     
     /**
@@ -23,40 +23,24 @@ class PaymentMethodConfigController extends PayumController
      * 
      * @return type
      */
-    public function configAction($gatewayFactory, $gatewayName, Request $request)
+    public function configAction( $id, Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage($this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig');
-        $searchConfig = $gatewayConfigStorage->findBy(array('gatewayName'=>$gatewayName));
-        $gatewayConfig = is_array($searchConfig) && isset($searchConfig[0])
-                            ? $searchConfig[0] : null;
-
-        if(!$gatewayConfig) {
-            $gatewayConfig = $gatewayConfigStorage->create();
-            $gatewayConfig->setGatewayName($gatewayName);
-            $gatewayConfig->setFactoryName($gatewayFactory);
-            
-            // Set Default Config Options From Factory
-            $factory = $this->get('payum')->getGatewayFactory($gatewayFactory);
-            $config = $factory->createConfig();
-            $defaultOptions = $config['payum.default_options'];
-            if(isset($defaultOptions['sandbox'])) {
-                $defaultOptions['sandbox'] = 1;
-                $gatewayConfig->setSandboxConfig($defaultOptions);
-                $defaultOptions['sandbox'] = 0;
-            }
-            $gatewayConfig->setConfig($defaultOptions);
-            
-        }
-        $form = $this->createForm( GatewayConfig::class, $gatewayConfig);
+        $er     = $this->getDoctrine()->getRepository( PaymentMethod::class );
+        $paymentMethod = $id ? $er->find( $id ) : new PaymentMethod();
+        
+        $form = $this->createForm( PaymentMethodForm::class, $paymentMethod );
      
         // Form Submit
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $gatewayConfigStorage->update($gatewayConfig);
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist( $form->getData() );
+            $em->flush();
+            
+           //return $this->redirect($this->generateUrl('ia_web_content_thief_fieldsets_list'));
         }
         
-        return $this->render('IAPaymentBundle:PaymentMethodConfig:config.html.twig', [
-            'gateway'   => $gatewayName,
+        return $this->render( 'IAPaymentBundle:PaymentMethodConfig:config.html.twig', [
             'form'      => $form->createView()
         ]);
     }

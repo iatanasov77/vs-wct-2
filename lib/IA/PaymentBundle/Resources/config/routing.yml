@@ -5,11 +5,14 @@ ia_payment_gateways_index:
 ia_payment_gateways_config:
     path:     /gateways/config/{gatewayName}
     defaults: { _controller: IAPaymentBundle:GatewayConfig:config }
+ia_payment_gateways_config_options:
+    path:     /gateways/config/options/get
+    defaults: { _controller: IAPaymentBundle:GatewayConfig:gatewayConfig }
 ia_payment_methods_index:
     path:     /methods
     defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:index }
 ia_payment_methods_config:
-    path:     /methods/config/{gatewayFactory}/{gatewayName}
+    path:     /methods/config/{id}
     defaults: { _controller: IAPaymentBundle:PaymentMethodConfig:config }
  
 

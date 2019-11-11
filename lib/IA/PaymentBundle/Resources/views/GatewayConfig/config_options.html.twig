@@ -1,0 +1,44 @@
+
+{% if options.sandbox is defined %}
+	<div class="form-row">
+	    {{ form_label(form.useSandbox, null, {
+	        'label_attr': {'class': 'control-label col-lg-2'}
+	        }) 
+	    }}
+	    <div class="col-lg-10">
+	        <div class="checkbox">
+	            {{ form_widget(form.useSandbox) }}
+	        </div>
+	    </div>
+	</div>
+	<div class="form-row"></div>
+{% endif %}
+
+<fieldset>
+    <legend>Config Options</legend>
+	{% for key,value in options if key not in ['factory', 'sandbox'] %}
+	    <div class="form-group">
+	    	<label class="control-label col-lg-2">{{ key }}</label>
+	    	
+	        <div class="col-lg-10">
+	        	<input type="text" id="gateway_config_config_{{ key }}" name="gateway_config[config][{{ key }}]" value="{{ value }}" required="required" size="100">
+	        </div>
+	    </div>
+	{% endfor %}
+</fieldset>    
+
+{% if options.sandbox is defined %}
+	<div class="form-group"></div>    
+	<fieldset>
+	    <legend>Sandbox Config Options</legend>
+		{% for key,value in options if key not in ['factory', 'sandbox'] %}
+		    <div class="form-group">
+		    	<label class="control-label col-lg-2">{{ key }}</label>
+		    	
+		        <div class="col-lg-10">
+		        	<input type="text" id="gateway_config_config_{{ key }}" name="gateway_config[config][{{ key }}]" value="{{ value }}" required="required" size="100">
+		        </div>
+		    </div>
+		{% endfor %}
+	</fieldset>        
+{% endif %}

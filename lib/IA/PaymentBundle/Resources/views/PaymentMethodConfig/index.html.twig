@@ -32,31 +32,28 @@
 	                    <tr>
 	                        <th width="50">N</th>
 	                        <th>Payment Method</th>
-	                        <th>Gateway Factory</th>
+	                        <th>Gateway</th>
+	                        
+	                        <th>Route</th>
+	                        <th>Active</th>
 	                        <th width="150">Action</th>
 	                    </tr>
-	                    {% for key,config in methods %}
+	                    {{% for item in methods %}
 	                        <tr>
 	                            <td>
-	                                {#<input type="checkbox" name="active[{{ gateway }}]" />#}
 	                                {{ loop.index }}
 	                            </td>
 	                            <td>
-	                                <a href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': config.gateway}) }}">
-	                                    {{ key }}
+	                                <a href="{{ path( 'ia_payment_methods_config', {'id': item.id} ) }}">
+	                                    {{ item.name }}
 	                                </a>
 	                            </td>
-	                            <td>{{ config.factory }}</td>
+	                            <td>{{ item.gateway.name }}</td>
+	                            <td>{{ item.route }}</td>
+	                            <td>{{ item.active }}</td>
 	                            <td>
 	                                <div class="btn-group">
-	                                    <div class="btn-group">
-	                                        <a class="btn btn-primary" href="{{ path('ia_payment_methods_config', {'gatewayFactory': config.factory, 'gatewayName': config.gateway}) }}">
-	                                            <i class="glyphicon glyphicon-pencil"></i>
-	                                        </a>
-	                                        {#<a class="btn btn-danger btnDelete" href="{{ path('ia_payment_methods_config', {'gateway': key}) }}">
-	                                            <i class="icon_close_alt2"></i>
-	                                        </a>#}
-	                                    </div>
+	                                    
 	                                </div>
 	                            </td>
 	                        </tr>

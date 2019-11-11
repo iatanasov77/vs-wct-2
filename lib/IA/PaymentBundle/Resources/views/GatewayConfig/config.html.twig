@@ -32,7 +32,7 @@
             <!-- ============================================================== -->
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card">
-                	<h5 class="card-header">Gateway: {{ gateway }}</h5>
+                	<h5 class="card-header">Gateway: {{ gateway.gatewayName }}</h5>
                 	<div class="card-body">
 			            {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
 			                {{ form_widget(form._token) }}
@@ -53,6 +53,7 @@
                                             'label_attr': {'class': 'control-label col-lg-2'}
                                             }) 
                                         }}
+			                            
 			                            {{ form_widget(form.gatewayName) }}
 			                            
 			                        </div> 
@@ -62,77 +63,29 @@
                                             'label_attr': {'class': 'control-label col-lg-2'}
                                             }) 
                                         }}
-			                            {{ form_widget(form.factoryName) }}
+			                            {{ form_widget(form.factoryName, {'attr': {
+			                            	'data-getConfigUrl': path( 'ia_payment_gateways_config_options' )
+			                            }}) }}
 			                            <div class="col-lg-6">{{ form.factoryName.vars.value }}</div>
 			                        </div>
-			                    {% if form.config.sandbox is defined %}
+			                        
 			                        <div class="form-row">
-			                            {{ form_label(form.useSandbox, null, {
+			                            {{ form_label(form.currency, null, {
 			                                'label_attr': {'class': 'control-label col-lg-2'}
 			                                }) 
 			                            }}
 			                            <div class="col-lg-10">
 			                                <div class="checkbox">
-			                                    {{ form_widget(form.useSandbox) }}
+			                                    {{ form_widget(form.currency) }}
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div class="form-row"></div>
-			                    {% endif %}
-			                        <fieldset>
-			                            <legend>Config Options</legend>
-			
-			                            <div class="fieldsContainer">
-			                                {{ form_widget(form.config.factory) }}
-			                                {% if form.config.sandbox is defined %}
-			                                    {{ form_widget(form.config.sandbox) }}
-			                                {% endif %}
-			                                
-			                                {% for key,field in form.config if key not in ['factory', 'sandbox'] %}
-			                                    <div class="form-group">    
-			                                        {{ form_label(field, null, {
-			                                            'label_attr': {'class': 'control-label col-lg-2'}
-			                                            }) 
-			                                        }}
-			                                        <div class="col-lg-10">
-			                                            <div class="checkbox">
-			                                                {{ form_widget(field) }}
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                {% endfor %}
-			                            </div>
-			
-			                        </fieldset>    
-			                            
-			                        <div class="form-group"></div>
-			                            
-			                        <fieldset>
-			                            <legend>Sandbox Config Options</legend>
-			
-			                            <div class="fieldsContainer">
-			                                {{ form_widget(form.sandboxConfig.factory) }}
-			                                {% if form.sandboxConfig.sandbox is defined %}
-			                                    {{ form_widget(form.config.sandbox) }}
-			                                {% endif %}
-			                                
-			                                {% for key,field in form.sandboxConfig if key not in ['factory', 'sandbox'] %}
-			                                    <div class="form-group">    
-			                                        {{ form_label(field, null, {
-			                                            'label_attr': {'class': 'control-label col-lg-2'}
-			                                            }) 
-			                                        }}
-			                                        <div class="col-lg-10">
-			                                            <div class="checkbox">
-			                                                {{ form_widget(field) }}
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                {% endfor %}
-			                            </div>
-			
-			                        </fieldset>        
 			                        
+			                        <div class="fieldsContainer" id="gatewayConfigOptions">
+			                        	{% include 'IAPaymentBundle:GatewayConfig:config_options.html.twig' with {
+		                            		'options': gateway.getConfig(false)
+		                            	} %}
+			                        </div>
 			                    </div>
 			                </section>
 			                {{ form_widget(form.btnSave, {'attr': {'class': 'btn btn-primary', 'id':'btnSave'}}) }}
@@ -143,4 +96,10 @@
 			</div>
         </div>
     </div>   
+{% endblock %}
+
+{% block body_scripts %}
+	{{ parent() }}
+	
+    {{ encore_entry_script_tags( 'gateway-config', null, 'new-template' ) }}  
 {% endblock %}

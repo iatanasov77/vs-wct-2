@@ -34,9 +34,21 @@ class GatewayConfig extends BaseGatewayConfig
     protected $sandboxConfig;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=4, nullable=true)
+     */
+    protected $currency;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PaymentMethod", mappedBy="gateway", cascade={"persist"})
+     */
+    protected $paymentMethods;
+    
+    /**
      * 
-     * Предефинирам оригиналната функция , за да може когато се извиква за билдване на Gateway да връща конфига според флага useSandbox,
-     * а когато се извиква от формата за редакция да не взима предвид този флаг
+     * ÐŸÑ€ÐµÐ´ÐµÑ„Ð¸Ð½Ð¸Ñ€Ð°Ð¼ Ð¾Ñ€Ð¸Ð³Ð¸Ð½Ð°Ð»Ð½Ð°Ñ‚Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ� , Ð·Ð° Ð´Ð° Ð¼Ð¾Ð¶Ðµ ÐºÐ¾Ð³Ð°Ñ‚Ð¾ Ñ�Ðµ Ð¸Ð·Ð²Ð¸ÐºÐ²Ð° Ð·Ð° Ð±Ð¸Ð»Ð´Ð²Ð°Ð½Ðµ Ð½Ð° Gateway Ð´Ð° Ð²Ñ€ÑŠÑ‰Ð° ÐºÐ¾Ð½Ñ„Ð¸Ð³Ð° Ñ�Ð¿Ð¾Ñ€ÐµÐ´ Ñ„Ð»Ð°Ð³Ð° useSandbox,
+     * Ð° ÐºÐ¾Ð³Ð°Ñ‚Ð¾ Ñ�Ðµ Ð¸Ð·Ð²Ð¸ÐºÐ²Ð° Ð¾Ñ‚ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð° Ð·Ð° Ñ€ÐµÐ´Ð°ÐºÑ†Ð¸Ñ� Ð´Ð° Ð½Ðµ Ð²Ð·Ð¸Ð¼Ð° Ð¿Ñ€ÐµÐ´Ð²Ð¸Ð´ Ñ‚Ð¾Ð·Ð¸ Ñ„Ð»Ð°Ð³
      * 
      * @param type $builder
      * @return type
@@ -76,6 +88,18 @@ class GatewayConfig extends BaseGatewayConfig
     function setSandboxConfig($sandboxConfig)
     {
         $this->sandboxConfig = $sandboxConfig;
+        return $this;
+    }
+    
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+    
+    public function setCurrency( $currency )
+    {
+        $this->currency = $currency;
+        
         return $this;
     }
 

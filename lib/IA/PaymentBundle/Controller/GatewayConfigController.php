@@ -7,61 +7,65 @@ use Symfony\Component\HttpFoundation\Request;
 
 use IA\PaymentBundle\Entity\GatewayConfig as GatewayConfigEntity;
 use IA\PaymentBundle\Form\GatewayConfig;
+use IA\PaymentBundle\Form\Type\GatewayConfigType;
 
 use Payum\Core\Bridge\Doctrine\Storage\DoctrineStorage;
 
-class GatewayConfigController extends PayumController 
+class GatewayConfigController extends PayumController
 {
     
-    public function indexAction(Request $request)
+    public function indexAction( Request $request )
     {
         return $this->render('IAPaymentBundle:GatewayConfig:index.html.twig', [
             'items' => $this->getDoctrine()->getRepository( GatewayConfigEntity::class )->findAll()
         ]);
     }
     
-    /**
-     * Prepare Action
-     * 
-     * @return type
-     */
-    public function configAction($gatewayName, Request $request)
+    public function configAction( $gatewayName, Request $request )
     {
-        $gatewayConfigStorage = new DoctrineStorage($this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig');
-        $searchConfig = $gatewayConfigStorage->findBy(array('gatewayName'=>$gatewayName));
-        $gatewayConfig = is_array($searchConfig) && isset($searchConfig[0])
-                            ? $searchConfig[0] : null;
-
-        if(!$gatewayConfig) {
-            $gatewayConfig = $gatewayConfigStorage->create();
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
+        $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
+        $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
+        
+        $form = $this->createForm( GatewayConfig::class, $gatewayConfig );
+        $form->handleRequest( $request );
+        if ( $form->isSubmitted() ) {
             
-//             $gatewayConfig->setGatewayName($gatewayName);
-//             $gatewayConfig->setFactoryName($gatewayFactory);
+            $postData = $request->request->get( 'gateway_config' );
             
-//             // Set Default Config Options From Factory
-//             $factory = $this->get('payum')->getGatewayFactory($gatewayFactory);
-//             $config = $factory->createConfig();
-//             $defaultOptions = $config['payum.default_options'];
-//             if(isset($defaultOptions['sandbox'])) {
-//                 $defaultOptions['sandbox'] = 1;
-//                 $gatewayConfig->setSandboxConfig($defaultOptions);
-//                 $defaultOptions['sandbox'] = 0;
-//             }
-//             $gatewayConfig->setConfig($defaultOptions);
+            // Set Default Config Options From Factory
+            $factory = $this->get( 'payum' )->getGatewayFactory( $postData['factoryName'] );
+            $config = $factory->createConfig();
+            $defaultOptions = $config['payum.default_options'];
             
-        }
-        $form = $this->createForm( GatewayConfig::class, $gatewayConfig);
-     
-        // Form Submit
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $gatewayConfigStorage->update($gatewayConfig);
+            if( isset( $defaultOptions['sandbox'] ) ) {
+                $defaultOptions['sandbox'] = 1;
+                $gatewayConfig->setSandboxConfig( $postData['sandboxConfig'] );
+            }
+            $gatewayConfig->setConfig( $postData['config'] );
+            
+            $gatewayConfigStorage->update( $gatewayConfig );
         }
         
         return $this->render('IAPaymentBundle:GatewayConfig:config.html.twig', [
-            'gateway'   => $gatewayName,
+            'gateway'   => $gatewayConfig,
             'form'      => $form->createView()
         ]);
     }
     
+    public function gatewayConfigAction( Request $request )
+    {
+        $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false) ) );
+        return $this->render('IAPaymentBundle:GatewayConfig:config_options.html.twig', [
+            'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
+            'form'      => $form->createView()
+        ]);
+    }
+    
+    private function gatewayConfigOptions( $factory )
+    {
+        $config    = $this->get( 'payum' )->getGatewayFactory( $factory )->createConfig();
+        
+        return $config['payum.default_options'];
+    }
 }

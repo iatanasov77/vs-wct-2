@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,8 +35,8 @@ class GatewayConfig extends AbstractType
             
             ->add('factoryName', ChoiceType::class, [
                 'label' => 'Factory',
+                'placeholder' => '-- Select Factory --',
                 'choices'  => [
-                    '-- Select Factory --'  => '',
                     'offline' => 'offline',
                     'paypal_express_checkout' => 'paypal_express_checkout',
                     'paypal_pro_checkout' => 'paypal_pro_checkout',
@@ -43,7 +44,18 @@ class GatewayConfig extends AbstractType
                 ],
             ])
             
-            ->add('useSandbox', CheckboxType::class, array('required'=>false))
+            // CurrencyType::class
+            ->add('currency', ChoiceType::class, [
+                'label' => 'Merchant Account Currency',
+                'placeholder' => '-- Select Currency --',
+                'choices'  => [
+                    'Euro' => 'EUR',
+                    'US Dolar' => 'USD',
+                    'Bulgarian Lev' => 'BGN',
+                ],
+            ])
+            
+            
                 
             ->add('config', GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false)))
             ->add('sandboxConfig', GatewayConfigType::class, array('data' => $gatewayConfig->getSandboxConfig()))

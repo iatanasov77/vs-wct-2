@@ -82,10 +82,10 @@
                         <div><span>Price:</span> <span class="price"></span></div>
                         <div id="boxPaymentMethodOptions" class="form-horizontal">
                             <input type="hidden" name="packagePlanId" id="packagePlanId" value="" />
-                            {% for key,method in paymentMethods %}
+                            {% for method in paymentMethods %}
                             <div class="form-group">
                                 <label class="custom-control custom-radio">
-                                    <input class="custom-control-input selectPaymentMethod" type="radio" name="paymentMethod" data-url="{{ path(method.route, {'planId': 1}) }}" value="{{ key }}" />
+                                    <input class="custom-control-input selectPaymentMethod" type="radio" name="paymentMethod" data-url="{{ path(method.route, {'planId': 1}) }}" value="{{ method.name }}" />
                                     <span class="custom-control-label">{{ method.name }}</span>
                                 </label>
                             </div>

@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
@@ -21,8 +22,12 @@ class GatewayConfigType extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
-        $builder->add('factory', HiddenType::class);
+    {   
+        
+        $builder
+            ->add('factory', HiddenType::class)
+            ->add('useSandbox', CheckboxType::class, array('required'=>false))
+        ;
         if(isset($options['data']['sandbox'])) {
             $builder->add('sandbox', HiddenType::class);
         }
