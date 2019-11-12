@@ -26,7 +26,6 @@ class GatewayConfigType extends AbstractType
         
         $builder
             ->add('factory', HiddenType::class)
-            ->add('useSandbox', CheckboxType::class, array('required'=>false))
         ;
         if(isset($options['data']['sandbox'])) {
             $builder->add('sandbox', HiddenType::class);

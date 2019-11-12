@@ -32,7 +32,7 @@ class GatewayConfig extends AbstractType
         $gatewayConfig = $options['data'];
         $builder
             ->add('gatewayName', TextType::class, array('label' => 'Gateway'))
-            
+            ->add('useSandbox', CheckboxType::class, array('required'=>false))
             ->add('factoryName', ChoiceType::class, [
                 'label' => 'Factory',
                 'placeholder' => '-- Select Factory --',

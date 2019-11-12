@@ -45,6 +45,8 @@ class GatewayConfigController extends PayumController
             $gatewayConfig->setConfig( $postData['config'] );
             
             $gatewayConfigStorage->update( $gatewayConfig );
+            
+            return $this->redirect( $this->generateUrl( 'ia_payment_gateways_index' ) );
         }
         
         return $this->render('IAPaymentBundle:GatewayConfig:config.html.twig', [
@@ -55,6 +57,10 @@ class GatewayConfigController extends PayumController
     
     public function gatewayConfigAction( Request $request )
     {
+        $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
+        $searchConfig = $gatewayConfigStorage->findBy( ['factoryName' => $request->query->get( 'factory' )] );
+        $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
+        
         $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false) ) );
         return $this->render('IAPaymentBundle:GatewayConfig:config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
