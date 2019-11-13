@@ -37,7 +37,7 @@ class PaymentMethodConfigController extends PayumController
             $em->persist( $form->getData() );
             $em->flush();
             
-           //return $this->redirect($this->generateUrl('ia_web_content_thief_fieldsets_list'));
+           return $this->redirect( $this->generateUrl( 'ia_payment_methods_index' ) );
         }
         
         return $this->render( 'IAPaymentBundle:PaymentMethodConfig:config.html.twig', [

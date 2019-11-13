@@ -24,7 +24,13 @@
         <!-- ============================================================== -->
         <!-- end pageheader -->
         <!-- ============================================================== -->
-        
+        <div class="row">
+        	<div class="btn-group">
+                <a class="btn btn-primary" href="{{ path('ia_payment_methods_config', {'id': 0}) }}">
+                    Create New Payment Method
+                </a>
+            </div>
+        </div>
         <div class="row">   
             <div class="col-lg-12">
                 <section class="panel">
@@ -38,7 +44,7 @@
 	                        <th>Active</th>
 	                        <th width="150">Action</th>
 	                    </tr>
-	                    {{% for item in methods %}
+	                    {% for item in methods %}
 	                        <tr>
 	                            <td>
 	                                {{ loop.index }}
@@ -48,7 +54,7 @@
 	                                    {{ item.name }}
 	                                </a>
 	                            </td>
-	                            <td>{{ item.gateway.name }}</td>
+	                            <td>{{ item.gateway.gatewayName }}</td>
 	                            <td>{{ item.route }}</td>
 	                            <td>{{ item.active }}</td>
 	                            <td>

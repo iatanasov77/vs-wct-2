@@ -29,7 +29,7 @@ class GatewayConfig extends BaseGatewayConfig
     /**
      * @var array
      * 
-     * @ORM\Column(name="sandboxConfig", type="array", nullable=false)
+     * @ORM\Column(name="sandboxConfig", nullable=false)
      */
     protected $sandboxConfig;
     

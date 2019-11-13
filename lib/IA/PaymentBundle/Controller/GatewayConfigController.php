@@ -25,6 +25,7 @@ class GatewayConfigController extends PayumController
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
+        var_dump( $searchConfig->getGatewayName() ); die;
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfig::class, $gatewayConfig );
@@ -58,10 +59,9 @@ class GatewayConfigController extends PayumController
     public function gatewayConfigAction( Request $request )
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
-        $searchConfig = $gatewayConfigStorage->findBy( ['factoryName' => $request->query->get( 'factory' )] );
-        $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
+        $gatewayConfig = $gatewayConfigStorage->create();
         
-        $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig(false) ) );
+        $form = $this->createForm( GatewayConfigType::class, array('data' => $gatewayConfig->getConfig( false ) ) );
         return $this->render('IAPaymentBundle:GatewayConfig:config_options.html.twig', [
             'options'   => $this->gatewayConfigOptions( $request->query->get( 'factory' ) ),
             'form'      => $form->createView()

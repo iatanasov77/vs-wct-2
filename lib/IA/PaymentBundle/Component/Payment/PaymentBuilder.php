@@ -12,6 +12,7 @@ class PaymentBuilder
     
     public function __construct( Payum $payum )
     {
+        //var_dump( $payum->getGateway('paypal_express_checkout_gateway') ); die;
         $this->payum   = $payum;
     }
     

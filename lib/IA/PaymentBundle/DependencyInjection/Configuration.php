@@ -18,19 +18,19 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ia_payment');
+//         $rootNode = $treeBuilder->root('ia_payment');
 
-        $rootNode->children()
-            ->arrayNode('payment_accounts')->isRequired()
-            ->prototype('variable')
-            ->treatNullLike(array())
-        ;
+//         $rootNode->children()
+//             ->arrayNode('payment_accounts')->isRequired()
+//             ->prototype('variable')
+//             ->treatNullLike(array())
+//         ;
         
-        $rootNode->children()
-            ->arrayNode('payment_methods')->isRequired()
-                ->prototype('variable')
-                ->treatNullLike(array())
-        ;
+//         $rootNode->children()
+//             ->arrayNode('payment_methods')->isRequired()
+//                 ->prototype('variable')
+//                 ->treatNullLike(array())
+//         ;
 
         return $treeBuilder;
     }

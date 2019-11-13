@@ -8,7 +8,7 @@ use Payum\Core\Security\SensitiveValue;
 use Payum\Core\Request\GetHumanStatus;
 
 use IA\PaymentBundle\Entity\PaymentModel;
-use IA\PaymentBundle\Entity\PaymentDetails;
+use IA\PaymentBundle\Entity\Payment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StripeCheckoutController extends PayumController
@@ -17,7 +17,7 @@ class StripeCheckoutController extends PayumController
     
     public function prepareAction( Request $request )
     {
-        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
+        $storage = $this->getPayum()->getStorage( Payment::class );
         //$storage = $this->getPayum()->getStorage( PaymentModel::class );
      
         $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
@@ -28,7 +28,6 @@ class StripeCheckoutController extends PayumController
         
         $payment = $storage->create();
         
-        $payment->setType( PaymentDetails::TYPE_PAYMENT );
         $payment->setPaymentMethod( 'stripe' );
         $payment->setPackagePlan( $packagePlan );
         
@@ -39,13 +38,16 @@ class StripeCheckoutController extends PayumController
 //         $payment->setClientId( 'anId' );
 //         $payment->setClientEmail( 'foo@example.com' );
 
-        $payment['number']          = uniqid();
-        $payment['currencyCode']    = $packagePlan->getCurrency();
-        $payment['totalAmount']     = $packagePlan->getPrice();
-        $payment['description']     = $packagePlan->getDescription();
-        $payment['clientId']        = 'anId';
-        $payment['clientEmail']     = 'foo@example.com';
         
+        $details    = [
+            'number'        => uniqid(),
+            'currencyCode'  => $packagePlan->getCurrency(),
+            'totalAmount'   => $packagePlan->getPrice(),
+            'description'   => $packagePlan->getDescription(),
+            'clientId'      => 'anId',
+            'clientEmail'   => 'foo@example.com'
+        ];
+        $payment->setDetails( $details );
         $storage->update( $payment );
         
         $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(

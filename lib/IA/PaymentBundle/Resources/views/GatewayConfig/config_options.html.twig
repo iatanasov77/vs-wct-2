@@ -17,19 +17,7 @@
 			<div class="form-group"></div>
 			    
 			<div class="card">
-			    <div class="card-header">
-			        <div class="form-row">
-					    {{ form_label(form.useSandbox, null, {
-					        'label_attr': {'class': 'control-label col-lg-2'}
-					        }) 
-					    }}
-					    <div class="col-lg-10">
-					        <div class="checkbox">
-					            {{ form_widget(form.useSandbox) }}
-					        </div>
-					    </div>
-					</div>
-			    </div>
+			    <div class="card-header">Sandbox Config</div>
 			    <div class="card-body">
 			        <blockquote class="blockquote mb-0">
 			        	<input type="hidden" id="gateway_config_sandbox_sandbox" name="gateway_config[sandboxConfig][sandbox]" value="1" />

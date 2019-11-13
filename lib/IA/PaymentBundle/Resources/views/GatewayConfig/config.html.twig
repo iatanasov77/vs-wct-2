@@ -80,7 +80,17 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        
+			                        <div class="form-row">
+									    {{ form_label(form.useSandbox, null, {
+									        'label_attr': {'class': 'control-label col-lg-2'}
+									        }) 
+									    }}
+									    <div class="col-lg-10">
+									        <div class="checkbox">
+									            {{ form_widget(form.useSandbox) }}
+									        </div>
+									    </div>
+									</div>
 			                        <div class="fieldsContainer" id="gatewayConfigOptions">
 			                        	{% include 'IAPaymentBundle:GatewayConfig:config_options.html.twig' with {
 		                            		'options': gateway.getConfig(false)
