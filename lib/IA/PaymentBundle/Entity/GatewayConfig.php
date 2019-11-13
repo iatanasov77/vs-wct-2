@@ -29,7 +29,7 @@ class GatewayConfig extends BaseGatewayConfig
     /**
      * @var array
      * 
-     * @ORM\Column(name="sandboxConfig", nullable=false)
+     * @ORM\Column(name="sandboxConfig", type="json", nullable=false)
      */
     protected $sandboxConfig;
     
@@ -66,7 +66,7 @@ class GatewayConfig extends BaseGatewayConfig
     {
         parent::__construct();
         $this->useSandbox = false;
-        $this->sandboxConfig = array();
+        $this->sandboxConfig = [];
     }
     
     function getUseSandbox()
@@ -85,7 +85,7 @@ class GatewayConfig extends BaseGatewayConfig
         return $this;
     }
 
-    function setSandboxConfig($sandboxConfig)
+    function setSandboxConfig( array $sandboxConfig )
     {
         $this->sandboxConfig = $sandboxConfig;
         return $this;

@@ -2,7 +2,6 @@
 	<fieldset class="fieldset-project-fields" style="width: 100%;">
 	    <legend class="w-auto">Gateway Config Options</legend>
 		
-		<input type="hidden" id="gateway_config_config_sandbox" name="gateway_config[config][sandbox]" value="0" />
 	    {% for key,value in options if key not in ['factory', 'sandbox'] %}
 		    <div class="form-group">
 		    	<label class="control-label col-lg-2">{{ key }}</label>
@@ -20,7 +19,6 @@
 			    <div class="card-header">Sandbox Config</div>
 			    <div class="card-body">
 			        <blockquote class="blockquote mb-0">
-			        	<input type="hidden" id="gateway_config_sandbox_sandbox" name="gateway_config[sandboxConfig][sandbox]" value="1" />
 			            {% for key,value in options if key not in ['factory', 'sandbox'] %}
 						    <div class="form-group">
 						    	<label class="control-label col-lg-2">{{ key }}</label>

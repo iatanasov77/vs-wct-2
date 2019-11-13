@@ -27,7 +27,7 @@ class PaymentMethod
     /**
      * @var string
      *
-     * @ORM\Column(name="route", type="string", length=64, nullable=false)
+     * @ORM\Column(name="route", type="string", length=128, nullable=false)
      */
     protected $route;
     

@@ -25,7 +25,6 @@ class GatewayConfigController extends PayumController
     {
         $gatewayConfigStorage = new DoctrineStorage( $this->getDoctrine()->getManager(), 'IA\PaymentBundle\Entity\GatewayConfig' );
         $searchConfig = $gatewayConfigStorage->findBy( ['gatewayName'=>$gatewayName] );
-        var_dump( $searchConfig->getGatewayName() ); die;
         $gatewayConfig = is_array( $searchConfig ) && isset( $searchConfig[0] ) ? $searchConfig[0] : $gatewayConfigStorage->create();
         
         $form = $this->createForm( GatewayConfig::class, $gatewayConfig );
@@ -40,7 +39,9 @@ class GatewayConfigController extends PayumController
             $defaultOptions = $config['payum.default_options'];
             
             if( isset( $defaultOptions['sandbox'] ) ) {
-                $defaultOptions['sandbox'] = 1;
+                $postData['config']['sandbox']          = false;
+                $postData['sandboxConfig']['sandbox']   = true;
+                
                 $gatewayConfig->setSandboxConfig( $postData['sandboxConfig'] );
             }
             $gatewayConfig->setConfig( $postData['config'] );
