@@ -15,11 +15,26 @@ class StripeCheckoutController extends PayumController
 {
     const GATEWAY   = 'stripe_checkout_gateway';
     
+    /*
+     * TEST MAIL: i.atanasov77@gmail.com
+     * 
+     * TEST CARDS
+     * ===========
+     
+     Card Type  |	Card Number	    |  Exp. Date  | CVV Code
+     --------------------------------------------------------
+     Visa       | 4242424242424242  |   Any future| Any 3
+                |                   |      date   | digits
+     ---------------------------------------------------------
+     Visa       | 4263982640269299  |   02/2023   |  837
+     --------------------------------------------------------
+     Visa       | 4263982640269299  |   04/2023   |  738
+     
+     */
     public function prepareAction( Request $request )
     {
         $storage = $this->getPayum()->getStorage( Payment::class );
-        //$storage = $this->getPayum()->getStorage( PaymentModel::class );
-     
+
         $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
         $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
         if (!$packagePlan) {
@@ -31,21 +46,10 @@ class StripeCheckoutController extends PayumController
         $payment->setPaymentMethod( 'stripe' );
         $payment->setPackagePlan( $packagePlan );
         
-//         $payment->setNumber( uniqid() );
-//         $payment->setCurrencyCode( $packagePlan->getCurrency() );
-//         $payment->setTotalAmount( $packagePlan->getPrice() );
-//         $payment->setDescription( $packagePlan->getDescription() );
-//         $payment->setClientId( 'anId' );
-//         $payment->setClientEmail( 'foo@example.com' );
-
-        
         $details    = [
-            'number'        => uniqid(),
-            'currencyCode'  => $packagePlan->getCurrency(),
-            'totalAmount'   => $packagePlan->getPrice(),
-            'description'   => $packagePlan->getDescription(),
-            'clientId'      => 'anId',
-            'clientEmail'   => 'foo@example.com'
+            'currency'  => $packagePlan->getCurrency(),
+            'amount'   => $packagePlan->getPrice(),
+            'description'   => $packagePlan->getDescription()
         ];
         $payment->setDetails( $details );
         $storage->update( $payment );
@@ -69,7 +73,7 @@ class StripeCheckoutController extends PayumController
         $payment = $status->getModel();
         
         if ( ! $status->isCaptured() ) {
-            throw new HttpException(400, 'Billing agreement status is not success.');
+            throw new HttpException( 400, 'The right payum gateway status is: ' . $status->getValue() );
         }
         
         return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [

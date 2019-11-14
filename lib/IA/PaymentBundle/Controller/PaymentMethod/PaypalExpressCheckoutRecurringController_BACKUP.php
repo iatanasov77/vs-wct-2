@@ -86,7 +86,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         
         
         if ( ! $status->isCaptured() ) {
-            throw new HttpException( 400, 'Billing agreement status is not success.' );
+            throw new HttpException( 400, 'The right payum gateway status is: ' . $status->getValue() );
         }
         
         $payment            = $status->getModel();

@@ -27,9 +27,11 @@ class PaypalExpressCheckoutController extends PayumController
         if ( $request->isMethod( 'POST' ) ) {
             $pb         = $this->get( 'ia_payment_builder' );
             $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
-            
+            //var_dump( number_format( $packagePlan->getPrice(), 2, ',', '' ) ); die;
             $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
             $payment->setDetails([
+                // number_format( $packagePlan->getPrice(), 2 )
+                // number_format( $packagePlan->getPrice(), 2, ',', '' )
                 'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice(),
                 'PAYMENTREQUEST_0_CURRENCYCODE' => $packagePlan->getCurrency(),
                 'PAYMENTREQUEST_0_DESC'         => $packagePlan->getDescription(),
@@ -64,9 +66,9 @@ class PaypalExpressCheckoutController extends PayumController
         $status     = new GetHumanStatus( $token );
         
         $gateway->execute( $status );
-      
-        if ( false == $status->isPending() ) {
-            throw new HttpException( 400, 'Billing agreement status is not success.' );
+        //if ( ! $status->isPending() ) {
+        if ( ! $status->isCaptured() ) {
+            throw new HttpException( 400, 'The right payum gateway status is: ' . $status->getValue() );
         }
         $payment        = $status->getFirstModel();
 

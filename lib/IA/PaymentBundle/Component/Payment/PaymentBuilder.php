@@ -12,7 +12,6 @@ class PaymentBuilder
     
     public function __construct( Payum $payum )
     {
-        //var_dump( $payum->getGateway('paypal_express_checkout_gateway') ); die;
         $this->payum   = $payum;
     }
     
@@ -41,7 +40,7 @@ class PaymentBuilder
         
         $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setPackagePlan( $packagePlan );
-        
+        // number_format( $packagePlan->getPrice(), 2, ',', '' )
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $packagePlan->getCurrency() );
         $payment->setTotalAmount( $packagePlan->getPrice() );
