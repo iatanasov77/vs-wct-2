@@ -7,7 +7,6 @@ use Payum\Bundle\PayumBundle\Controller\PayumController;
 use Payum\Core\Security\SensitiveValue;
 use Payum\Core\Request\GetHumanStatus;
 
-use IA\PaymentBundle\Entity\PaymentModel;
 use IA\PaymentBundle\Entity\Payment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -33,26 +32,24 @@ class StripeCheckoutController extends PayumController
      */
     public function prepareAction( Request $request )
     {
-        $storage = $this->getPayum()->getStorage( Payment::class );
-
-        $ppr = $this->getDoctrine()->getRepository('IAUsersBundle:PackagePlan');
-        $packagePlan = $ppr->find( $request->query->get( 'packagePlanId' ) );
-        if (!$packagePlan) {
+        $ppr            = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
+        
+        $packagePlan    = $ppr->find( $request->query->get( 'packagePlanId' ) );
+        if ( ! $packagePlan ) {
             throw new \Exception('Invalid Request!!!');
         }
         
-        $payment = $storage->create();
+        $pb         = $this->get( 'ia_payment_builder' );
+        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
         
         $payment->setPaymentMethod( 'stripe' );
-        $payment->setPackagePlan( $packagePlan );
+//         $payment->setDetails([
+//             'currency'      => $packagePlan->getCurrency(),
+//             'amount'        => (float) $packagePlan->getPrice(),
+//             'description'   => $packagePlan->getDescription()
+//         ]);
         
-        $details    = [
-            'currency'  => $packagePlan->getCurrency(),
-            'amount'   => $packagePlan->getPrice(),
-            'description'   => $packagePlan->getDescription()
-        ];
-        $payment->setDetails( $details );
-        $storage->update( $payment );
+         $pb->updateStorage( $payment );
         
         $captureToken = $this->get( 'payum' )->getTokenFactory()->createCaptureToken(
             self::GATEWAY,
@@ -70,11 +67,12 @@ class StripeCheckoutController extends PayumController
         
         $status = new GetHumanStatus( $token );
         $gateway->execute( $status );
-        $payment = $status->getModel();
-        
-        if ( ! $status->isCaptured() ) {
-            throw new HttpException( 400, 'The right payum gateway status is: ' . $status->getValue() );
+        if ( $status->isFailed() ) {
+            $details    = $status->getModel();
+            throw new HttpException( 400, 'ERROR: ' . $details['error']['message'] );
         }
+        
+        $payment = $status->getFirstModel();
         
         return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [
             'paymentId' => $payment->getId()

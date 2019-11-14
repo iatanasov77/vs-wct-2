@@ -68,7 +68,12 @@ class PaypalExpressCheckoutController extends PayumController
         $gateway->execute( $status );
         //if ( ! $status->isPending() ) {
         if ( ! $status->isCaptured() ) {
-            throw new HttpException( 400, 'The right payum gateway status is: ' . $status->getValue() );
+            if ( $status->isFailed() ) {
+                $details    = $status->getModel();
+                throw new HttpException( 400, 'ERROR: ' . $details['L_LONGMESSAGE0'] );
+            } else {
+                throw new HttpException( 400, 'The payum gateway status is: ' . $status->getValue() );
+            }
         }
         $payment        = $status->getFirstModel();
 

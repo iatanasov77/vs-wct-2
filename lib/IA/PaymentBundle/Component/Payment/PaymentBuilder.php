@@ -38,15 +38,15 @@ class PaymentBuilder
         
         $payment = $this->storage->create();
         
-        $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setPackagePlan( $packagePlan );
-        // number_format( $packagePlan->getPrice(), 2, ',', '' )
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $packagePlan->getCurrency() );
         $payment->setTotalAmount( $packagePlan->getPrice() );
         $payment->setDescription( $packagePlan->getCurrency() );
         $payment->setClientId( $user->getId() );
         $payment->setClientEmail( $user->getEmail() );
+        
+        $payment->setAmount( $packagePlan->getPrice() );
         
         return $payment;
     }
