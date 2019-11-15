@@ -34,29 +34,11 @@ class Payment extends BasePayment
     protected $paymentMethod;
     
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="amount", type="float", columnDefinition="DECIMAL(6, 2)", nullable=false)
+     * @ORM\Column(name="currencyDivisor", type="integer", length=4, nullable=false)
      */
-    protected $amount;
-
-    public function getTotalAmount()
-    {
-        //return $this->amount;
-        return $this->totalAmount;
-    }
-    
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-    
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-        
-        return $this;
-    }
+    protected $currencyDivisor;
     
     /**
      * @return int
@@ -103,5 +85,17 @@ class Payment extends BasePayment
     public function getDetails()
     {
         return $this->details;
+    }
+    
+    public function getCurrencyDivisor()
+    {
+        return $this->currencyDivisor;
+    }
+    
+    public function setCurrencyDivisor( $currencyDivisor )
+    {
+        $this->currencyDivisor = $currencyDivisor;
+        
+        return $this;
     }
 }

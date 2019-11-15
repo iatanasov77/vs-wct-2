@@ -11,9 +11,14 @@ use Payum\Core\Request\GetHumanStatus;
  * -----------------------------------------------
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
  */
-class PaypalExpressCheckoutController extends PayumController
+class PaypalExpressCheckoutController extends AbstractPaymentMethodController
 {   
     const GATEWAY   = 'paypal_express_checkout_gateway';
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
+    }
     
     public function prepareAction( Request $request )
     {
@@ -26,12 +31,11 @@ class PaypalExpressCheckoutController extends PayumController
 
         if ( $request->isMethod( 'POST' ) ) {
             $pb         = $this->get( 'ia_payment_builder' );
-            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
-            $divisor    = $pb->getCurrencyDivisor( $packagePlan->getCurrency() );
+            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, self::GATEWAY );
             
             $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
             $payment->setDetails([
-                'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice() * $divisor,
+                'PAYMENTREQUEST_0_AMT'          => $packagePlan->getPrice() * $payment->getCurrencyDivisor(),
                 'PAYMENTREQUEST_0_CURRENCYCODE' => $packagePlan->getCurrency(),
                 'PAYMENTREQUEST_0_DESC'         => $packagePlan->getDescription(),
                 'NOSHIPPING'                    => 1
@@ -52,30 +56,5 @@ class PaypalExpressCheckoutController extends PayumController
             'packagePlan'   => $packagePlan
         );
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:CheckoutForm.html.twig', $tplVars);
-    }
-
-    public function doneAction( Request $request )
-    {
-        $token      = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
-        
-        // you can invalidate the token. The url could not be requested any more.
-        $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
-        
-        $gateway    = $this->getPayum()->getGateway( $token->getGatewayName() );
-        $status     = new GetHumanStatus( $token );
-        
-        $gateway->execute( $status );
-        //if ( ! $status->isPending() ) {
-        if ( ! $status->isCaptured() ) {
-            if ( $status->isFailed() ) {
-                $details    = $status->getModel();
-                throw new HttpException( 400, 'ERROR: ' . $details['L_LONGMESSAGE0'] );
-            } else {
-                throw new HttpException( 400, 'The payum gateway status is: ' . $status->getValue() );
-            }
-        }
-        $payment        = $status->getFirstModel();
-
-        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', ['paymentId' => $payment->getId()] ) );
     }
 }

@@ -1,18 +1,15 @@
 <?php  namespace IA\PaymentBundle\Controller\PaymentMethod;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use Payum\Bundle\PayumBundle\Controller\PayumController;
-use Payum\Core\Security\SensitiveValue;
-use Payum\Core\Request\GetHumanStatus;
-
-use IA\PaymentBundle\Entity\Payment;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-class StripeCheckoutController extends PayumController
+class StripeCheckoutController extends AbstractPaymentMethodController
 {
     const GATEWAY   = 'stripe_checkout_gateway';
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'STRIPE ERROR: ' . $details['error']['message'];
+    }
     
     /*
      * TEST MAIL: i.atanasov77@gmail.com
@@ -40,7 +37,7 @@ class StripeCheckoutController extends PayumController
         }
         
         $pb         = $this->get( 'ia_payment_builder' );
-        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
+        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, self::GATEWAY );
         
         $payment->setPaymentMethod( 'stripe' );
 //         $payment->setDetails([
@@ -58,24 +55,5 @@ class StripeCheckoutController extends PayumController
         );
         
         return $this->redirect( $captureToken->getTargetUrl() );
-    }
-    
-    public function doneAction( Request $request )
-    {
-        $token = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
-        $gateway = $this->getPayum()->getGateway( $token->getGatewayName() );
-        
-        $status = new GetHumanStatus( $token );
-        $gateway->execute( $status );
-        if ( $status->isFailed() ) {
-            $details    = $status->getModel();
-            throw new HttpException( 400, 'ERROR: ' . $details['error']['message'] );
-        }
-        
-        $payment = $status->getFirstModel();
-        
-        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [
-            'paymentId' => $payment->getId()
-        ]));
     }
 }

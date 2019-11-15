@@ -102,5 +102,4 @@ class GatewayConfig extends BaseGatewayConfig
         
         return $this;
     }
-
 }

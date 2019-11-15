@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PaymentMethod
 {
-    
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

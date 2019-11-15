@@ -1,13 +1,7 @@
 <?php namespace IA\PaymentBundle\Controller\PaymentMethod;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Range;
-
-use Payum\Bundle\PayumBundle\Controller\PayumController;
-use Payum\Core\Security\SensitiveValue;
-
 use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
-use IA\PaymentBundle\Entity\PaymentDetails;
 
 /*
  * TEST CARDS
@@ -26,9 +20,16 @@ use IA\PaymentBundle\Entity\PaymentDetails;
 
 // https://github.com/Payum/Payum/blob/master/docs/symfony/custom-purchase-examples/paypal-pro-checkout.md
 
-class PaypalProController extends PayumController
+// SETUP TEST ACCOUNT MANUEL: https://developer.paypal.com/docs/classic/payflow/test-hosted-pages/#create-a-test-only-payflow-gateway-account
+
+class PaypalProController extends AbstractPaymentMethodController
 {
     const GATEWAY   = 'paypal_pro_checkout_gateway';
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['RESPMSG'];
+    }
     
     public function prepareAction( Request $request )
     {
@@ -47,23 +48,21 @@ class PaypalProController extends PayumController
         
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
-            $data = $form->getData();
-            $storage = $this->getPayum()->getStorage( PaymentDetails::class );
-
-            $payment = $storage->create();
+            $data       = $form->getData();
+            $pb         = $this->get( 'ia_payment_builder' );
+            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, self::GATEWAY );
             
-            $payment->setType( PaymentDetails::TYPE_PAYMENT );
-            $payment->setPaymentMethod( 'paypal_pro_checkout' );
-            $payment->setPackagePlan( $packagePlan );
+            $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
+            $payment->setDetails([
+                'ACCT'          => $data['acct'],                       // new SensitiveValue( $data['acct'] ),
+                'CVV2'          => $data['cvv'],                        // new SensitiveValue( $data['cvv'] ),
+                'EXPDATE'       => $data['exp_date']->format( 'my' ),   // new SensitiveValue( $data['exp_date']->format( 'my' ) ),
+                'AMT'           => $packagePlan->getPrice() * $payment->getCurrencyDivisor(),
+                'CURRENCY'      => $packagePlan->getCurrency(),
+                'NOSHIPPING'    => 1
+            ]);
+            $pb->updateStorage( $payment );
             
-            $payment['ACCT']        = new SensitiveValue( $data['acct'] );
-            $payment['CVV2']        = new SensitiveValue( $data['cvv'] );
-            $payment['EXPDATE']     = new SensitiveValue( $data['exp_date']->format( 'my' ) );
-            $payment['AMT']         = number_format( $data['amt'], 2 );   // Amount
-            $payment['CURRENCY']    = $data['currency'];
-            $payment->setPaymentMethod( 'paypal_pro_checkout_credit_card' );
-            $storage->update($payment);
-
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
                 self::GATEWAY,
                 $payment,
@@ -77,15 +76,5 @@ class PaypalProController extends PayumController
             'form' => $form->createView(),
         ));
     }
-    
-    public function doneAction( Request $request )
-    {
-        $storage = $this->getPayum()->getStorage( PaymentDetails::class );
-        $payment = $storage->create();
-        $storage->update( $payment );
-        
-        $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken( self::GATEWAY, $payment, 'create_recurring_payment.php' );
-        
-        return $this->redirect( $captureToken->getTargetUrl() );
-    }
+
 }

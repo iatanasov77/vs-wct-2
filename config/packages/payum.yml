@@ -1,6 +1,6 @@
 payum:
     dynamic_gateways:
-        #sonata_admin: true
+        sonata_admin: false
         config_storage: 
             IA\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }
 

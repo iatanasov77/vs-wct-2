@@ -10,23 +10,24 @@ use Payum\Core\Request\GetHumanStatus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use Payum\Core\Model\Payment;
 
-use IA\PaymentBundle\Entity\PaymentDetails;
-use IA\PaymentBundle\Entity\PaymentModel;
 use IA\UsersBundle\Entity\UserActivity;
 
-use IA\PaymentBundle\Component\PaymentBuilder;
 
 /*
  * TEST ACCOUNTS
  * -----------------------------------------------
  * sb-wsp2g401218@personal.example.com / 8o?JWT#6
  */
-class PaypalExpressCheckoutRecurringController extends PayumController
+class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodController
 {
 
     const GATEWAY   = 'paypal_express_checkout_gateway';
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
+    }
     
     public function prepareAction( Request $request )
     {
@@ -98,7 +99,7 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         $agreement  = $status->getModel();
         
         $pb         = $this->get( 'ia_payment_builder' );
-        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan );
+        $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, $gatewayName );
         
         $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setDetails([
@@ -134,29 +135,6 @@ class PaypalExpressCheckoutRecurringController extends PayumController
         $doneToken = $this->getPayum()->getTokenFactory()->createToken( $gatewayName, $payment, 'ia_payment_paypal_express_checkout_done_recurring_payment' );
         
         return $this->redirect( $doneToken->getTargetUrl() );
-    }
-    
-    public function doneAction( Request $request )
-    {
-        $token      = $this->getPayum()->getHttpRequestVerifier()->verify( $request );
-        
-        // you can invalidate the token. The url could not be requested any more.
-        $this->getPayum()->getHttpRequestVerifier()->invalidate( $token );
-        
-        $gateway    = $this->getPayum()->getGateway( $token->getGatewayName() );
-        $status     = new GetHumanStatus( $token );
-        
-        $gateway->execute( $status );
-      
-        if ( ! $status->isCaptured() ) {
-            throw new HttpException( 400, 'Billing agreement status is not success.' );
-        }
-
-        $payment            = $status->getFirstModel();
-
-        return $this->redirect( $this->generateUrl( 'ia_paid_membership_subscription_create', [
-            'paymentId' => $payment->getId()
-        ]));
     }
 
     public function cancelAction( $paymentId, Request $request )
