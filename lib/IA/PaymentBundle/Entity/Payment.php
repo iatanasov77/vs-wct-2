@@ -32,7 +32,32 @@ class Payment extends BasePayment
      * @ORM\Column(name="paymentMethod", type="string", length=64, nullable=false)
      */
     protected $paymentMethod;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="amount", type="float", columnDefinition="DECIMAL(6, 2)", nullable=false)
+     */
+    protected $amount;
 
+    public function getTotalAmount()
+    {
+        //return $this->amount;
+        return $this->totalAmount;
+    }
+    
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+    
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+        
+        return $this;
+    }
+    
     /**
      * @return int
      */

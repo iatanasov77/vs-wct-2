@@ -52,7 +52,6 @@ class PaymentBuilder
         $payment    = $this->storage->create();
         $divisor    = $this->getCurrencyDivisor( $packagePlan->getCurrency() );
         
-        $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setPackagePlan( $packagePlan );
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $packagePlan->getCurrency() );
@@ -60,6 +59,8 @@ class PaymentBuilder
         $payment->setDescription( $packagePlan->getCurrency() );
         $payment->setClientId( $user->getId() );
         $payment->setClientEmail( $user->getEmail() );
+        
+        $payment->setAmount( $packagePlan->getPrice() );
         
         return $payment;
     }
