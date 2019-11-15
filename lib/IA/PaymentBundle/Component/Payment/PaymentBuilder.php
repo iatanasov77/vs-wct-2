@@ -1,14 +1,27 @@
 <?php namespace IA\PaymentBundle\Component\Payment;
 
 use Payum\Core\Payum;
+use Payum\Core\Request\GetCurrency;
 
 use IA\PaymentBundle\Entity\Agreement;
 use IA\PaymentBundle\Entity\Payment;
+
+/*
+ * When execute action Payum\Paypal\ExpressCheckout\Nvp\Action\ConvertPaymentAction
+ * price is divided by divisor
+ *
+ * zaradi tova prawq integer umnojen po divisor
+ */
 
 class PaymentBuilder
 {
     private $payum;
     private $storage;
+    
+    /*
+     * Currency divisor is hardcoded in this var since i dont know how to get it
+     */
+    private $currencyDivisor    = 100;
     
     public function __construct( Payum $payum )
     {
@@ -36,18 +49,29 @@ class PaymentBuilder
     {
         $this->storage = $this->payum->getStorage( Payment::class );
         
-        $payment = $this->storage->create();
+        $payment    = $this->storage->create();
+        $divisor    = $this->getCurrencyDivisor( $packagePlan->getCurrency() );
         
         $payment->setPaymentMethod( 'paypal_express_checkout_recurring_payment' );
         $payment->setPackagePlan( $packagePlan );
-        // number_format( $packagePlan->getPrice(), 2, ',', '' )
         $payment->setNumber( uniqid() );
         $payment->setCurrencyCode( $packagePlan->getCurrency() );
-        $payment->setTotalAmount( $packagePlan->getPrice() );
+        $payment->setTotalAmount( $packagePlan->getPrice() * $divisor );
         $payment->setDescription( $packagePlan->getCurrency() );
         $payment->setClientId( $user->getId() );
         $payment->setClientEmail( $user->getEmail() );
         
         return $payment;
+    }
+    
+    public function getCurrencyDivisor( $currencyCode )
+    {
+//         $currency = new GetCurrency( $currencyCode );
+        
+//         return pow( 10, $currency->exp );
+
+        // Currency divisor is hardcoded in this var since i dont know how to get it
+        return $this->currencyDivisor;
+        
     }
 }
