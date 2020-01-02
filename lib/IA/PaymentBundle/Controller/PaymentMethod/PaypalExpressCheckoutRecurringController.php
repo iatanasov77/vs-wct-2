@@ -22,13 +22,6 @@ use IA\UsersBundle\Entity\UserActivity;
 class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodController
 {
 
-    const GATEWAY   = 'paypal_express_checkout_gateway';
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
-    }
-    
     public function prepareAction( Request $request )
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
@@ -54,7 +47,8 @@ class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodCont
             $pb->updateStorage( $agreement );
             
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
-                self::GATEWAY, $agreement, 
+                $this->gatewayName(), 
+                $agreement, 
                 'ia_payment_paypal_express_checkout_create_recurring_payment',
                 ['packagePlanId' => $packagePlanId]
             );
@@ -139,7 +133,7 @@ class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodCont
 
     public function cancelAction( $paymentId, Request $request )
     {
-        $gateway = $this->getPayum()->getGateway( self::GATEWAY );
+        $gateway = $this->getPayum()->getGateway( $this->gatewayName() );
         
         $ppr = $this->getDoctrine()->getRepository( 'IAPaymentBundle:Payment' );
         $payment = $ppr->find( $paymentId );
@@ -168,6 +162,16 @@ class PaypalExpressCheckoutRecurringController extends AbstractPaymentMethodCont
         $em->flush();
         
         return $this->redirect( $this->generateUrl( 'ia_users_profile_show' ) );
+    }
+    
+    protected function gatewayName()
+    {
+        return 'paypal_express_checkout_gateway';
+    }
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
     }
     
     private function runWorkаround( $payment )

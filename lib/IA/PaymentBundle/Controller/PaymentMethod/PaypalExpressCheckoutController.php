@@ -13,13 +13,6 @@ use Payum\Core\Request\GetHumanStatus;
  */
 class PaypalExpressCheckoutController extends AbstractPaymentMethodController
 {   
-    const GATEWAY   = 'paypal_express_checkout_gateway';
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
-    }
-    
     public function prepareAction( Request $request )
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
@@ -31,7 +24,7 @@ class PaypalExpressCheckoutController extends AbstractPaymentMethodController
 
         if ( $request->isMethod( 'POST' ) ) {
             $pb         = $this->get( 'ia_payment_builder' );
-            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, self::GATEWAY );
+            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, $this->gatewayName() );
             
             $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
             $payment->setDetails([
@@ -43,7 +36,7 @@ class PaypalExpressCheckoutController extends AbstractPaymentMethodController
             $pb->updateStorage( $payment );
             
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
-                self::GATEWAY, 
+                $this->gatewayName(), 
                 $payment,
                 'ia_payment_paypal_express_checkout_done'
             );
@@ -56,5 +49,15 @@ class PaypalExpressCheckoutController extends AbstractPaymentMethodController
             'packagePlan'   => $packagePlan
         );
         return $this->render('IAPaymentBundle:PaymentMethod/PaypalExpressCheckout:CheckoutForm.html.twig', $tplVars);
+    }
+    
+    protected function gatewayName()
+    {
+        return 'paypal_express_checkout_gateway';
+    }
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['L_LONGMESSAGE0'];
     }
 }

@@ -24,13 +24,6 @@ use IA\PaymentBundle\Form\CreditCard as CreditCardForm;
 
 class PaypalProController extends AbstractPaymentMethodController
 {
-    const GATEWAY   = 'paypal_pro_checkout_gateway';
-    
-    protected function getErrorMessage( $details )
-    {
-        return 'PAYPAL ERROR: ' . $details['RESPMSG'];
-    }
-    
     public function prepareAction( Request $request )
     {
         $ppr = $this->getDoctrine()->getRepository( 'IAUsersBundle:PackagePlan' );
@@ -50,13 +43,13 @@ class PaypalProController extends AbstractPaymentMethodController
         if ( $form->isSubmitted() ) {
             $data       = $form->getData();
             $pb         = $this->get( 'ia_payment_builder' );
-            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, self::GATEWAY );
+            $payment    = $pb->buildPayment( $this->getUser(), $packagePlan, $this->gatewayName() );
             
             $payment->setPaymentMethod( 'paypal_express_checkout_NOT_recurring_payment' );
             $payment->setDetails([
-                'ACCT'          => $data['acct'],                       // new SensitiveValue( $data['acct'] ),
-                'CVV2'          => $data['cvv'],                        // new SensitiveValue( $data['cvv'] ),
-                'EXPDATE'       => $data['exp_date']->format( 'my' ),   // new SensitiveValue( $data['exp_date']->format( 'my' ) ),
+                'ACCT'          => $data['acct'],
+                'CVV2'          => $data['cvv'],
+                'EXPDATE'       => $data['exp_date']->format( 'my' ),
                 'AMT'           => $packagePlan->getPrice() * $payment->getCurrencyDivisor(),
                 'CURRENCY'      => $packagePlan->getCurrency(),
                 'NOSHIPPING'    => 1
@@ -64,7 +57,7 @@ class PaypalProController extends AbstractPaymentMethodController
             $pb->updateStorage( $payment );
             
             $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken(
-                self::GATEWAY,
+                $this->gatewayName(),
                 $payment,
                 'ia_payment_paypal_done'
             );
@@ -76,5 +69,14 @@ class PaypalProController extends AbstractPaymentMethodController
             'form' => $form->createView(),
         ));
     }
-
+    
+    protected function gatewayName()
+    {
+        return 'paypal_pro_checkout_gateway';
+    }
+    
+    protected function getErrorMessage( $details )
+    {
+        return 'PAYPAL ERROR: ' . $details['RESPMSG'];
+    }
 }
