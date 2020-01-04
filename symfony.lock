@@ -5,6 +5,9 @@
     "clue/stream-filter": {
         "version": "v1.4.1"
     },
+    "composer/semver": {
+        "version": "1.5.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -141,6 +144,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "iatanasov77/vs-core-bundle": {
+        "version": "dev-develop"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -257,6 +263,9 @@
     },
     "payum/stripe": {
         "version": "1.5.1"
+    },
+    "php": {
+        "version": "7.2"
     },
     "php-http/guzzle6-adapter": {
         "version": "v2.0.1"

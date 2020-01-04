@@ -11,15 +11,15 @@ app_logout:
 home:
     path: /
     controller: App\Controller\DefaultController::index
- 
+
 ia_users:
-    resource: "@IAUsersBundle/Resources/config/routing.yml"
+    resource: "@IAUsersBundle/Resources/config/routing/user_management.yml"
     prefix:   /users_bundle/
- 
-ia_taxonomy:
-    resource: "@IATaxonomyBundle/Resources/config/routing.yml"
-    prefix: /taxonomy
-    
+
+ia_users_subscription:
+    resource: "@IAUsersBundle/Resources/config/routing/subscription.yml"
+    prefix:   /users_bundle/subscription/
+
 ia_cms:
     resource: "@IACmsBundle/Resources/config/routing.yml"
     prefix:   /cms
