@@ -13,10 +13,7 @@ parameters:
     ia_web_content_thief.map_processors:
         'ia_web_content_thief.processor.prestashop15': 'PrestaShop 1.5'
         
-    payment_methods:
-        # payment_method: gateway_factory
-        #paypal_pro_checkout: paypal_pro_checkout
-        #paypal_express_checkout_recurring_payment: paypal_express_checkout
+    menu.config_file: "%kernel.root_dir%/../config/packages/ia_cms.yaml"
 
 services:
    
@@ -44,36 +41,6 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
         autowire: false
-        
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    
-    app.menu_builder:
-        class: App\Component\MenuBuilder
-        arguments: ["@security.authorization_checker"]
-        calls:
-          - [ setContainer ]
-
-    app.main_menu:
-        class: Knp\Menu\MenuItem
-        factory: ["@app.menu_builder", mainMenu]
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu, alias: main }
-            
-    app.profile_menu:
-        class: Knp\Menu\MenuItem
-        factory: ["@app.menu_builder", profileMenu]
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu, alias: profile }
-    
-    app.breadcrumbs_menu:
-        class: Knp\Menu\MenuItem
-        factory: ["@app.menu_builder", breadcrumbsMenu]
-        arguments: ["@knp_menu.factory"]
-        tags:
-            - { name: knp_menu.menu, alias: breadcrumbs }
               
     # Sylius Resource Form Services
     ia_web_content_thief.form.type.fieldsets:
