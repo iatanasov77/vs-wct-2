@@ -32,12 +32,12 @@ class Kernel extends BaseKernel
 
     public function getCacheDir()
     {
-        return '/var/www/wct2/cache';
+        return '/var/www/wct2.lh/cache';
     }
     
     public function getLogDir()
     {
-        return '/var/www/wct2/log';
+        return '/var/www/wct2.lh/log';
     }
     
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
