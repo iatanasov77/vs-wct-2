@@ -10,6 +10,22 @@
       <div class="modal-body">
         <span class="dashboard-spinner spinner-md browser-spinner" id="browser-spinner"></span>
         <div class="col-sm-12" style="margin: 20px 0 20px 0;">
+            <div class="form-group">
+                <label for="project_xqueryField">URL: </label>
+                <div class="input-group mb-3">
+                    <input type="text" name="url" id="urlInput" class="form-control" />
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-primary btnBrowse" 
+                            data-toggle="modal" data-target="#modalBrowser" 
+                            data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" 
+                            data-urlInput="#urlInput"
+                            data-fields="{{ listingFieldsDef }}"
+                        >
+                            Browse
+                        </button>
+                    </div>
+                </div>                                  
+            </div>
             <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('css/browser.css') }}"></iframe>
         </div>
         

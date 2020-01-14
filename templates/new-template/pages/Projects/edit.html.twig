@@ -75,25 +75,8 @@
                                     <strong>Error!</strong> {{ form_errors(form) }}
                                 </div>
                             {% endif %}
-        						
-                            <div class="form-group">
-                                {{ form_label(form.title, null, {
-                                    'label_attr': {'class': 'col-form-label'}
-                                    }) 
-                                }}
-                                
-                                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            
-                            <div class="form-group">
-                            	{{ form_label(form.parseCountMax, null, {
-                                    'label_attr': {'class': 'col-form-label'}
-                                    }) 
-                                }}
-                                {{ form_widget(form.parseCountMax, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            
-    						<div class="input-group mb-3">    
+        				    
+        				    <div class="input-group mb-3">    
                                 {{ form_label(form.enabled, null, {
                                     'label_attr': {'class': 'col-form-label'}
                                     }) 
@@ -104,37 +87,40 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                {{ form_label(form.title, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                            <div class="form-group">
+                                {{ form_label(form.url, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
+                            <div class="form-group">
+                            	{{ form_label(form.parseCountMax, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.parseCountMax, {'attr': {'class': 'form-control'}}) }}
+                            </div>
             				
+            				<div class="row form-group input-group"></div>
+            				  
 							<fieldset  class="fieldset-project-fields">
             					<legend class="w-auto">Listing Page Fields</legend>
+            				    <div class="text-right">
+            				        <button type="button" class="btn btn-primary" class="btnOpenBrowser">Setup</button>
+            				    </div>
             				
-                            	<div class="form-group">
-                            		
-                            		{% set url=item.getUrl() %}
-                                    {% if(url is empty) %}
-                                        {% set url='#' %}
-                                    {% endif %}
-                                    {{ form_label(form.url, null, {
-                                        'label_attr': {'class': 'col-form-label'}
-                                        }) 
-                                    }}
-                                    <div class="input-group mb-3">
-                                         
-                                        {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
-                
-                                        <div class="col-sm-1">
-                                        	<button type="button" class="btn btn-primary btnBrowse" 
-                                        		data-toggle="modal" data-target="#modalBrowser" 
-                                        		data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" 
-                                        		data-urlInput="#project_url"
-                                        		data-fields="{{ listingFieldsDef }}"
-                                        	>
-                                        		Browse
-                                        	</button>
-                                        </div>
-        							</div>									
-                    			</div>
-                    			
                                 <div class="form-group">
                                     {{ form_label(form.detailsLink, null, {
                                         'label_attr': {'class': 'col-form-label'}
@@ -181,7 +167,11 @@
                    			
                    			<fieldset  class="fieldset-project-fields">
                     			<legend class="w-auto">Details Page Fields</legend>        	
-                                            
+                                
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-primary" class="btnOpenBrowser">Setup</button>
+                                </div>
+                                          
                             	{% if(item.getId()) %}
                             
                                 	{{ form_label(form.detailsPage, null, {

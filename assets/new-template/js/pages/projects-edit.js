@@ -13,6 +13,11 @@ $( function ()
 		$( '#btnCloseBrowser' ).click();
 	});
 	
+	$( '.btnOpenBrowser' ).on( 'click', function ()
+	{
+		alert( 'btnOpenBrowser' );
+	});
+	
     $('.btnBrowse').on('click', function ()
     {
     	$( '#browser-spinner' ).show();
