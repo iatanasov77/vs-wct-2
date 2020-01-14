@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Controller;
+<?php namespace App\Controller;
 
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use App\Form\FieldsetType;
@@ -35,8 +33,9 @@ class FieldsetsController extends ResourceController
     
     public function editAction(Request $request)
     {
-        $id     = \App\Component\Url::GetParameter( 'id' );
-
+        //$id     = \App\Component\Url::GetParameter( 'id' );
+        $id     = $request->attributes->get( 'id' );
+        
         $er = $this->getDoctrine()->getRepository('App\Entity\Fieldset');
         $oFieldset = $id ? $er->findOneBy(array('id' => $id)) : new Fieldset();
 
@@ -52,7 +51,7 @@ class FieldsetsController extends ResourceController
             $em->persist($form->getData());
             $em->flush();
             
-            return $this->redirect($this->generateUrl('ia_web_content_thief_fieldsets_list'));
+            return $this->redirect($this->generateUrl('ia_web_content_thief_fieldsets_index'));
         }
         
         $tplVars = array(

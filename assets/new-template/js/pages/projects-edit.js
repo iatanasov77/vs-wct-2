@@ -1,10 +1,4 @@
-function showSpinner()
-{
-	
-	//$( '#remoteBrowser' ).before( html );
-}
-
-$( function () 
+$( function ()
 { 
 	$( "#btnSaveFieldsXquery" ).on( "click", function( e )
 	{
@@ -21,7 +15,7 @@ $( function ()
 	
     $('.btnBrowse').on('click', function ()
     {
-    	showSpinner();
+    	$( '#browser-spinner' ).show();
     	
         var browserUrl	= $(this).attr('data-browserUrl');
         var url			= $($(this).attr('data-urlInput')).val();
@@ -49,6 +43,8 @@ $( function ()
     });
 
     $('#remoteBrowser').on('load', function () {
+    	$( '#browser-spinner' ).hide();
+    	
         var cssUrl = $(this).attr('data-browserCss');
         var head = $(this).contents().find("head");
         head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));
