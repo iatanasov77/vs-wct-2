@@ -41,10 +41,14 @@ ia_web_content_thief_projects:
         path: /projects
         templates: "pages/Projects"
     type: sylius.resource
-    
+
+ia_web_content_fieldset_fields:
+    path:     /fieldsets/{id}/fields
+    defaults: { _controller: App\Controller\ProjectsJsonController:fieldsetFields }
+
 ia_web_content_projects_add_fields:
     path:     /projects/add-fields
-    defaults: { _controller: App\Controller\ProjectsJsonController:addFieldsAction }
+    defaults: { _controller: App\Controller\ProjectsJsonController:addFields }
     
 # Parser Controller
 ia_web_content_thief_parser_run_project:

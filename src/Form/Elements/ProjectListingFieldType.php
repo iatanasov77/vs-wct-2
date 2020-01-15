@@ -19,20 +19,21 @@ class ProjectListingFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array('required' => false))
-            ->add('type', EntityType::class, array(
+        ->add( 'title', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Enter a Title']] )
+            ->add('type', EntityType::class, [
                 'class' => 'App\Entity\FieldType',
-                'choice_label' => 'title'
-            ))
-            ->add('xquery', TextType::class, array('required' => false))
+                'choice_label' => 'title',
+                'placeholder' => '-- Choose a Type --',
+            ])
+            ->add('xquery', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Enter a XPath']])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'App\Entity\ProjectListingField'
-        ));
+        ]);
     }
 
 }

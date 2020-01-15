@@ -12,7 +12,27 @@ class ProjectsJsonController extends Controller
     const TYPE_LISTING_FIELD    = 'listing';
     const TYPE_DETAILS_FIELD    = 'details';
     
-    public function addFieldsAction( Request $request )
+    public function fieldsetFields( Request $request )
+    {
+        $fieldsetId = $request->attributes->get( 'id' );
+        $fr         = $this->getDoctrine()->getRepository( 'App\Entity\Fieldset' );
+        $oFieldset  = $fieldsetId ? $fr->findOneBy( ['id' => $fieldsetId] ) : null;
+        if( !$oFieldset ) {
+            throw new \Exception( 'Fieldset with id:'.$fieldsetId.' not found!' );
+        }
+        
+        $fields     = [];
+        foreach( $oFieldset->getFields() as $field ) {
+            $fields[]   = [
+                'title' => $field->getTitle(),
+                'type'  => $field->getType()
+            ];
+        }
+        
+        return new JsonResponse( $fields );
+    }
+    
+    public function addFields( Request $request )
     {
         $projectId = $request->request->get( 'projectId' );
         $fieldsetId = $request->request->get( 'fieldsetId' );

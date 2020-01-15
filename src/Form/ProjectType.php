@@ -54,17 +54,18 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
                 'class' => 'App\Entity\Fieldset',
                 'choice_label' => 'title',
                 "mapped" => false,
-                'required' => false
+                'required' => false,
+                'placeholder' => '-- Apply a Fieldset --',
             ))
             
             ->add('fieldsetDetails', EntityType::class, array(
                 'class' => 'App\Entity\Fieldset',
                 'choice_label' => 'title',
                 "mapped" => false,
-                'required' => false
+                'required' => false,
+                'placeholder' => '-- Apply a Fieldset --',
             ))
             
-                
             ->add('listingFields', CollectionType::class, array(
                 'entry_type'   => ProjectListingFieldType::class,
                 'allow_add'    => true,

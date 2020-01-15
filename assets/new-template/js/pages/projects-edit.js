@@ -15,25 +15,11 @@ $( function ()
 	
 	$( '.btnOpenBrowser' ).on( 'click', function ()
 	{
-		alert( 'btnOpenBrowser' );
-	});
-	
-    $('.btnBrowse').on('click', function ()
-    {
-    	$( '#browser-spinner' ).show();
-    	
-        var browserUrl	= $(this).attr('data-browserUrl');
-        var url			= $($(this).attr('data-urlInput')).val();
-        var fields		= JSON.parse($(this).attr('data-fields'));
-        if ( ! url.length || ! fields.length ) {
-        	
-        	alert( 'URL or Fields are not defined!' );
-        	return false;
-        }
-        
-        $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
-        
-        var prototype	= '';
+		$( '#browser-spinner' ).hide();
+		
+		var fields		= JSON.parse($(this).attr('data-fields'));
+		
+		var prototype	= '';
         var options		= '';
         for (var i = 0; i < fields.length; i++) {
           prototype += '<div class="input-group">' + '<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + '<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id_source + '" data-target="#' + fields[i].id_target + '" /></div>' + '</div>';
@@ -45,6 +31,23 @@ $( function ()
         
         $('#project_xqueryField').html('');
         $('#project_xqueryField').html(options);
+		
+	});
+	
+    $('.btnBrowse').on('click', function ()
+    {
+    	$( '#browser-spinner' ).show();
+    	
+        var browserUrl	= $(this).attr('data-browserUrl');
+        var url			= $($(this).attr('data-urlInput')).val();
+        
+        if ( ! url.length ) {
+        	alert( 'URL is empty!' );
+        	
+        	return false;
+        }
+        
+        $('#remoteBrowser').attr('src', browserUrl + '?url=' + encodeURIComponent(url));
     });
 
     $('#remoteBrowser').on('load', function () {
