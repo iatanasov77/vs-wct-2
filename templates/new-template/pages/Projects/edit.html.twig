@@ -121,7 +121,7 @@
             				        <button type="button" class="btn btn-primary btnOpenBrowser"
             				        	data-toggle="modal" data-target="#modalBrowser"
             				        	data-fields="{{ listingFieldsDef }}"
-            				        >Setup</button>
+            				        >Browser</button>
             				    </div>
             				
                                 <div class="form-group">
@@ -149,12 +149,17 @@
                                     <div class="input-group">
                                         {{ form_widget(form.fieldsetListing, {'attr': {'class': 'form-control'}}) }}
         								<div class="col-sm-1">
-                                        	<input class="btn btn-primary" id="btnAddFieldsListing" type="button" value="Add Fields" data-resourceId="{{ item.getId() }}" data-addFieldsUrl="{{ path('ia_web_content_projects_add_fields') }}" />
+                                        	<input class="btn btn-primary" id="btnAddFieldsListing" type="button" value="Add Fields"
+                                        	   data-getFieldsUrl="{{ path('ia_web_content_fieldset_fields') }}" 
+                                        	/>
                                     	</div>
                                     </div>
                                 </div>
                                 
-                                <div class="fieldsContainer" data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}">
+                                <div class="fieldsContainer" 
+                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}"
+                                    id="fieldsListingContainer"
+                                >
                                     {% for field in form.listingFields %}
                                         {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
                                     {% endfor %}
@@ -171,7 +176,7 @@
                                     <button type="button" class="btn btn-primary btnOpenBrowser"
                                     	data-toggle="modal" data-target="#modalBrowser"
                                     	data-fields="{{ detailsFieldsDef }}"
-                                    >Setup</button>
+                                    >Browser</button>
                                 </div>
                                           
                             	{% if(item.getId()) %}
@@ -230,7 +235,10 @@
                                     </div>
                                 </div>
                                     
-                                <div class="fieldsContainer" data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}">
+                                <div class="fieldsContainer" 
+                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}"
+                                    id="fieldsDetailsContainer"
+                                >
                                     {% for field in form.detailsFields %}
                                         {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
                                     {% endfor %}

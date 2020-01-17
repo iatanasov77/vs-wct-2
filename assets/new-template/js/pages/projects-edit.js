@@ -1,5 +1,74 @@
+/*
+{
+	id_source: "project_pagerLink_source"
+	id_target: "project_pagerLink"
+	title: "Pager Link"
+}
+
+project_listingFields_2_xquery
+ */
+class ProjectFields
+{
+	constructor(  )
+	{
+		this.fields	= [];
+	}
+	
+	getFields() {
+		return this.fields;
+ 	}
+	
+	addField( field )
+	{
+		
+	}
+}
+
+var dfOptions	= {
+    btnRemoveSelector: ".btnRemoveField",
+    btnAddSelector:    ".btnAddField"
+};
+
+function initDfButtons( container )
+{
+    container.find( dfOptions.btnRemoveSelector ).show();
+    container.find( dfOptions.btnRemoveSelector ).last().hide();
+    container.find( dfOptions.btnAddSelector ).hide();
+    container.find( dfOptions.btnAddSelector ).last().show();
+}
+
+function createDfElement( container, data, fields )
+{
+    var elementNumber = container.children().length + 1;
+    var newElement = $(container.attr('data-prototype'));
+    
+    newElement.find( '#project_listingFields___name___title' ).val( data.title );
+    newElement.find( '#project_listingFields___name___type' ).val( data.type );
+    
+    newElement.find(':input').each(function() {
+        var id = $(this).attr('id').replace('__name__', elementNumber);
+        $(this).attr('id', id);
+        
+        if ( id.endsWith( '_xquery' ) ) {
+        	fields.addField({
+				id_source: id + "_source",
+				id_target: id,
+				title: data.title
+			});
+        }
+        
+        var name = $(this).attr('name').replace('__name__', elementNumber);
+        $(this).attr('name', name);
+    });
+    container.append(newElement);
+    
+    return newElement;
+}
+
 $( function ()
-{ 
+{
+	$('.fieldsContainer').duplicateFields( dfOptions );
+	
 	$( "#btnSaveFieldsXquery" ).on( "click", function( e )
 	{
 		e.preventDefault(); // prevent de default action, which is to submit
@@ -18,7 +87,7 @@ $( function ()
 		$( '#browser-spinner' ).hide();
 		
 		var fields		= JSON.parse($(this).attr('data-fields'));
-		
+
 		var prototype	= '';
         var options		= '';
         for (var i = 0; i < fields.length; i++) {
@@ -70,12 +139,7 @@ $( function ()
             $("#" + whereToSet, parent.document).val( xpath );
         });
     });
-    
-    $('.fieldsContainer').duplicateFields({
-        btnRemoveSelector: ".btnRemoveField",
-        btnAddSelector:    ".btnAddField"
-    });
-    
+        
     $('#btnSetXquery').on('click', function() {
         var xquery = $('#project_xquery').val();
         if(!xquery.length)
@@ -86,20 +150,22 @@ $( function ()
     });
     
     $('#btnAddFieldsListing').on('click', function() {
-        var projectId = $(this).attr('data-resourceId');
-        var fieldsetId = $('#FormProject_fieldset').val();
-        var url = $(this).attr('data-addFieldsUrl');
+        var fieldsetId	= $('#project_fieldsetListing').val();
+        var url			= $(this).attr('data-getFieldsUrl') + '?id=' + fieldsetId;
         
         $.ajax({
             type: 'post',
             dataType: 'json',
             url: url,
             data: {
-                projectId: projectId,
-                fieldsetId: fieldsetId
+                id: fieldsetId
             },
             success: function(data) {
-                document.location = document.location;
+            	for ( i = 0; i < data.length; i++ ) {
+            		createDfElement( $( '#fieldsListingContainer' ), data[i] );
+            	}
+            	
+            	initDfButtons( $( '#fieldsListingContainer' ) )
             }
         });
     });

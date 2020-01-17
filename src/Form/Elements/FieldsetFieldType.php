@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class FieldsetFieldType extends AbstractType
 {
@@ -19,11 +19,12 @@ class FieldsetFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('type', EntityType::class, array(
-                'class' => 'App\Entity\FieldType',
-                'choice_label' => 'title'
-            ))
+            ->add( 'title', TextType::class, ['required' => true] )
+            ->add( 'type', ChoiceType::class, [
+                'required'      => true,
+                'placeholder'   => '-- Choose a Type --',
+                'choices'       => \App\Component\ProjectField::types()
+            ])
         ;
     }
 

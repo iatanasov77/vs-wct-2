@@ -32,9 +32,8 @@ class FieldsetField implements SlugAwareInterface
     private $slug;
     
     /**
-     *
-     * @ORM\OneToOne(targetEntity="FieldType")
-     * @ORM\JoinColumn(name="typeId", referencedColumnName="id")
+     * 
+     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
      */
     private $type;
     
@@ -82,7 +81,7 @@ class FieldsetField implements SlugAwareInterface
      * @param FieldType $type
      * @return FieldsetsField
      */
-    public function setType(FieldType $type)
+    public function setType($type)
     {
         $this->type = $type;
 

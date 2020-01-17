@@ -14,7 +14,9 @@ class ProjectsJsonController extends Controller
     
     public function fieldsetFields( Request $request )
     {
-        $fieldsetId = $request->attributes->get( 'id' );
+        //$fieldsetId = $request->attributes->get( 'id' );
+        $fieldsetId = $request->query->get( 'id' );
+        
         $fr         = $this->getDoctrine()->getRepository( 'App\Entity\Fieldset' );
         $oFieldset  = $fieldsetId ? $fr->findOneBy( ['id' => $fieldsetId] ) : null;
         if( !$oFieldset ) {

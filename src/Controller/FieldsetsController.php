@@ -33,14 +33,12 @@ class FieldsetsController extends ResourceController
     
     public function editAction(Request $request)
     {
-        //$id     = \App\Component\Url::GetParameter( 'id' );
         $id     = $request->attributes->get( 'id' );
-        
+
         $er = $this->getDoctrine()->getRepository('App\Entity\Fieldset');
         $oFieldset = $id ? $er->findOneBy(array('id' => $id)) : new Fieldset();
 
-        //$request = $this->get('request');
-        $form = $this->createForm( FieldsetType::class, $oFieldset, ['data' => $oFieldset]);
+        $form = $this->createForm( FieldsetType::class, $oFieldset, ['data' => $oFieldset, 'method' => $id ? 'PUT' : 'POST']);
         if($request->isMethod('POST')) {
             $form->handleRequest($request);
             if($form->isValid()) {
