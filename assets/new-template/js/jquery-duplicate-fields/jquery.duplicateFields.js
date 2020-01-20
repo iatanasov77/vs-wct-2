@@ -15,7 +15,7 @@
         return this.each(function () 
         {   
             if(!$(this).children().length) {
-                createElement($(this));
+                createElement($(this), 'df-initial');
             }
             
             initButtons($(this));
@@ -80,7 +80,7 @@
          * @param container
          * @param target
          */
-        function createElement(container, target)
+        function createElement(container, id)
         {
             var elementNumber = container.children().length + 1;
             var newElement = $(container.attr('data-prototype'));
@@ -92,6 +92,8 @@
                 var name = $(this).attr('name').replace('__name__', elementNumber);
                 $(this).attr('name', name);
             });
+            
+            newElement.addClass( id );
             container.append(newElement);
             
             return newElement;

@@ -47,7 +47,6 @@
                         <a class="btn  btn-danger btnCopyProject" data-resourceId="{{ item.getId() }}" href="javascript:;">
                             Copy Project
                         </a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreateProject">Create New Project</button>
                     </div>
                 </section>
             {% endif %}
@@ -149,28 +148,13 @@
         						<div class="row form-group input-group"></div>
                                 
                                 <fieldset  class="fieldset-project-fields-additional">
-            						<legend class="w-auto">Additional Fields for Listing Pages</legend>
+            						<legend class="w-auto">Additional Fields</legend>
             						
 	                                <div class="fieldsContainer" 
-	                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}"
-	                                    id="fieldsListingContainer"
+	                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.fields.vars.prototype} %}{% endfilter %}"
+	                                    id="fieldsContainer"
 	                                >
-	                                    {% for field in form.listingFields %}
-	                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
-	                                    {% endfor %}
-	                                </div>
-	                            </fieldset>
-                            	
-                            	<div class="row form-group input-group"></div>
-                            	
-                            	<fieldset  class="fieldset-project-fields-additional">
-            						<legend class="w-auto">Additional Fields for Details Pages</legend>
-            						
-	                                <div class="fieldsContainer" 
-	                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}"
-	                                    id="fieldsDetailsContainer"
-	                                >
-	                                    {% for field in form.listingFields %}
+	                                    {% for field in form.fields %}
 	                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
 	                                    {% endfor %}
 	                                </div>
@@ -185,9 +169,6 @@
 		                                </div>
                                     	<div class="col-lg-6">
                                         	{{ form_widget(form.addFieldset.fieldset, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-lg-2">
-                                        	{{ form_widget(form.addFieldset.destination, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="col-lg-2">
                                         	{{ form_widget(form.addFieldset.button, {'attr': {'class': 'btn btn-primary', 'data-getFieldsUrl': path('ia_web_content_fieldset_fields')}}) }}

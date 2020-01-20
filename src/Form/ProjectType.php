@@ -36,8 +36,8 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder            
-            ->add('enabled', CheckboxType::class, array('label' => 'Enabled'))
-            ->add('title', TextType::class, array('label' => 'Title'))
+            ->add( 'enabled', CheckboxType::class, ['label' => 'Enabled'] )
+            ->add( 'title', TextType::class, ['label' => 'Title'] )
             
             ->add( 'parseMode', ChoiceType::class, [
                 'label'         => 'Parse Mode',
@@ -45,55 +45,44 @@ class ProjectType extends AbstractResourceType implements ContainerAwareInterfac
                 'placeholder'   => '-- Choose Parse Mode --',
                 'choices'       => \App\Component\ProjectField::parseModes()
              ])
-            ->add('parseCountMax', TextType::class, array('label' => 'Max Count Parsing Objects'))
+            ->add( 'parseCountMax', TextType::class, ['label' => 'Max Count Parsing Objects'] )
             
-            ->add('url', TextType::class, array('label' => 'Url')) // , array("mapped" => false)
+            ->add( 'url', TextType::class, ['label' => 'Url'] ) // , array("mapped" => false)
             
-            ->add('detailsPage', TextType::class, array('label'=> 'Details Page', 'required' => false))
-            ->add('detailsLink', TextType::class, array('label'=> 'Details Link'))
-            ->add('pagerLink', TextType::class, array('label'=> 'Pager Link'))
+            ->add( 'detailsPage', TextType::class, ['label'=> 'Details Page', 'required' => false] )
+            ->add( 'detailsLink', TextType::class, ['label'=> 'Details Link'] )
+            ->add( 'pagerLink', TextType::class, ['label'=> 'Pager Link'] )
                 
             
-            ->add('addFieldset', ProjectFieldsetAddFieldsType::class, array(
+            ->add( 'addFieldset', ProjectFieldsetAddFieldsType::class, [
                 'label' => 'Add Fields',
                 "mapped" => false
-            ))
-            ->add('listingFields', CollectionType::class, array(
+            ])
+            ->add( 'fields', CollectionType::class, [
                 'entry_type'   => ProjectFieldType::class,
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'prototype'    => true,
-                'by_reference' => false,
-                "mapped" => false
-            ))  
-            ->add('detailsFields', CollectionType::class, array(
-                'entry_type'   => ProjectFieldType::class,
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'prototype'    => true,
-                'by_reference' => false,
-                "mapped" => false
-            ))
+                'by_reference' => false
+            ])
             
             
-            ->add('btnSave', SubmitType::class, array('label' => 'Save'))
-            ->add('btnCancel', ButtonType::class, array('label' => 'Cancel'))
+            ->add( 'btnSave', SubmitType::class, ['label' => 'Save'] )
+            ->add( 'btnCancel', ButtonType::class, ['label' => 'Cancel'] )
         ;
     }
     
-    public function configureOptions(OptionsResolver $resolver) : void
+    public function configureOptions( OptionsResolver $resolver ) : void
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Project'
-        ));
+        $resolver->setDefaults( ['data_class' => 'App\Entity\Project'] );
     }
     
-    protected function getXqueryFieldChoices(Project $project)
+    protected function getXqueryFieldChoices( Project $project )
     {
-        $choices = array(
+        $choices = [
             'Details Link'  => 'project_detailsLink',
             'Pager Link'    => 'project_pagerLink'
-        );
+        ];
         
         $i = 0;
         foreach($project->getListingFields() as $field) {

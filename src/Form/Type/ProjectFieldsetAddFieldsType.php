@@ -19,11 +19,6 @@ class ProjectFieldsetAddFieldsType extends AbstractType
                 'required' => false,
                 'placeholder' => '-- Choose a Fieldset --',
             ])
-            ->add( 'destination', ChoiceType::class, [
-                'required'      => false,
-                'placeholder'   => '-- Choose a Destination --',
-                'choices'       => \App\Component\ProjectField::destinations()
-            ])
             ->add( 'button', ButtonType::class, [
                 'label' => 'Add Fields'
                 

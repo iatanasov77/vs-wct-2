@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2020 at 08:14 AM
--- Server version: 5.7.28
--- PHP Version: 7.2.25
+-- Generation Time: 20 яну 2020 в 11:45
+-- Версия на сървъра: 5.7.29
+-- PHP Version: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_Agreements`
+-- Структура на таблица `IAP_Agreements`
 --
 
 CREATE TABLE `IAP_Agreements` (
@@ -39,7 +39,7 @@ CREATE TABLE `IAP_Agreements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_GatewayConfig`
+-- Структура на таблица `IAP_GatewayConfig`
 --
 
 CREATE TABLE `IAP_GatewayConfig` (
@@ -53,7 +53,7 @@ CREATE TABLE `IAP_GatewayConfig` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAP_GatewayConfig`
+-- Схема на данните от таблица `IAP_GatewayConfig`
 --
 
 INSERT INTO `IAP_GatewayConfig` (`id`, `gateway_name`, `factory_name`, `config`, `useSandbox`, `sandboxConfig`, `currency`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `IAP_GatewayConfig` (`id`, `gateway_name`, `factory_name`, `config`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_PaymentDetails`
+-- Структура на таблица `IAP_PaymentDetails`
 --
 
 CREATE TABLE `IAP_PaymentDetails` (
@@ -76,7 +76,7 @@ CREATE TABLE `IAP_PaymentDetails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAP_PaymentDetails`
+-- Схема на данните от таблица `IAP_PaymentDetails`
 --
 
 INSERT INTO `IAP_PaymentDetails` (`id`, `details`, `paymentMethod`, `packagePlanId`, `type`) VALUES
@@ -96,7 +96,7 @@ INSERT INTO `IAP_PaymentDetails` (`id`, `details`, `paymentMethod`, `packagePlan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_PaymentMethods`
+-- Структура на таблица `IAP_PaymentMethods`
 --
 
 CREATE TABLE `IAP_PaymentMethods` (
@@ -108,7 +108,7 @@ CREATE TABLE `IAP_PaymentMethods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `IAP_PaymentMethods`
+-- Схема на данните от таблица `IAP_PaymentMethods`
 --
 
 INSERT INTO `IAP_PaymentMethods` (`id`, `gatewayId`, `name`, `route`, `active`) VALUES
@@ -120,7 +120,7 @@ INSERT INTO `IAP_PaymentMethods` (`id`, `gatewayId`, `name`, `route`, `active`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_Payments`
+-- Структура на таблица `IAP_Payments`
 --
 
 CREATE TABLE `IAP_Payments` (
@@ -141,7 +141,7 @@ CREATE TABLE `IAP_Payments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAP_Tokens`
+-- Структура на таблица `IAP_Tokens`
 --
 
 CREATE TABLE `IAP_Tokens` (
@@ -153,7 +153,7 @@ CREATE TABLE `IAP_Tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `IAP_Tokens`
+-- Схема на данните от таблица `IAP_Tokens`
 --
 
 INSERT INTO `IAP_Tokens` (`hash`, `details`, `after_url`, `target_url`, `gateway_name`) VALUES
@@ -264,7 +264,7 @@ INSERT INTO `IAP_Tokens` (`hash`, `details`, `after_url`, `target_url`, `gateway
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_Packages`
+-- Структура на таблица `IAUM_Packages`
 --
 
 CREATE TABLE `IAUM_Packages` (
@@ -273,7 +273,7 @@ CREATE TABLE `IAUM_Packages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAUM_Packages`
+-- Схема на данните от таблица `IAUM_Packages`
 --
 
 INSERT INTO `IAUM_Packages` (`id`, `title`) VALUES
@@ -282,7 +282,7 @@ INSERT INTO `IAUM_Packages` (`id`, `title`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_Packages_Plans`
+-- Структура на таблица `IAUM_Packages_Plans`
 --
 
 CREATE TABLE `IAUM_Packages_Plans` (
@@ -295,7 +295,7 @@ CREATE TABLE `IAUM_Packages_Plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAUM_Packages_Plans`
+-- Схема на данните от таблица `IAUM_Packages_Plans`
 --
 
 INSERT INTO `IAUM_Packages_Plans` (`id`, `price`, `currency`, `description`, `packageId`, `planId`) VALUES
@@ -305,7 +305,7 @@ INSERT INTO `IAUM_Packages_Plans` (`id`, `price`, `currency`, `description`, `pa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_Plans`
+-- Структура на таблица `IAUM_Plans`
 --
 
 CREATE TABLE `IAUM_Plans` (
@@ -315,7 +315,7 @@ CREATE TABLE `IAUM_Plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAUM_Plans`
+-- Схема на данните от таблица `IAUM_Plans`
 --
 
 INSERT INTO `IAUM_Plans` (`id`, `title`, `subscription_period`) VALUES
@@ -324,7 +324,7 @@ INSERT INTO `IAUM_Plans` (`id`, `title`, `subscription_period`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_UserGroups`
+-- Структура на таблица `IAUM_UserGroups`
 --
 
 CREATE TABLE `IAUM_UserGroups` (
@@ -336,7 +336,7 @@ CREATE TABLE `IAUM_UserGroups` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_Users`
+-- Структура на таблица `IAUM_Users`
 --
 
 CREATE TABLE `IAUM_Users` (
@@ -357,18 +357,18 @@ CREATE TABLE `IAUM_Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `IAUM_Users`
+-- Схема на данните от таблица `IAUM_Users`
 --
 
 INSERT INTO `IAUM_Users` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `subscriptionId`, `user_info_id`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin', 1, 'ZEAYhdMkJnNRZ0t5JO0Ol5AecbXAwj3ennB0CrmBIBY', '$argon2i$v=19$m=65536,t=4,p=1$MWFNejhXMzFwVFdpVElGMg$qq6lIt3kFlHxPq6plag34jEwsfMvglffqYH9UkKL26Q', '2020-01-13 21:02:55', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}', NULL, 4),
+(1, 'admin', 'admin', 'admin', 'admin', 1, 'ZEAYhdMkJnNRZ0t5JO0Ol5AecbXAwj3ennB0CrmBIBY', '$argon2i$v=19$m=65536,t=4,p=1$MWFNejhXMzFwVFdpVElGMg$qq6lIt3kFlHxPq6plag34jEwsfMvglffqYH9UkKL26Q', '2020-01-20 09:19:14', NULL, NULL, 'a:1:{i:0;s:10:\"ROLE_ADMIN\";}', NULL, 4),
 (2, 'admin2', 'admin2', 'admin2', 'admin2', 1, '.oHKGUigY1G7Z0zMWuYTGC4DZ2Mc9fQNZ2jBLvkTTn0', '$argon2i$v=19$m=65536,t=4,p=1$MWFNejhXMzFwVFdpVElGMg$qq6lIt3kFlHxPq6plag34jEwsfMvglffqYH9UkKL26Q', NULL, NULL, NULL, 'a:0:{}', NULL, NULL),
 (3, 'admin', 'admin', 'admin', 'admin', 1, 'rID/Lqp8tiUKWL9s7pAPzal3y00yLvBzx0UC88V8.Zk', '$argon2i$v=19$m=65536,t=4,p=1$NkdQVUMuNXYzZGNxL2U1Nw$lMSM2JxwjZNuo53LCGeuEVh0izOxrwUGIb2D5h9a/64', NULL, NULL, NULL, 'a:0:{}', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_UsersActivities`
+-- Структура на таблица `IAUM_UsersActivities`
 --
 
 CREATE TABLE `IAUM_UsersActivities` (
@@ -379,7 +379,7 @@ CREATE TABLE `IAUM_UsersActivities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAUM_UsersActivities`
+-- Схема на данните от таблица `IAUM_UsersActivities`
 --
 
 INSERT INTO `IAUM_UsersActivities` (`id`, `date`, `userId`, `activity`) VALUES
@@ -398,7 +398,7 @@ INSERT INTO `IAUM_UsersActivities` (`id`, `date`, `userId`, `activity`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_UsersInfo`
+-- Структура на таблица `IAUM_UsersInfo`
 --
 
 CREATE TABLE `IAUM_UsersInfo` (
@@ -414,7 +414,7 @@ CREATE TABLE `IAUM_UsersInfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `IAUM_UsersInfo`
+-- Схема на данните от таблица `IAUM_UsersInfo`
 --
 
 INSERT INTO `IAUM_UsersInfo` (`id`, `apiToken`, `firstName`, `lastName`, `country`, `birthday`, `mobile`, `website`, `occupation`) VALUES
@@ -423,7 +423,7 @@ INSERT INTO `IAUM_UsersInfo` (`id`, `apiToken`, `firstName`, `lastName`, `countr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_UsersNotifications`
+-- Структура на таблица `IAUM_UsersNotifications`
 --
 
 CREATE TABLE `IAUM_UsersNotifications` (
@@ -434,7 +434,7 @@ CREATE TABLE `IAUM_UsersNotifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `IAUM_UsersNotifications`
+-- Схема на данните от таблица `IAUM_UsersNotifications`
 --
 
 INSERT INTO `IAUM_UsersNotifications` (`id`, `date`, `userId`, `notification`) VALUES
@@ -443,7 +443,7 @@ INSERT INTO `IAUM_UsersNotifications` (`id`, `date`, `userId`, `notification`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IAUM_UsersSubscriptions`
+-- Структура на таблица `IAUM_UsersSubscriptions`
 --
 
 CREATE TABLE `IAUM_UsersSubscriptions` (
@@ -457,7 +457,7 @@ CREATE TABLE `IAUM_UsersSubscriptions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IA_Cms_Pages`
+-- Структура на таблица `IA_Cms_Pages`
 --
 
 CREATE TABLE `IA_Cms_Pages` (
@@ -470,7 +470,7 @@ CREATE TABLE `IA_Cms_Pages` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IA_Taxonomy_Term`
+-- Структура на таблица `IA_Taxonomy_Term`
 --
 
 CREATE TABLE `IA_Taxonomy_Term` (
@@ -491,7 +491,7 @@ CREATE TABLE `IA_Taxonomy_Term` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `IA_Taxonomy_Vocabularies`
+-- Структура на таблица `IA_Taxonomy_Vocabularies`
 --
 
 CREATE TABLE `IA_Taxonomy_Vocabularies` (
@@ -506,7 +506,7 @@ CREATE TABLE `IA_Taxonomy_Vocabularies` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migration_versions`
+-- Структура на таблица `migration_versions`
 --
 
 CREATE TABLE `migration_versions` (
@@ -515,7 +515,7 @@ CREATE TABLE `migration_versions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migration_versions`
+-- Схема на данните от таблица `migration_versions`
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
@@ -526,7 +526,7 @@ INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Fieldsets`
+-- Структура на таблица `WCT_Fieldsets`
 --
 
 CREATE TABLE `WCT_Fieldsets` (
@@ -535,7 +535,7 @@ CREATE TABLE `WCT_Fieldsets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `WCT_Fieldsets`
+-- Схема на данните от таблица `WCT_Fieldsets`
 --
 
 INSERT INTO `WCT_Fieldsets` (`id`, `title`) VALUES
@@ -545,7 +545,7 @@ INSERT INTO `WCT_Fieldsets` (`id`, `title`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Fieldsets_Fields`
+-- Структура на таблица `WCT_Fieldsets_Fields`
 --
 
 CREATE TABLE `WCT_Fieldsets_Fields` (
@@ -558,7 +558,7 @@ CREATE TABLE `WCT_Fieldsets_Fields` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `WCT_Fieldsets_Fields`
+-- Схема на данните от таблица `WCT_Fieldsets_Fields`
 --
 
 INSERT INTO `WCT_Fieldsets_Fields` (`id`, `slug`, `title`, `typeId`, `fieldsetId`, `type`) VALUES
@@ -570,7 +570,7 @@ INSERT INTO `WCT_Fieldsets_Fields` (`id`, `slug`, `title`, `typeId`, `fieldsetId
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Field_Types`
+-- Структура на таблица `WCT_Field_Types`
 --
 
 CREATE TABLE `WCT_Field_Types` (
@@ -581,7 +581,7 @@ CREATE TABLE `WCT_Field_Types` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_ParcedItems`
+-- Структура на таблица `WCT_ParcedItems`
 --
 
 CREATE TABLE `WCT_ParcedItems` (
@@ -597,7 +597,7 @@ CREATE TABLE `WCT_ParcedItems` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_ProjectDetailsFields`
+-- Структура на таблица `WCT_ProjectDetailsFields`
 --
 
 CREATE TABLE `WCT_ProjectDetailsFields` (
@@ -612,22 +612,22 @@ CREATE TABLE `WCT_ProjectDetailsFields` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_ProjectFields`
+-- Структура на таблица `WCT_ProjectFields`
 --
 
 CREATE TABLE `WCT_ProjectFields` (
   `id` int(11) NOT NULL,
-  `slug` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `xquery` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `projectId` int(11) DEFAULT NULL,
-  `type` enum('text','picture','link') COLLATE utf8mb4_unicode_ci NOT NULL
+  `type` enum('text','picture','link') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page` enum('listing','details') COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_ProjectListingFields`
+-- Структура на таблица `WCT_ProjectListingFields`
 --
 
 CREATE TABLE `WCT_ProjectListingFields` (
@@ -642,7 +642,7 @@ CREATE TABLE `WCT_ProjectListingFields` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Projects`
+-- Структура на таблица `WCT_Projects`
 --
 
 CREATE TABLE `WCT_Projects` (
@@ -664,7 +664,7 @@ CREATE TABLE `WCT_Projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `WCT_Projects`
+-- Схема на данните от таблица `WCT_Projects`
 --
 
 INSERT INTO `WCT_Projects` (`id`, `parseMode`, `parseCountMax`, `url`, `detailsPage`, `categoryId`, `userId`, `title`, `detailsLink`, `pagerLink`, `nopic`, `pictureCropTop`, `pictureCropRight`, `pictureCropBottom`, `pictureCropLeft`) VALUES
@@ -673,7 +673,7 @@ INSERT INTO `WCT_Projects` (`id`, `parseMode`, `parseCountMax`, `url`, `detailsP
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Projects_Processors`
+-- Структура на таблица `WCT_Projects_Processors`
 --
 
 CREATE TABLE `WCT_Projects_Processors` (
@@ -687,7 +687,7 @@ CREATE TABLE `WCT_Projects_Processors` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `WCT_Projects_Processors_Mappings`
+-- Структура на таблица `WCT_Projects_Processors_Mappings`
 --
 
 CREATE TABLE `WCT_Projects_Processors_Mappings` (
@@ -1063,51 +1063,51 @@ ALTER TABLE `WCT_Projects_Processors_Mappings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Ограничения за дъмпнати таблици
 --
 
 --
--- Constraints for table `IA_Taxonomy_Term`
+-- Ограничения за таблица `IA_Taxonomy_Term`
 --
 ALTER TABLE `IA_Taxonomy_Term`
   ADD CONSTRAINT `FK_C6F4ABFC727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `IA_Taxonomy_Term` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_C6F4ABFCAD0E05F6` FOREIGN KEY (`vocabulary_id`) REFERENCES `IA_Taxonomy_Vocabularies` (`id`);
 
 --
--- Constraints for table `WCT_Fieldsets_Fields`
+-- Ограничения за таблица `WCT_Fieldsets_Fields`
 --
 ALTER TABLE `WCT_Fieldsets_Fields`
   ADD CONSTRAINT `FK_FAAA51A52DDE213` FOREIGN KEY (`fieldsetId`) REFERENCES `WCT_Fieldsets` (`id`),
   ADD CONSTRAINT `FK_FAAA51A59BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Constraints for table `WCT_ParcedItems`
+-- Ограничения за таблица `WCT_ParcedItems`
 --
 ALTER TABLE `WCT_ParcedItems`
   ADD CONSTRAINT `FK_12F343446C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`);
 
 --
--- Constraints for table `WCT_ProjectDetailsFields`
+-- Ограничения за таблица `WCT_ProjectDetailsFields`
 --
 ALTER TABLE `WCT_ProjectDetailsFields`
   ADD CONSTRAINT `FK_C17CD8136C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`),
   ADD CONSTRAINT `FK_C17CD8139BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Constraints for table `WCT_ProjectListingFields`
+-- Ограничения за таблица `WCT_ProjectListingFields`
 --
 ALTER TABLE `WCT_ProjectListingFields`
   ADD CONSTRAINT `FK_A77DA6706C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`),
   ADD CONSTRAINT `FK_A77DA6709BF49490` FOREIGN KEY (`typeId`) REFERENCES `WCT_Field_Types` (`id`);
 
 --
--- Constraints for table `WCT_Projects_Processors`
+-- Ограничения за таблица `WCT_Projects_Processors`
 --
 ALTER TABLE `WCT_Projects_Processors`
   ADD CONSTRAINT `FK_82E8FE4D6C9360F7` FOREIGN KEY (`projectId`) REFERENCES `WCT_Projects` (`id`);
 
 --
--- Constraints for table `WCT_Projects_Processors_Mappings`
+-- Ограничения за таблица `WCT_Projects_Processors_Mappings`
 --
 ALTER TABLE `WCT_Projects_Processors_Mappings`
   ADD CONSTRAINT `FK_6797DBA4F2C8D75E` FOREIGN KEY (`projectProcessorId`) REFERENCES `WCT_Projects_Processors` (`id`);

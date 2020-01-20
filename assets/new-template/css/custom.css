@@ -37,3 +37,15 @@ fieldset.fieldset-project-fields-additional {
 fieldset.fieldset-project-fields-additional legend {
 	padding: 0 10px 0 10px;
 }
+
+.project-field-source input {
+	margin-right: 5px;
+}
+
+.project-field-source label {
+    margin-right: 10px;
+}
+
+input[type="radio"] {
+	display: inline !important;
+}

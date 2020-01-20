@@ -1,15 +1,18 @@
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-sm-2">
         {{ form_widget(form.title, {'attr': {'class': 'form-control fieldTitle'}}) }}
     </div>
-    <div class="col-lg-2">
+    <div class="col-sm-1">
         {{ form_widget(form.type, {'attr': {'class': 'form-control m-bot15 fieldType'}}) }}
     </div>
-    <div class="col-lg-4">
+    <div class="col-sm-4">
         {{ form_widget(form.xquery, {'attr': {'class': 'form-control m-bot15'}}) }}
     </div>
-    <div class="col-lg-3">
-        {{ form_widget(form.source, {'attr': {'class': 'custom-control custom-radio custom-control-inline'}}) }}
+    
+    <div class="col-sm-1"></div>
+    <div>{{ form_label(form.page) }}:</div>
+    <div class="col-sm-2">
+        {{ form_widget(form.page, {'attr': {'class': 'custom-control custom-radio project-field-source'}}) }}
     </div>
     
     <a href="javascript:;" class="btn btn-success btnAddField"><i class="icon_plus_alt2"></i></a>

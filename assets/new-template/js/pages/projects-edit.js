@@ -41,11 +41,6 @@ const projectFields	= new ProjectFields([
 	}
 ]);
 
-const projectFieldsDestinations	= {
-	'listing':	$( '#fieldsListingContainer' ),
-	'details':	$( '#fieldsDetailsContainer' )
-};
-
 var dfOptions	= {
     btnRemoveSelector: ".btnRemoveField",
     btnAddSelector:    ".btnAddField"
@@ -59,13 +54,13 @@ function initDfButtons( container )
     container.find( dfOptions.btnAddSelector ).last().show();
 }
 
-function createDfElement( container, data, page )
-{
+function createDfElement( container, data )
+{	
     var elementNumber = container.children().length + 1;
     var newElement = $(container.attr('data-prototype'));
     
-    newElement.find( '#project_' + page + 'Fields___name___title' ).val( data.title );
-    newElement.find( '#project_' + page + 'Fields___name___type' ).val( data.type );
+    newElement.find( '#project_fields___name___title' ).val( data.title );
+    newElement.find( '#project_fields___name___type' ).val( data.type );
     
     newElement.find(':input').each(function() {
         var id = $(this).attr('id').replace('__name__', elementNumber);
@@ -76,15 +71,15 @@ function createDfElement( container, data, page )
 				id: id,
 				title: data.title,
 				type:	data.type,
-				xpath:	'',
-				page:	page
+				xpath:	''
 			});
         }
         
         var name = $(this).attr('name').replace('__name__', elementNumber);
         $(this).attr('name', name);
     });
-    container.prepend( newElement );
+    container.append( newElement );
+    container.find( ".df-initial" ).remove();	// remove empty initial element
     
     return newElement;
 }
@@ -149,17 +144,18 @@ $( function ()
         var head = $(this).contents().find("head");
         head.append($("<link/>", {rel: "stylesheet", href: cssUrl, type: "text/css"}));
 
+        $( '*', this.contentWindow.document ).hover(
+            function() { $(this).addClass("parserMarker"); },
+            function() { $(this).removeClass("parserMarker"); }
+        );
+        
         $('*', this.contentWindow.document).click(function (e) {
             e.preventDefault();
             e.stopPropagation();
 
-            $('.parserMarker').removeClass('parserMarker');
-            $(this).addClass('parserMarker');
-
-            var xpath = getXPath(this);
-            
-            var whereToSet	= $('#project_xqueryField').val();
-            $("#" + whereToSet, parent.document).val( xpath );
+            var xpath		= getXPath( this );            
+            var whereToSet	= $( '#project_xqueryField' ).val();
+            $( "#" + whereToSet, parent.document ).val( xpath );
         });
     });
         
@@ -174,11 +170,10 @@ $( function ()
     
     $( '#project_addFieldset_button' ).on( 'click', function() {
         var fieldsetId		= $( '#project_addFieldset_fieldset' ).val();
-        var destinationPage	= $( '#project_addFieldset_destination' ).val();
-
-        var destination		= projectFieldsDestinations[destinationPage];
-        var url				= $(this).attr( 'data-getFieldsUrl' ) + '?id=' + fieldsetId;
         
+        var destination		= $( '#fieldsContainer' )
+
+        var url				= $(this).attr( 'data-getFieldsUrl' ) + '?id=' + fieldsetId;
         $.ajax({
             type: 'post',
             dataType: 'json',
@@ -188,7 +183,7 @@ $( function ()
             },
             success: function(data) {
             	for ( i = 0; i < data.length; i++ ) {
-            		createDfElement( destination, data[i], destinationPage );
+            		createDfElement( destination, data[i] );
             	}
             	initDfButtons( destination );
             }

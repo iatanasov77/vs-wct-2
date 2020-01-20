@@ -1,11 +1,7 @@
-<?php
-
-namespace App\Entity;
+<?php namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-
-use Sylius\Component\Resource\Model\SlugAwareInterface;
 
 /**
  * WctProjectfields
@@ -13,19 +9,14 @@ use Sylius\Component\Resource\Model\SlugAwareInterface;
  * @ORM\Table(name="WCT_ProjectFields")
  * @ORM\Entity
  */
-class ProjectField implements SlugAwareInterface
+class ProjectField
 {
     
     /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
      * @ORM\JoinColumn(name="projectId", referencedColumnName="id")
      */
-    public $project;
-    
-     /**
-     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
-     */
-    private $type;
+    private $project;
     
     /**
      * @var integer
@@ -39,18 +30,14 @@ class ProjectField implements SlugAwareInterface
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"title"})
-     * @ORM\Column(name="slug", type="string", length=256, nullable=false)
-     */
-    private $slug;
-    
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=256, nullable=false)
      */
     private $title;
+    
+    /**
+     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
+     */
+    private $type;
 
     /**
      * @var string
@@ -59,7 +46,10 @@ class ProjectField implements SlugAwareInterface
      */
     private $xquery;
 
-
+    /**
+     * @ORM\Column(name="page", type="string", columnDefinition="enum('listing', 'details')")
+     */
+    private $page;
 
     /**
      * Get id
@@ -69,17 +59,6 @@ class ProjectField implements SlugAwareInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-    
-    function setSlug($slug=null): void
-    {
-        $this->slug = $slug;
-        //return $this;
     }
 
     /**
@@ -169,5 +148,17 @@ class ProjectField implements SlugAwareInterface
     public function getType()
     {
         return $this->type;
+    }
+    
+    public function setPage($page)
+    {
+        $this->page = $page;
+        
+        return $this;
+    }
+    
+    public function getPage()
+    {
+        return $this->page;
     }
 }

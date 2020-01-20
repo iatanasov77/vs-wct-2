@@ -25,7 +25,8 @@ class ProjectFieldType extends AbstractType
             ])
             ->add('xquery', TextType::class, ['required' => false, 'attr' => ['placeholder' => 'Enter a XPath']])
             
-            ->add( 'source', ChoiceType::class, [
+            ->add( 'page', ChoiceType::class, [
+                'label'         => 'Source Page',
                 'required'      => true,
                 'choices'       => \App\Component\ProjectField::destinations(),
                 'expanded'      => true,
