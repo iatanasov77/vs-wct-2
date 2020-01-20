@@ -28,18 +28,21 @@ class ProjectsController extends ResourceController
         return $this->render('pages/Projects/index.html.twig', $tplVars);
     }
 
-    public function createAction(Request $request): Response
+    public function createAction( Request $request ): Response
     {
         $id = Url::ProjectsUrlGetId();
         
         $er = $this->getDoctrine()->getRepository('App\Entity\Project');
         $oProject = $id ? $er->find($id) : new Project();
         
-        $form = $this->createForm(ProjectType::class, $oProject, ['data' => $oProject]); 
+        $form = $this->createForm( ProjectType::class, $oProject, [
+            'data'      => $oProject,
+            'method'    => $id ? 'PUT' : 'POST'
+        ]); 
         
-        //if($form->isSubmitted()) {
-        if($request->isMethod('POST') || $request->isMethod('PUT')) {
-            $form->handleRequest($request);
+        $form->handleRequest( $request );
+        if( $form->isSubmitted() ) {
+        //if($request->isMethod('POST') || $request->isMethod('PUT')) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
@@ -49,9 +52,7 @@ class ProjectsController extends ResourceController
         
         $tplVars = array(
             'form'          => $form->createView(),
-            'item'          => $oProject,
-            'listingFieldsDef'  => json_encode( $this->listingFieldsDefinition( $oProject ) ),
-            'detailsFieldsDef'  => json_encode( $this->detailsFieldsDefinition( $oProject ) ),
+            'item'          => $oProject
         );
         return $this->render('pages/Projects/edit.html.twig', $tplVars);
     }
@@ -134,51 +135,6 @@ class ProjectsController extends ResourceController
         //echo '<pre>'; die(var_dump($oProjectCopy->fields->toArray()));
         $oProjectCopy->save();
         $this->_helper->redirector('list', 'index');
-    }
-    
-    protected function listingFieldsDefinition( $project )
-    {
-        $fields = [
-            [
-                'title'     => 'Pager Link',
-                'id_target' => 'project_pagerLink',
-                'id_source' => 'project_pagerLink_source'
-            ],
-            [
-                'title'     => 'Details Link',
-                'id_target' => 'project_detailsLink',
-                'id_source' => 'project_detailsLink_source'
-            ],
-        ];
-        
-        $i      = 0;
-        foreach ( $project->getListingFields() as $field ) {
-            $fields[]   = [
-                'title'     => ucfirst( $field->getTitle() ),
-                'id_target' => 'project_listingFields_' . $i . '_xquery',
-                'id_source' => 'project_listingFields_' . $i . '_xquery_source'
-            ];
-            $i++;
-        }
-        
-        return $fields;
-    }
-    
-    protected function detailsFieldsDefinition( $project )
-    {
-        $fields = [];
-        
-        $i      = 0;
-        foreach ( $project->getDetailsFields() as $field ) {
-            $fields[]   = [
-                'title'     => ucfirst( $field->getTitle() ),
-                'id_target' => 'project_detailsFields_' . $i . '_xquery',
-                'id_source' => 'project_detailsFields_' . $i . '_xquery_source'
-            ];
-            $i++;
-        }
-        
-        return $fields;
     }
 }
 

@@ -10,4 +10,20 @@ class ProjectField
             'Link'      => 'link',
         ];
     }
+    
+    public static function destinations()
+    {
+        return [
+            'Listing'   => 'listing',
+            'Details'   => 'details'
+        ];
+    }
+    
+    public static function parseModes()
+    {
+        return [
+            'CSS'   => 'css',
+            'XPATH' => 'xpath'
+        ];
+    }
 }

@@ -63,7 +63,6 @@
                 <div class="card">
                 	<h5 class="card-header">Project Details</h5>
                 	<div class="card-body">
-                	
                         {{ form_start(form, { 'attr': {'class': 'form-horizontal '} }) }}
                             {{ form_widget(form._token) }}
                 
@@ -76,16 +75,14 @@
                                 </div>
                             {% endif %}
         				    
-        				    <div class="input-group mb-3">    
+        				    
+        				    <div class="form-group">
                                 {{ form_label(form.enabled, null, {
                                     'label_attr': {'class': 'col-form-label'}
                                     }) 
                                 }}
-                                <div class="col-lg-10">
-                                    <div class="checkbox">
-                                        {{ form_widget(form.enabled) }}
-                                    </div>
-                                </div>
+                          
+                                {{ form_widget(form.enabled, {'attr': {'class': 'ml-2'}}) }}
                             </div>
                             
                             <div class="form-group">
@@ -98,11 +95,11 @@
                             </div>
                             
                             <div class="form-group">
-                                {{ form_label(form.url, null, {
+                            	{{ form_label(form.parseMode, null, {
                                     'label_attr': {'class': 'col-form-label'}
                                     }) 
                                 }}
-                                {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.parseMode, {'attr': {'class': 'form-control'}}) }}
                             </div>
                             
                             <div class="form-group">
@@ -112,18 +109,27 @@
                                 }}
                                 {{ form_widget(form.parseCountMax, {'attr': {'class': 'form-control'}}) }}
                             </div>
-            				
+                            
+                            <div class="form-group">
+                                {{ form_label(form.url, null, {
+                                    'label_attr': {'class': 'col-form-label'}
+                                    }) 
+                                }}
+                                {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            
             				<div class="row form-group input-group"></div>
-            				  
-							<fieldset  class="fieldset-project-fields">
-            					<legend class="w-auto">Listing Page Fields</legend>
-            				    <div class="text-right">
-            				        <button type="button" class="btn btn-primary btnOpenBrowser"
-            				        	data-toggle="modal" data-target="#modalBrowser"
-            				        	data-fields="{{ listingFieldsDef }}"
-            				        >Browser</button>
-            				    </div>
+            				<div class="row form-group input-group"></div>
             				
+            				
+            				<div class="text-right fieldset-project-fields-button">
+        				        <button type="button" class="btn btn-primary btnOpenBrowser"
+        				        	data-toggle="modal" data-target="#modalBrowser"
+        				        >Browser</button>
+        				    </div>
+							<fieldset  class="fieldset-project-fields">
+            					<legend class="w-auto">Project Fields</legend>
+            				    
                                 <div class="form-group">
                                     {{ form_label(form.detailsLink, null, {
                                         'label_attr': {'class': 'col-form-label'}
@@ -140,111 +146,59 @@
                                     {{ form_widget(form.pagerLink, {'attr': {'class': 'form-control'}}) }}
                                 </div>
         
+        						<div class="row form-group input-group"></div>
                                 
-                                <div class="form-group">
-                                    {{ form_label(form.fieldsetListing, null, {
-                                        'label_attr': {'class': 'col-form-label'}
-                                        }) 
-                                    }}
+                                <fieldset  class="fieldset-project-fields-additional">
+            						<legend class="w-auto">Additional Fields for Listing Pages</legend>
+            						
+	                                <div class="fieldsContainer" 
+	                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}"
+	                                    id="fieldsListingContainer"
+	                                >
+	                                    {% for field in form.listingFields %}
+	                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
+	                                    {% endfor %}
+	                                </div>
+	                            </fieldset>
+                            	
+                            	<div class="row form-group input-group"></div>
+                            	
+                            	<fieldset  class="fieldset-project-fields-additional">
+            						<legend class="w-auto">Additional Fields for Details Pages</legend>
+            						
+	                                <div class="fieldsContainer" 
+	                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}"
+	                                    id="fieldsDetailsContainer"
+	                                >
+	                                    {% for field in form.listingFields %}
+	                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
+	                                    {% endfor %}
+	                                </div>
+	                            </fieldset>
+	                            
+	                            <div class="row form-group input-group"></div>
+	                            
+	                            <div class="form-group">
                                     <div class="input-group">
-                                        {{ form_widget(form.fieldsetListing, {'attr': {'class': 'form-control'}}) }}
-        								<div class="col-sm-1">
-                                        	<input class="btn btn-primary" id="btnAddFieldsListing" type="button" value="Add Fields"
-                                        	   data-getFieldsUrl="{{ path('ia_web_content_fieldset_fields') }}" 
-                                        	/>
-                                    	</div>
+                                    	<div class="col-sm-1">
+	                                    	{{ form_label(form.addFieldset, null, {'label_attr': {'class': 'col-form-label'}}) }}
+		                                </div>
+                                    	<div class="col-lg-6">
+                                        	{{ form_widget(form.addFieldset.fieldset, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-lg-2">
+                                        	{{ form_widget(form.addFieldset.destination, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-lg-2">
+                                        	{{ form_widget(form.addFieldset.button, {'attr': {'class': 'btn btn-primary', 'data-getFieldsUrl': path('ia_web_content_fieldset_fields')}}) }}
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <div class="fieldsContainer" 
-                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.listingFields.vars.prototype} %}{% endfilter %}"
-                                    id="fieldsListingContainer"
-                                >
-                                    {% for field in form.listingFields %}
-                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
-                                    {% endfor %}
-                                </div>
-                            	
                    			</fieldset>
                    			
                    			<div class="row">&nbsp;</div>
                    			
-                   			<fieldset  class="fieldset-project-fields">
-                    			<legend class="w-auto">Details Page Fields</legend>        	
-                                
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary btnOpenBrowser"
-                                    	data-toggle="modal" data-target="#modalBrowser"
-                                    	data-fields="{{ detailsFieldsDef }}"
-                                    >Browser</button>
-                                </div>
-                                          
-                            	{% if(item.getId()) %}
-                            
-                                	{{ form_label(form.detailsPage, null, {
-                                        	'label_attr': {'class': 'col-form-label'}
-                                        }) 
-                                    }}
-                            		<div class="input-group mb-3">
-                                        
-                                        
-                                        {{ form_widget(form.detailsPage, {'attr': {'class': 'form-control'}}) }}
-        
-                                        <div class="input-group-append col-sm-1">
-                                        	<button type="button" class="btn btn-primary btnBrowse" 
-                                        		data-toggle="modal" 
-                                        		data-target="#modalBrowser" 
-                                        		data-browserUrl="{{ url('ia_web_content_thief_browser_browse') }}" 
-                                        		data-urlInput="#project_detailsPage" 
-                                        		data-browserFrame="#remoteBrowser"
-                                        		data-fields="{{ detailsFieldsDef }}"
-                                        	>	
-                                        		Browse
-                                        	</button>
-                                        </div>
-        							</div>
-        							
-        							
-            
-                                    <div class="col-sm-1">&nbsp;</div>
-            
-                                    <div class="col-sm-12" style="margin: 20px 0 20px 0;">
-                                        <div id="loader">
-                                            <div class="d-flex justify-content-center">
-                                                <div class="spinner-border" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                {% endif %}
-                                   
-                                <div class="form-group">
-                                    {{ form_label(form.fieldsetDetails, null, {
-                                        'label_attr': {'class': 'col-form-label'}
-                                        }) 
-                                    }}
-        
-        							<div class="input-group">
-                                        {{ form_widget(form.fieldsetDetails    , {'attr': {'class': 'form-control'}}) }}
-            
-        
-                                        <div class="col-sm-1">
-                                            <input class="btn btn-primary" id="btnAddFieldsDetails" type="button" value="Add Fields" data-resourceId="{{ item.getId() }}" data-addFieldsUrl="{{ path('ia_web_content_projects_add_fields') }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                                <div class="fieldsContainer" 
-                                    data-prototype="{% filter escape %}{% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': form.detailsFields.vars.prototype} %}{% endfilter %}"
-                                    id="fieldsDetailsContainer"
-                                >
-                                    {% for field in form.detailsFields %}
-                                        {% include 'pages/Projects/Form/Collection/project-field.html.twig' with {'form': field} %}
-                                    {% endfor %}
-                                </div>
-                                        
-							</fieldset>
+                   			
                 
                 			<div class="row">&nbsp;</div>
                 			<div class="input-group row">

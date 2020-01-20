@@ -20,22 +20,6 @@ class Project implements ResourceInterface
     use TimestampableTrait;
     use ToggleableTrait;
     
-    
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectListingField", mappedBy="project", cascade={"persist"})
-     */
-    public $listingFields;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectDetailsField", mappedBy="project", cascade={"persist"})
-     */
-    public $detailsFields;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectProcessor", mappedBy="project", cascade={"persist"})
-     */
-    public $processors;
-
     /**
      * @var integer
      *
@@ -144,12 +128,22 @@ class Project implements ResourceInterface
     private $picturecropleft;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectField", mappedBy="project", cascade={"persist"})
+     */
+    private $fields;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectProcessor", mappedBy="project", cascade={"persist"})
+     */
+    private $processors;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->listingFields = new ArrayCollection();
-        $this->detailsFields = new ArrayCollection();
+        $this->fields       = new ArrayCollection();
+        $this->processors   = new ArrayCollection();
     }
 
     /**
@@ -448,61 +442,36 @@ class Project implements ResourceInterface
         return $this->active;
     }
 
-    public function getListingFields()
+    public function getFields()
     {
-        return $this->listingFields->toArray();
+        return $this->fields->toArray();
     }
 
-    public function addListingField(ProjectListingField $field)
+    public function addField( ProjectField $field )
     {
-        if($field->getTitle() && !$this->listingFields->contains($field)) {
-            $field->setProject($this);
-            $this->listingFields->add($field);
+        if( ! $this->fields->contains( $field ) ) {
+            $field->setProject( $this );
+            $this->fields->add( $field );
+        }
+        
+        return $this;
+    }
+
+    public function removeField( ProjectField $field )
+    {
+        if( $this->fields->contains( $field ) ) {
+            $this->fields->removeElement( $field );
         }
 
         return $this;
     }
-
-    public function removeListingField(ProjectListingField $field)
-    {
-        if($this->listingFields->contains($field)) {
-            $this->listingFields->removeElement($field);
-        }
-
-        return $this;
-    }
-    
-    public function getDetailsFields()
-    {
-        return $this->detailsFields->toArray();
-    }
-
-    public function addDetailsField(ProjectDetailsField $field)
-    {
-        if($field->getTitle() && !$this->detailsFields->contains($field)) {
-            $field->setProject($this);
-            $this->detailsFields->add($field);
-        }
-
-        return $this;
-    }
-
-    public function removeDetailsField(ProjectDetailsField $field)
-    {
-        if($this->detailsFields->contains($field)) {
-            $this->detailsFields->removeElement($field);
-        }
-
-        return $this;
-    }
-    
     
     public function getProcessors()
     {
         return $this->processors->toArray();
     }
 
-    public function addProcessor(ProjectProcessor $processor)
+    public function addProcessor( ProjectProcessor $processor )
     {
         if(!$this->processors->contains($processor)) {
             $processor->setProject($this);

@@ -80,10 +80,11 @@
          * @param container
          * @param target
          */
-        function createElement(container, target) 
+        function createElement(container, target)
         {
             var elementNumber = container.children().length + 1;
             var newElement = $(container.attr('data-prototype'));
+            
             newElement.find(':input').each(function() {
                 var id = $(this).attr('id').replace('__name__', elementNumber);
                 $(this).attr('id', id);

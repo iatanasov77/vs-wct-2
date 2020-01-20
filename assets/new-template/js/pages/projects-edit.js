@@ -9,9 +9,9 @@ project_listingFields_2_xquery
  */
 class ProjectFields
 {
-	constructor(  )
+	constructor( fields )
 	{
-		this.fields	= [];
+		this.fields	= fields;
 	}
 	
 	getFields() {
@@ -20,9 +20,31 @@ class ProjectFields
 	
 	addField( field )
 	{
-		
+		this.fields.push( field );
 	}
 }
+
+const projectFields	= new ProjectFields([
+	{
+		id:		'project_pagerLink',
+		title:	'Pager Link',
+		type:	'link',
+		xpath:	'',
+		page:	'listing'
+	},
+	{
+		id:		'project_detailsLink',
+		title:	'Details Link',
+		type:	'link',
+		xpath:	'',
+		page:	'listing'
+	}
+]);
+
+const projectFieldsDestinations	= {
+	'listing':	$( '#fieldsListingContainer' ),
+	'details':	$( '#fieldsDetailsContainer' )
+};
 
 var dfOptions	= {
     btnRemoveSelector: ".btnRemoveField",
@@ -37,30 +59,32 @@ function initDfButtons( container )
     container.find( dfOptions.btnAddSelector ).last().show();
 }
 
-function createDfElement( container, data, fields )
+function createDfElement( container, data, page )
 {
     var elementNumber = container.children().length + 1;
     var newElement = $(container.attr('data-prototype'));
     
-    newElement.find( '#project_listingFields___name___title' ).val( data.title );
-    newElement.find( '#project_listingFields___name___type' ).val( data.type );
+    newElement.find( '#project_' + page + 'Fields___name___title' ).val( data.title );
+    newElement.find( '#project_' + page + 'Fields___name___type' ).val( data.type );
     
     newElement.find(':input').each(function() {
         var id = $(this).attr('id').replace('__name__', elementNumber);
         $(this).attr('id', id);
         
         if ( id.endsWith( '_xquery' ) ) {
-        	fields.addField({
-				id_source: id + "_source",
-				id_target: id,
-				title: data.title
+        	projectFields.addField({
+				id: id,
+				title: data.title,
+				type:	data.type,
+				xpath:	'',
+				page:	page
 			});
         }
         
         var name = $(this).attr('name').replace('__name__', elementNumber);
         $(this).attr('name', name);
     });
-    container.append(newElement);
+    container.prepend( newElement );
     
     return newElement;
 }
@@ -86,13 +110,12 @@ $( function ()
 	{
 		$( '#browser-spinner' ).hide();
 		
-		var fields		= JSON.parse($(this).attr('data-fields'));
-
+		var fields		= projectFields.getFields();
 		var prototype	= '';
         var options		= '';
         for (var i = 0; i < fields.length; i++) {
-          prototype += '<div class="input-group">' + '<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + '<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id_source + '" data-target="#' + fields[i].id_target + '" /></div>' + '</div>';
-          options	+= '<option value="' + fields[i].id_source + '">' + fields[i].title + '</option>';
+          prototype += '<div class="input-group">' + '<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + '<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id + '_source" data-target="#' + fields[i].id + '" /></div>' + '</div>';
+          options	+= '<option value="' + fields[i].id + '_source">' + fields[i].title + '</option>';
         }
 
         $('#fieldsContainer').html('');
@@ -149,9 +172,12 @@ $( function ()
         $('#'+fieldId).val(xquery);
     });
     
-    $('#btnAddFieldsListing').on('click', function() {
-        var fieldsetId	= $('#project_fieldsetListing').val();
-        var url			= $(this).attr('data-getFieldsUrl') + '?id=' + fieldsetId;
+    $( '#project_addFieldset_button' ).on( 'click', function() {
+        var fieldsetId		= $( '#project_addFieldset_fieldset' ).val();
+        var destinationPage	= $( '#project_addFieldset_destination' ).val();
+
+        var destination		= projectFieldsDestinations[destinationPage];
+        var url				= $(this).attr( 'data-getFieldsUrl' ) + '?id=' + fieldsetId;
         
         $.ajax({
             type: 'post',
@@ -162,29 +188,9 @@ $( function ()
             },
             success: function(data) {
             	for ( i = 0; i < data.length; i++ ) {
-            		createDfElement( $( '#fieldsListingContainer' ), data[i] );
+            		createDfElement( destination, data[i], destinationPage );
             	}
-            	
-            	initDfButtons( $( '#fieldsListingContainer' ) )
-            }
-        });
-    });
-    
-    $('#btnAddFieldsDetails').on('click', function() {
-        var projectId = $(this).attr('data-resourceId');
-        var fieldsetId = $('#FormProject_fieldset').val();
-        var url = $(this).attr('data-addFieldsUrl');
-        
-        $.ajax({
-            type: 'post',
-            dataType: 'json',
-            url: url,
-            data: {
-                projectId: projectId,
-                fieldsetId: fieldsetId
-            },
-            success: function(data) {
-                document.location = document.location;
+            	initDfButtons( destination );
             }
         });
     });
