@@ -11,7 +11,8 @@ class ParserController extends Controller
 {
     public function runProjectAction($projectId)
     {
-        $er = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:Project');
+        $er = $this->getDoctrine()->getRepository( 'App\Entity\Project' );
+        
         $oProject = $er->findOneBy(array('id' => $projectId));
         if(!$oProject) {
             throw new \Exception("Invalid Request!");
@@ -25,7 +26,7 @@ class ParserController extends Controller
     
     public function runProcessorAction($processorId)
     {
-        $er = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:ProjectProcessor');
+        $er = $this->getDoctrine()->getRepository('App\Entity\ProjectProcessor');
         $oProcessor = $er->findOneBy(array('id' => $processorId));
         if(!$oProcessor) {
             throw new \Exception("Invalid Request!");
@@ -39,7 +40,7 @@ class ParserController extends Controller
     
     public function showSessionAction($runSession)
     {
-        $pir = $this->getDoctrine()->getRepository('IAWebContentThiefBundle:ParsedItem');
+        $pir = $this->getDoctrine()->getRepository('App\Entity\ParsedItem');
         $parserItems = $pir->findBy(array('runSession' => $runSession));
         
         var_dump($parserItems); die;
