@@ -46,6 +46,10 @@ ia_web_content_fieldset_fields:
     path:     /fieldsets/fields
     defaults: { _controller: App\Controller\ProjectsJsonController:fieldsetFields }
 
+ia_web_content_project_fields:
+    path:     /projects/{id}/get-fields
+    defaults: { _controller: App\Controller\ProjectsJsonController:projectFields }
+    
 ia_web_content_projects_add_fields:
     path:     /projects/add-fields
     defaults: { _controller: App\Controller\ProjectsJsonController:addFields }

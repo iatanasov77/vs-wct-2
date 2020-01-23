@@ -29,22 +29,37 @@ const projectFields	= new ProjectFields([
 		id:		'project_pagerLink',
 		title:	'Pager Link',
 		type:	'link',
-		xpath:	'',
-		page:	'listing'
+		page:	'listing',
+		xpath:	$( '#project_pagerLink' ).val()
 	},
 	{
 		id:		'project_detailsLink',
 		title:	'Details Link',
 		type:	'link',
-		xpath:	'',
-		page:	'listing'
+		page:	'listing',
+		xpath:	$( '#project_detailsLink' ).val()
 	}
 ]);
+
+
 
 var dfOptions	= {
     btnRemoveSelector: ".btnRemoveField",
     btnAddSelector:    ".btnAddField"
 };
+
+function initProjectAdditionalFields()
+{
+	$( '.additionalFieldXquery' ).each( function() {
+		projectFields.addField({
+			id:		$( this ).attr( 'id' ),
+			title:	$( this ).attr( 'data-title' ),
+			type:	$( this ).attr( 'data-type' ),
+			page:	$( this ).attr( 'data-page' ),
+			xpath:	$( this ).val()
+		});
+	});
+}
 
 function initDfButtons( container )
 {
@@ -66,7 +81,7 @@ function createDfElement( container, data )
         var id = $(this).attr('id').replace('__name__', elementNumber);
         $(this).attr('id', id);
         
-        if ( id.endsWith( '_xquery' ) ) {
+        if ( id.endsWith( '_xquery' ) ) {       	
         	projectFields.addField({
 				id: id,
 				title: data.title,
@@ -86,6 +101,8 @@ function createDfElement( container, data )
 
 $( function ()
 {
+	initProjectAdditionalFields();
+	
 	$('.fieldsContainer').duplicateFields( dfOptions );
 	
 	$( "#btnSaveFieldsXquery" ).on( "click", function( e )
@@ -93,7 +110,7 @@ $( function ()
 		e.preventDefault(); // prevent de default action, which is to submit
 	  
 		// Copy fields
-		$( '#fieldsContainer' ).find( 'input' ).each( function ()
+		$( '#browserFieldsContainer' ).find( 'input' ).each( function ()
 		{
 			$( $(this).attr( 'data-target' ) ).val( $(this).val() );
 		});
@@ -108,16 +125,25 @@ $( function ()
 		var fields		= projectFields.getFields();
 		var prototype	= '';
         var options		= '';
+        
         for (var i = 0; i < fields.length; i++) {
-          prototype += '<div class="input-group">' + '<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + '<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id + '_source" data-target="#' + fields[i].id + '" /></div>' + '</div>';
+          prototype += 
+        	'<div class="input-group">' + 
+	          	'<label class="col-sm-1 control-label">' + fields[i].title + ':</label>' + 
+	          	'<div class="col-sm-6"><input type="text" class="form-control" id="' + fields[i].id + '_source" data-target="#' + fields[i].id + '" /></div>' + 
+          	'</div>';
+          
           options	+= '<option value="' + fields[i].id + '_source">' + fields[i].title + '</option>';
         }
 
-        $('#fieldsContainer').html('');
-        $('#fieldsContainer').append(prototype);
+        $('#browserFieldsContainer').html( '' );
+        $('#browserFieldsContainer').append( prototype );
+        for (var i = 0; i < fields.length; i++) {
+        	$( '#' + fields[i].id + '_source' ).val( fields[i].xpath );
+        }
         
-        $('#project_xqueryField').html('');
-        $('#project_xqueryField').html(options);
+        $('#project_xqueryField').html( '' );
+        $('#project_xqueryField').html( options );
 		
 	});
 	

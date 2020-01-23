@@ -126,7 +126,10 @@
         				        	data-toggle="modal" data-target="#modalBrowser"
         				        >Browser</button>
         				    </div>
-							<fieldset  class="fieldset-project-fields">
+							<fieldset  class="fieldset-project-fields" 
+							     id="fieldset-project-fields" 
+							     data-projectfields-url="{{ path( 'ia_web_content_project_fields', {'id': item.id} ) }}"
+							>
             					<legend class="w-auto">Project Fields</legend>
             				    
                                 <div class="form-group">

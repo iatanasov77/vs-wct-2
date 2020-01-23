@@ -128,7 +128,7 @@ class Project implements ResourceInterface
     private $picturecropleft;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectField", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectField", mappedBy="project", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fields;
     

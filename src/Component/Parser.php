@@ -42,8 +42,11 @@ class Parser
             $page++;
             $this->_createCrawler( $url );
         
-            foreach($this->project->getListingFields() as $field)
+            foreach($this->project->getFields() as $field)
             {
+                if ( ! $field->getXquery() )
+                    continue;
+                
                 $parsedField = $this->crawler->filterXPath($field->getXquery());
                 
                 if($parsedField->count()) {

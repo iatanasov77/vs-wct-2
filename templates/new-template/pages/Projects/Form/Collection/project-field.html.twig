@@ -6,7 +6,14 @@
         {{ form_widget(form.type, {'attr': {'class': 'form-control m-bot15 fieldType'}}) }}
     </div>
     <div class="col-sm-4">
-        {{ form_widget(form.xquery, {'attr': {'class': 'form-control m-bot15'}}) }}
+        {{ form_widget(form.xquery, {
+            'attr': {
+                'class':        'form-control m-bot15 additionalFieldXquery',
+                'data-title':   form.title.vars.value,
+                'data-type':    form.type.vars.value,
+                'data-page':    form.page.vars.value
+            }
+        }) }}
     </div>
     
     <div class="col-sm-1"></div>

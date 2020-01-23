@@ -73,6 +73,29 @@ class ProjectsJsonController extends Controller
         ]);
     }
     
+    public function projectFields( Request $request )
+    {
+        $projectId = $request->attributes->get( 'id' );
+        
+        $fr         = $this->getDoctrine()->getRepository( 'App\Entity\Project' );
+        $oProject   = $projectId ? $fr->findOneBy( ['id' => $projectId] ) : null;
+        if( !$oProject ) {
+            throw new \Exception( 'Project with id:'.$projectId.' not found!' );
+        }
+        
+        $fields     = [];
+        foreach( $oProject->getFields() as $field ) {
+            $fields[]   = [
+                'id'    => $field->getId(),
+                'title' => $field->getTitle(),
+                'type'  => $field->getType(),
+                'xpath' => $field->getXquery()
+            ];
+        }
+        
+        return new JsonResponse( $fields );
+    }
+    
     protected function addListingFields( $oProject, $oFieldset )
     {
         foreach($oFieldset->getFields() as $field) {

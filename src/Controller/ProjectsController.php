@@ -42,10 +42,7 @@ class ProjectsController extends ResourceController
         
         $form->handleRequest( $request );
         if( $form->isSubmitted() ) {
-        //if($request->isMethod('POST') || $request->isMethod('PUT')) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
+            $this->_saveProject( $form->getData() );
             
             return $this->redirect($this->generateUrl('ia_web_content_thief_projects_index'));
         }
@@ -136,5 +133,12 @@ class ProjectsController extends ResourceController
         $oProjectCopy->save();
         $this->_helper->redirector('list', 'index');
     }
+    
+    protected function _saveProject( Project $project )
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $em->persist( $project );
+        $em->flush();
+    }
 }
-
