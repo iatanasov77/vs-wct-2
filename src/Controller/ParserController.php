@@ -11,7 +11,8 @@ class ParserController extends Controller
 {
     public function runProjectAction($projectId)
     {
-        $er = $this->getDoctrine()->getRepository('App\Entity\Project');
+        $er = $this->getDoctrine()->getRepository( 'App\Entity\Project' );
+
         $oProject = $er->findOneBy(array('id' => $projectId));
         if(!$oProject) {
             throw new \Exception("Invalid Request!");
