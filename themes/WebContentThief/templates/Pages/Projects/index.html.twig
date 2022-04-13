@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} :: List Projects{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> List Projects{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- basic tabs  -->
+        <!-- ============================================================== -->
+        
+        <div class="accrodion-regular col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div id="accordion">
+                {% for cat in categories %}
+                    {# Expand First Category #}
+                    {% set accordionExpand = loop.first %}  
+                    
+                    {% if not cat.parent and cat.projects|length %}
+                        {% set dataParent = '#accordion' %}
+                        {% include 'Pages/Projects/Partial/projects_table.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,11 +1,10 @@
-<?php
-
-namespace App\Entity;
+<?php namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-
-use Sylius\Component\Resource\Model\SlugAwareInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * WctProjectfields
@@ -13,20 +12,8 @@ use Sylius\Component\Resource\Model\SlugAwareInterface;
  * @ORM\Table(name="WCT_ProjectFields")
  * @ORM\Entity
  */
-class ProjectField implements SlugAwareInterface
+class ProjectField implements ResourceInterface
 {
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
-     * @ORM\JoinColumn(name="projectId", referencedColumnName="id")
-     */
-    public $project;
-    
-     /**
-     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
-     */
-    private $type;
-    
     /**
      * @var integer
      *
@@ -35,16 +22,25 @@ class ProjectField implements SlugAwareInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
+     */
+    private $project;
+    
     /**
      * @var string
      *
-     * @Gedmo\Slug(fields={"title"})
-     * @ORM\Column(name="slug", type="string", length=256, nullable=false)
+     * @ORM\Column(name="collection_type", type="string", columnDefinition="enum('listing', 'details')")
      */
-    private $slug;
+    private $collectionType;
     
-
+     /**
+     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
+     */
+    private $type;
+    
     /**
      * @var string
      *
@@ -58,9 +54,19 @@ class ProjectField implements SlugAwareInterface
      * @ORM\Column(name="xquery", type="string", length=256, nullable=true)
      */
     private $xquery;
+    
+    /**
+     * @var Collection|ProjectCategory[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryField", mappedBy="projectField")
+     */
+    private $parsedFields;
 
-
-
+    public function __construct()
+    {
+        $this->parsedFields = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -71,15 +77,16 @@ class ProjectField implements SlugAwareInterface
         return $this->id;
     }
 
-    function getSlug(): ?string
+    public function getCollectionType(): ?string
     {
-        return $this->slug;
+        return $this->collectionType;
     }
     
-    function setSlug($slug=null): void
+    public function setCollectionType($collectionType): self
     {
-        $this->slug = $slug;
-        //return $this;
+        $this->collectionType = $collectionType;
+        
+        return $this;
     }
 
     /**
@@ -88,7 +95,7 @@ class ProjectField implements SlugAwareInterface
      * @param string $title
      * @return WctProjectfields
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -111,7 +118,7 @@ class ProjectField implements SlugAwareInterface
      * @param string $xquery
      * @return WctProjectfields
      */
-    public function setXquery($xquery)
+    public function setXquery($xquery): self
     {
         $this->xquery = $xquery;
 
@@ -134,7 +141,7 @@ class ProjectField implements SlugAwareInterface
      * @param Project $project
      * @return ProjectField
      */
-    public function setProject(Project $project)
+    public function setProject(Project $project): self
     {
         $this->project = $project;
 
@@ -169,5 +176,33 @@ class ProjectField implements SlugAwareInterface
     public function getType()
     {
         return $this->type;
+    }
+    
+    /**
+     * @return Collection|ProjectRepertoryField[]
+     */
+    public function getParsedFields(): Collection
+    {
+        return $this->parsedFields;
+    }
+    
+    public function addParsedField( ProjectRepertoryField $parsedField ): self
+    {
+        if ( ! $this->parsedFields->contains( $parsedField ) ) {
+            $this->parsedFields[] = $parsedField;
+            $parsedField->setProjectField( $this );
+        }
+        
+        return $this;
+    }
+    
+    public function removeParsedField( ProjectRepertoryField $parsedField ): self
+    {
+        if ( $this->parsedFields->contains( $parsedField ) ) {
+            $this->parsedFields->removeElement( $parsedField );
+            $parsedField->setProjectField( null );
+        }
+        
+        return $this;
     }
 }

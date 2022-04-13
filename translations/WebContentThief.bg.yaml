@@ -1,0 +1,20 @@
+vs_wct:
+    template:
+        edit: Редакция
+        delete: Изтриване
+        category: Категория
+        action: Действие
+        project_categories: Проект Категории
+        project_category_create_title: Създаване на Нова Категория
+        project_category_details: Категория Детайли
+    form:
+        locale: Език
+        name: Име
+        category: Категория
+        category_placeholder: '-- Избери Категория --'
+        project:
+            url: УРЛ
+            field_type_placeholder: '-- Избери Тип на Полето --'
+            field_title_placeholder: '-- Напиши Име на Полето --'
+            field_xquery_placeholder: '-- Напиши Xquery на Полето --'
+

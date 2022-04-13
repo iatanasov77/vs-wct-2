@@ -1,5 +1,4 @@
-<?php
-namespace App\Component;
+<?php namespace App\Component;
 
 use Buzz\Browser as BuzzBrowser;
 use Buzz\Client\FileGetContents;
@@ -15,47 +14,40 @@ class Browser
      */
     public function browseUrl( $url )
     {
-        $client = new FileGetContents(new Psr17Factory());
-        $browser = new BuzzBrowser($client, new Psr17Factory());
-        $response = $browser->get($url);
+        $client     = new FileGetContents( new Psr17Factory() );
+        $browser    = new BuzzBrowser( $client, new Psr17Factory() );
+        $response   = $browser->get( $url );
+        $urlContent = $response->getBody()->__toString();
         
-        return $response->getBody()->__toString();
+        $this->_fixAssetUrls( $url, $urlContent );
+        
+        return $urlContent;
     }
     
-    /**
-     * Browse URL and return its html content
-     * 
-     * @param string $url
-     * @return string
-     */
-    function browseUrlOld($url)
+    private function _fixAssetUrls( $url, &$urlContent )
     {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $html = curl_exec($ch);
-        curl_close($ch);
-        var_dump($html); die;
-        if (!$html) {
-            throw new \Exception(sprintf("Cannot browse this url: '%s'.", $url));
-        }
+        $urlInfo    = \parse_url( $url );
+        $baseUrl    = $urlInfo['scheme'] . '://' . $urlInfo['host'] . '/';
         
-        /*
-         * Reencode html text to UTF-8
-         */
-        $regexCharset = "/(?:<meta[^>]*http-equiv[^>])*charset=(.*?)\"/i";
-        if (preg_match($regexCharset, $html, $matches)) {
-            $charset = $matches[1];
-            if ($charset && ($charset != 'utf-8')) {
-                $html = iconv($charset, 'UTF-8', $html);
-                $html = preg_replace($regexCharset, 'charset=utf-8"', $html);
-            }
-        }
-
-        return $html;
+        $search = ['src="//'];
+        $replace = ['SRC_NOT_REPLACE'];
+        $urlContent = str_replace( $search, $replace, $urlContent );
+        
+        $search = [
+            'href="/',
+            'src="/',
+            //'<link rel="preload" href="/'
+        ];
+        $replace = [
+            'href="' . $baseUrl,
+            'src="'. $baseUrl,
+            //'<link rel="preload" href="' . $baseUrl
+        ];
+        $urlContent = str_replace( $search, $replace, $urlContent );
+        
+        $search = ['SRC_NOT_REPLACE'];
+        $replace = ['src="//'];
+        $urlContent = str_replace( $search, $replace, $urlContent );
     }
 }
 

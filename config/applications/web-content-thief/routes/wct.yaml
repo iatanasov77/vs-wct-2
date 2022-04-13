@@ -1,0 +1,17 @@
+# Browser Controller
+#######################
+vs_wct_browser_browse:
+    path:     /browser/browse
+    defaults: { _controller: 'App\Controller\WebContentThief\BrowserController:browseAction' }
+
+vs_wct_browser_test_browser:
+    path:     /browser/test-browser
+    defaults: { _controller: 'App\Controller\WebContentThief\BrowserController:testBrowserAction' }
+    
+vs_wct_collector_collect_data:
+    path:     /collector/collect-data
+    defaults: { _controller: 'App\Controller\WebContentThief\CollectorController:collectDataAction' }
+
+vs_wct_project_preview_repertory:
+    path:     /project-repertories/{id}/preview
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController:previewRepertoryAction' }

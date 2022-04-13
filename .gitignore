@@ -1,88 +1,75 @@
-# Eclipse project files
-/.buildpath
-/.project
-/.settings
-
-
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-
-# Email spool folder
-/app/spool/*
-
-# Cache, session files and logs (Symfony3)
-/var/cache/*
-/var/logs/*
-/var/sessions/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-!var/sessions/.gitkeep
-
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
-
-# Managed by Composer
-/app/bootstrap.php.cache
-/var/bootstrap.php.cache
-/bin/*
-!bin/console
-!bin/symfony_requirements
-/vendor/
-
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
-
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
-# Build data
-/build/
-
-# Composer PHAR
-/composer.phar
-/composer.lock
-
-# Backup entities generated with doctrine:generate:entities command
-**/Entity/*~
-
-# Embedded web-server pid file
-/.web-server-pid
 
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
-/var/
+/config/secrets/prod/prod.decrypt.private.php
 /vendor/
+/node_modules/
 ###< symfony/framework-bundle ###
 
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-/public/assets/
-npm-debug.log
-yarn-error.log
-/yarn.lock
-/composer.lock
-/symfony.lock
-/public/build/
-/public/bundles/
-###< symfony/webpack-encore-bundle ###
-
 ###> symfony/phpunit-bridge ###
-.phpunit
+.phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> symfony/web-server-bundle ###
-/.web-server-pid
-###< symfony/web-server-bundle ###
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
 
-/docs/TechnicalDocumentation/VisualParadigm/wct2.vpp.bak*
-/docs/TechnicalDocumentation/VisualParadigm/.wct2.vpp.lck
+###> package managers ###
+/composer.lock
+/symfony.lock
+/yarn.lock
+###< package managers ###
+
+###> Eclipse project files ###
+/.buildpath
+/.project
+/.settings
+###< Eclipse project files ###
+
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/assets/controllers/
+/assets/styles/
+/assets/app.js
+/assets/bootstrap.js
+/assests/controllers.json
+/node_modules/
+/public/build/
+/public/bundles/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+###> VankosoftApplication Files ###
+
+/config/*
+/VSAPP_VERSION
+
+# Public files ignores
+/public/admin-panel/build/
+/public/admin-panel/bundles/
+/public/admin-panel/media/
+/public/shared_assets/build/
+
+# Except for the applications configs:
+!/config/admin-panel
+!/config/applications
+
+# Example Application ignores
+/public/test-vankosoft-application/build/
+/public/test-vankosoft-application/bundles/
+/public/test-vankosoft-application/media/
+
+###< VankosoftApplication Files ###

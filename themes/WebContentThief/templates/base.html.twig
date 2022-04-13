@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{% block title %}.:: Web Content Thief{% endblock %}</title>
+
+        {% block head_meta %}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            {% if applicationIcon is defined %}
+                <link rel="icon" type="image/svg+xml" href="{{ asset( applicationIcon ) }}" />
+            {% endif %}
+        {% endblock %}
+
+        {% block stylesheets %}
+        {#  #}
+            {{ encore_entry_link_tags( 'css/app', null, 'WebContentThief' ) }}
+            {{ encore_entry_link_tags( 'js/app', null, 'WebContentThief' ) }}
+       
+        {% endblock %}
+        {% block javascripts_head %}
+            {{ encore_entry_script_tags( 'js/app', null, 'WebContentThief' ) }}
+        {% endblock %}
+    </head>
+    <body>
+        <!-- ============================================================== -->
+        <!-- main wrapper -->
+        <!-- ============================================================== -->
+        <div class="dashboard-main-wrapper">
+           <!-- ============================================================== -->
+            <!-- navbar -->
+            <!-- ============================================================== -->
+            <div class="dashboard-header">
+                {% include 'Layout/top.html.twig' %}
+            </div>
+            <!-- ============================================================== -->
+            <!-- end navbar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- left sidebar -->
+            <!-- ============================================================== -->
+            <div class="nav-left-sidebar sidebar-dark">
+                <div class="menu-list">
+                    {% include 'Layout/side.html.twig' %}
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end left sidebar -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- wrapper  -->
+            <!-- ============================================================== -->
+            <div class="dashboard-wrapper">
+                <div class="container-fluid  dashboard-content">
+                    <!-- ============================================================== -->
+                    <!-- pageheader -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-header">
+                                <h2 class="pageheader-title">{% block pageTitle %}{% endblock %}</h2>
+                                <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+                                <div class="page-breadcrumb">
+                                    <nav aria-label="breadcrumb">
+                                        {{ knp_menu_render('breadcrumbs', {'template': '@VSApplication/Menu/breadcrumb.html.twig'}) }}
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end pageheader -->
+                    <!-- ============================================================== -->
+                    
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+            
+            {% include 'Layout/footer.html.twig' %}
+        </div>
+        <!-- ============================================================== -->
+        <!-- end main wrapper -->
+        <!-- ============================================================== -->
+        
+        <!-- Modal Dialogs -->
+        {% block modals %}{% endblock %}
+        
+        <!-- Optional JavaScript -->
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,28 +1,21 @@
-<?php
-
-namespace App\Entity;
+<?php namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Component\MapProcessor\ProcessorOptionsInterface;
+use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Model\ToggleableTrait;
 
 /**
- * Project Processor
+ * ProjectProcessor
  *
- * @ORM\Table(name="WCT_Projects_Processors")
+ * @ORM\Table(name="WCT_ProjectProcessors")
  * @ORM\Entity
  */
-class ProjectProcessor implements ProcessorOptionsInterface
+class ProjectProcessor implements ResourceInterface
 {
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="processors")
-     * @ORM\JoinColumn(name="projectId", referencedColumnName="id")
-     */
-    public $project;
+    use ToggleableTrait;
     
-    private $projectId;
-
     /**
      * @var integer
      *
@@ -31,170 +24,72 @@ class ProjectProcessor implements ProcessorOptionsInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=128, nullable=false)
-     */
-    private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="class", type="string", length=128, nullable=false)
-     */
-    private $class;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="options", type="string", length=256, nullable=false)
-     */
-    private $options;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ProjectProcessorMapping", mappedBy="processor", cascade={"persist"})
-     */
-    private $mappings;
     
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service", type="string", length=255, nullable=false)
+     */
+    private $service;
+    
+    /**
+     * @var Collection|ProjectMapper[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapper", mappedBy="processor")
+     */
+    private $mappers;
+    
     public function __construct()
     {
-        $this->mappings = new ArrayCollection();
+        $this->mappers  = new ArrayCollection();
     }
-
-    function getProjectId() {
-     return $this->projectId;
-    }
-
-    function setProjectId($projectId) {
-        $this->projectId = $projectId;
-        
-        return $this;
-    }
-
-
     
-    function getId()
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
     {
         return $this->id;
     }
-
-    function getTitle()
+    
+    public function getService()
     {
-        return $this->title;
+        return $this->service;
     }
-
-    function getClass()
+    
+    public function setService( string $service )
     {
-        return $this->class;
-    }
-
-    function getOptions()
-    {
-        return $this->options;
-    }
-
-    function setId($id)
-    {
-        $this->id = $id;
-        
-        return $this;
-    }
-
-    function setTitle($title)
-    {
-        $this->title = $title;
-        
-        return $this;
-    }
-
-    function setClass($class)
-    {
-        $this->class = $class;
-        
-        return $this;
-    }
-
-    function setOptions($options)
-    {
-        $this->options = $options;
+        $this->service  = $service;
         
         return $this;
     }
     
     /**
-     * Set project
-     *
-     * @param Project $project
-     * @return Mapper
+     * @return Collection|ProjectMapper[]
      */
-    public function setProject(Project $project)
+    public function getMappers(): Collection
     {
-        $this->project = $project;
-
+        return $this->mappers;
+    }
+    
+    public function addMapper( ProjectMapper $mapper ): self
+    {
+        if ( ! $this->mappers->contains( $mapper ) ) {
+            $this->mappers[] = $mapper;
+            $mapper->setProcessor( $this );
+        }
+        
         return $this;
     }
-
-    /**
-     * Get project
-     *
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
     
-    function getMappings()
+    public function removeMapper( ProjectMapper $mapper ): self
     {
-        return $this->mappings->toArray();
-    }
-    
-    function resetMappings()
-    {
-        $this->mappings = new ArrayCollection();
+        if ( $this->mappers->contains( $mapper ) ) {
+            $this->mappers->removeElement( $mapper );
+        }
         
         return $this;
     }
-
-            public function addMapping(ProjectProcessorMapping $mapping)
-    {
-        if(!$this->mappings->contains($mapping)) {
-            $mapping->setProcessor($this);
-            $this->mappings->add($mapping);
-        }
-
-        return $this;
-    }
-
-    public function removeMapping(ProjectProcessorMapping $mapping)
-    {
-        if($this->mappings->contains($mapping)) {
-            $this->mappings->removeElement($mapping);
-        }
-
-        return $this;
-    }
-    
-    public function getProcessorOptions()
-    {
-        return json_decode($this->getOptions());
-    }
-    
-    public function getProjectFields()
-    {
-        $fields = array();
-        
-        foreach($this->getProject()->getListingFields() as $field) {
-            $fields[$field->getXquery()] = $field->getTitle();
-        }
-        foreach($this->getProject()->getDetailsFields() as $field) {
-            $fields[$field->getXquery()] = $field->getTitle();
-        }
-        
-        return $fields;
-    }
-
 }

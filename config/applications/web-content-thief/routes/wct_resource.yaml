@@ -1,0 +1,16 @@
+vs_wct_projects:
+    resource: |
+        alias: vs_wct.projects
+        except: ['show']
+        path: /projects
+        templates: "Pages/Projects"
+    type: sylius.resource
+
+vs_wct_project_categories:
+    resource: |
+        alias: vs_wct.project_categories
+        except: ['show']
+        path: /project-categories
+        templates: "Pages/ProjectsCategories"
+    type: sylius.resource
+

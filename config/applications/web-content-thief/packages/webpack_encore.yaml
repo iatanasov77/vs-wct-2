@@ -1,0 +1,12 @@
+framework:
+    assets:
+        packages:
+            default:
+                json_manifest_path: '%kernel.project_dir%/public/web-content-thief/build/default/manifest.json'
+            web-content-thief:
+                json_manifest_path: '%kernel.project_dir%/public/shared_assets/build/web-content-thief/manifest.json'
+webpack_encore:
+    output_path: '%kernel.project_dir%/public/web-content-thief/build/default'
+    builds:
+        defaultConfig: '%kernel.project_dir%/public/web-content-thief/build/default'
+        WebContentThief: '%kernel.project_dir%/public/shared_assets/build/web-content-thief'

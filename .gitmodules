@@ -1,3 +1,0 @@
-[submodule "lib/Payum/Stripe"]
-	path = lib/Payum/Stripe
-	url = https://github.com/iatanasov77/Stripe

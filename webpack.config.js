@@ -1,85 +1,33 @@
 var Encore = require( '@symfony/webpack-encore' );
 
+/**
+ *  AdminPanel Default Theme
+ */
 Encore
-    .setOutputPath( 'public/assets/build/old-template/' )
-    .setPublicPath( '/assets/build/old-template' )
-    .copyFiles({
-         from: './assets/old-template/img',
-         to: 'img/[path][name].[hash:8].[ext]',
-     })
+    .setOutputPath( 'public/admin-panel/build/default/' )
+    .setPublicPath( '/build/default/' )
+
+	// FOS CkEditor
+	.copyFiles([
+		{from: './node_modules/bootstrap-sass/assets/fonts/bootstrap', to: 'fonts/bootstrap/[name].[ext]'},
+		
+        {from: './node_modules/ckeditor/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
+        {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+    ])
     
-    .splitEntryChunks()
-    .enableSingleRuntimeChunk()
-
-    .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
-    .autoProvidejQuery()
-
-    .addLoader({
-        test: /jsrouting-bundle\/Resources\/public\/js\/router.js$/,
-        loader: "exports-loader?router=window.Routing"
-    })
-    .enableSassLoader(function(sassOptions) {}, {
-        resolveUrlLoader: true
-    })
-    .configureFilenames({
-        js: '[name].js?[contenthash]',
-        css: '[name].css?[contenthash]',
-        images: 'images/[name].[ext]?[hash:8]',
-        fonts: 'fonts/[name].[ext]?[hash:8]'
-    })
-    
-    .addEntry('app', './assets/old-template/js/app.js')
-    .addEntry('main', './assets/old-template/js/main.js')
-    
-    .addEntry('jquery-duplicate-fields', './assets/old-template/vendor/jquery-duplicate-fields/jquery.duplicateFields.js')
-    
-    .addEntry('fieldsets', './assets/old-template/js/pages/fieldsets.js')
-    .addEntry('fieldsets-edit', './assets/old-template/js/pages/fieldsets-edit.js')
-    
-    .addEntry('projects', './assets/old-template/js/pages/projects.js')
-    .addEntry('projects-edit', './assets/old-template/js/pages/projects-edit.js')
-    .addEntry('taxonomy-vocabolarities', './assets/old-template/js/pages/taxonomy-vocabolarities.js')
-
-    .addStyleEntry( 'css/global', './assets/old-template/css/app.css')
-    .addStyleEntry( 'css/browser', './assets/old-template/css/browser.css')
-    .addStyleEntry( 'css/wct', './assets/old-template/css/wct.css')
-;
-
-const oldTemplate = Encore.getWebpackConfig();
-oldTemplate.name = 'oldTemplate';
-
-oldTemplate.watchOptions = {
-    poll: true,
-    ignored: /node_modules/
-};
-
-var path = require('path');
-oldTemplate.resolve.alias	= {
-    // Force all modules to use the same jquery version.
-    'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery'),
-    'router': __dirname + '/assets/js/fos_js_routing.js'
-};
-
-
-//reset Encore to build the second config
-Encore.reset();
-Encore
-    .setOutputPath( 'public/assets/build/new-template/' )
-    .setPublicPath( '/assets/build/new-template' )
+    // CKeditor 4 Extra Plugins
+    .copyFiles([
+        {from: './assets/admin-panel/vendor/ckeditor4_plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+    ])
     
     .copyFiles({
-         from: './assets/new-template/images',
+         from: './assets/admin-panel/images',
          to: 'images/[path][name].[ext]',
      })
     
-    .addEntry( 'app', './assets/new-template/js/app.js' )
-    .addStyleEntry( 'css/global', './assets/new-template/css/main.css' )
-    .addStyleEntry( 'css/browser', './assets/new-template/css/browser.css' )
-    
     .autoProvidejQuery()
     .enableSassLoader(function(sassOptions) {}, {
         resolveUrlLoader: true
@@ -87,32 +35,58 @@ Encore
     .configureFilenames({
         js: '[name].js?[contenthash]',
         css: '[name].css?[contenthash]',
-        images: 'images/[name].[ext]?[hash:8]',
-        fonts: 'fonts/[name].[ext]?[hash:8]'
+        assets: '[name].[ext]?[hash:8]'
     })
     .enableSingleRuntimeChunk()
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps( !Encore.isProduction() )
     
-    .addEntry('profile', './assets/new-template/js/pages/profile.js')
+    //////////////////////////////////////////////////////////////////
+    // ASSETS
+    //////////////////////////////////////////////////////////////////
+    .addEntry( 'js/app', './assets/admin-panel/js/app.js' )
+    .addStyleEntry( 'css/global', './assets/admin-panel/css/main.scss' )
     
-    .addEntry('jquery-duplicate-fields', './assets/new-template/js/jquery-duplicate-fields/jquery.duplicateFields.js')
+    .addEntry( 'js/settings', './assets/admin-panel/js/pages/settings.js' )
+    .addEntry( 'js/applications', './assets/admin-panel/js/pages/applications.js' )
+    .addEntry( 'js/profile', './assets/admin-panel/js/pages/profile.js' )
+    .addEntry( 'js/taxonomy-vocabolaries', './assets/admin-panel/js/pages/taxonomy-vocabolaries.js' )
+    .addEntry( 'js/taxonomy-vocabolaries-edit', './assets/admin-panel/js/pages/taxonomy-vocabolaries-edit.js' )
     
-    .addEntry('fieldsets', './assets/new-template/js/pages/fieldsets.js')
-    .addEntry('fieldsets-edit', './assets/new-template/js/pages/fieldsets-edit.js')
+    .addEntry( 'js/pages-categories', './assets/admin-panel/js/pages/pages_categories.js' )
+    .addEntry( 'js/pages-categories-edit', './assets/admin-panel/js/pages/pages_categories_edit.js' )
+    .addEntry( 'js/pages-index', './assets/admin-panel/js/pages/pages-index.js' )
+    .addEntry( 'js/pages-edit', './assets/admin-panel/js/pages/pages-edit.js' )
+    .addEntry( 'js/documents-index', './assets/admin-panel/js/pages/documents-index.js' )
+    .addEntry( 'js/documents-edit', './assets/admin-panel/js/pages/documents-edit.js' )
     
-    .addEntry('projects', './assets/new-template/js/pages/projects.js')
-    .addEntry('projects-edit', './assets/new-template/js/pages/projects-edit.js')
+    .addEntry( 'js/users-index', './assets/admin-panel/js/pages/users-index.js' )
+    .addEntry( 'js/users-edit', './assets/admin-panel/js/pages/users-edit.js' )
+    .addEntry( 'js/users-roles-index', './assets/admin-panel/js/pages/users-roles-index.js' )
+    .addEntry( 'js/users-roles-edit', './assets/admin-panel/js/pages/users-roles-edit.js' )
     
-    .addEntry('taxonomy-vocabolarities', './assets/new-template/js/pages/taxonomy-vocabolarities.js')
+    .addEntry( 'js/filemanager-index', './assets/admin-panel/js/pages/filemanager-index.js' )
+    .addEntry( 'js/filemanager-file-upload', './assets/admin-panel/js/pages/filemanager-file-upload.js' )
     
-    .addEntry('gateway-config', './assets/new-template/js/pages/gateway-config.js')
+    //////////////////////////////////////////////////////////////////
+    // SUBSCRIPTION AND PAYMENT ASSETS
+    //////////////////////////////////////////////////////////////////
+    .addEntry( 'js/payed-services-edit', './assets/admin-panel/js/subscription_pages/payed-services-edit.js' )
+    .addEntry( 'js/gateway-config', './assets/admin-panel/js/payment_pages/gateway-config.js' )
 ;
 
-// build the second configuration
-const newTemplate = Encore.getWebpackConfig();
-newTemplate.name = 'newTemplate';
+const adminPanelConfig = Encore.getWebpackConfig();
+adminPanelConfig.name = 'adminPanel';
+
+//=================================================================================================
+
+/**
+ *  WebContentThief Theme
+ */
+Encore.reset();
+const WebContentThiefConfig   = require('./themes/WebContentThief/webpack.config');
+
+//=================================================================================================
 
 
-// export the final configuration as an array of multiple configurations
-module.exports = [oldTemplate, newTemplate];
+module.exports = [adminPanelConfig, WebContentThiefConfig];

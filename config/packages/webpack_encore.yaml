@@ -1,9 +1,0 @@
-framework:
-    assets:
-      json_manifest_path: '%kernel.project_dir%/public/assets/build/%wct_template%/manifest.json'
-
-webpack_encore:
-    output_path: '%kernel.project_dir%/public/assets/build/%wct_template%'
-    builds:
-        new-template: '%kernel.project_dir%/public/assets/build/new-template'
-        old-template: '%kernel.project_dir%/public/assets/build/old-template'
