@@ -2,12 +2,9 @@
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
-=======
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
 
 /**
  * WctProjectfields
@@ -15,20 +12,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  * @ORM\Table(name="WCT_ProjectFields")
  * @ORM\Entity
  */
-<<<<<<< HEAD
 class ProjectField implements ResourceInterface
 {
-=======
-class ProjectField
-{
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
-     * @ORM\JoinColumn(name="projectId", referencedColumnName="id")
-     */
-    private $project;
-    
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     /**
      * @var integer
      *
@@ -47,26 +32,22 @@ class ProjectField
     /**
      * @var string
      *
-<<<<<<< HEAD
      * @ORM\Column(name="collection_type", type="string", columnDefinition="enum('listing', 'details')")
      */
     private $collectionType;
-    
-     /**
-     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
-     */
-    private $type;
-=======
-     * @ORM\Column(name="title", type="string", length=256, nullable=false)
-     */
-    private $title;
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     
     /**
      * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
      */
     private $type;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=256, nullable=false)
+     */
+    private $title;
+    
     /**
      * @var string
      *
@@ -80,31 +61,22 @@ class ProjectField
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryField", mappedBy="projectField")
      */
     private $parsedFields;
-
-<<<<<<< HEAD
+    
     public function __construct()
     {
         $this->parsedFields = new ArrayCollection();
     }
     
-=======
-    /**
-     * @ORM\Column(name="page", type="string", columnDefinition="enum('listing', 'details')")
-     */
-    private $page;
-
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-
-<<<<<<< HEAD
+    
     public function getCollectionType(): ?string
     {
         return $this->collectionType;
@@ -116,9 +88,7 @@ class ProjectField
         
         return $this;
     }
-
-=======
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
+    
     /**
      * Set title
      *
@@ -128,20 +98,20 @@ class ProjectField
     public function setTitle($title): self
     {
         $this->title = $title;
-
+        
         return $this;
     }
-
+    
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
     }
-
+    
     /**
      * Set xquery
      *
@@ -151,14 +121,14 @@ class ProjectField
     public function setXquery($xquery): self
     {
         $this->xquery = $xquery;
-
+        
         return $this;
     }
-
+    
     /**
      * Get xquery
      *
-     * @return string 
+     * @return string
      */
     public function getXquery()
     {
@@ -174,10 +144,10 @@ class ProjectField
     public function setProject(Project $project): self
     {
         $this->project = $project;
-
+        
         return $this;
     }
-
+    
     /**
      * Get project
      *
@@ -196,10 +166,10 @@ class ProjectField
     public function setType($type)
     {
         $this->type = $type;
-
+        
         return $this;
     }
-
+    
     /**
      * Get type
      */
@@ -208,7 +178,6 @@ class ProjectField
         return $this->type;
     }
     
-<<<<<<< HEAD
     /**
      * @return Collection|ProjectRepertoryField[]
      */
@@ -223,16 +192,10 @@ class ProjectField
             $this->parsedFields[] = $parsedField;
             $parsedField->setProjectField( $this );
         }
-=======
-    public function setPage($page)
-    {
-        $this->page = $page;
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
         
         return $this;
     }
     
-<<<<<<< HEAD
     public function removeParsedField( ProjectRepertoryField $parsedField ): self
     {
         if ( $this->parsedFields->contains( $parsedField ) ) {
@@ -241,10 +204,5 @@ class ProjectField
         }
         
         return $this;
-=======
-    public function getPage()
-    {
-        return $this->page;
->>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     }
 }
