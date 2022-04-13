@@ -1,0 +1,66 @@
+<div class="modal fade" id="modalBrowser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 1400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Browser</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            
+                <!-- Browser Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <span class="dashboard-spinner spinner-md browser-spinner" id="browser-spinner"></span>
+                        <div class="col-sm-12" style="margin: 20px 0 20px 0;">
+                            <div class="form-group">
+                                <label for="project_xqueryField">URL: </label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="url" id="urlInput" class="form-control" />
+                                    <div class="col-sm-1">
+                                        <button type="button" id="ModalBrowser_BtnBrowse"
+                                            class="btn btn-primary btnBrowse" 
+                                        	data-browserUrl="{{ url('vs_wct_browser_browse') }}"
+                                            data-urlInput="#urlInput"
+                                        >
+                                            Browse
+                                        </button>
+                                    </div>
+                                </div>                                  
+                            </div>
+                            <iframe id="remoteBrowser" style="display:block; width:100%; height:500px;" data-browserCss="{{ asset('build/web-content-thief/css/browser.css') }}"></iframe>
+                        </div>
+                    
+                        <input type="hidden" id="project_fieldsContainer" name="project[fieldsContainer]" val="" />
+                        <div class="input-group">
+                        	<label for="project_xqueryField" class="col-sm-2 control-label">Set to Field: </label>
+                        	<div class="col-sm-6"> 
+                            	<select id="project_xqueryField" name="project[xqueryField]" class="form-control xquery-field-select"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">&nbsp;</div>
+                        
+                        <fieldset class="fieldset-fields">
+                            <legend class="w-auto">Fields</legend>
+                            <div id="fieldsContainer"></div>
+                        </fieldset>
+                    </div>
+                </div>
+                
+                <!-- Browser-Log Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title border-bottom pb-2">Browser-Log</h4>
+                        <div class="browser-log" id="browserLogContainer"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseBrowser">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSaveFieldsXquery">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

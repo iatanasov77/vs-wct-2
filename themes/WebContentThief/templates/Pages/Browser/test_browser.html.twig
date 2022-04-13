@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} :: Test Browser{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> Test Browser{% endblock %}
+
+{% block content %}
+    <div class="row">   
+        <div class="col-lg-12">
+            <section class="panel">
+                <div class="panel-body">
+                    <div class="row form-group input-group"></div>
+                    <div class="row form-group input-group"></div>
+                            
+                    <div class="ml-4">
+                        <button type="button" class="btn btn-primary btnOpenBrowser"
+                            data-toggle="modal" data-target="#modalBrowser"
+                        >Browser</button>
+                    </div>
+                    
+                    <div class="row form-group input-group"></div>
+                    <div class="row form-group input-group"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    {% include 'Modals/browser.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/browser', null, 'WebContentThief' ) }}
+    {{ encore_entry_script_tags( 'js/projects-edit', null, 'WebContentThief' ) }}
+{% endblock %}

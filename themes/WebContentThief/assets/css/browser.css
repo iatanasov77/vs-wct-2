@@ -1,0 +1,15 @@
+
+body {
+    cursor:grab;
+}
+
+.parserHover {
+	display: block;
+    border: 1px solid black;
+}
+
+.parserMarker {
+	display: block;
+    border: 1px solid red;
+}
+

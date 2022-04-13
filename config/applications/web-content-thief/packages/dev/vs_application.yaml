@@ -1,0 +1,67 @@
+vs_application:
+    menu:
+        mainApplicationMenu:
+            home:
+                name: Home
+                uri: "http://%vankosoft_host%"
+                attributes:
+                    iconClass: icon_genius
+            browser:
+                name: Browser
+                uri: "javascript:;"
+                attributes:
+                    iconClass: icon_genius
+                childs:
+                    browser_test_browser:
+                        name: Test Browser
+                        route: vs_wct_browser_test_browser
+            projects:
+                name: Projects
+                uri: "javascript:;"
+                attributes:
+                    iconClass: icon_genius
+                childs:
+                    projects_categories_list:
+                        name: List Categories
+                        route: vs_wct_project_categories_index
+                    projects_categories_create:
+                        name: Create Category
+                        route: vs_wct_project_categories_create
+                    projects_categories_update:
+                        name: Update Category
+                        route: vs_wct_project_categories_update
+                        routeParameters:
+                          id: int
+                        display: false
+                    projects_list:
+                        name: List Projects
+                        route: vs_wct_projects_index
+                    projects_create:
+                        name: Create Project
+                        route: vs_wct_projects_create
+                    projects_update:
+                        name: Update Project
+                        route: vs_wct_projects_update
+                        routeParameters:
+                          id: int
+                        display: false
+
+        profileMenu:
+            profile:
+                name: "My Profile"
+                route: wct_user_profile_show
+                attributes:
+                    iconClass: "fas fa-user mr-2"
+            logout:
+                name: "Log Out"
+                route: app_logout
+                attributes:
+                    iconClass: "fas fa-power-off mr-2"
+            documentation:
+                name: "Documentation"
+                uri: "javascript:;"
+                attributes:
+                    iconClass: "fas fa-cog mr-2"
+                    
+
+     

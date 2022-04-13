@@ -1,0 +1,117 @@
+{# Import Macros #}
+{% from '@SyliusResource/Macros/actions.html.twig' import create %}
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% if item.id %}{% set formMethod = 'PUT' %}{% else %}{% set formMethod = 'POST' %}{% endif %}
+{{ form_start(form, { 'attr': {'class': 'form-horizontal '}, 'method': formMethod }) }}
+    {% if form_errors(form) is not empty %}
+        <div class="alert alert-block alert-danger fade in">
+            <button type="button" class="close close-sm" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+            <strong>Error!</strong> {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_label(form.title, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+    </div>
+     
+    <div class="form-group">
+        {{ form_label(form.category, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.url, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        <div class="input-group mb-3">
+            {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+            <div class="input-group-append">
+                <button type="button" id="btnBrowseListingUrl"
+                    class="btn btn-primary ml-2 btnBrowseUrl"
+                    data-toggle="modal" data-target="#modalBrowser"
+                >Browse URL</button>
+            {% if detailsUrl %}
+                <button type="button" id="btnBrowseDetailsUrl"
+                    class="btn btn-primary ml-2 btnBrowseDetails"
+                    data-toggle="modal" data-target="#modalBrowser"
+                    data-url="{{ detailsUrl }}"
+                >Browse Details</button>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.listingContainerElement, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.listingContainerElement, {'attr': {'class': 'form-control'}}) }}
+        
+        <p>The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)</p>
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.detailsLink, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.detailsLink, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.pagerLink, null, {
+            'label_attr': {'class': 'col-form-label'}
+            }) 
+        }}
+        
+        {{ form_widget(form.pagerLink, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <fieldset class="fieldset-project-listing-fields" id="fieldsetProjectListingFields">
+        <legend class="w-auto">Listing Page Fields</legend>
+        <div class="fieldsContainer"
+            data-prototype="{% apply escape %}
+                {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.listingFields.vars.prototype} %}
+            {% endapply %}"
+        >
+            {% for field in form.listingFields %}
+                {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+    <div class="row">&nbsp;</div>
+    
+{% if detailsUrl %}
+    <fieldset class="fieldset-project-details-fields" id="fieldsetProjectDetailsFields">
+        <legend class="w-auto">Details Page Fields</legend>
+        <div class="fieldsContainer"
+            data-prototype="{% apply escape %}
+                {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.detailsFields.vars.prototype} %}
+            {% endapply %}"
+        >
+            {% for field in form.detailsFields %}
+                {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+    <div class="row">&nbsp;</div>
+{% endif %}
+    
+    {{ vs_form.buttons( form ) }}
+{{ form_end(form, {'render_rest': false}) }}

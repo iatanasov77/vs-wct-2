@@ -1,0 +1,23 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        
+    vs_wct.resources.project_categories.form:
+        class: App\Form\ProjectCategoryForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_wct.model.project_categories.class%'
+            - '@request_stack'
+            
+    vs_wct.resources.projects.form:
+        class: App\Form\ProjectForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_wct.model.projects.class%'
+            - '@request_stack'
+            - '@vs_wct.repository.project_fields'
+
+    

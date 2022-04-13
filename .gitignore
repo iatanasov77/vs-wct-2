@@ -1,48 +1,75 @@
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
 
-# Email spool folder
-/app/spool/*
-
-# Cache, session files and logs (Symfony3)
-/var/cache/*
-/var/logs/*
-/var/sessions/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-!var/sessions/.gitkeep
-
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
-
-# Managed by Composer
-/app/bootstrap.php.cache
-/var/bootstrap.php.cache
-/bin/*
-!bin/console
-!bin/symfony_requirements
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /vendor/
+/node_modules/
+###< symfony/framework-bundle ###
 
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
-
-# PHPUnit
-/app/phpunit.xml
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
 /phpunit.xml
+###< symfony/phpunit-bridge ###
 
-# Build data
-/build/
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
 
-# Composer PHAR
-/composer.phar
+###> package managers ###
+/composer.lock
+/symfony.lock
+/yarn.lock
+###< package managers ###
 
-# Backup entities generated with doctrine:generate:entities command
-**/Entity/*~
+###> Eclipse project files ###
+/.buildpath
+/.project
+/.settings
+###< Eclipse project files ###
 
-# Embedded web-server pid file
-/.web-server-pid
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/assets/controllers/
+/assets/styles/
+/assets/app.js
+/assets/bootstrap.js
+/assests/controllers.json
+/node_modules/
+/public/build/
+/public/bundles/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+###> VankosoftApplication Files ###
+
+/config/*
+/VSAPP_VERSION
+
+# Public files ignores
+/public/admin-panel/build/
+/public/admin-panel/bundles/
+/public/admin-panel/media/
+/public/shared_assets/build/
+
+# Except for the applications configs:
+!/config/admin-panel
+!/config/applications
+
+# Example Application ignores
+/public/test-vankosoft-application/build/
+/public/test-vankosoft-application/bundles/
+/public/test-vankosoft-application/media/
+
+###< VankosoftApplication Files ###

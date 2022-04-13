@@ -1,0 +1,23 @@
+wct_user_registration_form:
+    path:     /register
+    controller: App\Controller\WebContentThief\RegisterController:index
+
+wct_user_registration_confirmation:
+    path:     /verify
+    controller: App\Controller\WebContentThief\RegisterController:verify
+
+wct_user_forgot_password_form:
+    path:     /forgot-password
+    controller: App\Controller\WebContentThief\ForgotPasswordController:indexAction
+
+wct_user_forgot_password_reset:
+    path:     /forgot-password/reset/{token}
+    controller: App\Controller\WebContentThief\ForgotPasswordController:resetAction
+
+wct_user_profile_show:
+    path:     /user/profile
+    controller: App\Controller\WebContentThief\ProfileController:indexAction
+    
+wct_user_profile_change_password:
+    path:     /user/profile/change-password
+    controller: App\Controller\WebContentThief\ProfileController:changePasswordAction

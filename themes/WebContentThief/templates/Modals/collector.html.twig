@@ -1,0 +1,49 @@
+<div class="modal fade" id="modalCollectorProgress" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" 
+    data-actionUrl="{{ url( 'vs_wct_collector_collect_data' ) }}"
+>
+    <div class="modal-dialog" role="document" style="max-width: 1400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Collector Progress</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start( collectorForm, { 'attr': {'class': 'form-horizontal', 'id': 'formCollectData'} } ) }}
+                    {{ form_widget(collectorForm.projectId, {'attr': {'class': 'form-control'}, 'value': item.id}) }}
+                    
+                    <div class="form-row mb-2">
+                        <div class="col-sm form-group">
+                            {{ form_label(collectorForm.parseMode, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(collectorForm.parseMode, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        
+                        <div class="col-sm form-group">
+                            {{ form_label(collectorForm.collectionType, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(collectorForm.collectionType , {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                {{ form_end(form, {'render_rest': false}) }}
+                
+                <div id="consoleCollectData" class="col-sm-12 console" style="margin: 20px 0 20px 0;">
+                    <div id="CollectDataContainer"></div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnRunCollector">Run Collector</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseCollectorProgress">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

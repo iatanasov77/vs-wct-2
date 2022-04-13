@@ -1,0 +1,22 @@
+vs_wct:
+    template:
+        edit: Edit
+        delete: Delete
+        category: Category
+        action: Action
+        project_categories: Project Categories
+        project_category_create_title: Create New Project Category
+        project_category_details: Project Category Details
+        
+    form:
+        locale: Language
+        name: Name
+        category: Category
+        category_placeholder: '-- Choose a Category --'
+        project:
+            url: Url
+            field_type_placeholder: '-- Choose a Field Type --'
+            field_title_placeholder: '-- Type a Field Title --'
+            field_xquery_placeholder: '-- Type a Field Xquery --'
+            
+

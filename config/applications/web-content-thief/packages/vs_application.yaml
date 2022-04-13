@@ -1,0 +1,100 @@
+vs_application_instalator:
+    resources:
+        instalation_info:
+            classes:
+                model: App\Entity\Application\InstalationInfo
+vs_application:
+    resources:
+        application:
+            classes:
+                model: App\Entity\Application\Application
+        settings:
+            classes:
+                model: App\Entity\Application\Settings
+        taxonomy:
+            classes:
+                model: App\Entity\Application\Taxonomy
+        taxon:
+            classes:
+                model: App\Entity\Application\Taxon
+            translation:
+                classes:
+                    model: App\Entity\Application\TaxonTranslation
+        taxon_image:
+            classes:
+                model: App\Entity\Application\TaxonImage
+        translation:
+            classes:
+                model: App\Entity\Application\Translation
+        logentry:
+            classes:
+                model: App\Entity\Application\LogEntry
+        locale:
+            classes:
+                model: App\Entity\Application\Locale
+
+    menu:
+        mainApplicationMenu:
+            home:
+                name: Home
+                uri: "http://%vankosoft_host%"
+                attributes:
+                    iconClass: icon_genius
+            projects:
+                name: Projects
+                uri: "javascript:;"
+                attributes:
+                    iconClass: icon_genius
+                childs:
+                    projects_categories_list:
+                        name: List Categories
+                        route: vs_wct_project_categories_index
+                    projects_categories_create:
+                        name: Create Category
+                        route: vs_wct_project_categories_create
+                        display: true
+                    projects_categories_update:
+                        name: Update Category
+                        route: vs_wct_project_categories_update
+                        routeParameters:
+                          id: int
+                        display: false
+                    projects_list:
+                        name: List Projects
+                        route: vs_wct_projects_index
+                    projects_create:
+                        name: Create Project
+                        route: vs_wct_projects_create
+                        display: true
+                    projects_update:
+                        name: Update Project
+                        route: vs_wct_projects_update
+                        routeParameters:
+                          id: int
+                        display: false
+                    projects_repertory_preview:
+                        name: Project Repertory Preview
+                        route: vs_wct_project_preview_repertory
+                        routeParameters:
+                          id: int
+                        display: false
+
+        profileMenu:
+            profile:
+                name: "My Profile"
+                route: wct_user_profile_show
+                attributes:
+                    iconClass: "fas fa-user mr-2"
+            logout:
+                name: "Log Out"
+                route: app_logout
+                attributes:
+                    iconClass: "fas fa-power-off mr-2"
+            documentation:
+                name: "Documentation"
+                uri: "javascript:;"
+                attributes:
+                    iconClass: "fas fa-cog mr-2"
+                    
+
+     

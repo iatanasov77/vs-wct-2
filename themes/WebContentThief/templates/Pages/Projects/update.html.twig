@@ -1,0 +1,107 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} :: Edit Project{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> Edit Project{% endblock %}
+
+{% block content %}
+
+    {% if applicationEnvironement == 'dev' %}
+        <div class="card bg-info text-white shadow">
+            <div class="card-body">
+              Test URL's:
+              <hr />
+              <div class="text-white-50 small">Comuter Store: 
+                  <a href="https://computer-store.bg/komputri/dell" class="btnTestBrowse">
+                      https://computer-store.bg/komputri/dell
+                  </a>
+              </div>
+              <div class="text-white-50 small">JAR Computers: 
+                  <a href="https://www.jarcomputers.com/Kompyutri-i-Tableti_cat_1.html?ref=cat" class="btnTestBrowse">
+                      https://www.jarcomputers.com/Kompyutri-i-Tableti_cat_1.html?ref=cat
+                  </a>
+              </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if item.id %}
+        <div class="card">
+            <div class="card-body me-auto">
+                <button type="button"
+                    class="btn btn-primary mr-3 btnDisplayCollector"
+                    data-toggle="modal" data-target="#modalCollectorProgress"
+                    data-url="{{ detailsUrl }}"
+                >
+                    Collect Data
+                </button>
+                <button type="button" 
+                    class="btn btn-primary mr-3"
+                >
+                    Preview Data
+                </button>
+                <button type="button" 
+                    class="btn btn-primary"
+                >
+                    Deploy Data
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    
+    <div class="row">
+    {% if item.id %}
+        <div class="col-lg-9">
+            <section class="panel">
+                <div class="panel-body">
+                    {% include 'Pages/Projects/Partial/project_form.html.twig' %}
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="panel  panel-default border">
+                <div class="panel-heading ml-2">Project Collector Repertories</div>
+                <div class="panel-body" style="height: 900px !important;">
+                    <table class="table table-striped table-advance table-hover">
+                    {% for rep in item.repertories %}
+                        <tr>
+                            <td>Repertory - {{ rep.createdAt | date( "d.m.Y H:i:s" ) }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-primary repertoryPreview"
+                                        href="{{ path('vs_wct_project_preview_repertory', {'id': rep.id}) }}"
+                                        title="Preview Repertory"
+                                    >
+                                        <i class="fas fa-eye" style="color: #be4bdb;"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            </section>
+        </div>
+    {% else %}
+        <div class="col-lg-12">
+            <section class="panel">
+                <div class="panel-body">
+                    {% include 'Pages/Projects/Partial/project_form.html.twig' %}
+                </div>
+            </section>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}
+
+{% block modals %}
+    {% include 'Modals/browser.html.twig' %}
+    {% include 'Modals/collector.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags( 'js/projects-edit', null, 'WebContentThief' ) }}
+    {{ encore_entry_script_tags( 'js/browser', null, 'WebContentThief' ) }}
+    {{ encore_entry_script_tags( 'js/collector', null, 'WebContentThief' ) }}
+{% endblock %}

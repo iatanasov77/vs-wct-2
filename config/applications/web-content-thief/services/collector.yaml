@@ -1,0 +1,15 @@
+services:
+    vs_wct.collector:
+        public: true
+        class: App\Component\Collector\XPathCollector
+        arguments:
+            - '@service_container'
+            
+    vs_wct.command.collect_data:
+        class: App\Command\ProjectCollectDataCommand
+        arguments:
+            - '@service_container'
+            - '@vs_wct.collector'
+            - '@vs_wct.repository.projects'
+        tags:
+            - 'console.command'

@@ -1,0 +1,50 @@
+sylius_resource:
+    #translation:
+        #default_locale: '%locale%'
+        #locale_provider: sylius.translation.locale_provider.contextual
+        #available_locales_provider: sylius.translation.locales_provider
+    resources:
+        vs_wct.project_categories:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectCategory
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                controller: App\Controller\WebContentThief\ProjectsCategoryController
+                form:       App\Form\ProjectCategoryForm
+        vs_wct.projects:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\Project
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                controller: App\Controller\WebContentThief\ProjectsController
+                form:       App\Form\ProjectForm
+        vs_wct.project_fields:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectField
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: App\Repository\ProjectFieldsRepository
+        vs_wct.project_repertories:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectRepertory
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                factory:    Sylius\Component\Resource\Factory\Factory
+        vs_wct.project_repertory_items:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectRepertoryItem
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                factory:    Sylius\Component\Resource\Factory\Factory
+        vs_wct.project_repertory_fields:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectRepertoryField
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                factory:    Sylius\Component\Resource\Factory\Factory
+
