@@ -2,9 +2,12 @@
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
+=======
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
 
 /**
  * WctProjectfields
@@ -12,8 +15,20 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  * @ORM\Table(name="WCT_ProjectFields")
  * @ORM\Entity
  */
+<<<<<<< HEAD
 class ProjectField implements ResourceInterface
 {
+=======
+class ProjectField
+{
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
+     * @ORM\JoinColumn(name="projectId", referencedColumnName="id")
+     */
+    private $project;
+    
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     /**
      * @var integer
      *
@@ -32,6 +47,7 @@ class ProjectField implements ResourceInterface
     /**
      * @var string
      *
+<<<<<<< HEAD
      * @ORM\Column(name="collection_type", type="string", columnDefinition="enum('listing', 'details')")
      */
     private $collectionType;
@@ -40,13 +56,16 @@ class ProjectField implements ResourceInterface
      * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
      */
     private $type;
-    
-    /**
-     * @var string
-     *
+=======
      * @ORM\Column(name="title", type="string", length=256, nullable=false)
      */
     private $title;
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
+    
+    /**
+     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
+     */
+    private $type;
 
     /**
      * @var string
@@ -62,11 +81,19 @@ class ProjectField implements ResourceInterface
      */
     private $parsedFields;
 
+<<<<<<< HEAD
     public function __construct()
     {
         $this->parsedFields = new ArrayCollection();
     }
     
+=======
+    /**
+     * @ORM\Column(name="page", type="string", columnDefinition="enum('listing', 'details')")
+     */
+    private $page;
+
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     /**
      * Get id
      *
@@ -77,6 +104,7 @@ class ProjectField implements ResourceInterface
         return $this->id;
     }
 
+<<<<<<< HEAD
     public function getCollectionType(): ?string
     {
         return $this->collectionType;
@@ -89,6 +117,8 @@ class ProjectField implements ResourceInterface
         return $this;
     }
 
+=======
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     /**
      * Set title
      *
@@ -178,6 +208,7 @@ class ProjectField implements ResourceInterface
         return $this->type;
     }
     
+<<<<<<< HEAD
     /**
      * @return Collection|ProjectRepertoryField[]
      */
@@ -192,10 +223,16 @@ class ProjectField implements ResourceInterface
             $this->parsedFields[] = $parsedField;
             $parsedField->setProjectField( $this );
         }
+=======
+    public function setPage($page)
+    {
+        $this->page = $page;
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
         
         return $this;
     }
     
+<<<<<<< HEAD
     public function removeParsedField( ProjectRepertoryField $parsedField ): self
     {
         if ( $this->parsedFields->contains( $parsedField ) ) {
@@ -204,5 +241,10 @@ class ProjectField implements ResourceInterface
         }
         
         return $this;
+=======
+    public function getPage()
+    {
+        return $this->page;
+>>>>>>> 19b2b198590823e41b1f1ae2c0617fb0b827b2f5
     }
 }
