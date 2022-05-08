@@ -36,7 +36,7 @@ class ProjectField implements ResourceInterface
      */
     private $collectionType;
     
-     /**
+    /**
      * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
      */
     private $type;
@@ -47,7 +47,7 @@ class ProjectField implements ResourceInterface
      * @ORM\Column(name="title", type="string", length=256, nullable=false)
      */
     private $title;
-
+    
     /**
      * @var string
      *
@@ -61,7 +61,7 @@ class ProjectField implements ResourceInterface
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryField", mappedBy="projectField")
      */
     private $parsedFields;
-
+    
     public function __construct()
     {
         $this->parsedFields = new ArrayCollection();
@@ -70,13 +70,13 @@ class ProjectField implements ResourceInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-
+    
     public function getCollectionType(): ?string
     {
         return $this->collectionType;
@@ -88,7 +88,7 @@ class ProjectField implements ResourceInterface
         
         return $this;
     }
-
+    
     /**
      * Set title
      *
@@ -98,20 +98,20 @@ class ProjectField implements ResourceInterface
     public function setTitle($title): self
     {
         $this->title = $title;
-
+        
         return $this;
     }
-
+    
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
     }
-
+    
     /**
      * Set xquery
      *
@@ -121,14 +121,14 @@ class ProjectField implements ResourceInterface
     public function setXquery($xquery): self
     {
         $this->xquery = $xquery;
-
+        
         return $this;
     }
-
+    
     /**
      * Get xquery
      *
-     * @return string 
+     * @return string
      */
     public function getXquery()
     {
@@ -144,10 +144,10 @@ class ProjectField implements ResourceInterface
     public function setProject(Project $project): self
     {
         $this->project = $project;
-
+        
         return $this;
     }
-
+    
     /**
      * Get project
      *
@@ -166,10 +166,10 @@ class ProjectField implements ResourceInterface
     public function setType($type)
     {
         $this->type = $type;
-
+        
         return $this;
     }
-
+    
     /**
      * Get type
      */

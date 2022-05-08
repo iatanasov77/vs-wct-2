@@ -95,7 +95,9 @@
 
 {% block modals %}
     {% include 'Modals/browser.html.twig' %}
-    {% include 'Modals/collector.html.twig' %}
+    {% if item.id %}
+        {% include 'Modals/collector.html.twig' %}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
