@@ -1,3 +1,9 @@
+0.2.1	|	Release date: **08.05.2022**
+============================================
+* Bug-Fixes:
+  - Fix Deployment: Add Phing Build Script.
+
+
 0.2.0	|	Release date: **08.05.2022**
 ============================================
 * New Features:
