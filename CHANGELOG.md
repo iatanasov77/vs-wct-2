@@ -1,3 +1,9 @@
+0.2.2	|	Release date: **08.05.2022**
+============================================
+* Bug-Fixes:
+  - Fix Controllers Template Namespaces.
+
+
 0.2.1	|	Release date: **08.05.2022**
 ============================================
 * Bug-Fixes:

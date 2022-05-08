@@ -40,11 +40,11 @@ class DefaultController extends AbstractController
     
     protected function getTemplate(): string
     {
-        $template   = 'web-content-thief/pages/Dashboard/index.html.twig';
+        $template   = 'web-content-thief/Pages/Dashboard/index.html.twig';
         
         $appSettings    = $this->applicationContext->getApplication()->getSettings();
         if ( ! $appSettings->isEmpty() && $appSettings[0]->getTheme() ) {
-            $template   = 'pages/Dashboard/index.html.twig';
+            $template   = 'Pages/Dashboard/index.html.twig';
         }
         
         return $template;
