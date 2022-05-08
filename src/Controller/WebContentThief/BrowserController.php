@@ -19,6 +19,6 @@ class BrowserController extends AbstractController
     
     public function testBrowserAction( Request $request )
     {
-        return $this->render( 'pages/Browser/test_browser.html.twig' );
+        return $this->render( 'Pages/Browser/test_browser.html.twig' );
     }
 }
