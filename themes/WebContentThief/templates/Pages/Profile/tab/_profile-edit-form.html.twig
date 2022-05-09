@@ -8,13 +8,9 @@
             <div class="form-group">
                 <div class="row">
                 {% if app.user.info.avatar %}
-                    <img
-                        src="{{ app.user.info.avatar.path|imagine_filter('profile_form_thumb') }}"
-                        {# src="{{ path( 'vs_cms_images_get_file', { file: 'var/uploads/profile_pictures/' ~ user.info.profilePictureFilename } ) }}?filter=profile_form_thumb" #}
-                        style="width: 120px; height: 100px; border: 2px solid #000000;"
-                    />
+                    <img src="{{ app.user.info.avatar.path|imagine_filter('profile_form_thumb') }}" style="width: 120px; height: 100px; border: 2px solid #000000;" />
                 {% else %}
-                    <img src="{{ asset( '/build/default/images/avatar-1.jpg' ) }}" alt="" class="user-avatar-md rounded-circle" />
+                    <img src="{{ asset( 'build/web-content-thief/images/avatar-1.jpg' ) }}" alt="" class="user-avatar-md rounded-circle" />
                 {% endif %}
                 </div>
                 <div class="custom-file mb-4">
