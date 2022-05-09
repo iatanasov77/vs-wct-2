@@ -1,3 +1,11 @@
+0.2.3	|	Release date: **09.05.2022**
+============================================
+* New Features:
+  - Display Profile Avatar on Top Bar.
+* Bug-Fixes:
+  - Gitignore Media Files.
+
+
 0.2.2	|	Release date: **08.05.2022**
 ============================================
 * Bug-Fixes:

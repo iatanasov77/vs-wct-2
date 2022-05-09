@@ -50,6 +50,7 @@ yarn-error.log
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
+
 ###< liip/imagine-bundle ###
 
 ###> VankosoftApplication Files ###
@@ -72,4 +73,5 @@ yarn-error.log
 /public/test-vankosoft-application/bundles/
 /public/test-vankosoft-application/media/
 
+/public/web-content-thief/media/cache/
 ###< VankosoftApplication Files ###
