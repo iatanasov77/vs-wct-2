@@ -78,6 +78,25 @@ vs_application:
                         routeParameters:
                           id: int
                         display: false
+            api_hosts:
+                name: Api Hosts
+                uri: "javascript:;"
+                attributes:
+                    iconClass: icon_genius
+                childs:
+                    api_hosts_list:
+                        name: List Api Hosts
+                        route: vs_wct_api_hosts_index
+                    api_hosts_create:
+                        name: Create Api Host
+                        route: vs_wct_api_hosts_create
+                        display: true
+                    api_hosts_update:
+                        name: Update Api Host
+                        route: vs_wct_api_hosts_update
+                        routeParameters:
+                          id: int
+                        display: false
 
         profileMenu:
             profile:

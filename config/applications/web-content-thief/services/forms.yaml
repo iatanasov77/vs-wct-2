@@ -34,5 +34,12 @@ services:
         arguments:
             - '@vs_wct.repository.project_fields'
             - '@vs_wct.deployers.sylius'
+    
+    vs_wct.resources.api_hosts.form:
+        class: App\Form\ApiHostForm
+        tags:
+            - { name: form.type }
+        arguments:
+            - '%vs_wct.model.api_hosts.class%'
 
     
