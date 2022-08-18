@@ -1,0 +1,51 @@
+<div class="modal fade" id="modalDeployerProgress" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" 
+>
+    <div class="modal-dialog" role="document" style="max-width: 1400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Deployer Progress</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start( deployerForm, { 'attr': {'class': 'form-horizontal', 'id': 'formDeployData'} } ) }}
+                    {{ form_widget(deployerForm.projectId, {'value': item.id}) }}
+                    {{ form_widget(deployerForm.repertoryId) }}
+                    
+                    <div class="form-row mb-2">
+                        <div class="col-sm form-group">
+                            {{ form_label(deployerForm.deployer, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(deployerForm.deployer, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row mb-2">
+                        <div class="col-sm form-group">
+                            {{ form_label(deployerForm.baseUrl, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(deployerForm.baseUrl, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                {{ form_end(deployerForm, {'render_rest': false}) }}
+                
+                <div id="consoleDeployData" class="col-sm-12 console" style="margin: 20px 0 20px 0;">
+                    <div id="DeployDataContainer"></div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnRunDeployer">Run Deployer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseDeployerProgress">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ class ProjectCollectorForm extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $builder
-            ->add( 'projectId', HiddenType::class, ['required' => true])
+            ->add( 'projectId', HiddenType::class, ['required' => true] )
             
             ->add( 'parseMode', ChoiceType::class, [
                 'label'         => 'Parse Mode',

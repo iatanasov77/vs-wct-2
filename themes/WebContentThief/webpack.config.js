@@ -38,6 +38,8 @@ Encore
     
     .addEntry( 'js/browser', './themes/WebContentThief/assets/js/pages/browser.js' )
     .addEntry( 'js/collector', './themes/WebContentThief/assets/js/pages/collector.js' )
+    .addEntry( 'js/deployer', './themes/WebContentThief/assets/js/pages/deployer.js' )
+    .addEntry( 'js/mapper', './themes/WebContentThief/assets/js/pages/mapper.js' )
     
     .addEntry( 'js/projects-edit', './themes/WebContentThief/assets/js/pages/projects-edit.js' )
 ;

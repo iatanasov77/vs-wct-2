@@ -22,6 +22,3 @@ vs_users_subscriptions:
             classes:
                 model: App\Entity\UsersSubscriptions\PayedServiceSubscription
 
-
-vs_payment:
-

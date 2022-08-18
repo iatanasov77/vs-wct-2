@@ -17,4 +17,7 @@ vs_wct:
             field_type_placeholder: '-- Избери Тип на Полето --'
             field_title_placeholder: '-- Напиши Име на Полето --'
             field_xquery_placeholder: '-- Напиши Xquery на Полето --'
+        mapper:
+            project_field_placeholder: '-- Избери Поле от Проекта --'
+            map_field_placeholder: '-- Избери Поле за Мапване --'
 

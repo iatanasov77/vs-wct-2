@@ -75,3 +75,8 @@ yarn-error.log
 
 /public/web-content-thief/media/cache/
 ###< VankosoftApplication Files ###
+
+###> VisualParadigm Meta Files ###
+/docs/TechnicalDocumentation/VisualParadigm/.VankosoftApplication.vpp.lck
+/docs/TechnicalDocumentation/VisualParadigm/VankosoftApplication.vpp.bak_*
+###< VisualParadigm Meta Files ###

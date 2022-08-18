@@ -1,0 +1,39 @@
+{{ form_start( mapperForm, { 'action': path( 'vs_wct_project_mapper_create' ), 'attr': {'class': 'form-horizontal', 'id': 'formCreateMapper'} } ) }}
+    {{ form_widget(mapperForm.projectId, {'value': item.id}) }}
+    
+    <div class="form-row mb-2">
+        <div class="col-sm form-group">
+            {{ form_label(mapperForm.title, null, {
+                'label_attr': {'class': 'col-form-label'}
+                }) 
+            }}
+            
+            {{ form_widget(mapperForm.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="form-row mb-2">
+        <div class="col-sm form-group">
+            {{ form_label(mapperForm.deployer, null, {
+                'label_attr': {'class': 'col-form-label'}
+                }) 
+            }}
+            
+            {{ form_widget(mapperForm.deployer, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <fieldset class="fieldset-project-listing-fields" id="fieldsetMapperFields">
+        <legend class="w-auto">Mapper Fields</legend>
+        <div class="fieldsContainer"
+            data-prototype="{% apply escape %}
+                {% include 'Pages/Mappers/Partial/add-field-prototype.html.twig' with {'form': mapperForm.fields.vars.prototype} %}
+            {% endapply %}"
+        >
+            {% for field in mapperForm.fields %}
+                {% include 'Pages/Mappers/Partial/add-field-prototype.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+    <div class="row">&nbsp;</div>
+{{ form_end(mapperForm, {'render_rest': false}) }}

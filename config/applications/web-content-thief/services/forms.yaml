@@ -19,5 +19,18 @@ services:
             - '%vs_wct.model.projects.class%'
             - '@request_stack'
             - '@vs_wct.repository.project_fields'
+    
+    App\Form\ProjectMapperForm:
+        tags:
+            - { name: form.type }
+        arguments:
+            #- '@vs_wct.repository.project_fields'
+            - '@doctrine.orm.entity_manager'
+            
+    App\Form\Type\MapperFieldType:
+        tags:
+            - { name: form.type }
+        arguments:
+            - '@vs_wct.repository.project_fields'
 
     

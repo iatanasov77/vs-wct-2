@@ -34,16 +34,27 @@
                 >
                     Collect Data
                 </button>
+                
+                <button type="button"
+                    class="btn btn-primary mr-3 btnCreateMapper"
+                    data-toggle="modal" data-target="#modalMapper"
+                >
+                    Create Mapper
+                </button>
+            
+            {#
                 <button type="button" 
                     class="btn btn-primary mr-3"
                 >
                     Preview Data
                 </button>
                 <button type="button" 
-                    class="btn btn-primary"
+                    class="btn btn-primary btnDisplayDeployer"
+                    data-toggle="modal" data-target="#modalDeployerProgress"
                 >
                     Deploy Data
                 </button>
+            #}
             </div>
         </div>
     {% endif %}
@@ -58,6 +69,29 @@
             </section>
         </div>
         <div class="col-lg-3">
+             <section class="panel  panel-default border mb-4">
+                <div class="panel-heading ml-2">Project Mappers</div>
+                <div class="panel-body">
+                    <table class="table table-striped table-advance table-hover">
+                    {% for mapper in item.mappers %}
+                        <tr>
+                            <td>{{ mapper.title }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-primary repertoryPreview"
+                                        href="{{ path('vs_wct_project_mapper_update', {'id': mapper.id}) }}"
+                                        title="Edit Mapper"
+                                    >
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            </section>
+            
             <section class="panel  panel-default border">
                 <div class="panel-heading ml-2">Project Collector Repertories</div>
                 <div class="panel-body" style="height: 900px !important;">
@@ -72,6 +106,13 @@
                                         title="Preview Repertory"
                                     >
                                         <i class="fas fa-eye" style="color: #be4bdb;"></i>
+                                    </a>
+                                    <a class="btn btn-outline-primary btnDisplayDeployer"
+                                        title="Deploy Repertory"
+                                        data-toggle="modal" data-target="#modalDeployerProgress"
+                                        data-repertoryId="{{ rep.id }}"
+                                    >
+                                        <i class="fa fa-server" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </td>
@@ -97,6 +138,8 @@
     {% include 'Modals/browser.html.twig' %}
     {% if item.id %}
         {% include 'Modals/collector.html.twig' %}
+        {% include 'Modals/deployer.html.twig' %}
+        {% include 'Modals/mapper.html.twig' %}
     {% endif %}
 {% endblock %}
 
@@ -106,4 +149,7 @@
     {{ encore_entry_script_tags( 'js/projects-edit', null, 'WebContentThief' ) }}
     {{ encore_entry_script_tags( 'js/browser', null, 'WebContentThief' ) }}
     {{ encore_entry_script_tags( 'js/collector', null, 'WebContentThief' ) }}
+    {{ encore_entry_script_tags( 'js/deployer', null, 'WebContentThief' ) }}
+    {{ encore_entry_script_tags( 'js/mapper', null, 'WebContentThief' ) }}
+    
 {% endblock %}
