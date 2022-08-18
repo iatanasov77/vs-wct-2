@@ -8,7 +8,10 @@
         <div class="col-lg-12">
             <section class="panel">
                 <div class="panel-body">
-                    {% include 'Pages/Mappers/Partial/mapper_form.html.twig' %}
+                    {% include 'Pages/Mappers/Partial/mapper_form.html.twig' with {
+                        'displayButtons': true,
+                        'formAction': path('vs_wct_project_mapper_update', {'id': item.id})
+                    } %}
                 </div>
             </section>
         </div>

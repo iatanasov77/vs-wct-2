@@ -1,4 +1,8 @@
-{{ form_start( mapperForm, { 'action': path( 'vs_wct_project_mapper_create' ), 'attr': {'class': 'form-horizontal', 'id': 'formCreateMapper'} } ) }}
+{# Import Macros #}
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% if formAction is not defined %}{% set formAction = path( 'vs_wct_project_mapper_create' ) %}{% endif %}
+{{ form_start( mapperForm, { 'action': formAction, 'attr': {'class': 'form-horizontal', 'id': 'formCreateMapper'} } ) }}
     {{ form_widget(mapperForm.projectId, {'value': item.id}) }}
     
     <div class="form-row mb-2">
@@ -36,4 +40,7 @@
         </div>
     </fieldset>
     <div class="row">&nbsp;</div>
+    {% if displayButtons is defined and displayButtons == true  %}
+        {{ vs_form.buttons( mapperForm ) }}
+    {% endif %}
 {{ form_end(mapperForm, {'render_rest': false}) }}

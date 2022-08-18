@@ -1,5 +1,6 @@
 <?php namespace App\Form;
 
+use Vankosoft\ApplicationBundle\Form\AbstractForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,20 +18,26 @@ use App\Entity\ProjectMapper;
 use App\Entity\ProjectMapperField;
 use App\Repository\ProjectFieldsRepository;
 
-class ProjectMapperForm extends AbstractType
+//class ProjectMapperForm extends AbstractType
+class ProjectMapperForm extends AbstractForm
 {
     protected $pfRepo;
     
     public function __construct(
+        string $dataClass,
         //ProjectFieldsRepository $pfRepo
         EntityManagerInterface $em
     ) {
+        parent::__construct( $dataClass );
+        
         //$this->pfRepo   = $pfRepo;
         $this->pfRepo   = $em->getRepository( ProjectMapper::class );
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
+        parent::buildForm( $builder, $options );
+        
         $fields = $this->initFields( $builder->getData() );
         
         $builder

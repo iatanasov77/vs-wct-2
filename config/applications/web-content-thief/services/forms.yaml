@@ -24,6 +24,7 @@ services:
         tags:
             - { name: form.type }
         arguments:
+            - 'App\Entity\ProjectMapper'
             #- '@vs_wct.repository.project_fields'
             - '@doctrine.orm.entity_manager'
             

@@ -25,6 +25,8 @@ class ProjectMappersController extends AbstractController
             $project    = $this->getDoctrine()->getRepository( Project::class )->find( $projectId );
             $oMapper->setProject( $project );
             
+            $this->addFields( $oMapper, $form );
+            
             $em->persist( $oMapper );
             $em->flush();
             
@@ -42,17 +44,21 @@ class ProjectMappersController extends AbstractController
         $em         = $this->getDoctrine()->getManager();
         $oMapper    = $this->getDoctrine()->getRepository( ProjectMapper::class )->find( $id );
         
-        $form   = $this->createForm( ProjectMapperForm::class, $oMapper );
+        $form   = $this->createForm( ProjectMapperForm::class, $oMapper, [
+            'method'    => 'POST',
+            'project'   => $oMapper->getProject(),
+        ]);
 
         $form->handleRequest( $request );
         if ( $form->isSubmitted() ) {
             $oMapper    = $form->getData();
             
+            $this->addFields( $oMapper, $form );
             
             $em->persist( $oMapper );
             $em->flush();
             
-            //return $this->redirectToRoute( 'vs_users_profile_show' );
+            return $this->redirectToRoute( 'vs_wct_project_mapper_update', ['id' => $id] );
         }
         
         return $this->render( 'Pages/Mappers/update.html.twig', [
@@ -60,5 +66,18 @@ class ProjectMappersController extends AbstractController
             'mapperForm'    => $form->createView(),
             'item'          => $oMapper,
         ]);
+    }
+    
+    private function addFields( &$entity, &$form )
+    {
+        foreach ( $form['fields']->getData() as $field ) {
+            if ( empty( $field->getProjectField() ) ) {
+                $entity->removeField( $field ); // WORKAROUND
+                continue;
+            }
+
+            $entity->addField( $field );
+            $field->setMapper( $entity ); // WORKAROUND
+        }
     }
 }

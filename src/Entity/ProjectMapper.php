@@ -41,7 +41,7 @@ class ProjectMapper implements ResourceInterface
     private $deployer;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapperField", mappedBy="mapper", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapperField", mappedBy="mapper", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fields;
     
@@ -104,6 +104,7 @@ class ProjectMapper implements ResourceInterface
     public function addField( ProjectMapperField $field )
     {
         if( ! $this->fields->contains( $field ) ) {
+            //die( 'EHO' );
             $field->setMapper( $this );
             $this->fields->add( $field );
         }
