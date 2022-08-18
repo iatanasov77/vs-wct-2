@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Vankosoft\ApplicationBundle\Component\Status;
 use App\Entity\ProjectRepertory;
 
 class ProjectRepertoriesController extends AbstractController
@@ -30,14 +31,26 @@ class ProjectRepertoriesController extends AbstractController
     {
         $repertory      = $this->getDoctrine()->getRepository( ProjectRepertory::class )->find( $id );
         
-        $repertoryItems    = [];
+        $response           = [
+            'status'    => Status::STATUS_OK,
+            'repertory' => [],
+        ];
+        $i  = 0;
         foreach ( $repertory->getItems() as $item ) {
-            $repertoryItems[$item->getId()]  = [];
+            $response['repertory'][$i]  = [
+                'itemId'    => $item->getId(),
+                'fields'    => [],
+            ];
             foreach ( $item->getFields() as $field ) {
-                $repertoryItems[$item->getId()][]   = '';
+                $response['repertory'][$i]['fields'][]    = [
+                    'projectField'  => $field->getProjectField()->getId(),
+                    'content'       => $field->getContent(),
+                ];
             }
+            
+            $i++;
         }
         
-        return new JsonResponse( $repertoryItems );
+        return new JsonResponse( $response );
     }
 }

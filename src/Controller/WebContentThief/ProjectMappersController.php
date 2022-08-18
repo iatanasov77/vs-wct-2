@@ -68,6 +68,29 @@ class ProjectMappersController extends AbstractController
         ]);
     }
     
+    public function getJsonAction( $id, Request $request ): Response
+    {
+        $mapper             = $this->getDoctrine()->getRepository( ProjectMapper::class )->find( $id );
+        $response           = [
+            'status'    => Status::STATUS_OK,
+            'mapper'    => [
+                'title'     => $mapper->getTitle(),
+                'deployer'  => $mapper->getDeployer(),
+            ]
+        ];
+        
+        $response['fields'] = [];
+        foreach ( $mapper->getFields() as $field ) {
+            $response['mapper']['fields'][$field->getId()]  = [
+                'projectField'  => $field->getProjectField()->getId(),
+                'mapField'      => $field->getMapField(),
+            ];
+            
+        }
+        
+        return new JsonResponse( $response );
+    }
+    
     private function addFields( &$entity, &$form )
     {
         foreach ( $form['fields']->getData() as $field ) {

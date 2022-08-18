@@ -7,23 +7,38 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use App\Component\Deployer\Deployer;
+use Doctrine\ORM\EntityRepository;
+use App\Entity\ProjectMapper;
+use App\Entity\Project;
 
 class ProjectDeployerForm extends AbstractType
 {
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
+        $project    = $options['project'];
+        
         $builder
             ->add( 'projectId', HiddenType::class, ['required' => true] )
             ->add( 'repertoryId', HiddenType::class, ['required' => true] )
             
-            ->add( 'deployer', ChoiceType::class, [
-                'label'                 => 'Deployer',
+            ->add( 'mapper', EntityType::class, [
+                'class'                 => ProjectMapper::class,
+                'choice_label'          => 'title',
+                'query_builder'         => function ( EntityRepository $er ) use ( $project )
+                {
+                    $qb = $er->createQueryBuilder( 'pm' );
+                    if  ( $project && $project->getId() ) {
+                        $qb->where( 'pm.project = :project' )->setParameter( 'project', $project->getId() );
+                    }
+                    
+                    return $qb;
+                },
+            
+                'required'              => true,
+                'placeholder'           => 'vs_wct.form.deployer.project_mapper_placeholder',
                 'translation_domain'    => 'WebContentThief',
-                'choices'               => \array_flip( Deployer::DeployersAvailable() ),
-                'placeholder'           => '-- Choose a Deployer --',
-                //'data'                  => Deployer::DEPLOYER_SYLIUS,
             ])
             
             ->add( 'baseUrl', TextType::class, [
@@ -41,6 +56,12 @@ class ProjectDeployerForm extends AbstractType
             ->setDefaults([
                 'csrf_protection'   => false,
             ])
+            
+            ->setDefined([
+                'project',
+            ])
+            
+            ->setAllowedTypes( 'project', Project::class )
         ;
     }
     

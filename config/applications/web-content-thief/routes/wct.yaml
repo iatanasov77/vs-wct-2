@@ -19,6 +19,8 @@ vs_wct_project_preview_repertory:
 vs_wct_project_json_repertory:
     path:     /project-repertories/{id}/get-json
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController:getJsonAction' }
+    options:
+        expose: true
 
 vs_wct_project_mapper_create:
     path:     /project-mappers/new
@@ -28,5 +30,16 @@ vs_wct_project_mapper_update:
     path:     /project-mappers/{id}/edit
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:updateAction' }
 
+vs_wct_project_mapper_json:
+    path:     /project-mappers/{id}/get-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getJsonAction' }
+    options:
+        expose: true
 
-
+# Deployer Services
+#######################
+vs_wct_service_sylius_get_create_product_request_body:
+    path:     /service/sylius/get-create-product-request-body/{repertoryId}/{mapperId}
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getCreateProductRequestBody' }
+    options:
+        expose: true

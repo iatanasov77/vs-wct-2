@@ -31,6 +31,7 @@ class ProjectsController extends AbstractCrudController
             
             $deployerForm   = $this->createForm( ProjectDeployerForm::class, null, [
                 'method'    => 'POST',
+                'project'   => $entity,
             ]);
             
             $oMapper        = new ProjectMapper();

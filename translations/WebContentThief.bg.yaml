@@ -20,4 +20,6 @@ vs_wct:
         mapper:
             project_field_placeholder: '-- Избери Поле от Проекта --'
             map_field_placeholder: '-- Избери Поле за Мапване --'
+        deployer:
+            project_mapper_placeholder: '-- Избери един Мапър --'
 

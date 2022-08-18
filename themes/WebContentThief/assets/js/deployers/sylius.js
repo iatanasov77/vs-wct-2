@@ -1,3 +1,4 @@
+import * as vsConsole from '../includes/console';
 
 var apiToken;
 var apiBaseUrl;
@@ -21,17 +22,22 @@ export const authenticate = () => {
         type: "POST",
         dataType: "json",
         success: function ( response ) {
-            alert( "TOKEN: " + response.token );
+            //alert( "TOKEN: " + response.token );
             apiToken    = response.token;
         },
         error: function () {
             alert( 'DEPLOYMENT ERROR !!!' );
-        }
+        },
+        
+        // <- this turns it into synchronous
+        // Execution is BLOCKED until request finishes.
+        async: false
     });
 }
 
-export const createProduct = () => {
-    let product = {
+function createProductRequest()
+{
+    let request = {
       "code": "TEST1",
       "translations": {
         "en_US": {
@@ -42,10 +48,20 @@ export const createProduct = () => {
       }
     };
     
+    return request;
+}
+
+export const createProduct = () => {
+    
+    /**
+     * Install This Package to Allow CORS Policy
+     * ---------------------------------------------------
+     * https://packagist.org/packages/nelmio/cors-bundle
+     */
     $.ajax({
         url: `${apiBaseUrl}/api/v2/admin/products`,
         headers: {"Authorization": `Bearer ${apiToken}` },
-        data: JSON.stringify( product ),
+        data: JSON.stringify( createProductRequest() ),
         contentType : 'application/json',
         type: "POST",
         dataType: "json",
@@ -54,13 +70,24 @@ export const createProduct = () => {
         },
         error: function () {
             alert( 'DEPLOYMENT ERROR !!!' );
-        }
+        },
+        
+        // <- this turns it into synchronous
+        // Execution is BLOCKED until request finishes.
+        async: false
     });
 }
 
-export const deploy = ( baseUrl ) => {
+export const deploy = ( baseUrl, repertory, mapperFields ) => {
     apiBaseUrl = baseUrl;
     if( ! apiToken ) {
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Authenticate to Remote Host ...' );
         authenticate();
+    }
+    
+    vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Deploy Data ...' );
+    for( let i = 0; i < repertory.length; i++ ) {
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Deploy Item ' + ( i + 1 ) + ' ...' );
+        console.log( repertory[i] );
     }
 }

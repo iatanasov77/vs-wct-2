@@ -62,6 +62,12 @@ class ProjectField implements ResourceInterface
      */
     private $parsedFields;
     
+    /**
+     * @Gedmo\Slug(fields={"title", "id"})
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+    private $slug;
+    
     public function __construct()
     {
         $this->parsedFields = new ArrayCollection();
@@ -202,6 +208,18 @@ class ProjectField implements ResourceInterface
             $this->parsedFields->removeElement( $parsedField );
             $parsedField->setProjectField( null );
         }
+        
+        return $this;
+    }
+    
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    
+    public function setSlug($slug): self
+    {
+        $this->slug = $slug;
         
         return $this;
     }

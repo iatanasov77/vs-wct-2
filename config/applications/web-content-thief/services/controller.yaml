@@ -65,4 +65,10 @@ services:
         autowire: true
         arguments:
             - '@kernel'
+    
+    App\Controller\WebContentThief\ServiceSyliusController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@vs_wct.deployers.sylius'
 

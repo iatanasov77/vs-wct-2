@@ -13,7 +13,6 @@ use App\Entity\ProjectField;
 use App\Entity\ProjectMapperField;
 use App\Repository\ProjectFieldsRepository;
 
-
 use App\Component\Deployer\Sylius\Sylius;
 
 class MapperFieldType extends AbstractType
@@ -21,9 +20,11 @@ class MapperFieldType extends AbstractType
     protected $pfRepo;
     
     public function __construct(
-        ProjectFieldsRepository $pfRepo
+        ProjectFieldsRepository $pfRepo,
+        Sylius $sylius
     ) {
         $this->pfRepo   = $pfRepo;
+        $this->sylius   = $sylius;
     }
     
     public function buildForm( FormBuilderInterface $builder, array $options )
@@ -50,13 +51,11 @@ class MapperFieldType extends AbstractType
                 'translation_domain'    => 'WebContentThief',
             ])
             
-            
-            
             ->add( 'mapField', ChoiceType::class, [
                 'required'              => false,
                 'translation_domain'    => 'WebContentThief',
                 'placeholder'           => 'vs_wct.form.mapper.map_field_placeholder',
-                'choices'               => Sylius::schemaCreateProduct(),
+                'choices'               => $this->sylius->schemaCreateProduct(),
             ])
             /*
             ->add( 'mapField', TextType::class, [

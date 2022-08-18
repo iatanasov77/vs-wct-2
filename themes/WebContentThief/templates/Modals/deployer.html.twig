@@ -16,12 +16,12 @@
                     
                     <div class="form-row mb-2">
                         <div class="col-sm form-group">
-                            {{ form_label(deployerForm.deployer, null, {
+                            {{ form_label(deployerForm.mapper, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
                             }}
                             
-                            {{ form_widget(deployerForm.deployer, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_widget(deployerForm.mapper, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     </div>
                     
@@ -37,8 +37,8 @@
                     </div>
                 {{ form_end(deployerForm, {'render_rest': false}) }}
                 
-                <div id="consoleDeployData" class="col-sm-12 console" style="margin: 20px 0 20px 0;">
-                    <div id="DeployDataContainer"></div>
+                <div id="consoleDeployer" class="col-sm-12 console border border-dark" style="margin: 20px 0 20px 0; padding: 10px 15px 10px 15px; display: none">
+                    <div id="consoleDeployerBody" style="height: 200px; overflow: scroll;"></div>
                 </div>
                 
             </div>

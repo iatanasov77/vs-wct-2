@@ -21,5 +21,7 @@ vs_wct:
         mapper:
             project_field_placeholder: '-- Choose a Project Field --'
             map_field_placeholder: '-- Choose a Map Field --'
+        deployer:
+            project_mapper_placeholder: '-- Choose a Mapper --'
             
 

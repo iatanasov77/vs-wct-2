@@ -33,5 +33,6 @@ services:
             - { name: form.type }
         arguments:
             - '@vs_wct.repository.project_fields'
+            - '@vs_wct.deployers.sylius'
 
     
