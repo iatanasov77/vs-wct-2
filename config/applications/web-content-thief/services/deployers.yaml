@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    vs_wct.deployers.sylius:
+        class: App\Component\Deployer\Sylius\Sylius
+        arguments:
+            - '@vs_application.slug_generator'
+            
+
+
+
+
+
