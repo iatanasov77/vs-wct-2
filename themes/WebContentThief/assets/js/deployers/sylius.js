@@ -3,12 +3,7 @@ import * as vsConsole from '../includes/console';
 var apiToken;
 var apiBaseUrl;
 
-export const authenticate = () => {
-    
-    let credentials = {
-        "email": "api@example.com",
-        "password": "sylius-api"
-    };
+export const authenticate = ( credentials ) => {
     
     /**
      * Install This Package to Allow CORS Policy
@@ -78,11 +73,11 @@ export const createProduct = () => {
     });
 }
 
-export const deploy = ( baseUrl, repertory, mapperFields ) => {
-    apiBaseUrl = baseUrl;
+export const deploy = ( apiHost, repertory, mapperFields ) => {
+    apiBaseUrl = apiHost.baseUrl;
     if( ! apiToken ) {
         vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Authenticate to Remote Host ...' );
-        authenticate();
+        authenticate( apiHost.credentials );
     }
     
     vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Deploy Data ...' );

@@ -5,13 +5,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Doctrine\ORM\EntityRepository;
 use App\Entity\ProjectMapper;
 use App\Entity\Project;
+use App\Entity\ApiHost;
 
 class ProjectDeployerForm extends AbstractType
 {
@@ -22,6 +21,16 @@ class ProjectDeployerForm extends AbstractType
         $builder
             ->add( 'projectId', HiddenType::class, ['required' => true] )
             ->add( 'repertoryId', HiddenType::class, ['required' => true] )
+            
+            ->add( 'apiHost', EntityType::class, [
+                'label'                 => 'Api Host',
+                'translation_domain'    => 'WebContentThief',
+                
+                'class'                 => ApiHost::class,
+                'choice_label'          => 'baseUrl',
+                'required'              => true,
+                'placeholder'           => 'vs_wct.form.deployer.api_host_placeholder',
+            ])
             
             ->add( 'mapper', EntityType::class, [
                 'class'                 => ProjectMapper::class,
@@ -38,11 +47,6 @@ class ProjectDeployerForm extends AbstractType
             
                 'required'              => true,
                 'placeholder'           => 'vs_wct.form.deployer.project_mapper_placeholder',
-                'translation_domain'    => 'WebContentThief',
-            ])
-            
-            ->add( 'baseUrl', TextType::class, [
-                'label'                 => 'Base URL',
                 'translation_domain'    => 'WebContentThief',
             ])
         ;

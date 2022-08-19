@@ -36,6 +36,12 @@ vs_wct_project_mapper_json:
     options:
         expose: true
 
+vs_wct_api_host_json:
+    path:     /api-hosts/{id}/get-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ApiHostsExtController:getJsonAction' }
+    options:
+        expose: true
+
 # Deployer Services
 #######################
 vs_wct_service_sylius_get_create_product_request_body:

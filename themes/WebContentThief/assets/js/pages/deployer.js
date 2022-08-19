@@ -6,24 +6,43 @@ import * as prestashop from '../deployers/prestashop';
 
 import * as vsConsole from '../includes/console';
 
+var apiHost;
 var mapper;
 var repertory;
 
-function deploy( deployer, baseUrl, repertory, mapperFields )
+function deploy( deployer, apiHost, repertory, mapperFields )
 {
     switch ( deployer ) {
         case 'sylius':
-            sylius.deploy( baseUrl, repertory, mapperFields );
+            sylius.deploy( apiHost, repertory, mapperFields );
             break;
         case 'magento':
-            magento.deploy( baseUrl, repertory, mapperFields );
+            magento.deploy( apiHost, repertory, mapperFields );
             break;
         case 'prestashop':
-            prestashop.deploy( baseUrl, repertory, mapperFields );
+            prestashop.deploy( apiHost, repertory, mapperFields );
             break;
         default:
             alert( "Deployer '" + deployer + "' is Not Available !!!" );
     }
+}
+
+function getApiHost( id )
+{
+    $.ajax({
+        url: VsPath( 'vs_wct_api_host_json', { 'id': id } ),
+        type: "GET",
+        success: function ( response ) {
+            apiHost  = response.apiHost;
+        },
+        error: function () {
+            alert( 'GET API HOST ERROR !!!' );
+        },
+        
+        // <- this turns it into synchronous
+        // Execution is BLOCKED until request finishes.
+        async: false
+    });
 }
 
 function getMapper( id )
@@ -76,15 +95,17 @@ $( function ()
         $( '#consoleDeployer' ).show();
         
         vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Deployer ...' );
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Api Host Parameters ...' );
+        getApiHost( $( '#project_deployer_form_apiHost' ).val() );
+        
         vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Mapper ...' );
         getMapper( $( '#project_deployer_form_mapper' ).val() );
 
         vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Repertory ...' );
         getRepertory( $( '#project_deployer_form_repertoryId' ).val() );
     
-        let baseUrl     = $( '#project_deployer_form_baseUrl' ).val();
-        
-        deploy( mapper.deployer, baseUrl, repertory, mapper.fields );
+        deploy( mapper.deployer, apiHost, repertory, mapper.fields );
     });
     
 });

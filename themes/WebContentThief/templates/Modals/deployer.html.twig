@@ -16,6 +16,17 @@
                     
                     <div class="form-row mb-2">
                         <div class="col-sm form-group">
+                            {{ form_label(deployerForm.apiHost, null, {
+                                'label_attr': {'class': 'col-form-label'}
+                                }) 
+                            }}
+                            
+                            {{ form_widget(deployerForm.apiHost, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row mb-2">
+                        <div class="col-sm form-group">
                             {{ form_label(deployerForm.mapper, null, {
                                 'label_attr': {'class': 'col-form-label'}
                                 }) 
@@ -25,16 +36,6 @@
                         </div>
                     </div>
                     
-                    <div class="form-row mb-2">
-                        <div class="col-sm form-group">
-                            {{ form_label(deployerForm.baseUrl, null, {
-                                'label_attr': {'class': 'col-form-label'}
-                                }) 
-                            }}
-                            
-                            {{ form_widget(deployerForm.baseUrl, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                    </div>
                 {{ form_end(deployerForm, {'render_rest': false}) }}
                 
                 <div id="consoleDeployer" class="col-sm-12 console border border-dark" style="margin: 20px 0 20px 0; padding: 10px 15px 10px 15px; display: none">
