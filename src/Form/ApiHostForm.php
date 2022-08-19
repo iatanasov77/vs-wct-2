@@ -5,7 +5,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use App\Component\Form\Type\JsonType;
+use Vankosoft\ApplicationBundle\Component\Form\Type\JsonType;
 
 class ApiHostForm extends AbstractForm
 {

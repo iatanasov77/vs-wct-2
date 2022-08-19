@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-use App\ApplicationBundle\Controller\Traits\ConsoleCommandTrait;
+use Vankosoft\ApplicationBundle\Controller\Traits\ConsoleCommandTrait;
 
 class CollectorController extends AbstractController
 {
