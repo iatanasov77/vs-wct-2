@@ -1,6 +1,8 @@
+require( 'jquery-easyui/css/easyui.css' );
+require( 'jquery-easyui/js/jquery.easyui.min.js' );
+require ( 'jquery-duplicate-fields/jquery.duplicateFields.js' );
 
-
-
+require( '../../css/mapper.css' );
 
 $( function ()
 {
@@ -31,5 +33,13 @@ $( function ()
                 alert( 'CREATE MAPPER ERROR !!!' );
             }
         });
+    });
+    
+    $( '.mapperFieldsContainer' ).duplicateFields({
+        btnRemoveSelector: ".btnRemoveField",
+        btnAddSelector:    ".btnAddField",
+        onCreate: function( newElement ) {
+            newElement.find( '.mapperMapFieldCombo' ).first().combotree();
+        }
     });
 });

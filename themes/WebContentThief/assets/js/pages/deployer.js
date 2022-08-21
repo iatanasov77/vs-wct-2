@@ -7,24 +7,24 @@ import * as prestashop from '../deployers/prestashop';
 import * as vsConsole from '../includes/console';
 
 var apiHost;
-var mapper;
-var repertory;
+var deployer;
+var productsRequests;
 
-function deploy( deployer, apiHost, repertory, mapperFields )
+function validateForm()
 {
-    switch ( deployer ) {
-        case 'sylius':
-            sylius.deploy( apiHost, repertory, mapperFields );
-            break;
-        case 'magento':
-            magento.deploy( apiHost, repertory, mapperFields );
-            break;
-        case 'prestashop':
-            prestashop.deploy( apiHost, repertory, mapperFields );
-            break;
-        default:
-            alert( "Deployer '" + deployer + "' is Not Available !!!" );
+    let repertoryId = parseInt( $( '#project_deployer_form_repertoryId' ).val() );
+    let apiHostId   = parseInt( $( '#project_deployer_form_apiHost' ).val() );
+    let mapperId    = parseInt( $( '#project_deployer_form_mapper' ).val() );
+    
+    if ( repertoryId && apiHostId && mapperId ) {
+        return {
+            'repertoryId': repertoryId,
+            'apiHostId': apiHostId,
+            'mapperId': mapperId
+        };
     }
+    
+    return false;
 }
 
 function getApiHost( id )
@@ -45,17 +45,17 @@ function getApiHost( id )
     });
 }
 
-function getMapper( id )
+function getDeployer( mapperId )
 {
     $.ajax({
-        url: VsPath( 'vs_wct_project_mapper_json', { 'id': id } ),
+        url: VsPath( 'vs_wct_project_mapper_deployer_json', { 'mapperId': mapperId } ),
         type: "GET",
         success: function ( response ) {
-            //alert( "DEPLOYER IN CALLBACK: " + response.mapper.deployer );
-            mapper  = response.mapper;
+            //alert( response.status );
+            deployer   = response.deployer;
         },
         error: function () {
-            alert( 'GET MAPPER ERROR !!!' );
+            alert( 'GET DEPLOYER ERROR !!!' );
         },
         
         // <- this turns it into synchronous
@@ -64,23 +64,57 @@ function getMapper( id )
     });
 }
 
-function getRepertory( id )
+function getProductsRequests( repertoryId, mapperId )
 {
     $.ajax({
-        url: VsPath( 'vs_wct_project_json_repertory', { 'id': id } ),
+        url: VsPath( 'vs_wct_service_sylius_get_create_product_request_body', { 'repertoryId': repertoryId, 'mapperId': mapperId } ),
         type: "GET",
         success: function ( response ) {
             //alert( response.status );
-            repertory   = response.repertory;
+            productsRequests   = response.requestBody;
         },
         error: function () {
-            alert( 'GET REPERTORY ERROR !!!' );
+            alert( 'GET PRODUCTS REQUESTS ERROR !!!' );
         },
         
         // <- this turns it into synchronous
         // Execution is BLOCKED until request finishes.
         async: false
     });
+}
+
+function deployItems( deployer, apiHost, productsRequests )
+{
+    switch ( deployer ) {
+        case 'sylius':
+            sylius.deployProducts( apiHost, productsRequests );
+            break;
+        case 'magento':
+            magento.deployProducts( apiHost, productsRequests );
+            break;
+        case 'prestashop':
+            prestashop.deployProducts( apiHost, productsRequests );
+            break;
+        default:
+            alert( "Deployer '" + deployer + "' is Not Available !!!" );
+    }
+}
+
+function deleteItems( deployer, apiHost, productsRequests )
+{
+    switch ( deployer ) {
+        case 'sylius':
+            sylius.deleteProducts( apiHost, productsRequests );
+            break;
+        case 'magento':
+            magento.deleteProducts( apiHost, productsRequests );
+            break;
+        case 'prestashop':
+            prestashop.deleteProducts( apiHost, productsRequests );
+            break;
+        default:
+            alert( "Deployer '" + deployer + "' is Not Available !!!" );
+    }
 }
 
 $( function ()
@@ -92,20 +126,50 @@ $( function ()
     
     $( '#btnRunDeployer' ).on( 'click', function( e )
     {
+        let params  = validateForm();
+        if ( ! params ) {
+            alert( 'Please Select Api Host and Mapper' );
+            return;
+        }
+        
         $( '#consoleDeployer' ).show();
         
         vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Deployer ...' );
         
         vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Api Host Parameters ...' );
-        getApiHost( $( '#project_deployer_form_apiHost' ).val() );
-        
-        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Mapper ...' );
-        getMapper( $( '#project_deployer_form_mapper' ).val() );
+        getApiHost( params.apiHostId );
 
-        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Repertory ...' );
-        getRepertory( $( '#project_deployer_form_repertoryId' ).val() );
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Mapper Deployer ID ...' );
+        getDeployer( params.mapperId );
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Products Requests ...' );
+        getProductsRequests( params.repertoryId, params.mapperId );
     
-        deploy( mapper.deployer, apiHost, repertory, mapper.fields );
+        deployItems( deployer, apiHost, productsRequests );
+    });
+    
+    $( '#btnRunDeleter' ).on( 'click', function( e )
+    {
+        let params  = validateForm();
+        if ( ! params ) {
+            alert( 'Please Select Api Host and Mapper' );
+            return;
+        }
+        
+        $( '#consoleDeployer' ).show();
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Delete Items ...' );
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Api Host Parameters ...' );
+        getApiHost( params.apiHostId );
+
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Mapper Deployer ID ...' );
+        getDeployer( params.mapperId );
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Getting Products Requests ...' );
+        getProductsRequests( params.repertoryId, params.mapperId );
+
+        deleteItems( deployer, apiHost, productsRequests );
     });
     
 });

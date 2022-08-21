@@ -55,17 +55,8 @@ class MapperFieldType extends AbstractType
                 'required'              => false,
                 'translation_domain'    => 'WebContentThief',
                 'placeholder'           => 'vs_wct.form.mapper.map_field_placeholder',
-                'choices'               => $this->sylius->schemaCreateProduct(),
+                'choices'               => $this->sylius->getSchema(),
             ])
-            /*
-            ->add( 'mapField', TextType::class, [
-                'required'              => false,
-                'translation_domain'    => 'WebContentThief',
-                'attr' => [
-                    'placeholder' => 'vs_wct.form.mapper.map_field_placeholder',
-                ],
-            ])
-            */
         ;
     }
     

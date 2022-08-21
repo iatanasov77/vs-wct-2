@@ -1,10 +1,27 @@
-<div class="row mb-2">
+{% import "@VSApplication/Macros/tree.html.twig" as vs_tree %}
+
+<div class="row mb-2 mapperField">
 	<div class="col-lg-2">
 		{{ form_widget(form.projectField, {'attr': {'class': 'form-control fieldType'}}) }}
     </div>
+    
+    {% set comboDataSourceUrl  = url( 'vs_wct_service_sylius_get_schema_easyui_combotree' ) %}
     <div class="col-lg-2">
+    {#
         {{ form_widget(form.mapField, {'attr': {'class': 'form-control fieldTitle'}}) }}
+    #}    
+        {{ vs_tree.easyuiCombobox( form.mapField, comboDataSourceUrl, null,
+            {
+                'class': 'mapperMapFieldCombo',
+                'elementSelector': '.mapperMapFieldCombo',
+                'required': 'true',
+                'multiple': 'false',
+                'checkbox': 'false',
+                'placeholder': '-- Select Map Field --'
+            }
+        ) }}
     </div>
+    
 	<div class="col-lg-1">
 	    <a href="javascript:;" class="btn btn-success btnAddField"><i class="icon_plus_alt2"></i></a>
 	    <a href="javascript:;" class="btn btn-danger btnRemoveField"><i class="icon_close_alt2"></i></a>

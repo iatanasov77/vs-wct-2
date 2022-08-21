@@ -1,3 +1,4 @@
+import * as vsConsole from '../includes/console';
 
 var apiToken;
 var apiBaseUrl;
@@ -68,9 +69,10 @@ export const createProduct = () => {
     });
 }
 
-export const deploy = ( baseUrl ) => {
-    apiBaseUrl = baseUrl;
+export const deployProducts = ( apiHost, productsRequests ) => {
+    apiBaseUrl = apiHost.baseUrl;
     if( ! apiToken ) {
-        authenticate();
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Authenticate to Remote Host ...' );
+        authenticate( apiHost.credentials );
     }
 }

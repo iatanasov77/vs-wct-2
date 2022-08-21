@@ -35,6 +35,12 @@ vs_wct_project_mapper_json:
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getJsonAction' }
     options:
         expose: true
+        
+vs_wct_project_mapper_deployer_json:
+    path:     /project-mappers/{mapperId}/get-deployer-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getDeployerJsonAction' }
+    options:
+        expose: true
 
 vs_wct_api_host_json:
     path:     /api-hosts/{id}/get-json
@@ -44,8 +50,14 @@ vs_wct_api_host_json:
 
 # Deployer Services
 #######################
+vs_wct_service_sylius_get_schema_easyui_combotree:
+    path: /service/sylius/get-schema
+    defaults: { _controller: 'App\Controller\WebContentThief\ServiceSyliusController:getSchemaEasyuiCombotree' }
+    options:
+        expose: true
+        
 vs_wct_service_sylius_get_create_product_request_body:
     path:     /service/sylius/get-create-product-request-body/{repertoryId}/{mapperId}
-    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getCreateProductRequestBody' }
+    defaults: { _controller: 'App\Controller\WebContentThief\ServiceSyliusController:getCreateProductRequestBody' }
     options:
         expose: true
