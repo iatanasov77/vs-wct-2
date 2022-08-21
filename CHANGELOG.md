@@ -1,3 +1,23 @@
+1.0.0	|	Release date: **21.08.2022**
+============================================
+* New Features and Improvements:
+  - Install 'jquery-duplicate-fields' from npmjs.com
+  - Add to Documentation.
+  - Creating Project Mapper Entity.
+  - Create ProjectMapper Update.
+  - Create ApiHost Entity .
+  - Move Some Helpers to the Vankosoft/ApplicationBundle
+  - Use ApiHost in Js Deployers.
+  - Improve Sylius Deployer.
+* Bug-Fixesand and Improvements:
+  - Improve Layout Template.
+  - Rename mapper.js
+  - Remove VisualParadigm Backup Files.
+  - Fix Admin Panel Routes. Add Profile Routes From Users Bundle.
+  - Fix Footer Layout Template.
+  - Fix Adding ProjectMapper Fields.
+
+
 0.2.3	|	Release date: **09.05.2022**
 ============================================
 * New Features:
