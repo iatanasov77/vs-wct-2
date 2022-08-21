@@ -15,3 +15,49 @@ vs_wct_collector_collect_data:
 vs_wct_project_preview_repertory:
     path:     /project-repertories/{id}/preview
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController:previewRepertoryAction' }
+
+vs_wct_project_json_repertory:
+    path:     /project-repertories/{id}/get-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController:getJsonAction' }
+    options:
+        expose: true
+
+vs_wct_project_mapper_create:
+    path:     /project-mappers/new
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:createAction' }
+
+vs_wct_project_mapper_update:
+    path:     /project-mappers/{id}/edit
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:updateAction' }
+
+vs_wct_project_mapper_json:
+    path:     /project-mappers/{id}/get-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getJsonAction' }
+    options:
+        expose: true
+        
+vs_wct_project_mapper_deployer_json:
+    path:     /project-mappers/{mapperId}/get-deployer-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectMappersController:getDeployerJsonAction' }
+    options:
+        expose: true
+
+vs_wct_api_host_json:
+    path:     /api-hosts/{id}/get-json
+    defaults: { _controller: 'App\Controller\WebContentThief\ApiHostsExtController:getJsonAction' }
+    options:
+        expose: true
+
+# Deployer Services
+#######################
+vs_wct_service_sylius_get_schema_easyui_combotree:
+    path: /service/sylius/get-schema
+    defaults: { _controller: 'App\Controller\WebContentThief\ServiceSyliusController:getSchemaEasyuiCombotree' }
+    options:
+        expose: true
+        
+vs_wct_service_sylius_get_create_product_request_body:
+    path:     /service/sylius/get-create-product-request-body/{repertoryId}/{mapperId}
+    defaults: { _controller: 'App\Controller\WebContentThief\ServiceSyliusController:getCreateProductRequestBody' }
+    options:
+        expose: true

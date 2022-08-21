@@ -21,19 +21,3 @@ vs_users_subscriptions:
         payed_service_subscriptions:
             classes:
                 model: App\Entity\UsersSubscriptions\PayedServiceSubscription
-        payment_details:
-            classes:
-                model: App\Entity\UsersSubscriptions\PaymentDetails
-
-
-vs_payment:
-    resources:
-        gateway_config:
-            classes:
-                model: App\Entity\Payment\GatewayConfig
-        payment_method:
-            classes:
-                model: App\Entity\Payment\PaymentMethod
-        payment:
-            classes:
-                model: App\Entity\Payment\Payment

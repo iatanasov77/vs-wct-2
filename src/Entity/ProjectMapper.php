@@ -29,13 +29,19 @@ class ProjectMapper implements ResourceInterface
     private $project;
     
     /**
-     * @ORM\ManyToOne(targetEntity="ProjectProcessor", inversedBy="mappers")
-     * @ORM\JoinColumn(name="processor_id", referencedColumnName="id")
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=128, nullable=false)
      */
-    private $processor;
+    private $title;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapperField", mappedBy="projectMapper", orphanRemoval=true)
+     * @ORM\Column(name="deployer", type="string", columnDefinition="enum('sylius', 'magento', 'prestashop')")
+     */
+    private $deployer;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapperField", mappedBy="mapper", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $fields;
     
@@ -66,14 +72,26 @@ class ProjectMapper implements ResourceInterface
         return $this;
     }
     
-    public function getProcessor(): ?ProjectProcessor
+    public function getTitle(): ?string
     {
-        return $this->processor;
+        return $this->title;
     }
     
-    public function setProcessor(?ProjectProcessor $processor): self
+    public function setTitle(?string $title): self
     {
-        $this->processor = $processor;
+        $this->title = $title;
+        
+        return $this;
+    }
+    
+    public function getDeployer(): ?string
+    {
+        return $this->deployer;
+    }
+    
+    public function setDeployer(?string $deployer): self
+    {
+        $this->deployer = $deployer;
         
         return $this;
     }
@@ -86,6 +104,7 @@ class ProjectMapper implements ResourceInterface
     public function addField( ProjectMapperField $field )
     {
         if( ! $this->fields->contains( $field ) ) {
+            //die( 'EHO' );
             $field->setMapper( $this );
             $this->fields->add( $field );
         }

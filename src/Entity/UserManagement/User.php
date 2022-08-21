@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\Collection;
 use Vankosoft\UsersBundle\Model\User as BaseUser;
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface;
 use Vankosoft\UsersSubscriptionsBundle\Model\Traits\SubscribedUserTrait;
+use Vankosoft\PaymentBundle\Model\Interfaces\PaymentsUserInterface;
+use Vankosoft\PaymentBundle\Model\Traits\PaymentsUserTrait;
 
 use App\Entity\Project;
 
@@ -13,9 +15,10 @@ use App\Entity\Project;
  * @ORM\Entity
  * @ORM\Table(name="VSUM_Users")
  */
-class User extends BaseUser implements SubscribedUserInterface
+class User extends BaseUser implements SubscribedUserInterface, PaymentsUserInterface
 {
     use SubscribedUserTrait;
+    use PaymentsUserTrait;
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="user", orphanRemoval=true)

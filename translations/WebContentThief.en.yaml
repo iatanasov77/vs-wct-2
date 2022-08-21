@@ -18,5 +18,11 @@ vs_wct:
             field_type_placeholder: '-- Choose a Field Type --'
             field_title_placeholder: '-- Type a Field Title --'
             field_xquery_placeholder: '-- Type a Field Xquery --'
+        mapper:
+            project_field_placeholder: '-- Choose a Project Field --'
+            map_field_placeholder: '-- Choose a Map Field --'
+        deployer:
+            project_mapper_placeholder: '-- Choose a Mapper --'
+            api_host_placeholder: '-- Choose an Api Host --'
             
 

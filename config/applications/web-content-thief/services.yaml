@@ -5,6 +5,7 @@ imports:
     - { resource: services/doctrine_extensions.yaml }
     - { resource: services/menu.yaml }
     - { resource: services/collector.yaml }
+    - { resource: services/deployers.yaml }
     
 parameters:
     lang: 'en'

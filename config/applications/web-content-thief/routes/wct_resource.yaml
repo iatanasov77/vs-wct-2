@@ -14,3 +14,10 @@ vs_wct_project_categories:
         templates: "Pages/ProjectsCategories"
     type: sylius.resource
 
+vs_wct_api_hosts:
+    resource: |
+        alias: vs_wct.api_hosts
+        except: ['show']
+        path: /api-hosts
+        templates: "Pages/ApiHosts"
+    type: sylius.resource

@@ -4,6 +4,14 @@ sylius_resource:
         #locale_provider: sylius.translation.locale_provider.contextual
         #available_locales_provider: sylius.translation.locales_provider
     resources:
+        vs_wct.api_hosts:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ApiHost
+                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                controller: App\Controller\WebContentThief\ApiHostsController
+                form:       App\Form\ApiHostForm
         vs_wct.project_categories:
             driver: doctrine/orm
             classes:

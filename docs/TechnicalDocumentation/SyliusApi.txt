@@ -1,0 +1,9 @@
+
+
+bin/console sylius:oauth-server:create-client --grant-type="password" --grant-type="refresh_token" --grant-type="token"
+
+
+bin/console lexik:jwt:generate-keypair
+
+
+

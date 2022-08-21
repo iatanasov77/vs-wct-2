@@ -1,0 +1,46 @@
+{# Import Macros #}
+{% import "@VSApplication/Macros/form.html.twig" as vs_form %}
+
+{% if formAction is not defined %}{% set formAction = path( 'vs_wct_project_mapper_create' ) %}{% endif %}
+{{ form_start( mapperForm, { 'action': formAction, 'attr': {'class': 'form-horizontal', 'id': 'formCreateMapper'} } ) }}
+    {{ form_widget(mapperForm.projectId, {'value': item.id}) }}
+    
+    <div class="form-row mb-2">
+        <div class="col-sm form-group">
+            {{ form_label(mapperForm.title, null, {
+                'label_attr': {'class': 'col-form-label'}
+                }) 
+            }}
+            
+            {{ form_widget(mapperForm.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="form-row mb-2">
+        <div class="col-sm form-group">
+            {{ form_label(mapperForm.deployer, null, {
+                'label_attr': {'class': 'col-form-label'}
+                }) 
+            }}
+            
+            {{ form_widget(mapperForm.deployer, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <fieldset class="fieldset-project-listing-fields" id="fieldsetMapperFields">
+        <legend class="w-auto">Mapper Fields</legend>
+        <div class="mapperFieldsContainer"
+            data-prototype="{% apply escape %}
+                {% include 'Pages/Mappers/Partial/add-field-prototype.html.twig' with {'form': mapperForm.fields.vars.prototype} %}
+            {% endapply %}"
+        >
+            {% for field in mapperForm.fields %}
+                {% include 'Pages/Mappers/Partial/add-field-prototype.html.twig' with {'form': field} %}
+            {% endfor %}
+        </div>
+    </fieldset>
+    <div class="row">&nbsp;</div>
+    {% if displayButtons is defined and displayButtons == true  %}
+        {{ vs_form.buttons( mapperForm ) }}
+    {% endif %}
+{{ form_end(mapperForm, {'render_rest': false}) }}
