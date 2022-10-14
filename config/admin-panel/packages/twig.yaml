@@ -11,6 +11,8 @@ twig:
         installedBundles: '%kernel.bundles%'
         pageCategoriesTaxonomyCode: '%vs_application.page_categories.taxonomy_code%'
         
+        localesRepo: '@vs_application.repository.locale'
+        
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
