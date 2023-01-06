@@ -1,3 +1,14 @@
+1.1.0	|	Release date: **06.01.2023**
+============================================
+* New Features:
+  - Add to VisualParadigm Diagrams.
+  - Add Generate Passwords routes into the Application routes.
+  - Update VankoSoft Application Version
+  - Add Languages SubMenu at Admin Panel Profile Menu.
+  - Add Languages SubMenu at Admin Panel Profile Menu.
+  - Allow Deployment of file VERSION.
+
+
 1.0.0	|	Release date: **21.08.2022**
 ============================================
 * New Features and Improvements:
