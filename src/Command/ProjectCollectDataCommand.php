@@ -6,16 +6,34 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 use App\Component\Collector\Collector;
+use App\Component\Collector\XPathCollector;
 
 final class ProjectCollectDataCommand extends AbstractCommand
 {
     protected static $defaultName = 'wct:project:collect';
     
-    public function __construct( ContainerInterface $container )
-    {
-        parent::__construct( $container );
+    /** @var XPathCollector */
+    private $collector;
+    
+    /** @var EntityRepository */
+    private $repository;
+    
+    public function __construct(
+        ContainerInterface $container,
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator,
+        XPathCollector $collector,
+        EntityRepository $repository
+    ) {
+        parent::__construct( $container, $doctrine, $validator );
+        
+        $this->collector    = $collector;
+        $this->repository   = $repository;
     }
     
     protected function configure(): void

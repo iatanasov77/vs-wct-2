@@ -21,37 +21,7 @@ services:
         arguments:
             - '@vs_application.context.application'
             - '@twig'
-    
-    App\Controller\WebContentThief\RegisterController:
-        tags: ['controller.service_arguments']
-        autowire: true
-        arguments:
-            - '@vs_users.manager.user'
-            - '@vs_users.repository.users'
-            - '@vs_users.repository.user_roles'
-            - '@mailer'
-        calls:
-            - setTokenGenerator: ['@?symfonycasts.verify_email.token_generator']
-            - setVerifyEmailHelper: ['@?symfonycasts.verify_email.helper']
-
-    App\Controller\WebContentThief\ForgotPasswordController:
-        public: true
-        autowire: true
-        tags: ['controller.service_arguments']
-        arguments:
-            - '@vs_users.repository.reset_password_request'
-            - '@vs_users.repository.users'
-            - '@mailer'
-        calls:
-            - setResetPasswordHelper: ['@?symfonycasts.reset_password.helper']
-
-    App\Controller\WebContentThief\ProfileController:
-        tags: ['controller.service_arguments']
-        autowire: true
-        arguments:
-            - '@vs_users.manager.user'
-            - '@vs_users.factory.avatar_image'
-            - '@vs_cms.profile_uploader'
+            - '@doctrine'
 
     App\Controller\WebContentThief\ProjectsController:
         tags: ['controller.service_arguments']
@@ -70,5 +40,19 @@ services:
         tags: ['controller.service_arguments']
         autowire: true
         arguments:
+            - '@doctrine'
             - '@vs_wct.deployers.sylius'
+            
+    App\Controller\WebContentThief\ProjectMappersController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@doctrine'
+            
+    App\Controller\WebContentThief\ProjectRepertoriesController:
+        tags: ['controller.service_arguments']
+        autowire: true
+        arguments:
+            - '@doctrine'
+            
 

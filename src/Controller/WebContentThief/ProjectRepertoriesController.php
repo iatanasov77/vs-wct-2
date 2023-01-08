@@ -4,15 +4,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Persistence\ManagerRegistry;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use App\Entity\ProjectRepertory;
 
 class ProjectRepertoriesController extends AbstractController
 {
+    /** @var ManagerRegistry **/
+    private $doctrine;
+    
+    public function __construct( ManagerRegistry $doctrine )
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     public function previewRepertoryAction( $id, Request $request ): Response
     {
-        $repertory  = $this->getDoctrine()->getRepository( ProjectRepertory::class )->find( $id );
+        $repertory  = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
         
         return $this->render( 'Pages/ProjectRepertories/preview.html.twig', [
             'repertory' => $repertory,
@@ -29,7 +38,7 @@ class ProjectRepertoriesController extends AbstractController
      */
     public function getJsonAction( $id, Request $request ): Response
     {
-        $repertory      = $this->getDoctrine()->getRepository( ProjectRepertory::class )->find( $id );
+        $repertory      = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
         
         $response           = [
             'status'    => Status::STATUS_OK,

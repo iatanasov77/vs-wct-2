@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Persistence\ManagerRegistry;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use App\Form\ProjectMapperForm;
@@ -12,9 +13,17 @@ use App\Entity\Project;
 
 class ProjectMappersController extends AbstractController
 {
+    /** @var ManagerRegistry **/
+    private $doctrine;
+    
+    public function __construct( ManagerRegistry $doctrine )
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     public function createAction( Request $request ): Response
     {
-        $em     = $this->getDoctrine()->getManager();
+        $em     = $this->doctrine->getManager();
         $form   = $this->createForm( ProjectMapperForm::class );
         
         $form->handleRequest( $request );
@@ -22,7 +31,7 @@ class ProjectMappersController extends AbstractController
             $oMapper    = $form->getData();
             
             $projectId  = $form->get( "projectId" )->getData();
-            $project    = $this->getDoctrine()->getRepository( Project::class )->find( $projectId );
+            $project    = $this->doctrine->getRepository( Project::class )->find( $projectId );
             $oMapper->setProject( $project );
             
             $this->addFields( $oMapper, $form );
@@ -41,8 +50,8 @@ class ProjectMappersController extends AbstractController
     
     public function updateAction( $id, Request $request ): Response
     {
-        $em         = $this->getDoctrine()->getManager();
-        $oMapper    = $this->getDoctrine()->getRepository( ProjectMapper::class )->find( $id );
+        $em         = $this->doctrine->getManager();
+        $oMapper    = $this->doctrine->getRepository( ProjectMapper::class )->find( $id );
         
         $form   = $this->createForm( ProjectMapperForm::class, $oMapper, [
             'method'    => 'POST',
@@ -70,7 +79,7 @@ class ProjectMappersController extends AbstractController
     
     public function getDeployerJsonAction( $mapperId, Request $request ): Response
     {
-        $mapper             = $this->getDoctrine()->getRepository( ProjectMapper::class )->find( $mapperId );
+        $mapper             = $this->doctrine->getRepository( ProjectMapper::class )->find( $mapperId );
         $response           = [
             'status'    => Status::STATUS_OK,
             'deployer'  => $mapper->getDeployer(),
@@ -81,7 +90,7 @@ class ProjectMappersController extends AbstractController
     
     public function getJsonAction( $id, Request $request ): Response
     {
-        $mapper             = $this->getDoctrine()->getRepository( ProjectMapper::class )->find( $id );
+        $mapper             = $this->doctrine->getRepository( ProjectMapper::class )->find( $id );
         $response           = [
             'status'    => Status::STATUS_OK,
             'mapper'    => [
