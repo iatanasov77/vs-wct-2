@@ -6,3 +6,13 @@ app_logout:
     path: /logout
     controller: App\Controller\WebContentThief\AuthController::logout
 
+vs_user_authentication:
+    resource: "@VSUsersBundle/Resources/config/routing/authentication.yml"
+    prefix:   /
+    
+vs_user_proffile:
+    resource: "@VSUsersBundle/Resources/config/routing/profile.yml"
+    prefix:   /
+
+
+

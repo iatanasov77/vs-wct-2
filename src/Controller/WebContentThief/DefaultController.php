@@ -3,6 +3,7 @@
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Persistence\ManagerRegistry;
 use Twig\Environment;
 
 use Vankosoft\ApplicationBundle\Component\Context\ApplicationContextInterface;
@@ -17,17 +18,22 @@ class DefaultController extends AbstractController
     /** @var Environment */
     private $templatingEngine;
     
+    /** @var ManagerRegistry **/
+    private $doctrine;
+    
     public function __construct(
         ApplicationContextInterface $applicationContext,
-        Environment $templatingEngine
+        Environment $templatingEngine,
+        ManagerRegistry $doctrine
     ) {
         $this->applicationContext   = $applicationContext;
         $this->templatingEngine     = $templatingEngine;
+        $this->doctrine             = $doctrine;
     }
     
     public function index( Request $request ): Response
     {
-        $paidServicesRepo   = $this->getDoctrine()->getRepository( PayedService::class );
+        $paidServicesRepo   = $this->doctrine->getRepository( PayedService::class );
         $paidServices       = $paidServicesRepo->findAll();
         $paymentMethods     = [];
         

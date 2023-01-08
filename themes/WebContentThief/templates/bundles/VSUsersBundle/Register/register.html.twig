@@ -1,0 +1,59 @@
+{% extends 'base-login.html.twig' %} 
+
+{% block content %}
+	<!-- ============================================================== -->
+    <!-- signup page  -->
+    <!-- ============================================================== -->
+    <div class="card-header">
+        <h3 class="mb-1">{{ 'vs_users.template.register_header_title' | trans( {},'VSUsersBundle' ) }}</h3>
+        <p>{{ 'vs_users.template.register_header_description' | trans( {},'VSUsersBundle' ) }}</p>
+    </div>
+    <div class="card-body">
+       
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'form-post'} }) }}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token( 'registration' ) }}" />
+            
+            {% if form_errors( form ) is not empty %}
+                <div class="alert alert-block alert-danger fade in">
+                    <button type="button" class="close close-sm" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <strong>Error!</strong> {{ form_errors( form ) }}
+                </div>
+            {% endif %}
+            
+            <div class="form-group">               
+                {{ form_widget(form.username, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'vs_users.form.user.username'}}) }}
+            </div>
+            <div class="form-group">               
+                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'vs_users.form.user.email'}}) }}
+            </div>
+            <div class="form-group">               
+                {{ form_widget(form.plain_password.first, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'vs_users.form.user.password'}}) }}
+            </div>
+            <div class="form-group">               
+                {{ form_widget(form.plain_password.second, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'vs_users.form.user.password_repeat'}}) }}
+            </div>
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox">
+                    <span class="custom-control-label">
+                        {{ 'vs_users.form.registration.agreement_text' | trans( {},'VSUsersBundle' ) }}
+                        <a href="%vs_app.page.tac%">{{ 'vs_users.form.registration.terms_and_conditions' | trans( {},'VSUsersBundle' ) }}</a>
+                    </span>
+                </label>
+            </div>
+            
+            <div class="form-group pt-2">
+                <button class="btn btn-block btn-primary" type="submit">{{ 'vs_users.form.registration.button_register' | trans( {},'VSUsersBundle' ) }}</button>
+            </div>
+            
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+    <div class="card-footer bg-white ps-2 ">
+        <p>
+            {{ 'vs_users.template.register_already_member' | trans( {},'VSUsersBundle' ) }} 
+            <a href="{{ path( 'app_login' ) }}" class="text-secondary">{{ 'vs_users.template.register_login_here' | trans( {},'VSUsersBundle' ) }}</a>
+        </p>
+    </div>
+{% endblock %}

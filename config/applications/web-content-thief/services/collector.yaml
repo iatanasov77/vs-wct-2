@@ -9,6 +9,8 @@ services:
         class: App\Command\ProjectCollectDataCommand
         arguments:
             - '@service_container'
+            - '@doctrine'
+            - '@validator'
             - '@vs_wct.collector'
             - '@vs_wct.repository.projects'
         tags:
