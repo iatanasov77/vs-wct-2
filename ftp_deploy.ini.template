@@ -1,8 +1,8 @@
 ; log file (defaults to config file with .log extension)
-log = deploy_staging.log
+log = "deploy_${environement}.log"
 
 ; directory for temporary files (defaults to system's temporary directory)
-tempDir = /tmp/deploy_staging
+tempDir = "/tmp/deploy_${environement}"
 
 ; enable colored highlights? (defaults to autodetect)
 ;colors = yes
@@ -37,8 +37,6 @@ ignore = "
     
     Jenkinsfile
     /ftp_deploy.ini
-    /ftp_deploy.ini.production
-    /ftp_deploy.ini.staging
     /.env.production
     /.env.staging
 
@@ -82,8 +80,9 @@ include = "
     /vendor
     /vendor/*
     /.env
-    composer.json
-    
+    /composer.json
+    /themes/DeveloperBlog/composer.json
+    /themes/DeveloperWebsite/composer.json
     /VERSION
 "
 

@@ -1,22 +1,32 @@
 @Library( 'VankosoftGroovyLib' ) _
 
 node ( label: 'php-host' ) {
-    String[] environments   = ["production", "staging"]
+    String[] environments       = ["production", "staging"]
+    def HOST_PREFIX             = 'wct-'
+    def APP_HOST                = 'wct.vankosoft.org'
     def BUILD_ENVIRONMENT
     def BRANCH_NAME
     def DB_BACKUP
     def REMOTE_DIR
     
-    final GIT_REPO_URL      = 'https://github.com/iatanasov77/vs-wct-2.git'
-    final PHP_BIN           = '/usr/bin/php74'
+    final PHP_BIN               = '/usr/bin/php82'
     
+    final GIT_CREDENTIALS_ID    = 'github-iatanasov77';
+    final GIT_URI               = 'github.com/iatanasov77/vs-wct-2.git'
+    final GIT_REPO_URL          = "https://${GIT_URI}"
     def GIT_REPO_WITH_CRED;
+    
+    def MYSQL_CREDENTIALS_ID    = 'vankosoft-mysql';
+    def MYSQL_DATABASE_PREFIX   = 'WebContentThief_';
     def APP_MYSQL_USER;
     def APP_MYSQL_PASSWORD;
     def APP_MYSQL_DATABASE;
     def APP_DATABASE_URL;
     
     def CONFIG_TEMPLATE;
+    def FTP_HOST                = 'ftp://164.138.221.242';
+    def FTP_CREDENTIALS_ID      = 'wct-ftp';
+    def APP_DIR                 = '/opt/VankosoftProjects/WebContentThief';
     def APP_FTP_USER;
     def APP_FTP_PASSWORD;
     def APP_FTP_URL;
@@ -24,8 +34,8 @@ node ( label: 'php-host' ) {
     stage( 'Configure Environement' ) {
     
         // Bind Git Credentials
-        withCredentials([usernamePassword(credentialsId: 'github-iatanasov77', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            GIT_REPO_WITH_CRED = "https://$USERNAME:$PASSWORD@github.com/iatanasov77/vs-wct-2.git"
+        withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            GIT_REPO_WITH_CRED = "https://$USERNAME:$PASSWORD@${GIT_URI}"
         }
 
         BUILD_ENVIRONMENT   = input message: 'Select Environment', ok: 'Proceed!',
@@ -41,9 +51,9 @@ node ( label: 'php-host' ) {
                                     parameters: [choice(name: 'Select a Tag', choices: "${tags.join('\n')}", description: 'What tag to deploy?')]
                                 
                 break;
-                
             default:
                 DB_BACKUP       = false
+                APP_HOST        = "${HOST_PREFIX}${BUILD_ENVIRONMENT}.vankosoft.org"  
                 
                 def branches    = vankosoftJob.getGitBranches( GIT_REPO_WITH_CRED )
                 
@@ -52,21 +62,21 @@ node ( label: 'php-host' ) {
         }
         
         // Bind MySql Credentials
-        withCredentials([usernamePassword(credentialsId: 'vankosoft-mysql', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {            
+        withCredentials([usernamePassword(credentialsId: "${MYSQL_CREDENTIALS_ID}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {            
             APP_MYSQL_USER      = "$USERNAME"
             APP_MYSQL_PASSWORD  = "$PASSWORD"
-            APP_MYSQL_DATABASE  = "WebContentThief_$BUILD_ENVIRONMENT"
+            APP_MYSQL_DATABASE  = "${MYSQL_DATABASE_PREFIX}${BUILD_ENVIRONMENT}"
     
             APP_DATABASE_URL="mysql://$APP_MYSQL_USER:$APP_MYSQL_PASSWORD@127.0.0.1:3306/$APP_MYSQL_DATABASE"
         }
         
         // Bind FTP Credentials
-        withCredentials([usernamePassword(credentialsId: 'wct-ftp', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: "${FTP_CREDENTIALS_ID}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             //Using in Template Rendering
             APP_FTP_USER        = "$USERNAME"
             APP_FTP_PASSWORD    = "$PASSWORD"
-            APP_FTP_URL         = "ftp://164.138.221.242/web/project/$BUILD_ENVIRONMENT/"
-            REMOTE_DIR          = "/opt/VankosoftProjects/WebContentThief/$BUILD_ENVIRONMENT"
+            APP_FTP_URL         = "${FTP_HOST}/web/project/${BUILD_ENVIRONMENT}/"
+            REMOTE_DIR          = "${APP_DIR}/${BUILD_ENVIRONMENT}"
         }
     }
     
@@ -75,14 +85,14 @@ node ( label: 'php-host' ) {
             checkout([$class: 'GitSCM', 
                 branches: [[name: "refs/tags/${BRANCH_NAME}"]], 
                 userRemoteConfigs: [[
-                    credentialsId: 'gitlab-iatanasov77', 
+                    credentialsId: "${GIT_CREDENTIALS_ID}", 
                     refspec: '+refs/tags/*:refs/remotes/origin/tags/*', 
                     url: "${GIT_REPO_URL}"]]
             ])
         } else {
             git(
                 url: "${GIT_REPO_URL}",
-                credentialsId: 'gitlab-iatanasov77',
+                credentialsId: "${GIT_CREDENTIALS_ID}",
                 branch: "${BRANCH_NAME}"
             )
         }
@@ -94,17 +104,10 @@ node ( label: 'php-host' ) {
             /usr/local/bin/phing install-${BUILD_ENVIRONMENT} -verbose -debug
         """
         
-        CONFIG_TEMPLATE = readFile( "ftp_deploy.ini.${BUILD_ENVIRONMENT}" )
+        CONFIG_TEMPLATE = readFile( 'ftp_deploy.ini.template' )
         writeFile file: 'ftp_deploy.ini',
-                text: vankosoftJob.renderTemplate( CONFIG_TEMPLATE, ['url': APP_FTP_URL, 'user': APP_FTP_USER, 'password': APP_FTP_PASSWORD] )
-                
-        switch( BUILD_ENVIRONMENT ) {
-            case 'staging':
-                APP_HOST    = 'wct-staging.vankosoft.org'
-                break;
-            default:
-                APP_HOST    = 'wct.vankosoft.org'
-        }
+                text: vankosoftJob.renderTemplate( CONFIG_TEMPLATE, ['environement': BUILD_ENVIRONMENT, 'url': APP_FTP_URL, 'user': APP_FTP_USER, 'password': APP_FTP_PASSWORD] )
+        
         CONFIG_TEMPLATE = readFile( ".env.${BUILD_ENVIRONMENT}" )
         writeFile file: '.env',
                 text: vankosoftJob.renderTemplate( CONFIG_TEMPLATE, ['database_url': APP_DATABASE_URL, 'app_host': APP_HOST] )

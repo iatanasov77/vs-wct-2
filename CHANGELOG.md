@@ -1,3 +1,9 @@
+1.1.2	|	Release date: **08.01.2023**
+============================================
+* Bug-Fixes and Improvements:
+  - Improve Jenkinsfile
+
+
 1.1.1	|	Release date: **08.01.2023**
 ============================================
 * Bug-Fixes and Improvements:
