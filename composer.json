@@ -24,7 +24,7 @@
         
         "vankosoft/application": "1.10.*",
         "vankosoft/users-subscriptions-bundle": "2.4.*",
-        "vankosoft/payment-bundle": "2.3.*",
+        "vankosoft/payment-bundle": "2.6.*",
         
         "gregwar/captcha-bundle": "^2.1",
         "kriswallsmith/buzz": "^1.2"
