@@ -1,3 +1,8 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Vankosoft\PaymentBundle\Model\Interfaces\PayableObjectInterface: App\Entity\UsersSubscriptions\PayedServiceSubscriptionPeriod
+
 vs_users_subscriptions:
     #mailchimp_api_key: '%env(MAILCHIMP_API_KEY)%'
     mailchimp_api_key: 'NOT_DEFINED'
@@ -21,4 +26,7 @@ vs_users_subscriptions:
         payed_service_subscriptions:
             classes:
                 model: App\Entity\UsersSubscriptions\PayedServiceSubscription
+        payed_service_attribute:
+            classes:
+                model: App\Entity\UsersSubscriptions\PayedServiceAttribute
 

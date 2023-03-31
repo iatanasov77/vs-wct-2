@@ -34,7 +34,7 @@ class ProjectMapperForm extends AbstractForm
         $this->pfRepo   = $em->getRepository( ProjectMapper::class );
     }
     
-    public function buildForm( FormBuilderInterface $builder, array $options )
+    public function buildForm( FormBuilderInterface $builder, array $options ): void
     {
         parent::buildForm( $builder, $options );
         

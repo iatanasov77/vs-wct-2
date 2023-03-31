@@ -4,6 +4,7 @@ imports:
     - { resource: services/forms.yaml }
     - { resource: services/doctrine_extensions.yaml }
     - { resource: services/menu.yaml }
+    - { resource: services/uploader.yaml }
     - { resource: services/collector.yaml }
     - { resource: services/deployers.yaml }
     
