@@ -1,3 +1,12 @@
+1.2.0	|	Release date: **31.03.2023**
+============================================
+* New Features and Upgrade:
+  - Improve composer.json scripts order
+  - Change node-sass with sass package.
+  - Update composer.json package.json
+  - Fix All About to Upgrade PaymentBundle.
+
+
 1.1.2	|	Release date: **08.01.2023**
 ============================================
 * Bug-Fixes and Improvements:
