@@ -26,7 +26,6 @@ final class Version20220818172554 extends AbstractMigration
         $this->addSql('ALTER TABLE VSAPP_Settings CHANGE maintenance_page_id maintenance_page_id  INT DEFAULT NULL');
         $this->addSql('ALTER TABLE VSAPP_Settings ADD CONSTRAINT FK_4A491FD507FAB6A FOREIGN KEY (maintenance_page_id ) REFERENCES VSCMS_Pages (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_4A491FD507FAB6A ON VSAPP_Settings (maintenance_page_id )');
-        $this->addSql('ALTER TABLE VSPAY_Order CHANGE status status ENUM(\'shopping_cart\', \'paid_order\', \'failed_order\')');
         $this->addSql('ALTER TABLE WCT_ProjectFields ADD slug VARCHAR(255) NOT NULL, CHANGE type type enum(\'text\', \'picture\', \'link\'), CHANGE collection_type collection_type enum(\'listing\', \'details\')');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D88C386989D9B62 ON WCT_ProjectFields (slug)');
         $this->addSql('ALTER TABLE WCT_ProjectMappers CHANGE deployer deployer enum(\'sylius\', \'magento\', \'prestashop\')');
@@ -41,7 +40,6 @@ final class Version20220818172554 extends AbstractMigration
         $this->addSql('ALTER TABLE VSAPP_Settings CHANGE maintenance_page_id  maintenance_page_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE VSAPP_Settings ADD CONSTRAINT FK_4A491FD507FAB6A FOREIGN KEY (maintenance_page_id) REFERENCES VSCMS_Pages (id) ON UPDATE NO ACTION ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_4A491FD507FAB6A ON VSAPP_Settings (maintenance_page_id)');
-        $this->addSql('ALTER TABLE VSPAY_Order CHANGE status status VARCHAR(255) DEFAULT NULL');
         $this->addSql('DROP INDEX UNIQ_8D88C386989D9B62 ON WCT_ProjectFields');
         $this->addSql('ALTER TABLE WCT_ProjectFields DROP slug, CHANGE collection_type collection_type VARCHAR(255) DEFAULT NULL, CHANGE type type VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE WCT_ProjectMappers CHANGE deployer deployer VARCHAR(255) DEFAULT NULL');

@@ -25,8 +25,6 @@ final class Version20220318101944 extends AbstractMigration
         $this->addSql('ALTER TABLE VSAPP_Settings CHANGE maintenance_page_id maintenance_page_id  INT DEFAULT NULL');
         $this->addSql('ALTER TABLE VSAPP_Settings ADD CONSTRAINT FK_4A491FD507FAB6A FOREIGN KEY (maintenance_page_id ) REFERENCES VSCMS_Pages (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_4A491FD507FAB6A ON VSAPP_Settings (maintenance_page_id )');
-        $this->addSql('ALTER TABLE VSPAY_PaymentDetails CHANGE type type ENUM(\'agreement\', \'payment\')');
-        $this->addSql('ALTER TABLE VSUS_PayedServices CHANGE description description LONGTEXT NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -50,10 +48,6 @@ final class Version20220318101944 extends AbstractMigration
         $this->addSql('ALTER TABLE VSCMS_FileManagerFile CHANGE type type VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE path path VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE original_name original_name VARCHAR(255) DEFAULT \'\' NOT NULL COLLATE `utf8_unicode_ci` COMMENT \'The Original Name of the File.\'');
         $this->addSql('ALTER TABLE VSCMS_Pages CHANGE slug slug VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE title title VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE description description VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE text text LONGTEXT NOT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSCMS_TocPage CHANGE title title VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE description description VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE text text LONGTEXT DEFAULT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSPAY_GatewayConfig CHANGE gateway_name gateway_name VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE factory_name factory_name VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE config config LONGTEXT NOT NULL COLLATE `utf8_unicode_ci` COMMENT \'(DC2Type:json)\', CHANGE sandbox_config sandbox_config LONGTEXT DEFAULT NULL COLLATE `utf8_unicode_ci` COMMENT \'(DC2Type:json)\'');
-        $this->addSql('ALTER TABLE VSPAY_Payment CHANGE number number VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE description description VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE client_email client_email VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE client_id client_id VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE currency_code currency_code VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE details details LONGTEXT NOT NULL COLLATE `utf8_unicode_ci` COMMENT \'(DC2Type:json)\'');
-        $this->addSql('ALTER TABLE VSPAY_PaymentDetails CHANGE details details LONGTEXT NOT NULL COLLATE `utf8_unicode_ci` COMMENT \'(DC2Type:json)\', CHANGE type type VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSPAY_PaymentMethod CHANGE name name VARCHAR(64) NOT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSUM_AvatarImage CHANGE type type VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE path path VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSUM_ResetPasswordRequests CHANGE selector selector VARCHAR(24) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE hashedToken hashedToken VARCHAR(128) NOT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSUM_UserRoles CHANGE role role VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
@@ -61,9 +55,5 @@ final class Version20220318101944 extends AbstractMigration
         $this->addSql('ALTER TABLE VSUM_UsersActivities CHANGE activity activity VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSUM_UsersInfo CHANGE first_name first_name VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE last_name last_name VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE country country VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE mobile mobile VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE website website VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`, CHANGE occupation occupation VARCHAR(255) DEFAULT NULL COLLATE `utf8_unicode_ci`');
         $this->addSql('ALTER TABLE VSUM_UsersNotifications CHANGE notification notification VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSUS_MailchimpAudiences CHANGE audience_id audience_id VARCHAR(16) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE description description VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSUS_NewsletterSubscriptions CHANGE user_email user_email VARCHAR(64) NOT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSUS_PayedServiceSubscriptionPeriods CHANGE subscription_period subscription_period VARCHAR(64) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE price price VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE currency currency VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
-        $this->addSql('ALTER TABLE VSUS_PayedServices CHANGE title title VARCHAR(64) NOT NULL COLLATE `utf8_unicode_ci`, CHANGE description description VARCHAR(255) NOT NULL COLLATE `utf8_unicode_ci`');
     }
 }
