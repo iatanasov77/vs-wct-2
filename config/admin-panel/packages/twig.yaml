@@ -12,6 +12,7 @@ twig:
         pageCategoriesTaxonomyCode: '%vs_application.page_categories.taxonomy_code%'
         
         localesRepo: '@vs_application.repository.locale'
+        applicationsRepo: '@vs_application.repository.application'
         
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
