@@ -1,12 +1,12 @@
 {% import "@VSApplication/Macros/tree.html.twig" as vs_tree %}
 
 <div class="row mb-2 mapperField">
-	<div class="col-lg-2">
+	<div class="col-lg-3">
 		{{ form_widget(form.projectField, {'attr': {'class': 'form-control fieldType'}}) }}
     </div>
     
     {% set comboDataSourceUrl  = url( 'vs_wct_service_sylius_get_schema_easyui_combotree' ) %}
-    <div class="col-lg-2">
+    <div class="col-lg-3">
     {#
         {{ form_widget(form.mapField, {'attr': {'class': 'form-control fieldTitle'}}) }}
     #}    

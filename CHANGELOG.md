@@ -1,3 +1,12 @@
+1.2.1	|	Release date: **09.08.2023**
+============================================
+* New Features and  Improvements:
+  - Fix Modals Close Buttons About Bootstrap 5
+  - Fix and Improve.
+  - Add to AdminPanel Twig Globals.
+  - Improve Git Ignore File..
+
+
 1.2.0	|	Release date: **31.03.2023**
 ============================================
 * New Features and Upgrade:
