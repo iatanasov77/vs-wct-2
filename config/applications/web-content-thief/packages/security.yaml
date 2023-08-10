@@ -35,6 +35,7 @@ security:
        
     role_hierarchy:
         ROLE_SUPER_ADMIN: []
+        ROLE_ADMIN: []
         ROLE_APPLICATION_ADMIN: [ROLE_TEST_VANKOSOFT_APPLICATION_ADMIN]
         ROLE_TEST_VANKOSOFT_APPLICATION_ADMIN: [ROLE_TEST_VANKOSOFT_APPLICATION_AUTHOR, ROLE_TEST_VANKOSOFT_APPLICATION_USER]
 
@@ -44,12 +45,20 @@ security:
         - { path: /_wdt/.*, roles: PUBLIC_ACCESS }
         - { path: /_profiler/.*, roles: PUBLIC_ACCESS }
 
+        # API Routes
+        - { path: ^/api-docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        
+        # Web Routes
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/verify, roles: PUBLIC_ACCESS }
         - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
         - { path: ^/forgot-password/reset/, roles: PUBLIC_ACCESS }
         
-        - { path: ^/, roles: [ROLE_APPLICATION_ADMIN, ROLE_WEB_CONTENT_THIEF_ADMIN] }
+        - { path: ^/users/user-roles/, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/users/, roles: [ROLE_SUPER_ADMIN,ROLE_ADMIN] }
+        - { path: ^/, roles: [ROLE_APPLICATION_ADMIN, ROLE_WEB_CONTENT_THIEF_ADMIN,ROLE_ADMIN] }
         #- { path: ^/, roles: PUBLIC_ACCESS }
 

@@ -1,3 +1,9 @@
+1.2.2	|	Release date: **10.08.2023**
+============================================
+* New Features and Improvements:
+  - Improve Admin Panel Security and Add ROLE_ADMIN
+
+
 1.2.1	|	Release date: **09.08.2023**
 ============================================
 * New Features and  Improvements:
