@@ -31,7 +31,7 @@ class ProjectCategory implements ResourceInterface, TaxonDescendentInterface
     private $children;
     
     /** @var Collection | Project[] */
-    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: "category", indexBy: "id")]
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: "category", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $projects;
     
     public function __construct()
