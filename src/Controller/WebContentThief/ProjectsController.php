@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Vankosoft\ApplicationBundle\Controller\AbstractCrudController;
+use Vankosoft\ApplicationBundle\Controller\Traits\FilterFormTrait;
 
 use App\Component\ProjectField as ProjectFieldHelper;
 use App\Component\Collector\Collector;
@@ -9,11 +10,17 @@ use App\Form\ProjectCollectorForm;
 use App\Form\ProjectDeployerForm;
 use App\Form\ProjectMapperForm;
 use App\Entity\ProjectMapper;
+use App\Entity\ProjectCategory;
 
 class ProjectsController extends AbstractCrudController
 {
+    use FilterFormTrait;
+    
     protected function customData( Request $request, $entity = NULL ): array
     {
+        $filterForm     = null;
+        $filterCategory = null;
+        
         if( $entity && $entity->getId() && $entity->getDetailsLink() ) {
             $collector      = $this->get( 'vs_wct.collector' );
             
@@ -44,14 +51,21 @@ class ProjectsController extends AbstractCrudController
             $collectorForm  = null;
             $deployerForm   = null;
             $mapperForm     = null;
+            
+            $filterCategory = $request->attributes->get( 'filterCategory' );
+            $filterForm     = $this->getFilterForm( ProjectCategory::class, $filterCategory, $request );
         }
         
+        
+        
         return [
-            'categories'    => $this->get( 'vs_wct.repository.project_categories' )->findAll(),
-            'detailsUrl'    => $detailsUrl,
-            'collectorForm' => $collectorForm ? $collectorForm->createView() : null,
-            'deployerForm'  => $deployerForm ? $deployerForm->createView() : null,
-            'mapperForm'    => $mapperForm ? $mapperForm->createView() : null,
+            'filterForm'        => $filterForm ? $filterForm->createView() : null,
+            'filterCategory'    => $filterCategory ?: null,
+            
+            'detailsUrl'        => $detailsUrl,
+            'collectorForm'     => $collectorForm ? $collectorForm->createView() : null,
+            'deployerForm'      => $deployerForm ? $deployerForm->createView() : null,
+            'mapperForm'        => $mapperForm ? $mapperForm->createView() : null,
         ];
     }
     
@@ -74,5 +88,10 @@ class ProjectsController extends AbstractCrudController
             $field->setCollectionType( ProjectFieldHelper::COLLECTION_DETAILS );
             $entity->addField( $field );
         }
+    }
+    
+    protected function getFilterRepository()
+    {
+        return $this->get( 'vs_wct.repository.project_categories' );
     }
 }

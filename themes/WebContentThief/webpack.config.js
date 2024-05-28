@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const path = require('path');
 
 Encore
     .setOutputPath( 'public/shared_assets/build/web-content-thief/' )
@@ -13,11 +14,13 @@ Encore
         resolveUrlLoader: true
     })
     
-    /**
-     * Add Entries
-     */
-     .autoProvidejQuery()
-     .configureFilenames({
+    .addAliases({
+        '@': path.resolve( __dirname, '../../vendor/vankosoft/application/src/Vankosoft/ApplicationBundle/Resources/themes/default/assets' ),
+        '@@': path.resolve( __dirname, '../../vendor/vankosoft/payment-bundle/lib/Resources/assets' )
+    })
+    
+    .autoProvidejQuery()
+    .configureFilenames({
         js: '[name].js?[contenthash]',
         css: '[name].css?[contenthash]',
         assets: '[name].[ext]?[hash:8]'
@@ -28,7 +31,6 @@ Encore
          to: 'images/[path][name].[ext]',
      })
 
-    
     .addStyleEntry( 'css/app', './themes/WebContentThief/assets/css/main.scss' )
     .addStyleEntry( 'css/browser', './themes/WebContentThief/assets/css/browser.css' )
     .addEntry( 'js/app', './themes/WebContentThief/assets/js/app.js' )
@@ -41,7 +43,10 @@ Encore
     .addEntry( 'js/deployer', './themes/WebContentThief/assets/js/pages/deployer.js' )
     .addEntry( 'js/mapper', './themes/WebContentThief/assets/js/pages/mapper.js' )
     
+    .addEntry( 'js/projects', './themes/WebContentThief/assets/js/pages/projects.js' )
     .addEntry( 'js/projects-edit', './themes/WebContentThief/assets/js/pages/projects-edit.js' )
+    .addEntry( 'js/projects-categories', './themes/WebContentThief/assets/js/pages/projects-categories.js' )
+    .addEntry( 'js/api-hosts', './themes/WebContentThief/assets/js/pages/api-hosts.js' )
 ;
 
 const config = Encore.getWebpackConfig();
