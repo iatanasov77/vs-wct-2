@@ -3,48 +3,30 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * WctProjectRepertories
- *
- * @ORM\Table(name="WCT_ProjectRepertories")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectRepertories")]
 class ProjectRepertory implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    use TimestampableEntity;
+    
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
-     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
-     */
+    /** @var Project */
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: "fields")]
+    #[ORM\JoinColumn(name: "project_id", referencedColumnName: "id")]
     private $project;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="code", type="string", length=128, nullable=false, unique=true)
-     */
+    /** @var string */
+    #[ORM\Column(name: "code", type: "string", length: 128, nullable: false, unique: true)]
     private $code;
     
-    /**
-     * @var \DateTimeInterface
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryItem", mappedBy="repertory", cascade={"persist"})
-     */
+    /** @var Collection | ProjectRepertoryItem[] */
+    #[ORM\OneToMany(targetEntity: ProjectRepertoryItem::class, mappedBy: "repertory", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $items;
     
     public function __construct()
@@ -95,16 +77,6 @@ class ProjectRepertory implements ResourceInterface
         $this->code = $code;
         
         return $this;
-    }
-    
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-    
-    public function setCreatedAt( ?\DateTimeInterface $createdAt ): void
-    {
-        $this->createdAt = $createdAt;
     }
     
     public function getItems(): Collection

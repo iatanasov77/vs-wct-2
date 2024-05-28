@@ -5,44 +5,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * ProjectMapper
- *
- * @ORM\Table(name="WCT_ProjectMappers")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectMappers")]
 class ProjectMapper implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="mappers")
-     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
-     */
+    /** @var Project */
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: "mappers")]
+    #[ORM\JoinColumn(name: "project_id", referencedColumnName: "id")]
     private $project;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=128, nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "title", type: "string", length: 128, nullable: false)]
     private $title;
     
-    /**
-     * @ORM\Column(name="deployer", type="string", columnDefinition="enum('sylius', 'magento', 'prestashop')")
-     */
+    /** @var string */
+    #[ORM\Column(name: "deployer", type: "string", columnDefinition: "ENUM('sylius', 'magento', 'prestashop')")]
     private $deployer;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapperField", mappedBy="mapper", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
+    /** @var Collection | ProjectMapperField[] */
+    #[ORM\OneToMany(targetEntity: ProjectMapperField::class, mappedBy: "mapper", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $fields;
     
     public function __construct()

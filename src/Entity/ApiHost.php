@@ -3,35 +3,20 @@
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * WctProjectfields
- *
- * @ORM\Table(name="WCT_ApiHosts")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ApiHosts")]
 class ApiHost implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="base_url", type="string", length=256, nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "base_url", type: "string", length: 255, nullable: false)]
     private $baseUrl;
     
-    /**
-     * @var array
-     * 
-     * @ORM\Column(type="json")
-     */
+    /** @var array */
+    #[ORM\Column(type: "json")]
     private $credentials;
     
     public function __construct()

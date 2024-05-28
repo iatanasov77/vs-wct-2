@@ -76,3 +76,7 @@ export const deployProducts = ( apiHost, productsRequests ) => {
         authenticate( apiHost.credentials );
     }
 }
+
+export const deleteProducts = ( apiHost, productsRequests ) => {
+
+}

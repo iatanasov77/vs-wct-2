@@ -3,50 +3,35 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Vankosoft\ApplicationBundle\Model\Interfaces\TaxonInterface;
+use Vankosoft\ApplicationBundle\Model\Interfaces\TaxonDescendentInterface;
+use Vankosoft\ApplicationBundle\Model\Traits\TaxonDescendentEntity;
+use App\Entity\UserManagement\User;
 
-/**
- * @ORM\Table(name="WCT_ProjectCategories")
- * @ORM\Entity
- */
-class ProjectCategory implements ResourceInterface
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectCategories")]
+class ProjectCategory implements ResourceInterface, TaxonDescendentInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    use TaxonDescendentEntity;
+    
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @var TaxonInterface
-     *
-     * @ORM\OneToOne(targetEntity="App\Entity\Application\Taxon", cascade={"all"}, orphanRemoval=true)
-     * @ORM\JoinColumn(name="taxon_id", referencedColumnName="id", nullable=false)
-     */
-    private $taxon;
+    /** @var User */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "projectCategories")]
+    private $user;
     
-    /**
-     * @var ProjectCategory
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProjectCategory", inversedBy="children", cascade={"all"})
-     */
+    /** @var ProjectCategory */
+    #[ORM\ManyToOne(targetEntity: ProjectCategory::class, inversedBy: "children", cascade: ["all"])]
     private $parent;
     
-    /**
-     * @var Collection|ProjectCategory[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectCategory", mappedBy="parent")
-     */
+    /** @var Collection | ProjectCategory[] */
+    #[ORM\OneToMany(targetEntity: ProjectCategory::class, mappedBy: "parent", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $children;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="category", orphanRemoval=true)
-     */
+    /** @var Collection | Project[] */
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: "category", indexBy: "id")]
     private $projects;
     
     public function __construct()
@@ -112,40 +97,6 @@ class ProjectCategory implements ResourceInterface
         if ( $this->projects->contains( $project ) ) {
             $this->projects->removeElement( $project );
         }
-        
-        return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getTaxon(): ?TaxonInterface
-    {
-        return $this->taxon;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function setTaxon( ?TaxonInterface $taxon ): self
-    {
-        $this->taxon = $taxon;
-        
-        return $this;
-    }
-    
-    public function getName()
-    {
-        return $this->taxon ? $this->taxon->getName() : '';
-    }
-    
-    public function setName( string $name ): self
-    {
-        if ( ! $this->taxon ) {
-            // Create new taxon into the controller and set the properties passed from form
-            return $this;
-        }
-        $this->taxon->setName( $name );
         
         return $this;
     }

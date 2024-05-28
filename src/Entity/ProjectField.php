@@ -6,66 +6,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * WctProjectfields
- *
- * @ORM\Table(name="WCT_ProjectFields")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectFields")]
 class ProjectField implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="fields")
-     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
-     */
+    /** @var Project */
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: "fields")]
+    #[ORM\JoinColumn(name: "project_id", referencedColumnName: "id")]
     private $project;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="collection_type", type="string", columnDefinition="enum('listing', 'details')")
-     */
+    /** @var string */
+    #[ORM\Column(name: "collection_type", type: "string", columnDefinition: "ENUM('listing', 'details')")]
     private $collectionType;
     
-    /**
-     * @ORM\Column(name="type", type="string", columnDefinition="enum('text', 'picture', 'link')")
-     */
+    /** @var string */
+    #[ORM\Column(name: "type", type: "string", columnDefinition: "ENUM('text', 'picture', 'link')")]
     private $type;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=256, nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "title", type: "string", length: 255, nullable: false)]
     private $title;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="xquery", type="string", length=256, nullable=true)
-     */
+    /** @var string */
+    #[ORM\Column(name: "xquery", type: "string", length: 255, nullable: true)]
     private $xquery;
     
-    /**
-     * @var Collection|ProjectCategory[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryField", mappedBy="projectField")
-     */
+    /** @var Collection | ProjectRepertoryField[] */
+    #[ORM\OneToMany(targetEntity: ProjectRepertoryField::class, mappedBy: "projectField", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $parsedFields;
     
-    /**
-     * @Gedmo\Slug(fields={"title", "id"})
-     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
-     */
+    /** @var string */
+    #[ORM\Column(type: "string", length: 255, unique: true)]
+    #[Gedmo\Slug(fields: ["title", "id"])]
     private $slug;
     
     public function __construct()
