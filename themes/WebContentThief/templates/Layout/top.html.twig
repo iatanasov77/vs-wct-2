@@ -9,54 +9,60 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto navbar-right-top">
-            <li class="nav-item">
-                <div id="custom-search" class="top-search-bar">
-                    <input class="form-control" type="text" placeholder="Search..">
-                </div>
-            </li>
+        <ul class="navbar-nav ms-auto navbar-right-top">
+            
+            {% if hasTopSearch is defined and hasTopSearch %}
+                <li class="nav-item">
+                    <div id="custom-search" class="top-search-bar">
+                        <input class="form-control" type="text" placeholder="Search..">
+                    </div>
+                </li>
+            {% endif %}
             
             <li class="nav-item dropdown notification">
-                <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
-                <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
+                <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                >
+                    <i class="fas fa-fw fa-bell"></i>
+                    {% if not app.user.unreadedNotifications.empty %}
+                        <span class="indicator"></span>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
                     <li>
-                        <div class="notification-title"> Notification</div>
+                        <div class="notification-title">{{ 'vs_users.template.profile_notifications' | trans( {},'VSUsersBundle' ) }}</div>
                         <div class="notification-list">
                             <div class="list-group">
-
-                            {% for notification in app.user.notifications %}         
-                                <a href="#" class="list-group-item list-group-item-action active">
-                                    <div class="notification-info">
-                                        <div class="notification-list-user-img"><img src="{{ asset( '/assets/build/new-template/images/avatar-2.jpg' ) }}" alt="" class="user-avatar-md rounded-circle"></div>
-                                        <div class="notification-list-user-block">
-                                        	<span class="notification-list-user-name">Jeremy Rakestraw</span>{{ notification.notification }}
-                                            <div class="notification-date">{{ notification.date | date( 'Y-m-d H:i:s' ) }}</div>
+                                {% for notification in app.user.unreadedNotifications %}
+                                    <a href="#" class="list-group-item list-group-item-action active">
+                                        <div class="notification-info">
+                                            <div class="notification-list-user-img">
+                                                <img src="{{ asset( '/build/default/images/avatar-2.jpg' ) }}" alt="" class="user-avatar-md rounded-circle">
+                                            </div>
+                                            <div class="notification-list-user-block">
+                                                <span class="notification-list-user-name">{{ notification.notificationFrom }}</span>{{ notification.notification }}
+                                                <div class="notification-date">{{ time_diff( notification.date ) }}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                           	{% endfor %}
-                           	<!--
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="notification-info">
-                                        <div class="notification-list-user-img"><img src="{{ asset( '/assets/build/new-template/images/avatar-3.jpg' ) }}" alt="" class="user-avatar-md rounded-circle"></div>
-                                        <div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham</span>is now following you
-                                            <div class="notification-date">2 days ago</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            -->
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </li>
                     <li>
-                        <div class="list-footer"> <a href="#">View all notifications</a></div>
+                        <div class="list-footer"> 
+                            <a href="{{ path( 'vs_users_profile_show' ) }}#notifications">
+                                {{ 'vs_application.template.button_view_all_notifications' | trans( {},'VSApplicationBundle' ) }}
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </li>
         
+        {#
             <li class="nav-item dropdown connection">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
-                <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
+                <ul class="dropdown-menu dropdown-menu-end connection-dropdown">
                     <li class="connection-list">
                         <div class="row">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
@@ -86,19 +92,20 @@
                     </li>
                 </ul>
             </li>
+        #}
         
             <li class="nav-item dropdown nav-user">
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link nav-user-img dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {% if app.user.info.avatar %}
-                        <img src="{{ app.user.info.avatar.path|imagine_filter('profile_form_thumb') }}" class="user-avatar-md rounded-circle" />
+                        <img src="{{ app.user.info.avatar.path | imagine_filter('profile_form_thumb') }}" class="user-avatar-md rounded-circle" />
                     {% else %}
                         <img src="{{ asset( 'build/web-content-thief/images/avatar-1.jpg' ) }}" alt="" class="user-avatar-md rounded-circle" />
                     {% endif %}
                 </a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <div class="nav-user-dropdown dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
                         <h5 class="mb-0 text-white nav-user-name">{% if app.user.info %}{{ app.user.info.fullName }}{% endif %}</h5>
-                        <span class="status"></span><span class="ml-2">Available</span>
+                        <span class="status"></span><span class="ms-2">Available</span>
                     </div>
                     {{ knp_menu_render( 'profile', {'template': 'Menu/profile.html.twig'} ) }}
                 </div>

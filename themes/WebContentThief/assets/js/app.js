@@ -9,9 +9,10 @@ global.$ = $;
 window.$ = $;
 
 // bootstrap should be before jquery-ui
-require( 'bootstrap' );
+const bootstrap = require( 'bootstrap' );
+window.bootstrap = bootstrap;
 
 require( '../vendor/slimscroll/jquery.slimscroll.js' );
-
 require( './main.js' );
-
+require( './menu.js' );
+require( './authentication.js' );

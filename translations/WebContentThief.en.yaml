@@ -6,21 +6,40 @@ vs_wct:
         action: Action
         project_categories: Project Categories
         project_category_create_title: Create New Project Category
+        project_category_edit_title: Edit Project Category
         project_category_details: Project Category Details
+        project_create_title: Create New Project
+        project_edit_title: Edit Project
+        project_details: Project Details
+        project_collect_data: Collect Data
+        project_create_mapper: Create Mapper
+        project_deploy_data: Deploy Data
+        project_mappers: Project Mappers
+        project_collector_repertories: Project Collector Repertories
+        project_repertory: Repertory
+        edit_mapper: Edit Mapper
+        preview_repertory: Preview Repertory
+        deploy_repertory: Deploy Repertory
         
     form:
         locale: Language
         name: Name
         category: Category
         category_placeholder: '-- Choose a Category --'
+        
         project:
             url: Url
             field_type_placeholder: '-- Choose a Field Type --'
             field_title_placeholder: '-- Type a Field Title --'
             field_xquery_placeholder: '-- Type a Field Xquery --'
+            listing_container_element: Listing Container Element
+            details_link: Details Link
+            pager_link: Pager Link
+        
         mapper:
             project_field_placeholder: '-- Choose a Project Field --'
             map_field_placeholder: '-- Choose a Map Field --'
+        
         deployer:
             project_mapper_placeholder: '-- Choose a Mapper --'
             api_host_placeholder: '-- Choose an Api Host --'

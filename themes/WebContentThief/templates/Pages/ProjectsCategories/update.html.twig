@@ -5,13 +5,14 @@
 {% import "@VSApplication/Macros/form.html.twig" as vs_form %}
 
 {% if( item.id ) %}
-    {% set pageTitle = 'vs_wct.template.edit' | trans( {},'WebContentThief' ) ~ ': ' ~ item.name %}
+    {% set pageTitle = 'vs_wct.template.project_category_edit_title' | trans( {},'WebContentThief' ) ~ ': ' ~ item.name %}
 {% else %}
     {% set pageTitle = 'vs_wct.template.project_category_create_title' | trans( {},'WebContentThief' ) %}
 {% endif %}
 
 {% block title %}{{ parent() }} :: {{ pageTitle}}{% endblock %}
 {% block pageTitle %}<i class="icon_genius"></i> {{ pageTitle}}{% endblock %}
+
 {% block content %}
     <div class="row">
         <!-- ============================================================== -->
