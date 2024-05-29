@@ -60,6 +60,14 @@ vs_application:
                 uri: "http://%vankosoft_host%"
                 attributes:
                     iconClass: icon_genius
+            
+            projects_repertory_preview:
+                name: Project Repertory Preview
+                route: vs_wct_project_preview_repertory
+                routeParameters:
+                  id: int
+                display: false
+            
             projects:
                 name: Projects
                 uri: "javascript:;"
@@ -92,12 +100,7 @@ vs_application:
                         routeParameters:
                           id: int
                         display: false
-                    projects_repertory_preview:
-                        name: Project Repertory Preview
-                        route: vs_wct_project_preview_repertory
-                        routeParameters:
-                          id: int
-                        display: false
+            
             api_hosts:
                 name: Api Hosts
                 uri: "javascript:;"

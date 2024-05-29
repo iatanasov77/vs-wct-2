@@ -25,6 +25,10 @@ class ProjectRepertory implements ResourceInterface
     #[ORM\Column(name: "code", type: "string", length: 128, nullable: false, unique: true)]
     private $code;
     
+    /** @var string */
+    #[ORM\Column(name: "collection_type", type: "string", columnDefinition: "ENUM('listing', 'details')")]
+    private $collectionType;
+    
     /** @var Collection | ProjectRepertoryItem[] */
     #[ORM\OneToMany(targetEntity: ProjectRepertoryItem::class, mappedBy: "repertory", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $items;
@@ -75,6 +79,18 @@ class ProjectRepertory implements ResourceInterface
     public function setCode( $code ): self
     {
         $this->code = $code;
+        
+        return $this;
+    }
+    
+    public function getCollectionType(): string
+    {
+        return $this->collectionType;
+    }
+    
+    public function setCollectionType($collectionType): self
+    {
+        $this->collectionType = $collectionType;
         
         return $this;
     }

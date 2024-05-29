@@ -9,24 +9,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Vankosoft\ApplicationBundle\Command\ContainerAwareCommand;
 
-abstract class AbstractCommand extends ContainerAwareCommand
+abstract class AbstractWctCommand extends ContainerAwareCommand
 {
-    /**
-     * @return object
-     */
-    protected function get( string $id )
-    {
-        return $this->getContainer()->get( $id );
-    }
-    
     protected function getEnvironment(): string
     {
-        return (string) $this->getContainer()->getParameter( 'kernel.environment' );
+        return (string) $this->getParameter( 'kernel.environment' );
     }
     
     protected function isDebug(): bool
     {
-        return (bool) $this->getContainer()->getParameter( 'kernel.debug' );
+        return (bool) $this->getParameter( 'kernel.debug' );
     }
     
     protected function renderTable( array $headers, array $rows, OutputInterface $output ): void
@@ -54,7 +46,7 @@ abstract class AbstractCommand extends ContainerAwareCommand
     
     protected function ensureDirectoryExistsAndIsWritable( string $directory, OutputInterface $output ): void
     {
-        $checker    = $this->getContainer()->get( 'vs_app.installer.checker.command_directory' );
+        $checker    = $this->get( 'vs_app.installer.checker.command_directory' );
         $checker->setCommandName( $this->getName() );
         
         $checker->ensureDirectoryExists( $directory, $output );

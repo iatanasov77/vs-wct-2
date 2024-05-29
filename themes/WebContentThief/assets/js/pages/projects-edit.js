@@ -92,8 +92,8 @@ $( function ()
         //$( "#modalCollectorProgress" ).modal( 'show' );
         
         // EVENTS
-        $( "#install-php-version-modal" ).on( 'hidden.bs.modal', function () {
-            //window.location.reload();
+        $( "#modalCollectorProgress" ).on( 'hidden.bs.modal', function () {
+            window.location.reload();
         });
     });
     

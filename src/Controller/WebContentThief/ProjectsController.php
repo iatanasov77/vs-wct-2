@@ -22,7 +22,7 @@ class ProjectsController extends AbstractCrudController
         $filterCategory = null;
         
         if( $entity && $entity->getId() && $entity->getDetailsLink() ) {
-            $collector      = $this->get( 'vs_wct.collector' );
+            $collector      = $this->get( 'vs_wct.xpath_collector' );
             
             $collector->initialize( $entity, null );
             if ( $collector->getStatus() == Collector::STATUS_SUCCESS ) {

@@ -25,6 +25,10 @@ class ProjectRepertoryField implements ResourceInterface
     #[ORM\Column(name: "content", type: "text")]
     private $content;
     
+    /** @var ProjectRepertoryFieldFile */
+    #[ORM\OneToOne(targetEntity: ProjectRepertoryFieldFile::class, mappedBy: "owner", cascade: ["persist", "remove"], orphanRemoval: true)]
+    private $repertoryFieldFile;
+    
     /**
      * Get id
      *
@@ -78,6 +82,18 @@ class ProjectRepertoryField implements ResourceInterface
     public function setContent(string $content): self
     {
         $this->content  = $content;
+        
+        return $this;
+    }
+    
+    public function getRepertoryFieldFile()
+    {
+        return $this->repertoryFieldFile;
+    }
+    
+    public function setRepertoryFieldFile($repertoryFieldFile)
+    {
+        $this->repertoryFieldFile = $repertoryFieldFile;
         
         return $this;
     }

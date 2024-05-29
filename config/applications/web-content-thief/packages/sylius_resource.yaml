@@ -1,14 +1,22 @@
 sylius_resource:
-    #translation:
-        #default_locale: '%locale%'
-        #locale_provider: sylius.translation.locale_provider.contextual
-        #available_locales_provider: sylius.translation.locales_provider
+    #######################################################################################################################
+    # Override default settings
+    # -------------------------
+    # You Can To Override Many Resource Parameters For All Resources (Including VankoSoft Bundles)
+    # View Available Settings in 
+    #     \Sylius\Bundle\ResourceBundle\DependencyInjection\Configuration::addSettingsSection(ArrayNodeDefinition $node)
+    #######################################################################################################################
+    settings:
+        paginate: 10
+        
+    #######################################################################################################################
+    # Configure your resources
+    #######################################################################################################################
     resources:
         vs_wct.api_hosts:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ApiHost
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 controller: App\Controller\WebContentThief\ApiHostsController
                 form:       App\Form\ApiHostForm
@@ -16,7 +24,6 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ProjectCategory
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 controller: App\Controller\WebContentThief\ProjectsCategoryController
                 form:       App\Form\ProjectCategoryForm
@@ -24,7 +31,6 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\Project
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 controller: App\Controller\WebContentThief\ProjectsController
                 form:       App\Form\ProjectForm
@@ -32,27 +38,29 @@ sylius_resource:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ProjectField
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: App\Repository\ProjectFieldsRepository
         vs_wct.project_repertories:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ProjectRepertory
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 factory:    Sylius\Component\Resource\Factory\Factory
         vs_wct.project_repertory_items:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ProjectRepertoryItem
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 factory:    Sylius\Component\Resource\Factory\Factory
         vs_wct.project_repertory_fields:
             driver: doctrine/orm
             classes:
                 model:      App\Entity\ProjectRepertoryField
-                interface:  Sylius\Component\Resource\Model\ResourceInterface
+                repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
+                factory:    Sylius\Component\Resource\Factory\Factory
+        vs_wct.project_repertory_fields_files:
+            driver: doctrine/orm
+            classes:
+                model:      App\Entity\ProjectRepertoryFieldFile
                 repository: Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository
                 factory:    Sylius\Component\Resource\Factory\Factory
 
