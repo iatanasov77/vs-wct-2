@@ -4,8 +4,8 @@
 {% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
 {% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
 
-{% block title %}{{ parent() }} :: List Api Hosts{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> List Api Hosts{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_wct.template.list_api_hosts' | trans( {},'WebContentThief' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_wct.template.list_api_hosts' | trans( {},'WebContentThief' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">

@@ -8,6 +8,7 @@ vs_wct:
         project_category_create_title: Create New Project Category
         project_category_edit_title: Edit Project Category
         project_category_details: Project Category Details
+        project_index_title: List Projects
         project_create_title: Create New Project
         project_edit_title: Edit Project
         project_details: Project Details
@@ -20,6 +21,12 @@ vs_wct:
         edit_mapper: Edit Mapper
         preview_repertory: Preview Repertory
         deploy_repertory: Deploy Repertory
+        project_repertory_preview_title: Project Repertory Preview
+        repertory_item: Repertory Item
+        list_api_hosts: List API Hosts
+        edit_api_host: Edit API Host
+        create_api_host: Create API Host
+        api_host_details: API Host Details
         
     form:
         locale: Language

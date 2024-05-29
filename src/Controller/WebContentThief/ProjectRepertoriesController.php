@@ -14,9 +14,13 @@ class ProjectRepertoriesController extends AbstractController
     /** @var ManagerRegistry **/
     private $doctrine;
     
-    public function __construct( ManagerRegistry $doctrine )
+    /** @var string **/
+    private $repertoryFieldsFilesDirectory;
+    
+    public function __construct( ManagerRegistry $doctrine, string $repertoryFieldsFilesDirectory )
     {
-        $this->doctrine = $doctrine;
+        $this->doctrine                         = $doctrine;
+        $this->repertoryFieldsFilesDirectory    = $repertoryFieldsFilesDirectory;
     }
     
     public function previewRepertoryAction( $id, Request $request ): Response
@@ -24,7 +28,8 @@ class ProjectRepertoriesController extends AbstractController
         $repertory  = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
         
         return $this->render( 'Pages/ProjectRepertories/preview.html.twig', [
-            'repertory' => $repertory,
+            'repertory'                     => $repertory,
+            'repertoryFieldsFilesDirectory' => $this->repertoryFieldsFilesDirectory,
         ]);
     }
     

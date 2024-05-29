@@ -11,6 +11,7 @@ vs_wct:
         project_create_title: Създаване на Нов Проект
         project_edit_title: Редакция на Проект
         project_details: Проект Детайли
+        project_index_title: Листинг Проекти
         project_collect_data: Събиране на данни
         project_create_mapper: Създаване на Карта
         project_deploy_data: Разположете данни
@@ -20,6 +21,12 @@ vs_wct:
         edit_mapper: Редакция на Карта
         preview_repertory: Преглед на Репертоар
         deploy_repertory: Разположете репертоар
+        project_repertory_preview_title: Преглед на Репертоар
+        repertory_item: Елемент от репертоара
+        list_api_hosts: АПИ Хостове
+        edit_api_host: Редакция на АПИ Хост
+        create_api_host: Създаване на АПИ Хост
+        api_host_details: АПИ Хост Детайли
         
     form:
         locale: Език

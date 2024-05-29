@@ -4,8 +4,14 @@
 {% from '@SyliusResource/Macros/actions.html.twig' import create %}
 {% import "@VSApplication/Macros/form.html.twig" as vs_form %}
 
-{% block title %}{{ parent() }} :: Edit Api Host{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> Edit Api Host{% endblock %}
+{% if( item.id ) %}
+    {% set pageTitle = 'vs_wct.template.edit_api_host' | trans( {},'WebContentThief' ) ~ ': ' ~ item.baseUrl %}
+{% else %}
+    {% set pageTitle = 'vs_wct.template.create_api_host' | trans( {},'WebContentThief' ) %}
+{% endif %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ pageTitle }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -14,7 +20,7 @@
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Api Host</h5>
+                <h5 class="card-header">{{ 'vs_wct.template.api_host_details' | trans( {},'WebContentThief' ) }}</h5>
                 <div class="card-body">
 
                     {% if item.id %}{% set formMethod = 'PUT' %}{% else %}{% set formMethod = 'POST' %}{% endif %}

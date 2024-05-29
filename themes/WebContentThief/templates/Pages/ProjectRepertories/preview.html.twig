@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ parent() }} :: Project Repertory Preview{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> Project Repertory Preview{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_wct.template.project_repertory_preview_title' | trans( {},'WebContentThief' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_wct.template.project_repertory_preview_title' | trans( {},'WebContentThief' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">   
@@ -14,9 +14,8 @@
                     {% for item in repertory.items %}
                         <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Repertory Item {{ loop.index }}</h5>
-                                <div class="card-body p-0">
-                                    <div class="row">&nbsp;</div>
+                                <h5 class="card-header">{{ 'vs_wct.template.repertory_item' | trans( {},'WebContentThief' ) }} {{ loop.index }}</h5>
+                                <div class="card-body" style="height: 450px;">
                                     
                                 {% for field in item.fields %}
                                     <div class="row">
@@ -32,7 +31,11 @@
                                             </span>
                                         {% elseif field.projectField.type == 'picture' %}
                                             <span>
-                                                <img src="{{ field.content }}" />
+                                                {% if field.repertoryFieldFile %}
+                                                    <img src="{{ field.repertoryFieldFile.path | imagine_filter( 'repertory_field_file' ) }}" alt="{{ field.repertoryFieldFile.originalName }}" width="244" height="244" />
+                                                {% else %}
+                                                    <img src="{{ field.content }}" alt="{{ field.content }}" width="244" height="244" />
+                                                {% endif %}
                                             </span>
                                         {% endif %}
                                         </div>

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ parent() }} :: List Projects{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> List Projects{% endblock %}
+{% block title %}{{ parent() }} :: {{ 'vs_wct.template.project_index_title' | trans( {},'WebContentThief' ) }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_wct.template.project_index_title' | trans( {},'WebContentThief' ) }}{% endblock %}
 
 {% block content %}
     <div class="row">
