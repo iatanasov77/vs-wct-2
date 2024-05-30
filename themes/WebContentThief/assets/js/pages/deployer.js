@@ -100,6 +100,23 @@ function deployItems( deployer, apiHost, productsRequests )
     }
 }
 
+function downloadItems( deployer, apiHost, productsRequests )
+{
+    switch ( deployer ) {
+        case 'sylius':
+            //sylius.deleteProducts( apiHost, productsRequests );
+            break;
+        case 'magento':
+            //magento.deleteProducts( apiHost, productsRequests );
+            break;
+        case 'prestashop':
+            //prestashop.deleteProducts( apiHost, productsRequests );
+            break;
+        default:
+            alert( "Deployer '" + deployer + "' is Not Available !!!" );
+    }
+}
+
 function deleteItems( deployer, apiHost, productsRequests )
 {
     switch ( deployer ) {
@@ -172,4 +189,18 @@ $( function ()
         deleteItems( deployer, apiHost, productsRequests );
     });
     
+    $( '#btnRunDownloader' ).on( 'click', function( e )
+    {
+        let params  = validateForm();
+        if ( ! params ) {
+            alert( 'Please Select Api Host and Mapper' );
+            return;
+        }
+        
+        $( '#consoleDeployer' ).show();
+        
+        vsConsole.appendMessage( '#consoleDeployerBody', 'Starting Download Items ...' );
+        
+        downloadItems( deployer, apiHost, productsRequests );
+    });
 });

@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document" style="max-width: 1400px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Deployer Progress</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'vs_wct.template.deployer' | trans( {},'WebContentThief' ) }}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -44,9 +44,18 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnRunDeployer">Deploy Repertory Items</button>
-                <button type="button" class="btn btn-primary" id="btnRunDeleter">Delete Repertory Items</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseDeployerProgress">Close</button>
+                <button type="button" class="btn btn-primary" id="btnRunDeployer">
+                    {{ 'vs_wct.template.deploy_repertory_items' | trans( {},'WebContentThief' ) }}
+                </button>
+                <button type="button" class="btn btn-primary" id="btnRunDownloader">
+                    {{ 'vs_wct.template.download_repertory_items' | trans( {},'WebContentThief' ) }}
+                </button>
+                <button type="button" class="btn btn-primary" id="btnRunDeleter">
+                    {{ 'vs_wct.template.delete_repertory_items' | trans( {},'WebContentThief' ) }}
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseDeployerProgress">
+                    {{ 'vs_application.form.close' | trans( {},'VSApplicationBundle' ) }}
+                </button>
             </div>
         </div>
     </div>

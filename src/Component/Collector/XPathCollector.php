@@ -80,8 +80,10 @@ final class XPathCollector extends Collector
             }
         }
         
-        $this->em->persist( $repertory );
-        $this->em->flush();
+        if ( $repertory->getItems()->count() ) {
+            $this->em->persist( $repertory );
+            $this->em->flush();
+        }
     }
     
     protected function _getPageUrls(): array
@@ -125,7 +127,11 @@ final class XPathCollector extends Collector
             
             $this->setCrawlerUrl( $url );
             foreach( $this->projectListingFields as $fieldSlug => $field ) {
-                $domField = $this->crawler->filterXPath( $field->getXquery() );
+                $xquery     = $field->getXquery();
+                if ( ! $xquery ) {
+                    continue;
+                }
+                $domField   = $this->crawler->filterXPath( $xquery );
                 
                 $itemsCount = $domField->count();
                 if( $itemsCount ) {
@@ -171,7 +177,11 @@ final class XPathCollector extends Collector
             foreach( $this->_getPageItemUrls() as $itemUrl ) {
                 $this->setCrawlerUrl( $itemUrl );
                 foreach( $this->projectDetailsFields as $fieldSlug => $field ) {
-                    $domField   = $this->crawler->filterXPath( $field->getXquery() );
+                    $xquery     = $field->getXquery();
+                    if ( ! $xquery ) {
+                        continue;
+                    }
+                    $domField   = $this->crawler->filterXPath( $xquery );
                     
                     $itemsCount = $domField->count();
                     if( $itemsCount ) {

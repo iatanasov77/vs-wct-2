@@ -1,5 +1,9 @@
 {% extends "base.html.twig" %}
 
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+{% from "@VSApplication/Macros/pagination.html.twig" import pagination %}
+
 {% block title %}{{ parent() }} :: {{ 'vs_wct.template.project_index_title' | trans( {},'WebContentThief' ) }}{% endblock %}
 {% block pageTitle %}<i class="icon_genius"></i> {{ 'vs_wct.template.project_index_title' | trans( {},'WebContentThief' ) }}{% endblock %}
 

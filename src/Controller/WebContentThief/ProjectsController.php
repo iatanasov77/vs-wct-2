@@ -71,7 +71,9 @@ class ProjectsController extends AbstractCrudController
     
     protected function prepareEntity( &$entity, &$form, Request $request )
     {
-        $entity->setUser( $this->getUser() );
+        //$currentUser    = $this->getUser();
+        $currentUser    = $this->get( 'vs_users.security_bridge' )->getUser();
+        $entity->setUser( $currentUser );
         
         foreach ( $form['listingFields']->getData() as $field ) {
             if ( empty( $field->getTitle() ) )

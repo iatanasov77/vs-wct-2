@@ -21,12 +21,18 @@ vs_wct:
         edit_mapper: Редакция на Карта
         preview_repertory: Преглед на Репертоар
         deploy_repertory: Разположете репертоар
+        deployer: Разположител
         project_repertory_preview_title: Преглед на Репертоар
         repertory_item: Елемент от репертоара
         list_api_hosts: АПИ Хостове
         edit_api_host: Редакция на АПИ Хост
         create_api_host: Създаване на АПИ Хост
         api_host_details: АПИ Хост Детайли
+        collector_actions: Колектор Операции
+        deploy_repertory_items: Deploy Repertory Items
+        download_repertory_items: Download Repertory Items
+        delete_repertory_items: Delete Repertory Items
+        download_repertory: Download Repertory
         
     form:
         locale: Език

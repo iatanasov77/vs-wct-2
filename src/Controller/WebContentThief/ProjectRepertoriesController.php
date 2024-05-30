@@ -4,7 +4,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Doctrine\Persistence\ManagerRegistry;
+use ZipStream;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use App\Entity\ProjectRepertory;
@@ -31,6 +33,47 @@ class ProjectRepertoriesController extends AbstractController
             'repertory'                     => $repertory,
             'repertoryFieldsFilesDirectory' => $this->repertoryFieldsFilesDirectory,
         ]);
+    }
+    
+    /**
+     * MANUAL: https://maennchen.dev/ZipStream-PHP/guide/Symfony.html
+     */
+    public function downloadRepertoryAction( $id, Request $request ): Response
+    {
+        $repertory  = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
+        $fileName   = \sprintf( '%s.zip' , $repertory->getProject()->getTitle() );
+        
+        $response   = new StreamedResponse( function() use ( $repertory, $fileName )
+        {
+            $zip = new ZipStream\ZipStream(
+                outputName: $fileName,
+                defaultEnableZeroHeader: true,
+                contentType: 'application/octet-stream',
+            );
+            
+            foreach ( $repertory->getItems() as $item ) {
+                foreach ( $item->getFields() as $field ) {
+                    $oFile  = $field->getRepertoryFieldFile();
+                    if ( ! $oFile ) {
+                        continue;
+                    }
+                    
+                    $filePath   = \sprintf( '%s/%s', $this->repertoryFieldsFilesDirectory, $oFile->getPath() );
+                    if ( $streamRead = \fopen( $filePath, 'r' ) ) {
+                        $zip->addFileFromStream(
+                            fileName: '/TestDir1/' . $oFile->getOriginalName(),
+                            stream: $streamRead,
+                        );
+                    } else {
+                        die( 'Could not open stream for reading' );
+                    }
+                }
+            }
+            
+            $zip->finish();
+        });
+        
+        return $response;
     }
     
     /**

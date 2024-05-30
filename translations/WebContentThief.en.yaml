@@ -21,12 +21,18 @@ vs_wct:
         edit_mapper: Edit Mapper
         preview_repertory: Preview Repertory
         deploy_repertory: Deploy Repertory
+        deployer: Deployer
         project_repertory_preview_title: Project Repertory Preview
         repertory_item: Repertory Item
         list_api_hosts: List API Hosts
         edit_api_host: Edit API Host
         create_api_host: Create API Host
         api_host_details: API Host Details
+        collector_actions: Collector Actions
+        deploy_repertory_items: Deploy Repertory Items
+        download_repertory_items: Download Repertory Items
+        delete_repertory_items: Delete Repertory Items
+        download_repertory: Download Repertory
         
     form:
         locale: Language
