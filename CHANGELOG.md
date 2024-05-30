@@ -1,3 +1,11 @@
+2.0.1	|	Release date: **30.05.2024**
+============================================
+* New Features:
+  - Update ENV Files.
+  - Improve AdminPanel Default Theme Layout.
+  - Update Vankosoft Application Bundle Config.
+
+
 2.0.0	|	Release date: **30.05.2024**
 ============================================
 * New Features:
