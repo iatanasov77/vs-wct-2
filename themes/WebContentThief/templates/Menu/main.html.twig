@@ -4,7 +4,7 @@
     <!-- sidebar menu start-->
     <ul class="navbar-nav flex-column">
         <li class="nav-divider">
-            Menu
+            {{ 'vs_application.menu.menu' | trans( {},'VSApplicationBundle' ) }}
         </li>
         
         {% for parentItem in item.children %}

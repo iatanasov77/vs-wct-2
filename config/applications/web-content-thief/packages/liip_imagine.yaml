@@ -2,14 +2,17 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    twig:
+        mode: lazy
     
     loaders:
         default:
             filesystem:
                 data_root:
+                    - "%kernel.project_dir%/public/shared_media/artgris"
                     - "%kernel.project_dir%/public/shared_media/gaufrette/profile"
                     - "%kernel.project_dir%/public/shared_media/gaufrette/filemanager"
-                    - "%kernel.project_dir%/public/shared_media/artgris"
+                    - "%kernel.project_dir%/public/shared_media/gaufrette/repertory_fields_files"
 
     resolvers:
         default:
@@ -37,3 +40,10 @@ liip_imagine:
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
                 background: { size: [50, 50], position: center, color: '#000000' }
+                
+        repertory_field_file:
+            quality: 75
+            filters:
+                thumbnail: { size: [240, 240], mode: outbound }
+                background: { size: [244, 244], position: center, color: '#FFFFFF' }
+            

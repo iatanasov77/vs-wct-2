@@ -1,7 +1,9 @@
 parameters:
     vs_application.filemanager_shared_media_gaufrette.app_pictures: "%kernel.project_dir%/public/shared_media/gaufrette/app_pictures"
     vs_application.gaufrette.app_pictures.filesystem: vs_application_app_pictures
-
+    vs_wct.repertory_fields_files_directory: "%kernel.project_dir%/public/shared_media/gaufrette/repertory_fields_files"
+    vs_wct.repertory_fields_files_download_directory: "%kernel.project_dir%/var/system"
+    
 services:
     _defaults:
         autowire: true
@@ -22,10 +24,17 @@ services:
     # Create a Custom Uploader extending Vankosoft\CmsBundle\Component\Uploader\FilemanagerUploader
     # Add Needed Configurations in packages/knp_gaufrette.yaml
     ##################################################################################################
-#    vs_application.custom_uploader:
-#        class: App\Component\Uploader\GamePictureUploader
-#        arguments:
-#            - '@vs_application.app_pictures_uploader.filesystem'
-#            - '@vs_cms.file_path_generator'
+    vs_wct.repertory_fields_files_uploader.filesystem:
+        class: Gaufrette\Filesystem
+        arguments: ['vs_wct_repertory_fields_files']
+        factory: ['@knp_gaufrette.filesystem_map', 'get']
+        
+    vs_wct.repertory_fields_files_uploader:
+        class: App\Component\Uploader\RepertoryFieldFileUploader
+        arguments:
+            - '@gaufrette.vs_wct_repertory_fields_files_filesystem'
+            - '@vs_cms.file_path_generator'
+            - '@vs_wct.factory.project_repertory_fields_files'
+            - '%vs_wct.repertory_fields_files_download_directory%'
 
 

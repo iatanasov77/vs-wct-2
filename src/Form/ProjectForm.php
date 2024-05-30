@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-use Vankosoft\ApplicationBundle\Component\I18N;
 use App\Entity\ProjectCategory;
 use App\Entity\Project;
 use App\Entity\ProjectField;
@@ -45,6 +44,7 @@ class ProjectForm extends AbstractForm
                 'label'                 => 'vs_wct.form.name',
                 'translation_domain'    => 'WebContentThief',
             ])
+            
             ->add( 'category', EntityType::class, [
                 'class'                 => ProjectCategory::class,
                 'choice_label'          => 'name',
@@ -55,25 +55,25 @@ class ProjectForm extends AbstractForm
             ])
             
             ->add( 'url', TextType::class, [
-                'label'                 => 'Url',
+                'label'                 => 'vs_wct.form.project.url',
                 'translation_domain'    => 'WebContentThief',
             ])
             
             ->add( 'listingContainerElement', TextType::class, [
                 'required'              => false,
-                'label'                 => 'Listing Container Element',
+                'label'                 => 'vs_wct.form.project.listing_container_element',
                 'translation_domain'    => 'WebContentThief',
             ])
             
             ->add( 'detailsLink', TextType::class, [
                 'required'              => false,
-                'label'                 => 'Details Link',
+                'label'                 => 'vs_wct.form.project.details_link',
                 'translation_domain'    => 'WebContentThief',
             ])
             
             ->add( 'pagerLink', TextType::class, [
                 'required'              => false,
-                'label'                 => 'Pager Link',
+                'label'                 => 'vs_wct.form.project.pager_link',
                 'translation_domain'    => 'WebContentThief',
             ])
             

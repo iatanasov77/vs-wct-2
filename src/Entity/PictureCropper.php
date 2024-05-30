@@ -12,52 +12,33 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  * --------------
  * https://symfony.com/bundles/LiipImagineBundle/current/index.html
  * https://www.web-hints.com/blog/automatic-resizing-and-cropping-of-images-using-symfony
- * 
- * @ORM\Table(name="WCT_PictureCroppers")
- * @ORM\Entity
  */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_PictureCroppers")]
 class PictureCropper implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Project", mappedBy="pictureCropper")
-     */
+    /** @var Collection | Project[] */
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: "pictureCropper", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $projects;
     
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="crop_top", type="boolean", nullable=true)
-     */
+    /** @var boolean */
+    #[ORM\Column(name: "crop_top", type: "boolean", nullable: true)]
     private $cropTop;
     
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="crop_right", type="boolean", nullable=true)
-     */
+    /** @var boolean */
+    #[ORM\Column(name: "crop_right", type: "boolean", nullable: true)]
     private $cropRight;
     
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="crop_bottom", type="boolean", nullable=true)
-     */
+    /** @var boolean */
+    #[ORM\Column(name: "crop_bottom", type: "boolean", nullable: true)]
     private $cropBottom;
     
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="crop_left", type="boolean", nullable=true)
-     */
+    /** @var boolean */
+    #[ORM\Column(name: "crop_left", type: "boolean", nullable: true)]
     private $cropLeft;
     
     public function __construct()

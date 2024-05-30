@@ -21,7 +21,7 @@ class CollectorController extends AbstractController
     public function collectDataAction( Request $request ): Response
     {
         if ( $request->isMethod( 'post' ) ) {
-            $formData   = $request->request->get( 'project_collector_form' );
+            $formData   = $request->request->all( 'project_collector_form' );
             $command    = [
                 'command'           => 'wct:project:collect',
                 '--project-id'      => $formData['projectId'],

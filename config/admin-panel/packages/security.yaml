@@ -1,4 +1,8 @@
 security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    
     password_hashers:
         # use your user class name here
         App\Entity\UserManagement\User:
@@ -63,11 +67,6 @@ security:
     access_control:
         - { path: /_wdt/.*, roles: PUBLIC_ACCESS }
         - { path: /_profiler/.*, roles: PUBLIC_ACCESS }
-        
-        # API Routes
-        - { path: ^/api-docs, roles: PUBLIC_ACCESS }
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         
         # Web Routes
         - { path: ^/login, roles: PUBLIC_ACCESS }

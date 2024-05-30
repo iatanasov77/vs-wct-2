@@ -6,21 +6,80 @@ vs_wct:
         action: Действие
         project_categories: Проект Категории
         project_category_create_title: Създаване на Нова Категория
+        project_category_edit_title: Редакция на Категория
         project_category_details: Категория Детайли
+        project_create_title: Създаване на Нов Проект
+        project_edit_title: Редакция на Проект
+        project_details: Проект Детайли
+        project_index_title: Листинг Проекти
+        project_collect_data: Събиране на данни
+        project_create_mapper: Създаване на Карта
+        project_deploy_data: Разположете данни
+        project_mappers: Карти на Проект
+        project_collector_repertories: Събиране на данни Репертоари
+        project_repertory: Репертоар
+        edit_mapper: Редакция на Карта
+        preview_repertory: Преглед на Репертоар
+        deploy_repertory: Разположете репертоар
+        deployer: Разположител
+        project_repertory_preview_title: Преглед на Репертоар
+        repertory_item: Елемент от репертоара
+        list_api_hosts: АПИ Хостове
+        edit_api_host: Редакция на АПИ Хост
+        create_api_host: Създаване на АПИ Хост
+        api_host_details: АПИ Хост Детайли
+        collector_actions: Колектор Операции
+        deploy_repertory_items: Deploy Repertory Items
+        download_repertory_items: Download Repertory Items
+        delete_repertory_items: Delete Repertory Items
+        download_repertory: Download Repertory
+        browser: Browser
+        url: URL
+        browse: Browse
+        set_to_field: Set to Field
+        fields: Fields
+        browser_log: Browser-Log
+        save_changes: Save changes
+        listing_page_fields: Listing Page Fields
+        details_page_fields: Details Page Fields
+        listing_container_element_description: 'The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)'
+        browse_url: Browse URL
+        browse_details: Browse Details
+        collector: Collector
+        run_collector: Run Collector
+        
     form:
         locale: Език
         name: Име
         category: Категория
         category_placeholder: '-- Избери Категория --'
+        
+        api_host:
+            base_url: Base Url
+            credentials: Credentials
+        
         project:
             url: УРЛ
             field_type_placeholder: '-- Избери Тип на Полето --'
             field_title_placeholder: '-- Напиши Име на Полето --'
             field_xquery_placeholder: '-- Напиши Xquery на Полето --'
+            listing_container_element: Елемент на контейнер за списък
+            details_link: Връзка за Детайли
+            pager_link: Странициране връзка
+            
+        project_collector:
+            parse_mode: Parse Mode
+            collection_type: Collection Type
+        
         mapper:
+            deployer: Deployer
+            deployer_placeholder: '-- Choose a Deployer --'
             project_field_placeholder: '-- Избери Поле от Проекта --'
             map_field_placeholder: '-- Избери Поле за Мапване --'
+        
         deployer:
+            api_host: Api Host
+            mapper: Mapper
             project_mapper_placeholder: '-- Избери един Мапър --'
             api_host_placeholder: '-- Избери един Апи Хост --'
 

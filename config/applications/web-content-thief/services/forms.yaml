@@ -10,6 +10,7 @@ services:
         arguments:
             - '%vs_wct.model.project_categories.class%'
             - '@request_stack'
+            - '@vs_application.repository.locale'
             
     vs_wct.resources.projects.form:
         class: App\Form\ProjectForm

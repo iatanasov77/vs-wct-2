@@ -4,25 +4,33 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Vankosoft\UsersBundle\Model\User as BaseUser;
+
 use Vankosoft\UsersSubscriptionsBundle\Model\Interfaces\SubscribedUserInterface;
-use Vankosoft\UsersSubscriptionsBundle\Model\Traits\SubscribedUserTrait;
-use Vankosoft\PaymentBundle\Model\Interfaces\PaymentsUserInterface;
-use Vankosoft\PaymentBundle\Model\Traits\PaymentsUserTrait;
+use Vankosoft\UsersSubscriptionsBundle\Model\Traits\SubscribedUserEntity;
+use Vankosoft\PaymentBundle\Model\Interfaces\UserPaymentAwareInterface;
+use Vankosoft\PaymentBundle\Model\Traits\UserPaymentAwareEntity;
+use Vankosoft\PaymentBundle\Model\Interfaces\CustomerInterface;
+use Vankosoft\PaymentBundle\Model\Traits\CustomerEntity;
+use Vankosoft\CatalogBundle\Model\Interfaces\UserSubscriptionAwareInterface;
+use Vankosoft\CatalogBundle\Model\Traits\UserSubscriptionAwareEntity;
 
 use App\Entity\Project;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="VSUM_Users")
- */
-class User extends BaseUser implements SubscribedUserInterface, PaymentsUserInterface
+#[ORM\Entity]
+#[ORM\Table(name: "VSUM_Users")]
+class User extends BaseUser implements
+    SubscribedUserInterface,
+    UserPaymentAwareInterface,
+    CustomerInterface,
+    UserSubscriptionAwareInterface
 {
-    use SubscribedUserTrait;
-    use PaymentsUserTrait;
+    use SubscribedUserEntity;
+    use UserPaymentAwareEntity;
+    use CustomerEntity;
+    use UserSubscriptionAwareEntity;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="user", orphanRemoval=true)
-     */
+    /** @var Collection | Project[] */
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: "user", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $projects;
     
     public function __construct()

@@ -1,87 +1,10 @@
 <?php namespace App\Component\Collector;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\Console\Style\SymfonyStyle;
-
-use App\Component\Browser;
-use App\Entity\Project;
 use App\Component\ProjectField as ProjectFieldHelper;
 
-class XPathCollector extends Collector implements ContainerAwareInterface
+final class XPathCollector extends Collector
 {
-    private $container;
-    
-    private $em;
-    
-    private $crawler;
-    
-    private $output;
-    
-    private $status;
-    
-    private $project;
-    
-    private $currentUrl;
-    
-    private $collectCountMax;
-    
-    private $pageUrls;
-    
-    private $pageItemUrls;
-    
-    private $projectListingFields;
-    
-    private $projectDetailsFields;
-    
-    public function __construct( ContainerInterface $container )
-    {
-        $this->container    = $container;
-        $this->em           = $this->container->get( 'doctrine' )->getManager();
-        $this->crawler      = new Crawler();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer( ContainerInterface $container = null )
-    {
-        $this->container    = $container;
-    }
-    
-    public function getStatus()
-    {
-        return $this->status;    
-    }
-    
-    public function initialize( Project $project, ?SymfonyStyle $output ): self
-    {
-        $this->project          = $project;
-        $this->collectCountMax  = 20;
-        $this->output           = $output;
-        
-        $this->setCrawlerUrl( $this->project->getUrl() );
-        if ( $this->status == self::STATUS_SUCCESS ) {
-            $this->pageUrls             = $this->_getPageUrls();
-            $this->pageItemUrls         = $this->_getPageItemUrls();
-            
-            $this->projectListingFields = [];
-            foreach( $this->getProjectListingFields() as $field ) {
-                $slug  = $this->getContainer()->get( 'vs_application.slug_generator' )->generate( $field->getTitle() );
-                $this->projectListingFields[$slug]  = $field;
-            }
-            
-            $this->projectDetailsFields = [];
-            foreach( $this->getProjectDetailsFields() as $field ) {
-                $slug  = $this->getContainer()->get( 'vs_application.slug_generator' )->generate( $field->getTitle() );
-                $this->projectDetailsFields[$slug]  = $field;
-            }
-        }
-        
-        return $this;
-    }
-    
     /**
      * FOR DEBUGING PURPOSES
      * 
@@ -92,23 +15,15 @@ class XPathCollector extends Collector implements ContainerAwareInterface
         return $this->crawler->filterXPath( $xquery );
     }
     
-    public function getDetailsUrl()
-    {
-        if ( count( $this->pageItemUrls ) ) {
-            return $this->pageItemUrls[0];
-        }
-         
-        return null;
-    }
-    
-    public function runCollector()
+    public function runCollector( string $collectionType ): void
     {
         $runAt      = new \DateTime();
         $repertory  = $this->getContainer()->get( 'vs_wct.factory.project_repertories' )->createNew();
         $repertory->setProject( $this->project );
         $repertory->setCode( $runAt->getTimestamp() );
+        $repertory->setCollectionType( $collectionType );
         $repertory->setCreatedAt( $runAt );
-        $this->em->persist( $repertory );
+        //$this->em->persist( $repertory );
         
         $parsedListingFields    = $this->parseListingFields();
         $parsedDetailsFields    = $this->parseDetailsFields();
@@ -120,9 +35,15 @@ class XPathCollector extends Collector implements ContainerAwareInterface
             foreach( $parsedListingFields as $index => $parsedItem ) {
                 $repertoryItem  = $this->getContainer()->get( 'vs_wct.factory.project_repertory_items' )->createNew();
                 foreach( $parsedItem as $fieldSlug => $fieldContent ) {
-                    $repertoryField  = $this->getContainer()->get( 'vs_wct.factory.project_repertory_fields' )->createNew();
-                    $repertoryField->setProjectField( $this->projectListingFields[$fieldSlug] );
+                    $repertoryField = $this->getContainer()->get( 'vs_wct.factory.project_repertory_fields' )->createNew();
+                    $projectField   = $this->projectListingFields[$fieldSlug];
+                    
+                    $repertoryField->setProjectField( $projectField );
                     $repertoryField->setContent( $fieldContent );
+                    
+                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
+                        $this->uploader->createRepertoryFieldFile( $repertoryField, $fieldContent );
+                    }
                     
                     $repertoryItem->addField( $repertoryField );
                 }
@@ -142,9 +63,15 @@ class XPathCollector extends Collector implements ContainerAwareInterface
             foreach( $parsedDetailsFields as $index => $parsedItem ) {
                 $repertoryItem  = $this->getContainer()->get( 'vs_wct.factory.project_repertory_items' )->createNew();
                 foreach( $parsedItem as $fieldSlug => $fieldContent ) {
-                    $repertoryField  = $this->getContainer()->get( 'vs_wct.factory.project_repertory_fields' )->createNew();
-                    $repertoryField->setProjectField( $this->projectDetailsFields[$fieldSlug] );
+                    $repertoryField = $this->getContainer()->get( 'vs_wct.factory.project_repertory_fields' )->createNew();
+                    $projectField   = $this->projectDetailsFields[$fieldSlug];
+                    
+                    $repertoryField->setProjectField( $projectField );
                     $repertoryField->setContent( $fieldContent );
+                    
+                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
+                        $this->uploader->createRepertoryFieldFile( $repertoryField, $fieldContent );
+                    }
                     
                     $repertoryItem->addField( $repertoryField );
                 }
@@ -153,53 +80,38 @@ class XPathCollector extends Collector implements ContainerAwareInterface
             }
         }
         
-        $this->em->persist( $repertory );
-        $this->em->flush();
+        if ( $repertory->getItems()->count() ) {
+            $this->em->persist( $repertory );
+            $this->em->flush();
+        }
     }
     
-    /**
-     * @return ContainerInterface
-     *
-     * @throws \LogicException
-     */
-    protected function getContainer(): ContainerInterface
+    protected function _getPageUrls(): array
     {
-        if ( null === $this->container ) {
-            throw new \LogicException( 'The container is not yet set.' );
+        $pageUrls  = [];
+        if ( $this->project && $this->project->getPagerLink() ) {
+            $domPageUrls    = $this->crawler->filterXPath( $this->project->getPagerLink() );
+            $domPageUrls->each( function ( Crawler $node, $i ) use ( &$pageUrls )
+            {
+                $pageUrls[] = $node->attr( 'href' );
+            });
         }
         
-        return $this->container;
+        return $pageUrls;
     }
     
-    private function getProjectListingFields()
+    protected function _getPageItemUrls(): array
     {
-        return $this->getContainer()->get( 'vs_wct.repository.project_fields' )->getProjectListingFields( $this->project );
-    }
-    
-    private function getProjectDetailsFields()
-    {
-        return $this->getContainer()->get( 'vs_wct.repository.project_fields' )->getProjectDetailsFields( $this->project );
-    }
-    
-    private function setCrawlerUrl( string $url )
-    {
-        if ( $this->currentUrl == $url ) {
-            return;
+        $itemUrls   = [];
+        if ( $this->project && $this->project->getDetailsLink() ) {
+            $domItemUrls    = $this->crawler->filterXPath( $this->project->getDetailsLink() );
+            $domItemUrls->each( function ( Crawler $node, $i ) use ( &$itemUrls )
+            {
+                $itemUrls[] = $node->attr( 'href' );
+            });
         }
         
-        try {
-            $this->crawler->clear();
-            $this->crawler->add( ( new Browser() )->browseUrl( $url ) );
-            $this->currentUrl   = $url;
-            $this->status       = self::STATUS_SUCCESS;
-        } catch ( \Exception $e ) {
-            $this->status       = self::STATUS_ERROR;
-            
-            if ( $this->output ) {
-                //$this->output->writeln( '<info>Installing VankoSoft Application...</info>' );
-                $this->output->writeln( '<error>VankoSoft Exception: ' . $e->getMessage() . '</error>' );
-            }
-        }
+        return $itemUrls;
     }
     
     private function parseListingFields(): array
@@ -215,7 +127,11 @@ class XPathCollector extends Collector implements ContainerAwareInterface
             
             $this->setCrawlerUrl( $url );
             foreach( $this->projectListingFields as $fieldSlug => $field ) {
-                $domField = $this->crawler->filterXPath( $field->getXquery() );
+                $xquery     = $field->getXquery();
+                if ( ! $xquery ) {
+                    continue;
+                }
+                $domField   = $this->crawler->filterXPath( $xquery );
                 
                 $itemsCount = $domField->count();
                 if( $itemsCount ) {
@@ -235,7 +151,6 @@ class XPathCollector extends Collector implements ContainerAwareInterface
                         {
                             $parsedFields[$itemsKey + $i][$fieldSlug] = $node->attr( 'src' );
                         });
-                        //@TODO download picture
                     }
                 }
             }
@@ -262,7 +177,11 @@ class XPathCollector extends Collector implements ContainerAwareInterface
             foreach( $this->_getPageItemUrls() as $itemUrl ) {
                 $this->setCrawlerUrl( $itemUrl );
                 foreach( $this->projectDetailsFields as $fieldSlug => $field ) {
-                    $domField   = $this->crawler->filterXPath( $field->getXquery() );
+                    $xquery     = $field->getXquery();
+                    if ( ! $xquery ) {
+                        continue;
+                    }
+                    $domField   = $this->crawler->filterXPath( $xquery );
                     
                     $itemsCount = $domField->count();
                     if( $itemsCount ) {
@@ -272,7 +191,6 @@ class XPathCollector extends Collector implements ContainerAwareInterface
                             $parsedFields[$itemsKey][$fieldSlug] = $domField->attr( 'href' );
                         } elseif( $field->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
                             $parsedFields[$itemsKey][$fieldSlug] = $domField->attr( 'src' );
-                            //@TODO download picture
                         }
                     }
                 }
@@ -285,41 +203,5 @@ class XPathCollector extends Collector implements ContainerAwareInterface
         }
         
         return $parsedFields;
-    }
-    
-    private function _getPageUrls()
-    {
-        $pageUrls  = [];
-        if ( $this->project && $this->project->getPagerLink() ) {
-            $domPageUrls    = $this->crawler->filterXPath( $this->project->getPagerLink() );
-            $domPageUrls->each( function ( Crawler $node, $i ) use ( &$pageUrls )
-            {
-                $pageUrls[] = $node->attr( 'href' );
-            });
-        }
-        
-        return $pageUrls;
-    }
-    
-    private function _getPageItemUrls()
-    {
-        $itemUrls   = [];
-        if ( $this->project && $this->project->getDetailsLink() ) {
-            $domItemUrls    = $this->crawler->filterXPath( $this->project->getDetailsLink() );
-            $domItemUrls->each( function ( Crawler $node, $i ) use ( &$itemUrls )
-            {
-                $itemUrls[] = $node->attr( 'href' );
-            });
-        }
-        
-        return $itemUrls;
-    }
-    
-    private function debugCollectedData( $parsedListingFields, $parsedDetailsFields )
-    {
-        $logToFile  = $this->container->getParameter( 'kernel.project_dir' ) . '/var/CollectorDumps/' . $runAt->getTimestamp() . '.log';
-        $this->container->get( 'filesystem' )->dumpFile( $logToFile, json_encode( $parsedListingFields, JSON_PRETTY_PRINT ) );
-        $this->container->get( 'filesystem' )->appendToFile( $logToFile, json_encode( $parsedDetailsFields, JSON_PRETTY_PRINT ) );
-        die;
     }
 }

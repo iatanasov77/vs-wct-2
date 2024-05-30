@@ -1,7 +1,16 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ parent() }} :: Edit Project{% endblock %}
-{% block pageTitle %}<i class="icon_genius"></i> Edit Project{% endblock %}
+{# Import Macros #}
+{% import "@VSApplication/Macros/alerts.html.twig" as alerts %}
+
+{% if( item.id ) %}
+    {% set pageTitle = 'vs_wct.template.project_edit_title' | trans( {},'WebContentThief' ) ~ ': ' ~ item.title %}
+{% else %}
+    {% set pageTitle = 'vs_wct.template.project_create_title' | trans( {},'WebContentThief' ) %}
+{% endif %}
+
+{% block title %}{{ parent() }} :: {{ pageTitle }}{% endblock %}
+{% block pageTitle %}<i class="icon_genius"></i> {{ pageTitle }}{% endblock %}
 
 {% block content %}
 
@@ -24,113 +33,124 @@
         </div>
     {% endif %}
     
-    {% if item.id %}
-        <div class="card">
-            <div class="card-body me-auto">
-                <button type="button"
-                    class="btn btn-primary mr-3 btnDisplayCollector"
-                    data-bs-toggle="modal" data-bs-target="#modalCollectorProgress"
-                    data-url="{{ detailsUrl }}"
-                >
-                    Collect Data
-                </button>
-                
-                <button type="button"
-                    class="btn btn-primary mr-3 btnCreateMapper"
-                    data-bs-toggle="modal" data-bs-target="#modalMapper"
-                >
-                    Create Mapper
-                </button>
-            
-            {#
-                <button type="button" 
-                    class="btn btn-primary mr-3"
-                >
-                    Preview Data
-                </button>
-                <button type="button" 
-                    class="btn btn-primary btnDisplayDeployer"
-                    data-bs-toggle="modal" data-bs-target="#modalDeployerProgress"
-                >
-                    Deploy Data
-                </button>
-            #}
-            </div>
-        </div>
-    {% endif %}
-    
     <div class="row">
-    {% if item.id %}
-        <div class="col-lg-9">
-            <section class="panel">
-                <div class="panel-body">
-                    {% include 'Pages/Projects/Partial/project_form.html.twig' %}
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-3">
-             <section class="panel  panel-default border mb-4">
-                <div class="panel-heading ml-2">Project Mappers</div>
-                <div class="panel-body">
-                    <table class="table table-striped table-advance table-hover">
-                    {% for mapper in item.mappers %}
-                        <tr>
-                            <td>{{ mapper.title }}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-primary repertoryPreview"
-                                        href="{{ path('vs_wct_project_mapper_update', {'id': mapper.id}) }}"
-                                        title="Edit Mapper"
-                                    >
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </table>
-                </div>
-            </section>
-            
-            <section class="panel  panel-default border">
-                <div class="panel-heading ml-2">Project Collector Repertories</div>
-                <div class="panel-body" style="height: 900px !important;">
-                    <table class="table table-striped table-advance table-hover">
-                    {% for rep in item.repertories %}
-                        <tr>
-                            <td>Repertory - {{ rep.createdAt | date( "d.m.Y H:i:s" ) }}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-primary repertoryPreview"
-                                        href="{{ path('vs_wct_project_preview_repertory', {'id': rep.id}) }}"
-                                        title="Preview Repertory"
-                                    >
-                                        <i class="fas fa-eye" style="color: #be4bdb;"></i>
-                                    </a>
-                                    <a class="btn btn-outline-primary btnDisplayDeployer"
-                                        title="Deploy Repertory"
-                                        data-bs-toggle="modal" data-bs-target="#modalDeployerProgress"
-                                        data-repertoryId="{{ rep.id }}"
-                                    >
-                                        <i class="fa fa-server" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </table>
-                </div>
-            </section>
-        </div>
-    {% else %}
-        <div class="col-lg-12">
-            <section class="panel">
-                <div class="panel-body">
-                    {% include 'Pages/Projects/Partial/project_form.html.twig' %}
-                </div>
-            </section>
-        </div>
-    {% endif %}
+        {% if item.id %}
+            <div class="col-lg-8">
+                <section class="panel panel-default border p-3">
+                    <div class="panel-heading border-bottom pb-2 mb-2">{{ 'vs_wct.template.project_details' | trans( {},'WebContentThief' ) }}</div>
+                    <div class="panel-body">
+                        {% include 'Pages/Projects/Partial/project_form.html.twig' %}
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4">
+                <section class="panel panel-default border p-3 mb-3">
+                    <div class="panel-heading border-bottom pb-2 mb-2">{{ 'vs_wct.template.collector_actions' | trans( {},'WebContentThief' ) }}</div>
+                    <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body me-auto">
+                                <a class="btn btn-outline-primary mr-4 btnDisplayCollector"
+                                    title="{{ 'vs_wct.template.project_collect_data' | trans( {},'WebContentThief' ) }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalCollectorProgress"
+                                    data-url="{{ detailsUrl }}"
+                                >
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                
+                                <a class="btn btn-outline-primary mr-4 btnCreateMapper"
+                                    title="{{ 'vs_wct.template.project_create_mapper' | trans( {},'WebContentThief' ) }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalMapper"
+                                >
+                                    <i class="fas fa-map"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                    
+                <section class="panel panel-default border p-3 mb-3">
+                    <div class="panel-heading border-bottom pb-2 mb-2">{{ 'vs_wct.template.project_mappers' | trans( {},'WebContentThief' ) }}</div>
+                    <div class="panel-body">
+                        {% if item.mappers | length > 0 %}
+                            <table class="table table-striped table-advance table-hover">
+                                {% for mapper in item.mappers %}
+                                    <tr>
+                                        <td>{{ mapper.title }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-primary repertoryPreview"
+                                                    href="{{ path('vs_wct_project_mapper_update', {'id': mapper.id}) }}"
+                                                    title="{{ 'vs_wct.template.edit_mapper' | trans( {},'WebContentThief' ) }}"
+                                                >
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        {% else %}
+                            {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                        {% endif %}
+                    </div>
+                </section>
+                
+                <section class="panel  panel-default border p-3">
+                    <div class="panel-heading border-bottom pb-2 mb-2">{{ 'vs_wct.template.project_collector_repertories' | trans( {},'WebContentThief' ) }}</div>
+                    <div class="panel-body">
+                        {% if item.repertories | length > 0 %}
+                            <table class="table table-striped table-advance table-hover">
+                                {% for rep in item.repertories %}
+                                    <tr>
+                                        <td>
+                                            {{ 'vs_wct.template.project_repertory' | trans( {},'WebContentThief' ) }} - {{ rep.createdAt | date( "d.m.Y H:i:s" ) }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-primary mr-2 repertoryPreview"
+                                                    href="{{ path('vs_wct_project_preview_repertory', {'id': rep.id}) }}"
+                                                    title="{{ 'vs_wct.template.preview_repertory' | trans( {},'WebContentThief' ) }}"
+                                                >
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a class="btn btn-outline-primary btnDisplayDeployer"
+                                                    title="{{ 'vs_wct.template.deployer' | trans( {},'WebContentThief' ) }}"
+                                                    data-bs-toggle="modal" data-bs-target="#modalDeployerProgress"
+                                                    data-repertoryId="{{ rep.id }}"
+                                                >
+                                                    <i class="fas fa-upload"></i>
+                                                </a>
+                                                
+                                                {% if applicationEnvironement == 'dev' %}
+                                                    <a class="btn btn-outline-primary btnDownloadRepertory"
+                                                        title="{{ 'vs_wct.template.download_repertory' | trans( {},'WebContentThief' ) }}"
+                                                        href="{{ path( 'vs_wct_project_download_repertory', {'id': rep.id} ) }}"
+                                                        data-repertoryId="{{ rep.id }}"
+                                                    >
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        {% else %}
+                            {{ alerts.info( 'vs_application.template.there_are_no_items_to_display' | trans( {},'VSApplicationBundle' ) ) }}
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        {% else %}
+            <div class="col-lg-12">
+                <section class="panel">
+                    <div class="panel-heading border-bottom pb-2 mb-2">{{ 'vs_wct.template.project_details' | trans( {},'WebContentThief' ) }}</div>
+                    <div class="panel-body">
+                        {% include 'Pages/Projects/Partial/project_form.html.twig' %}
+                    </div>
+                </section>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

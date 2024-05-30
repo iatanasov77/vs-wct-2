@@ -7,90 +7,63 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 //use Sylius\Component\Resource\Model\TranslatableTrait;
 
-/**
- * Project
- *
- * @ORM\Table(name="WCT_Projects")
- * @ORM\Entity
- */
+use App\Entity\UserManagement\User;
+
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_Projects")]
 class Project implements ResourceInterface
 {
     use TimestampableTrait;
     
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProjectCategory", inversedBy="projects")
-     */
+    /** @var ProjectCategory */
+    #[ORM\ManyToOne(targetEntity: ProjectCategory::class, inversedBy: "projects")]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id")]
     private $category;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UserManagement\User", inversedBy="projects")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    /** @var User */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "projects")]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private $user;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PictureCropper", inversedBy="projects")
-     * @ORM\JoinColumn(name="picture_cropper_id", referencedColumnName="id", nullable=true)
-     */
+    /** @var PictureCropper | null */
+    #[ORM\ManyToOne(targetEntity: PictureCropper::class, inversedBy: "projects")]
+    #[ORM\JoinColumn(name: "picture_cropper_id", referencedColumnName: "id", nullable: true)]
     private $pictureCropper;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=128, nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "title", type: "string", length: 128, nullable: false)]
     private $title;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="url", type="string", length=128, nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "url", type: "string", length: 128, nullable: false)]
     private $url;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="listing_container_element", type="string", length=128, nullable=true, options={"comment": "The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.) "})
-     */
+    /** @var string */
+    #[ORM\Column(name: "listing_container_element", type: "string", length: 128, nullable: true, options: ["comment" => "The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.) "])]
     private $listingContainerElement;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="details_link", type="string", length=128, nullable=true)
-     */
+    /** @var string */
+    #[ORM\Column(name: "details_link", type: "string", length: 128, nullable: true)]
     private $detailsLink;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pager_link", type="string", length=128, nullable=true)
-     */
+    /** @var string */
+    #[ORM\Column(name: "pager_link", type: "string", length: 128, nullable: true)]
     private $pagerLink;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectField", mappedBy="project", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
+    /** @var Collection | ProjectField[] */
+    #[ORM\OneToMany(targetEntity: ProjectField::class, mappedBy: "project", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $fields;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMapper", mappedBy="project", orphanRemoval=true)
-     */
+    /** @var Collection | ProjectMapper[] */
+    #[ORM\OneToMany(targetEntity: ProjectMapper::class, mappedBy: "project", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $mappers;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertory", mappedBy="project", orphanRemoval=true)
-     */
+    /** @var Collection | ProjectRepertory[] */
+    #[ORM\OneToMany(targetEntity: ProjectRepertory::class, mappedBy: "project", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $repertories;
     
     /**

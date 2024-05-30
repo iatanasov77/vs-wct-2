@@ -54,5 +54,4 @@ services:
         autowire: true
         arguments:
             - '@doctrine'
-            
-
+            - '%vs_wct.repertory_fields_files_directory%'

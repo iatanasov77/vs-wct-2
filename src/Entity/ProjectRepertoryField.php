@@ -3,41 +3,31 @@
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * WctProjectRepertoryFields
- *
- * @ORM\Table(name="WCT_ProjectRepertoryFields")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectRepertoryFields")]
 class ProjectRepertoryField implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="ProjectRepertoryItem", inversedBy="fields")
-     * @ORM\JoinColumn(name="project_repertory_item_id", referencedColumnName="id")
-     */
+    /** @var ProjectRepertoryItem */
+    #[ORM\ManyToOne(targetEntity: ProjectRepertoryItem::class, inversedBy: "fields")]
+    #[ORM\JoinColumn(name: "project_repertory_item_id", referencedColumnName: "id")]
     private $item;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="ProjectField", inversedBy="parsedFields")
-     * @ORM\JoinColumn(name="project_field_id", referencedColumnName="id")
-     */
+    /** @var ProjectField */
+    #[ORM\ManyToOne(targetEntity: ProjectField::class, inversedBy: "parsedFields")]
+    #[ORM\JoinColumn(name: "project_field_id", referencedColumnName: "id")]
     private $projectField;
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
+    /** @var string */
+    #[ORM\Column(name: "content", type: "text")]
     private $content;
+    
+    /** @var ProjectRepertoryFieldFile */
+    #[ORM\OneToOne(targetEntity: ProjectRepertoryFieldFile::class, mappedBy: "owner", cascade: ["persist", "remove"], orphanRemoval: true)]
+    private $repertoryFieldFile;
     
     /**
      * Get id
@@ -92,6 +82,18 @@ class ProjectRepertoryField implements ResourceInterface
     public function setContent(string $content): self
     {
         $this->content  = $content;
+        
+        return $this;
+    }
+    
+    public function getRepertoryFieldFile()
+    {
+        return $this->repertoryFieldFile;
+    }
+    
+    public function setRepertoryFieldFile($repertoryFieldFile)
+    {
+        $this->repertoryFieldFile = $repertoryFieldFile;
         
         return $this;
     }

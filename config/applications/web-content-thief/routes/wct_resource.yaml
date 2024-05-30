@@ -5,6 +5,40 @@ vs_wct_projects:
         path: /projects
         templates: "Pages/Projects"
     type: sylius.resource
+    options:
+        expose: true
+
+vs_wct_projects_index:
+    path: /projects/
+    methods: [GET]
+    defaults:
+        _controller: vs_wct.controller.projects::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                updatedAt: desc
+            filterable: true
+            template: "Pages/Projects/index.html.twig"
+    options:
+        expose: true
+        
+vs_wct_projects_index_filtered:
+    path: /projects/{filterCategory}/
+    methods: [GET]
+    defaults:
+        _controller: vs_wct.controller.projects::indexAction
+        _sylius:
+            paginate: 10
+            sortable: true
+            sorting:
+                position: asc
+            filterable: true
+            criteria:
+                category: $filterCategory
+            template: "Pages/Projects/index.html.twig"
+    options:
+        expose: true
 
 vs_wct_project_categories:
     resource: |

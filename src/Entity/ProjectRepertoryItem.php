@@ -5,32 +5,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * WctProjectRepertoryItems
- *
- * @ORM\Table(name="WCT_ProjectRepertoryItems")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: "WCT_ProjectRepertoryItems")]
 class ProjectRepertoryItem implements ResourceInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    /** @var int */
+    #[ORM\Id, ORM\Column(type: "integer"), ORM\GeneratedValue(strategy: "IDENTITY")]
     private $id;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="ProjectRepertory", inversedBy="items")
-     * @ORM\JoinColumn(name="project_repertory_id", referencedColumnName="id")
-     */
+    /** @var ProjectRepertory */
+    #[ORM\ManyToOne(targetEntity: ProjectRepertory::class, inversedBy: "items")]
+    #[ORM\JoinColumn(name: "project_repertory_id", referencedColumnName: "id")]
     private $repertory;
     
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectRepertoryField", mappedBy="item", cascade={"persist"})
-     */
+    /** @var Collection | ProjectRepertoryField[] */
+    #[ORM\OneToMany(targetEntity: ProjectRepertoryField::class, mappedBy: "item", indexBy: "id", cascade: ["persist", "remove"], orphanRemoval: true)]
     private $fields;
     
     public function __construct()

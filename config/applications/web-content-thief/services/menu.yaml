@@ -1,11 +1,11 @@
 parameters:
     vs_application.menu.config_file: "%kernel.project_dir%/config/applications/web-content-thief/packages/vs_application.yaml"
-    vs_application.main_menus: ['mainApplicationMenu']
+    vs_application.main_menus: ['mainApplicationMenu', 'profileMenu']
 
 services:
     # Custom Menus
     ######################################################
-    application.main_menu:
+    vs_wct.main_menu:
         autowire: false
         class: Knp\Menu\MenuItem
         factory: ["@vs_app.menu_builder", mainMenu]

@@ -6,22 +6,80 @@ vs_wct:
         action: Action
         project_categories: Project Categories
         project_category_create_title: Create New Project Category
+        project_category_edit_title: Edit Project Category
         project_category_details: Project Category Details
+        project_index_title: List Projects
+        project_create_title: Create New Project
+        project_edit_title: Edit Project
+        project_details: Project Details
+        project_collect_data: Collect Data
+        project_create_mapper: Create Mapper
+        project_deploy_data: Deploy Data
+        project_mappers: Project Mappers
+        project_collector_repertories: Project Collector Repertories
+        project_repertory: Repertory
+        edit_mapper: Edit Mapper
+        preview_repertory: Preview Repertory
+        deploy_repertory: Deploy Repertory
+        deployer: Deployer
+        project_repertory_preview_title: Project Repertory Preview
+        repertory_item: Repertory Item
+        list_api_hosts: List API Hosts
+        edit_api_host: Edit API Host
+        create_api_host: Create API Host
+        api_host_details: API Host Details
+        collector_actions: Collector Actions
+        deploy_repertory_items: Deploy Repertory Items
+        download_repertory_items: Download Repertory Items
+        delete_repertory_items: Delete Repertory Items
+        download_repertory: Download Repertory
+        browser: Browser
+        url: URL
+        browse: Browse
+        set_to_field: Set to Field
+        fields: Fields
+        browser_log: Browser-Log
+        save_changes: Save changes
+        listing_page_fields: Listing Page Fields
+        details_page_fields: Details Page Fields
+        listing_container_element_description: 'The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)'
+        browse_url: Browse URL
+        browse_details: Browse Details
+        collector: Collector
+        run_collector: Run Collector
         
     form:
         locale: Language
         name: Name
         category: Category
         category_placeholder: '-- Choose a Category --'
+        
+        api_host:
+            base_url: Base Url
+            credentials: Credentials
+            
         project:
             url: Url
             field_type_placeholder: '-- Choose a Field Type --'
             field_title_placeholder: '-- Type a Field Title --'
             field_xquery_placeholder: '-- Type a Field Xquery --'
+            listing_container_element: Listing Container Element
+            details_link: Details Link
+            pager_link: Pager Link
+            
+        project_collector:
+            parse_mode: Parse Mode
+            collection_type: Collection Type
+        
         mapper:
+            deployer: Deployer
+            deployer_placeholder: '-- Choose a Deployer --'
             project_field_placeholder: '-- Choose a Project Field --'
             map_field_placeholder: '-- Choose a Map Field --'
+        
         deployer:
+            api_host: Api Host
+            mapper: Mapper
             project_mapper_placeholder: '-- Choose a Mapper --'
             api_host_placeholder: '-- Choose an Api Host --'
             
