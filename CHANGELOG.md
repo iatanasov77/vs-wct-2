@@ -1,3 +1,9 @@
+2.0.3	|	Release date: **30.05.2024**
+============================================
+* Bug-Fixes:
+  - Fix Doctrine Config For Production Environement.
+
+
 2.0.2	|	Release date: **30.05.2024**
 ============================================
 * Bug-Fixes:
