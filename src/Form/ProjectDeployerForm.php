@@ -23,7 +23,7 @@ class ProjectDeployerForm extends AbstractType
             ->add( 'repertoryId', HiddenType::class, ['required' => true] )
             
             ->add( 'apiHost', EntityType::class, [
-                'label'                 => 'Api Host',
+                'label'                 => 'vs_wct.form.deployer.api_host',
                 'translation_domain'    => 'WebContentThief',
                 
                 'class'                 => ApiHost::class,
@@ -33,6 +33,7 @@ class ProjectDeployerForm extends AbstractType
             ])
             
             ->add( 'mapper', EntityType::class, [
+                'label'                 => 'vs_wct.form.deployer.mapper',
                 'class'                 => ProjectMapper::class,
                 'choice_label'          => 'title',
                 'query_builder'         => function ( EntityRepository $er ) use ( $project )

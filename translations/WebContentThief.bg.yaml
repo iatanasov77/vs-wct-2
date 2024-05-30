@@ -33,12 +33,30 @@ vs_wct:
         download_repertory_items: Download Repertory Items
         delete_repertory_items: Delete Repertory Items
         download_repertory: Download Repertory
+        browser: Browser
+        url: URL
+        browse: Browse
+        set_to_field: Set to Field
+        fields: Fields
+        browser_log: Browser-Log
+        save_changes: Save changes
+        listing_page_fields: Listing Page Fields
+        details_page_fields: Details Page Fields
+        listing_container_element_description: 'The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)'
+        browse_url: Browse URL
+        browse_details: Browse Details
+        collector: Collector
+        run_collector: Run Collector
         
     form:
         locale: Език
         name: Име
         category: Категория
         category_placeholder: '-- Избери Категория --'
+        
+        api_host:
+            base_url: Base Url
+            credentials: Credentials
         
         project:
             url: УРЛ
@@ -48,12 +66,20 @@ vs_wct:
             listing_container_element: Елемент на контейнер за списък
             details_link: Връзка за Детайли
             pager_link: Странициране връзка
+            
+        project_collector:
+            parse_mode: Parse Mode
+            collection_type: Collection Type
         
         mapper:
+            deployer: Deployer
+            deployer_placeholder: '-- Choose a Deployer --'
             project_field_placeholder: '-- Избери Поле от Проекта --'
             map_field_placeholder: '-- Избери Поле за Мапване --'
         
         deployer:
+            api_host: Api Host
+            mapper: Mapper
             project_mapper_placeholder: '-- Избери един Мапър --'
             api_host_placeholder: '-- Избери един Апи Хост --'
 

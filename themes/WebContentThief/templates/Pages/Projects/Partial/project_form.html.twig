@@ -42,13 +42,13 @@
                 <button type="button" id="btnBrowseListingUrl"
                     class="btn btn-primary ml-2 btnBrowseUrl"
                     data-bs-toggle="modal" data-bs-target="#modalBrowser"
-                >Browse URL</button>
+                >{{ 'vs_wct.template.browse_url' | trans( {},'WebContentThief' ) }}</button>
             {% if detailsUrl %}
                 <button type="button" id="btnBrowseDetailsUrl"
                     class="btn btn-primary ml-2 btnBrowseDetails"
                     data-bs-toggle="modal" data-bs-target="#modalBrowser"
                     data-url="{{ detailsUrl }}"
-                >Browse Details</button>
+                >{{ 'vs_wct.template.browse_details' | trans( {},'WebContentThief' ) }}</button>
             {% endif %}
             </div>
         </div>
@@ -62,7 +62,7 @@
         
         {{ form_widget(form.listingContainerElement, {'attr': {'class': 'form-control'}}) }}
         
-        <p>The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)</p>
+        <p>{{ 'vs_wct.template.listing_container_element_description' | trans( {},'WebContentThief' ) }}</p>
     </div>
     
     <div class="form-group">
@@ -84,7 +84,7 @@
     </div>
     
     <fieldset class="border border-dark rounded p-3" id="fieldsetProjectListingFields">
-        <legend class="w-auto float-none ps-2 pe-2">Listing Page Fields</legend>
+        <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.template.listing_page_fields' | trans( {},'WebContentThief' ) }}</legend>
         <div class="fieldsContainer"
             data-prototype="{% apply escape %}
                 {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.listingFields.vars.prototype} %}
@@ -99,7 +99,7 @@
     
 {% if detailsUrl %}
     <fieldset class="border border-dark rounded p-3" id="fieldsetProjectDetailsFields">
-        <legend class="w-auto float-none ps-2 pe-2">Details Page Fields</legend>
+        <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.template.details_page_fields' | trans( {},'WebContentThief' ) }}</legend>
         <div class="fieldsContainer"
             data-prototype="{% apply escape %}
                 {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.detailsFields.vars.prototype} %}

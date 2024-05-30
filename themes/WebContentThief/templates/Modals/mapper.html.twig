@@ -4,8 +4,8 @@
     <div class="modal-dialog" role="document" style="max-width: 1400px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create Mapper</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'vs_wct.template.project_create_mapper' | trans( {},'WebContentThief' ) }}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="{{ 'vs_application.form.close' | trans( {},'VSApplicationBundle' ) }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -13,8 +13,12 @@
                 {% include 'Pages/Mappers/Partial/mapper_form.html.twig' %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnSaveMapper">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseMapper">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSaveMapper">
+                    {{ 'vs_application.form.save' | trans( {},'VSApplicationBundle' ) }}
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseMapper">
+                    {{ 'vs_application.form.cancel' | trans( {},'VSApplicationBundle' ) }}
+                </button>
             </div>
         </div>
     </div>

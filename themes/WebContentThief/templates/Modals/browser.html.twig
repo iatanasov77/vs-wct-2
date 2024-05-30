@@ -2,8 +2,8 @@
     <div class="modal-dialog" role="document" style="max-width: 1400px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Browser</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'vs_wct.template.browser' | trans( {},'WebContentThief' ) }}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="{{ 'vs_application.form.close' | trans( {},'VSApplicationBundle' ) }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,7 +15,7 @@
                         <span class="dashboard-spinner spinner-md browser-spinner" id="browser-spinner"></span>
                         <div class="col-sm-12" style="margin: 20px 0 20px 0;">
                             <div class="form-group">
-                                <label for="project_xqueryField">URL: </label>
+                                <label for="project_xqueryField">{{ 'vs_wct.template.url' | trans( {},'WebContentThief' ) }}: </label>
                                 <div class="input-group mb-3">
                                     <input type="text" name="url" id="urlInput" class="form-control" />
                                     <div class="col-sm-1">
@@ -24,7 +24,7 @@
                                         	data-browserUrl="{{ url('vs_wct_browser_browse') }}"
                                             data-urlInput="#urlInput"
                                         >
-                                            Browse
+                                            {{ 'vs_wct.template.browse' | trans( {},'WebContentThief' ) }}
                                         </button>
                                     </div>
                                 </div>                                  
@@ -34,15 +34,15 @@
                     
                         <input type="hidden" id="project_fieldsContainer" name="project[fieldsContainer]" val="" />
                         <div class="input-group">
-                        	<label for="project_xqueryField" class="col-sm-2 control-label">Set to Field: </label>
+                        	<label for="project_xqueryField" class="col-sm-2 control-label">{{ 'vs_wct.template.set_to_field' | trans( {},'WebContentThief' ) }}: </label>
                         	<div class="col-sm-6"> 
                             	<select id="project_xqueryField" name="project[xqueryField]" class="form-control xquery-field-select"></select>
                             </div>
                         </div>
                         <div class="col-sm-1">&nbsp;</div>
                         
-                        <fieldset class="fieldset-fields">
-                            <legend class="w-auto">Fields</legend>
+                        <fieldset class="border border-dark rounded p-3">
+                            <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.template.fields' | trans( {},'WebContentThief' ) }}</legend>
                             <div id="fieldsContainer"></div>
                         </fieldset>
                     </div>
@@ -51,15 +51,19 @@
                 <!-- Browser-Log Card -->
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title border-bottom pb-2">Browser-Log</h4>
+                        <h4 class="card-title border-bottom pb-2">{{ 'vs_wct.template.browser_log' | trans( {},'WebContentThief' ) }}</h4>
                         <div class="browser-log" id="browserLogContainer"></div>
                     </div>
                 </div>
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseBrowser">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSaveFieldsXquery">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCloseBrowser">
+                    {{ 'vs_application.form.close' | trans( {},'VSApplicationBundle' ) }}
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSaveFieldsXquery">
+                    {{ 'vs_wct.template.save_changes' | trans( {},'WebContentThief' ) }}
+                </button>
             </div>
         </div>
     </div>

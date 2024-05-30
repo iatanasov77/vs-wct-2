@@ -21,12 +21,12 @@ class ApiHostForm extends AbstractForm
         
         $builder
             ->add( 'baseUrl', TextType::class, [
-                'label'                 => 'Base Url',
+                'label'                 => 'vs_wct.form.api_host.base_url',
                 'translation_domain'    => 'WebContentThief',
             ])
             
             ->add( 'credentials', JsonType::class, [
-                'label'                 => 'Credentials',
+                'label'                 => 'vs_wct.form.api_host.credentials',
                 'translation_domain'    => 'WebContentThief',
             ])
         ;

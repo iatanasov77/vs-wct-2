@@ -33,6 +33,20 @@ vs_wct:
         download_repertory_items: Download Repertory Items
         delete_repertory_items: Delete Repertory Items
         download_repertory: Download Repertory
+        browser: Browser
+        url: URL
+        browse: Browse
+        set_to_field: Set to Field
+        fields: Fields
+        browser_log: Browser-Log
+        save_changes: Save changes
+        listing_page_fields: Listing Page Fields
+        details_page_fields: Details Page Fields
+        listing_container_element_description: 'The XPath using as base container when we parse fields in listing pages. ( In details pages is using the first parent with id attribute as base container.)'
+        browse_url: Browse URL
+        browse_details: Browse Details
+        collector: Collector
+        run_collector: Run Collector
         
     form:
         locale: Language
@@ -40,6 +54,10 @@ vs_wct:
         category: Category
         category_placeholder: '-- Choose a Category --'
         
+        api_host:
+            base_url: Base Url
+            credentials: Credentials
+            
         project:
             url: Url
             field_type_placeholder: '-- Choose a Field Type --'
@@ -48,12 +66,20 @@ vs_wct:
             listing_container_element: Listing Container Element
             details_link: Details Link
             pager_link: Pager Link
+            
+        project_collector:
+            parse_mode: Parse Mode
+            collection_type: Collection Type
         
         mapper:
+            deployer: Deployer
+            deployer_placeholder: '-- Choose a Deployer --'
             project_field_placeholder: '-- Choose a Project Field --'
             map_field_placeholder: '-- Choose a Map Field --'
         
         deployer:
+            api_host: Api Host
+            mapper: Mapper
             project_mapper_placeholder: '-- Choose a Mapper --'
             api_host_placeholder: '-- Choose an Api Host --'
             

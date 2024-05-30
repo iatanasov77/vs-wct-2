@@ -17,18 +17,20 @@ class ProjectCollectorForm extends AbstractType
             ->add( 'projectId', HiddenType::class, ['required' => true] )
             
             ->add( 'parseMode', ChoiceType::class, [
-                'label'         => 'Parse Mode',
-                'required'      => true,
+                'label'                 => 'vs_wct.form.project_collector.parse_mode',
+                'translation_domain'    => 'WebContentThief',
+                'required'              => true,
                 //'placeholder'   => '-- Choose Parse Mode --',
-                'choices'       => \array_flip( \App\Component\ProjectField::parseModes() ),
-                'data'          => 'xpath',
+                'choices'               => \array_flip( \App\Component\ProjectField::parseModes() ),
+                'data'                  => 'xpath',
             ])
             
             ->add( 'collectionType', ChoiceType::class, [
-                'label'         => 'Collection Type',
+                'label'                 => 'vs_wct.form.project_collector.collection_type',
+                'translation_domain'    => 'WebContentThief',
                 'required'      => true,
                 //'placeholder'   => '-- Choose Collection Type --',
-                'choices'       => \array_flip( \App\Component\ProjectField::destinations() ),
+                'choices'               => \array_flip( \App\Component\ProjectField::destinations() ),
             ])
         ;
     }

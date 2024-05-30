@@ -51,10 +51,10 @@ class ProjectMapperForm extends AbstractForm
             ])
             
             ->add( 'deployer', ChoiceType::class, [
-                'label'                 => 'Deployer',
+                'label'                 => 'vs_wct.form.mapper.deployer',
                 'translation_domain'    => 'WebContentThief',
                 'choices'               => \array_flip( Deployer::DeployersAvailable() ),
-                'placeholder'           => '-- Choose a Deployer --',
+                'placeholder'           => 'vs_wct.form.mapper.deployer_placeholder',
                 //'data'                  => Deployer::DEPLOYER_SYLIUS,
             ])
             
