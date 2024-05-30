@@ -1,3 +1,20 @@
+2.0.0	|	Release date: **30.05.2024**
+============================================
+* New Features:
+  - Load and  MonologBundle for Loggingg.
+  - CKEditor 4.22.1 was the last version of CKEditor 4 available under the open source license terms.
+  - Improve Phing Build Config.
+  - Add a Payment Entity.
+  - Update Doctrine Config.
+  - Update Application WCT About New Versions of Vankosoft Bundles.
+  - Improve WCT Application Project Pages.
+  - Improve Application Theme.
+  - Create File Downloader/Uploader for Project Collectors.
+  - Make Some View Improvements.
+  - Create Download Feature for Repertory Items.
+  - Translate all Forms and Views.
+
+
 1.2.2	|	Release date: **10.08.2023**
 ============================================
 * New Features and Improvements:
