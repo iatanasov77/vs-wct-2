@@ -4,6 +4,16 @@ vs_application_instalator:
             classes:
                 model: App\Entity\Application\InstalationInfo
 vs_application:
+    project_type: catalog_application
+    
+    vankosoft_api:
+        enabled: false
+        project: 'web-content-thief'
+        connection:
+            host: 'http://api.vankosoft.org/api'
+            user: apiadmin
+            password: '%env(VANKOSOFT_API_PASSWORD)%'
+    
     resources:
         application:
             classes:
