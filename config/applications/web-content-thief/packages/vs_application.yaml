@@ -149,7 +149,7 @@ vs_application:
             
             logout:
                 name: vs_application.menu.logout
-                route: vs_application_logout
+                route: app_logout
                 attributes:
                     iconClass: "fas fa-power-off me-2"
                     divider_prepend: false
