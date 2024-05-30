@@ -105,7 +105,7 @@
                 <div class="nav-user-dropdown dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
                         <h5 class="mb-0 text-white nav-user-name">{% if app.user.info %}{{ app.user.info.fullName }}{% endif %}</h5>
-                        <span class="status"></span><span class="ms-2">Available</span>
+                        <span class="status"></span><span class="ms-2">{{ app.user.info.designation }}</span>
                     </div>
                     {{ knp_menu_render( 'profile', {'template': 'Menu/profile.html.twig'} ) }}
                 </div>
