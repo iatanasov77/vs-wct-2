@@ -20,7 +20,7 @@ final class Version20240528071858 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE WCT_ApiHosts (id INT AUTO_INCREMENT NOT NULL, base_url VARCHAR(255) NOT NULL, credentials JSON NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE WCT_ApiHosts (id INT AUTO_INCREMENT NOT NULL, base_url VARCHAR(255) NOT NULL, credentials LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE WCT_PictureCroppers (id INT AUTO_INCREMENT NOT NULL, crop_top TINYINT(1) DEFAULT NULL, crop_right TINYINT(1) DEFAULT NULL, crop_bottom TINYINT(1) DEFAULT NULL, crop_left TINYINT(1) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE WCT_ProjectCategories (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, parent_id INT DEFAULT NULL, taxon_id INT DEFAULT NULL, INDEX IDX_1686C1F7A76ED395 (user_id), INDEX IDX_1686C1F7727ACA70 (parent_id), UNIQUE INDEX UNIQ_1686C1F7DE13F470 (taxon_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE WCT_ProjectFields (id INT AUTO_INCREMENT NOT NULL, project_id INT DEFAULT NULL, collection_type ENUM(\'listing\', \'details\'), type ENUM(\'text\', \'picture\', \'link\'), title VARCHAR(255) NOT NULL, xquery VARCHAR(255) DEFAULT NULL, slug VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D88C386989D9B62 (slug), INDEX IDX_8D88C386166D1F9C (project_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
@@ -52,11 +52,6 @@ final class Version20240528071858 extends AbstractMigration
         $this->addSql('ALTER TABLE VSCAT_PricingPlanSubscriptions CHANGE gateway_attributes gateway_attributes JSON DEFAULT NULL');
         $this->addSql('ALTER TABLE VSCAT_PricingPlans CHANGE gateway_attributes gateway_attributes JSON DEFAULT NULL');
         $this->addSql('ALTER TABLE VSCAT_Products DROP average_rating');
-        $this->addSql('ALTER TABLE VSPAY_Adjustments CHANGE details details JSON NOT NULL');
-        $this->addSql('ALTER TABLE VSPAY_GatewayConfig CHANGE config config JSON NOT NULL, CHANGE sandbox_config sandbox_config JSON DEFAULT NULL');
-        $this->addSql('ALTER TABLE VSPAY_Payment CHANGE details details JSON NOT NULL');
-        $this->addSql('ALTER TABLE VSUM_Users CHANGE payment_details payment_details JSON DEFAULT NULL');
-        $this->addSql('ALTER TABLE VSUM_UsersInfo CHANGE title title ENUM(\'mr\', \'mrs\', \'miss\')');
     }
 
     public function down(Schema $schema): void
@@ -94,10 +89,6 @@ final class Version20240528071858 extends AbstractMigration
         $this->addSql('ALTER TABLE VSCAT_PricingPlanSubscriptions CHANGE gateway_attributes gateway_attributes JSON DEFAULT NULL');
         $this->addSql('ALTER TABLE VSCAT_PricingPlans CHANGE gateway_attributes gateway_attributes JSON DEFAULT NULL');
         $this->addSql('ALTER TABLE VSCAT_Products ADD average_rating DOUBLE PRECISION DEFAULT \'0\' NOT NULL');
-        $this->addSql('ALTER TABLE VSPAY_Adjustments CHANGE details details JSON NOT NULL');
-        $this->addSql('ALTER TABLE VSPAY_GatewayConfig CHANGE config config JSON NOT NULL, CHANGE sandbox_config sandbox_config JSON DEFAULT NULL');
-        $this->addSql('ALTER TABLE VSPAY_Payment CHANGE details details JSON NOT NULL');
-        $this->addSql('ALTER TABLE VSUM_Users CHANGE payment_details payment_details JSON NOT NULL');
         $this->addSql('ALTER TABLE VSUM_UsersInfo CHANGE title title VARCHAR(255) DEFAULT NULL');
     }
 }
