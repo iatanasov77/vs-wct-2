@@ -288,4 +288,13 @@ class Project implements ResourceInterface
         
         return $this;
     }
+    
+    /**
+     * Needed of CrudOwnerModelsVoter
+     * @return \App\Entity\UserManagement\User
+     */
+    public function getOwner()
+    {
+        return $this->user;
+    }
 }
