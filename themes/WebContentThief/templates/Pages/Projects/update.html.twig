@@ -130,6 +130,15 @@
                                                         <i class="fas fa-download"></i>
                                                     </a>
                                                 {% endif %}
+                                                
+                                                <a class="btn btn-danger btnDeleteResource"
+                                                    href="{{ path('vs_wct_project_delete_repertory', {'id': rep.id}) }}"
+                                                    data-csrfToken="{{ csrf_token( rep.id ) }}"
+                                                    data-redirectUrl="{{ path('vs_wct_projects_update', {'id': item.id}) }}"
+                                                    title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
+                                                >
+                                                    <i class="icon_close_alt2"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -152,6 +161,8 @@
             </div>
         {% endif %}
     </div>
+    
+    {% include '@VSApplication/Partial/resource-delete.html.twig' %}
 {% endblock %}
 
 {% block modals %}

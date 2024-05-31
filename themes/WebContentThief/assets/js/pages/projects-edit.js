@@ -1,5 +1,6 @@
 require( 'bootstrap-sass' );
 require ( 'jquery-duplicate-fields/jquery.duplicateFields.js' );
+require( '@/js/includes/resource-delete.js' );
 
 import { WctProjectFields } from '../includes/wct_project_fields.js';
 import { initWctProjectFields } from '../includes/wct_project_fields.js';

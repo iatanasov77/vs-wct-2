@@ -46,10 +46,11 @@
                                         >
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger btnDelete" 
+                                        <a class="btn btn-danger btnDeleteResource" 
                                             href="{{ path('vs_wct_projects_delete', {'id': item.id}) }}"
                                             data-csrfToken="{{ csrf_token( item.id ) }}"
-                                            title="{{ 'vs_cms.template.button_delete' | trans( {},'VSCmsBundle' ) }}"
+                                            data-redirectUrl="{{ path( 'vs_wct_projects_index' ) }}"
+                                            title="{{ 'vs_application.template.items_index_row_action_delete' | trans( {},'VSApplicationBundle' ) }}"
                                         >
                                             <i class="icon_close_alt2"></i>
                                         </a>

@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\Persistence\ManagerRegistry;
 use ZipStream;
 
@@ -109,5 +110,41 @@ class ProjectRepertoriesController extends AbstractController
         }
         
         return new JsonResponse( $response );
+    }
+    
+    public function deleteRepertoryAction( $id, Request $request ): Response
+    {
+        $repertory  = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
+        $em         = $this->doctrine->getManager();
+        
+        $this->removeRepertoryFiles( $repertory );
+        $em->remove( $repertory );
+        $em->flush();
+        
+        return new JsonResponse([
+            'status'    => Status::STATUS_OK,
+        ]);
+    }
+    
+    private function removeRepertoryFiles( ProjectRepertory $repertory )
+    {
+        $em         = $this->doctrine->getManager();
+        $filesystem = new Filesystem();
+        
+        foreach ( $repertory->getItems() as $item ) {
+            foreach ( $item->getFields() as $field ) {
+                $oFile  = $field->getRepertoryFieldFile();
+                if ( ! $oFile ) {
+                    continue;
+                }
+                $filePath   = \sprintf( '%s/%s', $this->repertoryFieldsFilesDirectory, $oFile->getPath() );
+            
+                /*
+                $em->remove( $field );
+                $em->flush();
+                */
+                $filesystem->remove( $filePath );
+            }
+        }
     }
 }
