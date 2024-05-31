@@ -13,6 +13,7 @@ twig:
         alerts: '@vs_app.twig.alerts'
         languages: '%languages%'
         installedBundles: '%kernel.bundles%'
+        analyticsMeasurementId: '%env(GOOGLE_MEASUREMENT_ID)%'
         
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

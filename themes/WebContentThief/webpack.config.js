@@ -49,6 +49,10 @@ Encore
     .addEntry( 'js/api-hosts', './themes/WebContentThief/assets/js/pages/api-hosts.js' )
 ;
 
+Encore.configureDefinePlugin( ( options ) => {
+    options.IS_PRODUCTION = JSON.stringify( Encore.isProduction() );
+});
+
 const config = Encore.getWebpackConfig();
 config.name = 'WebContentThief';
 

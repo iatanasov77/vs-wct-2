@@ -40,7 +40,9 @@
         "vanilla-cookieconsent": "^3.0",
         "remixicon": "^3.5",
 
-        "jquery-xpath": "^0.3.1"
+        "jquery-xpath": "^0.3.1",
+        "@analytics/google-analytics": "^1.0.5",
+        "analytics": "^0.8.1"
     },
     "devDependencies": {
         "@hotwired/stimulus": "^3.0.0",

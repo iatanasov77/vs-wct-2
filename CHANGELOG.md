@@ -1,3 +1,12 @@
+2.1.0	|	Release date: **31.05.2024**
+============================================
+* New Features:
+  - Improve Browser Modal View.
+  - Update Security Access Control Config.
+  - Add Google Analytics Script.
+  - Create SEO Optimization.
+
+
 2.0.4	|	Release date: **30.05.2024**
 ============================================
 * Bug-Fixes:
