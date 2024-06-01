@@ -11,6 +11,7 @@ use ZipStream;
 
 use Vankosoft\ApplicationBundle\Component\Status;
 use App\Entity\ProjectRepertory;
+use App\Entity\ProjectRepertoryItem;
 
 class ProjectRepertoriesController extends AbstractController
 {
@@ -115,36 +116,53 @@ class ProjectRepertoriesController extends AbstractController
     public function deleteRepertoryAction( $id, Request $request ): Response
     {
         $repertory  = $this->doctrine->getRepository( ProjectRepertory::class )->find( $id );
+        $project    = $repertory->getProject();
         $em         = $this->doctrine->getManager();
         
         $this->removeRepertoryFiles( $repertory );
         $em->remove( $repertory );
         $em->flush();
         
-        return new JsonResponse([
-            'status'    => Status::STATUS_OK,
-        ]);
+        return $this->redirectToRoute( 'vs_wct_projects_update', ['id' => $project->getId()] );
+    }
+    
+    public function deleteRepertoryItemAction( $id, Request $request ): Response
+    {
+        $repertoryItem  = $this->doctrine->getRepository( ProjectRepertoryItem::class )->find( $id );
+        $repertory      = $repertoryItem->getRepertory();
+        $em         = $this->doctrine->getManager();
+        
+        $this->removeRepertoryItemFiles( $repertoryItem );
+        $em->remove( $repertoryItem );
+        $em->flush();
+        
+        return $this->redirectToRoute( 'vs_wct_project_preview_repertory', ['id' => $repertory->getId()] );
     }
     
     private function removeRepertoryFiles( ProjectRepertory $repertory )
     {
-        $em         = $this->doctrine->getManager();
+        foreach ( $repertory->getItems() as $item ) {
+            $this->removeRepertoryItemFiles( $item );
+        }
+    }
+    
+    private function removeRepertoryItemFiles( ProjectRepertoryItem $item )
+    {
+        //$em         = $this->doctrine->getManager();
         $filesystem = new Filesystem();
         
-        foreach ( $repertory->getItems() as $item ) {
-            foreach ( $item->getFields() as $field ) {
-                $oFile  = $field->getRepertoryFieldFile();
-                if ( ! $oFile ) {
-                    continue;
-                }
-                $filePath   = \sprintf( '%s/%s', $this->repertoryFieldsFilesDirectory, $oFile->getPath() );
-            
-                /*
-                $em->remove( $field );
-                $em->flush();
-                */
-                $filesystem->remove( $filePath );
+        foreach ( $item->getFields() as $field ) {
+            $oFile  = $field->getRepertoryFieldFile();
+            if ( ! $oFile ) {
+                continue;
             }
+            $filePath   = \sprintf( '%s/%s', $this->repertoryFieldsFilesDirectory, $oFile->getPath() );
+            
+            /*
+             $em->remove( $field );
+             $em->flush();
+             */
+            $filesystem->remove( $filePath );
         }
     }
 }

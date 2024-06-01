@@ -47,6 +47,7 @@ vs_wct:
         browse_details: Browse Details
         collector: Collector
         run_collector: Run Collector
+        return_to_project: Назад към Проекта
         
     form:
         locale: Език

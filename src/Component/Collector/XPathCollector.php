@@ -23,13 +23,12 @@ final class XPathCollector extends Collector
         $repertory->setCode( $runAt->getTimestamp() );
         $repertory->setCollectionType( $collectionType );
         $repertory->setCreatedAt( $runAt );
-        //$this->em->persist( $repertory );
         
         $parsedListingFields    = $this->parseListingFields();
         $parsedDetailsFields    = $this->parseDetailsFields();
         
-        /** Log Collected Data AND Exit */
-        //$this->debugCollectedData( $parsedListingFields, $parsedDetailsFields );
+        /** Log Collected Data */
+        $this->debugCollectedData( $parsedListingFields, $parsedDetailsFields, $runAt );
         
         if ( count( $parsedListingFields ) ) {
             foreach( $parsedListingFields as $index => $parsedItem ) {
@@ -39,9 +38,9 @@ final class XPathCollector extends Collector
                     $projectField   = $this->projectListingFields[$fieldSlug];
                     
                     $repertoryField->setProjectField( $projectField );
-                    $repertoryField->setContent( $fieldContent );
+                    $repertoryField->setContent( $fieldContent ?: '' );
                     
-                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
+                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE && $fieldContent ) {
                         $this->uploader->createRepertoryFieldFile( $repertoryField, $fieldContent );
                     }
                     
@@ -51,7 +50,7 @@ final class XPathCollector extends Collector
                     foreach( $parsedDetailsFields[$index] as $fieldSlug => $fieldContent ) {
                         $repertoryField  = $this->getContainer()->get( 'vs_wct.factory.project_repertory_fields' )->createNew();
                         $repertoryField->setProjectField( $this->projectDetailsFields[$fieldSlug] );
-                        $repertoryField->setContent( $fieldContent );
+                        $repertoryField->setContent( $fieldContent ?: '' );
                         
                         $repertoryItem->addField( $repertoryField );
                     }
@@ -67,9 +66,9 @@ final class XPathCollector extends Collector
                     $projectField   = $this->projectDetailsFields[$fieldSlug];
                     
                     $repertoryField->setProjectField( $projectField );
-                    $repertoryField->setContent( $fieldContent );
+                    $repertoryField->setContent( $fieldContent ?: '' );
                     
-                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
+                    if ( $projectField->getType() == ProjectFieldHelper::TYPE_PICTURE && $fieldContent ) {
                         $this->uploader->createRepertoryFieldFile( $repertoryField, $fieldContent );
                     }
                     
@@ -149,6 +148,10 @@ final class XPathCollector extends Collector
                     } elseif( $field->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
                         $domField->each( function ( Crawler $node, $i ) use ( &$parsedFields, $itemsKey, $fieldSlug )
                         {
+                            // Use For Debugging
+                            //$parsedFields[$itemsKey + $i][$fieldSlug] = $node->text();
+                            //$parsedFields[$itemsKey + $i][$fieldSlug] = $node->attr( 'alt' );
+                            
                             $parsedFields[$itemsKey + $i][$fieldSlug] = $node->attr( 'src' );
                         });
                     }
@@ -190,6 +193,10 @@ final class XPathCollector extends Collector
                         } elseif( $field->getType() == ProjectFieldHelper::TYPE_LINK ) {
                             $parsedFields[$itemsKey][$fieldSlug] = $domField->attr( 'href' );
                         } elseif( $field->getType() == ProjectFieldHelper::TYPE_PICTURE ) {
+                            // Use For Debugging
+                            //$parsedFields[$itemsKey][$fieldSlug] = $node->text();
+                            //$parsedFields[$itemsKey][$fieldSlug] = $node->attr( 'alt' );
+                            
                             $parsedFields[$itemsKey][$fieldSlug] = $domField->attr( 'src' );
                         }
                     }
