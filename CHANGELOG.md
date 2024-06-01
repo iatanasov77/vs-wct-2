@@ -1,3 +1,9 @@
+2.1.2	|	Release date: **01.06.2024**
+============================================
+* Bug-Fixes:
+  - Fix composer.json for production.
+
+
 2.1.1	|	Release date: **01.06.2024**
 ============================================
 * New Features:
