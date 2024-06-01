@@ -19,6 +19,7 @@ parameters:
     applicationTitle: 'Web Content Thief'
     applicationEnvironemnt: '%env(APP_ENV)%'
     
+    vs_agent.enabled: false
     vs_application.version: !php/const App\WebContentThiefKernel::VERSION
     vs_application.public_dir: "%kernel.project_dir%/public/web-content-thief"
     

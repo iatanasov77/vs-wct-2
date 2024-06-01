@@ -15,11 +15,11 @@ parameters:
 ##########################################
 #    Owner Models Example
 ##########################################
-#    vs_users.voter.crud_owner_models:
-#        - 'App\Entity\Post'
-#        - 'App\Entity\Comment'
-#
-#
+    vs_users.voter.crud_owner_models:
+        - 'App\Entity\ProjectCategory'
+        - 'App\Entity\Project'
+
+
 
 services:
     _defaults:

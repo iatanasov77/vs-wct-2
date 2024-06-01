@@ -4,6 +4,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\EntityManagerInterface;
 use Vankosoft\CmsBundle\Component\Uploader\FileUploaderInterface;
 
@@ -156,12 +157,16 @@ abstract class Collector implements ContainerAwareInterface
         }
     }
     
-    protected function debugCollectedData( $parsedListingFields, $parsedDetailsFields )
+    protected function debugCollectedData( $parsedListingFields, $parsedDetailsFields, $runAt )
     {
-        $logToFile  = $this->container->getParameter( 'kernel.project_dir' ) . '/var/CollectorDumps/' . $runAt->getTimestamp() . '.log';
-        $this->container->get( 'filesystem' )->dumpFile( $logToFile, json_encode( $parsedListingFields, JSON_PRETTY_PRINT ) );
-        $this->container->get( 'filesystem' )->appendToFile( $logToFile, json_encode( $parsedDetailsFields, JSON_PRETTY_PRINT ) );
-        die;
+        $environement   = $this->container->getParameter( 'applicationEnvironemnt' );
+        if ( $environement == 'dev' ) {
+            $logToFile  = $this->container->getParameter( 'kernel.project_dir' ) . '/var/CollectorDumps/' . $runAt->getTimestamp() . '.log';
+            $filesystem = new Filesystem();
+            
+            $filesystem->dumpFile( $logToFile, json_encode( $parsedListingFields, JSON_PRETTY_PRINT ) );
+            $filesystem->appendToFile( $logToFile, json_encode( $parsedDetailsFields, JSON_PRETTY_PRINT ) );
+        }
     }
     
     abstract public function runCollector( string $collectionType ): void;

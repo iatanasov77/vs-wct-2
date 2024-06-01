@@ -101,6 +101,15 @@ class ProjectCategory implements ResourceInterface, TaxonDescendentInterface
         return $this;
     }
     
+    /**
+     * Needed of CrudOwnerModelsVoter
+     * @return \App\Entity\UserManagement\User
+     */
+    public function getOwner()
+    {
+        return $this->user;
+    }
+    
     public function __toString()
     {
         return $this->taxon ? $this->taxon->getName() : '';

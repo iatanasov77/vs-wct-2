@@ -1,3 +1,11 @@
+2.1.1	|	Release date: **01.06.2024**
+============================================
+* New Features:
+  - Use CrudOwnerModelsVoter to Show Only Onwned Categories and Projects.
+  - Imrove Resource Deleting.
+  - Improve XPath Collector and Repertory Preview Page.
+
+
 2.1.0	|	Release date: **31.05.2024**
 ============================================
 * New Features:

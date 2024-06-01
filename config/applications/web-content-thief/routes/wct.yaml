@@ -20,6 +20,14 @@ vs_wct_project_download_repertory:
     path:     /project-repertories/{id}/download
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController::downloadRepertoryAction' }
 
+vs_wct_project_delete_repertory:
+    path:     /project-repertories/{id}/delete
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController::deleteRepertoryAction' }
+    
+vs_wct_project_delete_repertory_item:
+    path:     /project-repertories/{id}/delete-item
+    defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController::deleteRepertoryItemAction' }
+    
 vs_wct_project_json_repertory:
     path:     /project-repertories/{id}/get-json
     defaults: { _controller: 'App\Controller\WebContentThief\ProjectRepertoriesController::getJsonAction' }

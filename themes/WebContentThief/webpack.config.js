@@ -47,6 +47,7 @@ Encore
     .addEntry( 'js/projects-edit', './themes/WebContentThief/assets/js/pages/projects-edit.js' )
     .addEntry( 'js/projects-categories', './themes/WebContentThief/assets/js/pages/projects-categories.js' )
     .addEntry( 'js/api-hosts', './themes/WebContentThief/assets/js/pages/api-hosts.js' )
+    .addEntry( 'js/repertory-preview', './themes/WebContentThief/assets/js/pages/repertory-preview.js' )
 ;
 
 Encore.configureDefinePlugin( ( options ) => {
