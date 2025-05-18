@@ -5,12 +5,13 @@ vs_application:
                 name: Home
                 uri: "http://%vankosoft_host%"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: ri-dashboard-2-line
+            
             browser:
                 name: Browser
                 uri: "javascript:;"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: fas fa-search
                 childs:
                     browser_test_browser:
                         name: Test Browser
@@ -19,7 +20,7 @@ vs_application:
                 name: Projects
                 uri: "javascript:;"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: fas fa-project-diagram
                 childs:
                     projects_categories_list:
                         name: List Categories
@@ -49,7 +50,7 @@ vs_application:
                 name: Api Hosts
                 uri: "javascript:;"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: fas fa-server
                 childs:
                     api_hosts_list:
                         name: List Api Hosts

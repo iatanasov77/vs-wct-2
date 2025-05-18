@@ -59,7 +59,7 @@ vs_application:
                 name: vs_application.menu.dashboard
                 uri: "javascript:;"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: ri-dashboard-2-line
                     breadcrumb_route: vs_application_dashboard
                 childs:
                     locales:
