@@ -21,7 +21,7 @@ node ( label: 'php-host' ) {
     def GIT_REPO_WITH_CRED;
     
     def MYSQL_CREDENTIALS_ID    = 'vankosoft-mysql';
-    def MYSQL_DATABASE_PREFIX   = 'WebContentThief_';
+    def MYSQL_DATABASE_PREFIX   = 'c0WebContentThief_';
     def APP_MYSQL_USER;
     def APP_MYSQL_PASSWORD;
     def APP_MYSQL_DATABASE;
