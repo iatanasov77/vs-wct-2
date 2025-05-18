@@ -1,3 +1,11 @@
+2.2.0	|	Release date: **18.05.2025**
+============================================
+* New Features:
+  - Add a Documentation.
+  - Update to New Versions of Vankosoft Core Library and Extensions.
+  - Improve Application Menu And All Page Title Icons.
+
+
 2.1.2	|	Release date: **01.06.2024**
 ============================================
 * Bug-Fixes:
