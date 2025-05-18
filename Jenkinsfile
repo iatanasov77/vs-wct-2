@@ -6,10 +6,14 @@ node ( label: 'php-host' ) {
     def APP_HOST                = 'wct.vankosoft.org'
     def BUILD_ENVIRONMENT
     def BRANCH_NAME
-    def DB_BACKUP
+    def DO_BACKUP
+    
+    def REMOTE_SSH_HOST         = '164.138.221.242'
+    def REMOTE_SSH_PORT         = '22'
+    def REMOTE_SSH_USER         = 'root'
     def REMOTE_DIR
     
-    final PHP_BIN               = '/usr/bin/php82'
+    final PHP_BIN               = '/usr/bin/php8.2'
     
     final GIT_CREDENTIALS_ID    = 'github-iatanasov77';
     final GIT_URI               = 'github.com/iatanasov77/vs-wct-2.git'
@@ -30,6 +34,9 @@ node ( label: 'php-host' ) {
     def APP_FTP_USER;
     def APP_FTP_PASSWORD;
     def APP_FTP_URL;
+    
+    def GOOGLE_MEASUREMENT_CREDENTIALS_ID   = 'wct-measurement-id';
+    def GOOGLE_MEASUREMENT_ID               = 'G-abc123';
     
     stage( 'Configure Environement' ) {
     
@@ -78,6 +85,11 @@ node ( label: 'php-host' ) {
             APP_FTP_URL         = "${FTP_HOST}/web/project/${BUILD_ENVIRONMENT}/"
             REMOTE_DIR          = "${APP_DIR}/${BUILD_ENVIRONMENT}"
         }
+        
+        // Bind Google Measurement Id
+        withCredentials([string(credentialsId: "${GOOGLE_MEASUREMENT_CREDENTIALS_ID}", variable: 'MEASUREMENT_ID')]) {
+            GOOGLE_MEASUREMENT_ID   = "$MEASUREMENT_ID"
+        }
     }
     
     stage( 'Source Checkout' ) {
@@ -115,7 +127,11 @@ node ( label: 'php-host' ) {
         
         CONFIG_TEMPLATE = readFile( ".env.${BUILD_ENVIRONMENT}" )
         writeFile file: '.env',
-                text: vankosoftJob.renderTemplate( CONFIG_TEMPLATE, ['database_url': APP_DATABASE_URL, 'app_host': APP_HOST] )
+                text: vankosoftJob.renderTemplate( CONFIG_TEMPLATE, [
+                    'database_url': APP_DATABASE_URL,
+                    'app_host': APP_HOST,
+                    'google_measurement_id': GOOGLE_MEASUREMENT_ID
+                ])
     }
     
     stage( 'Before Deploy (Create Backup on Hosting, Set Maintenance Mode etc.)' ) {
@@ -126,7 +142,7 @@ node ( label: 'php-host' ) {
                 script {
                     sshagent(credentials : ['vps-mini-ssh-root']) {
                         sh """
-                            ssh -t -t -l root 164.138.221.242 -o StrictHostKeyChecking=no -p 1022  << ENDSSH
+                            ssh -t -t -l ${REMOTE_SSH_USER} ${REMOTE_SSH_HOST} -o StrictHostKeyChecking=no -p ${REMOTE_SSH_PORT} << ENDSSH
                                 cd ${REMOTE_DIR}
                                 yes | cp -dRf ${REMOTE_DIR} ${REMOTE_DIR}_BACKUP
                                 mysqldump -pg2Sx4,+WXwdQ ${DATABASE_PRODUCTION} > ${REMOTE_DIR}/../${DATABASE_PRODUCTION}_${now}.sql
@@ -158,7 +174,7 @@ ENDSSH
             script {
                 sshagent(credentials : ['vps-mini-ssh-root']) {
                     sh """
-                        ssh -t -t -l root 164.138.221.242 -o StrictHostKeyChecking=no -p 1022  << ENDSSH
+                        ssh -t -t -l ${REMOTE_SSH_USER} ${REMOTE_SSH_HOST} -o StrictHostKeyChecking=no -p ${REMOTE_SSH_PORT} << ENDSSH
                             cd ${REMOTE_DIR}
                             ${PHP_BIN} -d memory_limit=-1 bin/console --no-interaction doctrine:migrations:migrate
                             migrationCode=\$?   # Capture migration return code
@@ -183,7 +199,7 @@ ENDSSH
             script {
                 sshagent(credentials : ['vps-mini-ssh-root']) {
                     sh """
-                        ssh -t -t -l root 164.138.221.242 -o StrictHostKeyChecking=no -p 1022  << ENDSSH
+                        ssh -t -t -l ${REMOTE_SSH_USER} ${REMOTE_SSH_HOST} -o StrictHostKeyChecking=no -p ${REMOTE_SSH_PORT} << ENDSSH
                             cd ${REMOTE_DIR}
                             ${PHP_BIN} -d memory_limit=-1 bin/console --no-interaction doctrine:migrations:migrate
                             migrationCode=\$?   # Capture migration return code
