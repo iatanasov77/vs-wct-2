@@ -3,6 +3,14 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\Controller\AdminPanel\:
+        resource: '../../../src/Controller/AdminPanel'
+        tags: ['controller.service_arguments']
+        autowire: true
+    
+    App\Controller\AdminPanel\DefaultController:
+        tags: ['controller.service_arguments']
+    
     App\Controller\Application\DebugController:
         arguments:
             - '@service_container'

@@ -7,12 +7,9 @@ twig:
         applicationIcon: 'build/web-content-thief/images/web-content-thief.svg'
         applicationTitle: '%applicationTitle%'
         applicationEnvironement: '%applicationEnvironemnt%'
-        lang: '%lang%'
-        locale: '%locale%'
         formCreateAccount: '%vs_users.form_create_account%'
-        alerts: '@vs_app.twig.alerts'
-        languages: '%languages%'
         installedBundles: '%kernel.bundles%'
+        useCkEditor: '%env(resolve:USE_CKEDITOR)%'
         analyticsMeasurementId: '%env(GOOGLE_MEASUREMENT_ID)%'
         
     form_themes:

@@ -3,12 +3,14 @@
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Gaufrette\Filesystem as GaufretteFilesystem;
-use Vankosoft\CmsBundle\Component\Uploader\FilemanagerUploader;
+use League\Flysystem\Filesystem as LeagueFilesystem;
+
+use Vankosoft\CmsBundle\Component\Uploader\AbstractFileUploader;
+use Vankosoft\CmsBundle\Component\Uploader\FileUploader;
 use Vankosoft\CmsBundle\Component\Generator\FilePathGeneratorInterface;
 use App\Entity\ProjectRepertoryField;
 
-final class RepertoryFieldFileUploader extends FilemanagerUploader
+final class RepertoryFieldFileUploader extends FileUploader
 {
     /** @var FactoryInterface */
     private $repertoryFieldFileFactory;
@@ -17,7 +19,7 @@ final class RepertoryFieldFileUploader extends FilemanagerUploader
     private $downloadDirectory;
     
     public function __construct(
-        GaufretteFilesystem $filesystem,
+        LeagueFilesystem $filesystem,
         FilePathGeneratorInterface $filePathGenerator,
         FactoryInterface $repertoryFieldFileFactory,
         string $downloadDirectory

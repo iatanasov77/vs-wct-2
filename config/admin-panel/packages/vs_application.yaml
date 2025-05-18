@@ -6,14 +6,6 @@ vs_application_instalator:
 vs_application:
     project_type: catalog_application
     
-    vankosoft_api:
-        enabled: false
-        project: 'web-content-thief'
-        connection:
-            host: 'http://api.vankosoft.org/api'
-            user: apiadmin
-            password: '%env(VANKOSOFT_API_PASSWORD)%'
-    
     resources:
         application:
             classes:
@@ -67,7 +59,7 @@ vs_application:
                 name: vs_application.menu.dashboard
                 uri: "javascript:;"
                 attributes:
-                    iconClass: icon_genius
+                    iconClass: ri-dashboard-2-line
                     breadcrumb_route: vs_application_dashboard
                 childs:
                     locales:
@@ -397,10 +389,10 @@ vs_application:
                     ################################
                     gateway_config_stripe_subscription_plans:
                         name: vs_application.menu.stripe_subscription_plans
-                        route: gateway_config_stripe_subscription_objects_index
-                    gateway_config_stripe_coupons:
-                        name: vs_application.menu.stripe_coupons
-                        route: gateway_config_stripe_coupon_objects_index
+                        route: gateway_config_stripe_objects_index
+#                     gateway_config_stripe_coupons:
+#                         name: vs_application.menu.stripe_coupons
+#                         route: gateway_config_stripe_coupon_objects_index
                         
             currencies:
                 name: vs_application.menu.currencies
