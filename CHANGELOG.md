@@ -1,3 +1,9 @@
+2.2.1	|	Release date: **18.05.2025**
+============================================
+* New Features:
+  - Update Jenkinsfile Reinstalled Hosting Server.
+
+
 2.2.0	|	Release date: **18.05.2025**
 ============================================
 * New Features:
