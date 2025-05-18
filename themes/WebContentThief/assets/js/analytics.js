@@ -7,7 +7,7 @@ if ( IS_PRODUCTION ) {
     //alert( analyticsMeasurementId );
     
     const analytics = Analytics({
-        app: 'vankosoft-webguitarpro',
+        app: 'vankosoft-webcontentthief',
         plugins: [
             googleAnalytics({
                 measurementIds: [analyticsMeasurementId]
