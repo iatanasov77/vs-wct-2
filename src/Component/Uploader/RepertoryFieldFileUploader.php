@@ -6,11 +6,11 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use League\Flysystem\Filesystem as LeagueFilesystem;
 
 use Vankosoft\CmsBundle\Component\Uploader\AbstractFileUploader;
-use Vankosoft\CmsBundle\Component\Uploader\FilemanagerUploader;
+use Vankosoft\CmsBundle\Component\Uploader\FileUploader;
 use Vankosoft\CmsBundle\Component\Generator\FilePathGeneratorInterface;
 use App\Entity\ProjectRepertoryField;
 
-final class RepertoryFieldFileUploader extends FilemanagerUploader
+final class RepertoryFieldFileUploader extends FileUploader
 {
     /** @var FactoryInterface */
     private $repertoryFieldFileFactory;

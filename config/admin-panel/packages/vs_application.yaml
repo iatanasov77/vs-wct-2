@@ -389,10 +389,10 @@ vs_application:
                     ################################
                     gateway_config_stripe_subscription_plans:
                         name: vs_application.menu.stripe_subscription_plans
-                        route: gateway_config_stripe_subscription_objects_index
-                    gateway_config_stripe_coupons:
-                        name: vs_application.menu.stripe_coupons
-                        route: gateway_config_stripe_coupon_objects_index
+                        route: gateway_config_stripe_objects_index
+#                     gateway_config_stripe_coupons:
+#                         name: vs_application.menu.stripe_coupons
+#                         route: gateway_config_stripe_coupon_objects_index
                         
             currencies:
                 name: vs_application.menu.currencies
