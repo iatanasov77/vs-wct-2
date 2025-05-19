@@ -33,11 +33,13 @@
 
                                     <div class="row  text-center">
                                         <div class="col-lg-12 col-lg-offset-1">
+                                            {#
                                             <select>
                                             {% for ps_sp in ps.subscriptionPeriods %}
                                                 <option>{{ ps_sp.subscriptionPeriod }}  {{ ps_sp.price }}  {{ ps_sp.currencyCode }}</option>
                                             {% endfor %}
                                             </select>
+                                            #}
                                         </div>
                                     </div>
                                     <div class="row">&nbsp;</div>

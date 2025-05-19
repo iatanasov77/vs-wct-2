@@ -21,7 +21,7 @@ class ProjectsController extends AbstractCrudController
         $filterForm     = null;
         $filterCategory = null;
         
-        if( $entity && $entity->getId() && $entity->getDetailsLink() ) {
+        if( $entity && $entity->getId() ) {
             $collector      = $this->get( 'vs_wct.xpath_collector' );
             
             $collector->initialize( $entity, null );

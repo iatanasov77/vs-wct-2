@@ -43,13 +43,13 @@
                     class="btn btn-primary ml-2 btnBrowseUrl"
                     data-bs-toggle="modal" data-bs-target="#modalBrowser"
                 >{{ 'vs_wct.template.browse_url' | trans( {},'WebContentThief' ) }}</button>
-            {% if detailsUrl %}
-                <button type="button" id="btnBrowseDetailsUrl"
-                    class="btn btn-primary ml-2 btnBrowseDetails"
-                    data-bs-toggle="modal" data-bs-target="#modalBrowser"
-                    data-url="{{ detailsUrl }}"
-                >{{ 'vs_wct.template.browse_details' | trans( {},'WebContentThief' ) }}</button>
-            {% endif %}
+                {% if detailsUrl %}
+                    <button type="button" id="btnBrowseDetailsUrl"
+                        class="btn btn-primary ml-2 btnBrowseDetails"
+                        data-bs-toggle="modal" data-bs-target="#modalBrowser"
+                        data-url="{{ detailsUrl }}"
+                    >{{ 'vs_wct.template.browse_details' | trans( {},'WebContentThief' ) }}</button>
+                {% endif %}
             </div>
         </div>
     </div>
