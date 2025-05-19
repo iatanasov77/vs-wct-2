@@ -5,14 +5,11 @@ twig:
     
     globals:
         app_environment: '%env(APP_ENV)%'
-        applicationIcon: '%applicationIcon%'
         applicationCompany: '%applicationCompany%'
         applicationTitle: '%applicationTitle%'
-        hasTopSearch: '%hasTopSearch%'
         formCreateAccount: '%vs_users.form_create_account%'
         installedBundles: '%kernel.bundles%'
         picturesPath: '%vs_application.filemanager_shared_media_gaufrette.app_pictures%'
-        analyticsMeasurementId: '%env(GOOGLE_MEASUREMENT_ID)%'
         
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

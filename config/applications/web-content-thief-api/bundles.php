@@ -7,7 +7,6 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'staging' => true, 'test' => true],
-	Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 	
 	Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
@@ -19,10 +18,7 @@ return [
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-	daddl3\SymfonyCKEditor5WebpackViteBundle\SymfonyCKEditor5WebpackViteBundle::class => ['all' => true],
-	
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
-    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
 	Knp\Bundle\TimeBundle\KnpTimeBundle::class => ['all' => true],
 	Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
 	Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
@@ -36,15 +32,20 @@ return [
     Vankosoft\CmsBundle\VSCmsBundle::class => ['all' => true],
     Vankosoft\UsersBundle\VSUsersBundle::class => ['all' => true],
 	
-	FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle::class => ['all' => true],
 	Hackzilla\Bundle\PasswordGeneratorBundle\HackzillaPasswordGeneratorBundle::class => ['all' => true],
-
-	Oneup\UploaderBundle\OneupUploaderBundle::class => ['all' => true],
-    Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
+	Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
 
     Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
     Vankosoft\UsersSubscriptionsBundle\VSUsersSubscriptionsBundle::class => ['all' => true],
     Vankosoft\PaymentBundle\VSPaymentBundle::class => ['all' => true],
     Vankosoft\CatalogBundle\VSCatalogBundle::class => ['all' => true],
+	
+	ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Vankosoft\ApiBundle\VSApiBundle::class => ['all' => true],
+    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
+    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
+    Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
 ];

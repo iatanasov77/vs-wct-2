@@ -5,8 +5,8 @@ vs_application_instalator:
                 model: App\Entity\Application\InstalationInfo
 
 vs_application:
-    project_type: catalog_application
-    
+    project_type: extended_application
+
     resources:
         application:
             classes:
@@ -56,43 +56,9 @@ vs_application:
 
     menu:
         mainApplicationMenu:
-            home:
-                name: vs_application.menu.home
-                route: app_home
-                attributes:
-                    iconClass: "bx bxs-dashboard"
-                display: false
-            
-            user_register:
-                name: vs_application.menu.register
-                route: vs_users_register_form
-                attributes:
-                    id: user_register
-                    iconClass: "bx bx-user-circle"
-            user_login:
-                name: vs_application.menu.login
-                route: app_login
-                attributes:
-                    id: user_login
-                    iconClass: "bx bx-user-circle"
-        
             products:
                 name: Products
                 route: vs_catalog_catalog_latest_products
-                childs:
-                    category_products:
-                        name: Category Products
-                        route: vs_catalog_catalog_category_products
-                        routeParameters:
-                          categorySlug: string
-                        display: false
-                    product_show:
-                        name: Show Product
-                        route: vs_catalog_catalog_product_show
-                        routeParameters:
-                          categorySlug: string
-                          productSlug: string
-                        display: false
             pricing_plans:
                 name: Pricing plans
                 uri: "javascript:;"

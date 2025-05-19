@@ -1,6 +1,6 @@
 app_home:
     path: /
-    controller: App\Controller\WebContentThiefApi\DefaultController::index
+    controller: App\Controller\WebContentThiefAPI\DefaultController::index
 
 admin_panel:
     path: /admin

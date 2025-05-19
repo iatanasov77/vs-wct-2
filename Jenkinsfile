@@ -50,7 +50,7 @@ node ( label: 'php-host' ) {
         
         switch( BUILD_ENVIRONMENT ) {
             case 'production':
-                DB_BACKUP   = false
+                DO_BACKUP   = false
                 
                 def tags    = vankosoftJob.getGitTags( GIT_REPO_WITH_CRED )
                 
@@ -59,7 +59,7 @@ node ( label: 'php-host' ) {
                                 
                 break;
             default:
-                DB_BACKUP       = false
+                DO_BACKUP       = false
                 APP_HOST        = "${HOST_PREFIX}${BUILD_ENVIRONMENT}.vankosoft.org"  
                 
                 def branches    = vankosoftJob.getGitBranches( GIT_REPO_WITH_CRED )
@@ -136,7 +136,7 @@ node ( label: 'php-host' ) {
     
     stage( 'Before Deploy (Create Backup on Hosting, Set Maintenance Mode etc.)' ) {
         if ( BUILD_ENVIRONMENT == 'production' ) {
-            if ( DB_BACKUP ) {
+            if ( DO_BACKUP ) {
                 def now = new Date()
                 
                 script {

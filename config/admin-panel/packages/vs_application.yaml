@@ -4,7 +4,7 @@ vs_application_instalator:
             classes:
                 model: App\Entity\Application\InstalationInfo
 vs_application:
-    project_type: catalog_application
+    project_type: extended_application
     
     resources:
         application:

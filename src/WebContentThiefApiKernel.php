@@ -7,7 +7,7 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
 
 use Vankosoft\ApplicationBundle\Component\Application\Kernel as BaseKernel;
 
-class WebContentThiefApiKernel extends BaseKernel
+class WebContentThiefAPIKernel extends BaseKernel
 {
     const VERSION   = '1.12.0';
     const APP_ID    = 'web-content-thief-api';

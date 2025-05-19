@@ -1,6 +1,6 @@
 <?php
 
-use App\WebContentThiefApiKernel as Kernel;
+use App\WebContentThiefAPIKernel as Kernel;
 
 require_once dirname( __DIR__ ) . '/../vendor/autoload_runtime.php';
 

@@ -1,7 +1,7 @@
 app_pricing_plans:
     path: /pricing-plans
-    controller: App\Controller\WebContentThiefApi\PricingPlansController::index
+    controller: App\Controller\WebContentThiefAPI\PricingPlansController::index
 
 app_pricing_plans_select:
     path: /pricing-plans/select/{pricingPlanId}
-    controller: App\Controller\WebContentThiefApi\PricingPlansController::selectPricingPlan
+    controller: App\Controller\WebContentThiefAPI\PricingPlansController::selectPricingPlan

@@ -1,5 +1,5 @@
 parameters:
-    vs_application.menu.config_file: "%kernel.project_dir%/config/applications/web-content-thief-api/packages/vs_application.yaml"
+    vs_application.menu.config_file: "%kernel.project_dir%/config/applications/__application_slug__/packages/vs_application.yaml"
     vs_application.main_menus: ['mainApplicationMenu']
 
 services:

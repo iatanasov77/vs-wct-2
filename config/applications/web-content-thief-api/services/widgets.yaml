@@ -12,7 +12,7 @@ services:
     App\Widgets\Test2Widget:
         tags:
             - { name: kernel.event_listener, event: widget.start, method: builder }
-    
+            
     App\Widgets\ApplicationMenuLocalesWidget:
         arguments:
             - '@request_stack'

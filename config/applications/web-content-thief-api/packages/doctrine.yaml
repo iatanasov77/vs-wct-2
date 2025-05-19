@@ -5,12 +5,12 @@ doctrine:
         logging: true
         driver: 'pdo_mysql'
         server_version: '8.0'
-        charset: utf8mb4
+        charset: utf8
         
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
-        
+
         mapping_types:
             enum: string
             
@@ -48,7 +48,7 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-            
+
             gedmo_tree:
                 #type: annotation
                 type: attribute
@@ -56,7 +56,7 @@ doctrine:
                 dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Tree/Entity"
                 alias: GedmoTree # (optional) it will default to the name set for the mapping
                 is_bundle: false
-            
+                
             translatable:
                 #type: annotation
                 type: attribute
@@ -64,7 +64,7 @@ doctrine:
                 dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Translatable/Entity/MappedSuperclass"
                 alias: GedmoTranslatable
                 is_bundle: false
-            
+                
             loggable:
                 #type: annotation
                 type: attribute
@@ -72,7 +72,7 @@ doctrine:
                 dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity"
                 alias: GedmoLoggable
                 is_bundle: false
-            
+                
             sortable:
                 #type: annotation
                 type: attribute

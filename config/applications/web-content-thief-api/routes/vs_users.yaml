@@ -8,30 +8,30 @@ vs_user_proffile:
 
 app_login:
     path: /login
-    controller: App\Controller\WebContentThiefApi\AuthController::login
+    controller: App\Controller\WebContentThiefAPI\AuthController::login
 
 app_logout:
     path: /logout
-    controller: App\Controller\WebContentThiefApi\AuthController::logout
+    controller: App\Controller\WebContentThiefAPI\AuthController::logout
 
 vs_users_register_form:
     path:     /register
-    controller: App\Controller\WebContentThiefApi\RegisterController::index
+    controller: App\Controller\WebContentThiefAPI\RegisterController::index
     
 vs_users_forgot_password_form:
     path:     /forgot-password
-    controller: App\Controller\WebContentThiefApi\ForgotPasswordController::indexAction
+    controller: App\Controller\WebContentThiefAPI\ForgotPasswordController::indexAction
 
 vs_users_forgot_password_reset:
     path:     /forgot-password/reset/{token}
-    controller: App\Controller\WebContentThiefApi\ForgotPasswordController::resetAction
+    controller: App\Controller\WebContentThiefAPI\ForgotPasswordController::resetAction
 
 
 vs_users_get_states_for_country:
     path:     /get-states-for-country/{countryCode}
-    controller: App\Controller\WebContentThiefApi\RegisterController::getStatesForCountry
+    controller: App\Controller\WebContentThiefAPI\RegisterController::getStatesForCountry
     
 app_profile_show:
     path:     /my-profile
-    controller: App\Controller\WebContentThiefApi\ProfileController::showAction
+    controller: App\Controller\WebContentThiefAPI\ProfileController::showAction
 

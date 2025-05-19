@@ -10,11 +10,10 @@ parameters:
     locale: 'en_US'
 
     vankosoft_host: '%env(HOST)%'
-    applicationIcon: 'build/default/images/superman.svg'
     applicationCompany: 'VankoSoft'
-    applicationTitle: 'Web Content Thief Api'
+    applicationTitle: 'Web Content Thief API'
     
-    vs_application.version: !php/const App\WebContentThiefApiKernel::VERSION
+    vs_application.version: !php/const App\WebContentThiefAPIKernel::VERSION
     vs_application.public_dir: "%kernel.project_dir%/public/web-content-thief-api"
     vs_application.taxon_repository_throw_exception: false
     
@@ -49,7 +48,8 @@ services:
             - '../../../src/Tests/'
             - '../../../src/Controller/'
             - '../../../src/Widgets/'
-            - '../../../src/WebContentThiefApiKernel.php'
+            - '../../../src/Command/'
+            - '../../../src/WebContentThiefAPIKernel.php'
         autowire: true
 
     # add more service definitions when explicit configuration is needed
