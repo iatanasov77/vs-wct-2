@@ -29,7 +29,7 @@
                 {% endif %}
                 
                 <li class="nav-item ">
-                    <a class="nav-link menu-link {% if isCurrentParent %}active{% endif %}"
+                    <a class="nav-link menu-link {% if isCurrentParent is true %}active{% endif %}"
                         {% if(parentItem.hasChildren) %}
                         	data-bs-toggle="collapse"
                         	{% if isCurrentParent %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}

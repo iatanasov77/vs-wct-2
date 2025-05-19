@@ -21,7 +21,7 @@ node ( label: 'php-host' ) {
     def GIT_REPO_WITH_CRED;
     
     def MYSQL_CREDENTIALS_ID    = 'vankosoft-mysql';
-    def MYSQL_DATABASE_PREFIX   = 'WebContentThief_';
+    def MYSQL_DATABASE_PREFIX   = 'c0WebContentThief_';
     def APP_MYSQL_USER;
     def APP_MYSQL_PASSWORD;
     def APP_MYSQL_DATABASE;
@@ -50,7 +50,7 @@ node ( label: 'php-host' ) {
         
         switch( BUILD_ENVIRONMENT ) {
             case 'production':
-                DB_BACKUP   = false
+                DO_BACKUP   = false
                 
                 def tags    = vankosoftJob.getGitTags( GIT_REPO_WITH_CRED )
                 
@@ -59,7 +59,7 @@ node ( label: 'php-host' ) {
                                 
                 break;
             default:
-                DB_BACKUP       = false
+                DO_BACKUP       = false
                 APP_HOST        = "${HOST_PREFIX}${BUILD_ENVIRONMENT}.vankosoft.org"  
                 
                 def branches    = vankosoftJob.getGitBranches( GIT_REPO_WITH_CRED )
@@ -136,7 +136,7 @@ node ( label: 'php-host' ) {
     
     stage( 'Before Deploy (Create Backup on Hosting, Set Maintenance Mode etc.)' ) {
         if ( BUILD_ENVIRONMENT == 'production' ) {
-            if ( DB_BACKUP ) {
+            if ( DO_BACKUP ) {
                 def now = new Date()
                 
                 script {
@@ -181,6 +181,7 @@ ENDSSH
                             
                             ${PHP_BIN} -d memory_limit=-1 bin/console cache:clear
                             ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief cache:clear
+                            ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief-api cache:clear
                             
                             #${PHP_BIN} -d memory_limit=-1 bin/console vankosoft:maintenance --unset-maintenance
                             
@@ -206,6 +207,7 @@ ENDSSH
                             
                             ${PHP_BIN} -d memory_limit=-1 bin/console cache:clear
                             ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief cache:clear
+                            ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief-api cache:clear
                             
                             #SETUP APPLICATION PERMISSIONS
                             chmod -R 0777 ${REMOTE_DIR}

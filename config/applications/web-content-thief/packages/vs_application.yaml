@@ -4,7 +4,7 @@ vs_application_instalator:
             classes:
                 model: App\Entity\Application\InstalationInfo
 vs_application:
-    project_type: catalog_application
+    project_type: extended_application
     
     resources:
         application:
@@ -56,66 +56,68 @@ vs_application:
     menu:
         mainApplicationMenu:
             home:
-                name: Home
+                name: vs_application.menu.home
                 uri: "http://%vankosoft_host%"
                 attributes:
                     iconClass: ri-dashboard-2-line
             
-            projects_repertory_preview:
-                name: Project Repertory Preview
-                route: vs_wct_project_preview_repertory
-                routeParameters:
-                    id: int
-                display: false
-            
             projects:
-                name: Projects
+                name: vs_application.menu.projects
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-project-diagram
+                    breadcrumb_route: vs_wct_projects_index
                 childs:
                     projects_categories_list:
-                        name: List Categories
+                        name: vs_application.menu.list_categories
                         route: vs_wct_project_categories_index
                     projects_categories_create:
-                        name: Create Category
+                        name: vs_application.menu.create_category
                         route: vs_wct_project_categories_create
                         display: true
                     projects_categories_update:
-                        name: Update Category
+                        name: vs_application.menu.update_category
                         route: vs_wct_project_categories_update
                         routeParameters:
                             id: int
                         display: false
                     projects_list:
-                        name: List Projects
+                        name: vs_application.menu.list_projects
                         route: vs_wct_projects_index
                     projects_create:
-                        name: Create Project
+                        name: vs_application.menu.create_project
                         route: vs_wct_projects_create
                         display: true
                     projects_update:
-                        name: Update Project
+                        name: vs_application.menu.update_project
                         route: vs_wct_projects_update
+                        routeParameters:
+                            id: int
+                        display: false
+                    
+                    projects_repertory_preview:
+                        name: vs_application.menu.project_repertory_preview
+                        route: vs_wct_project_preview_repertory
                         routeParameters:
                             id: int
                         display: false
             
             api_hosts:
-                name: Api Hosts
+                name: vs_application.menu.api_hosts
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-server
+                    breadcrumb_route: vs_wct_api_hosts_index
                 childs:
                     api_hosts_list:
-                        name: List Api Hosts
+                        name: vs_application.menu.list_api_hosts
                         route: vs_wct_api_hosts_index
                     api_hosts_create:
-                        name: Create Api Host
+                        name: vs_application.menu.create_api_host
                         route: vs_wct_api_hosts_create
                         display: true
                     api_hosts_update:
-                        name: Update Api Host
+                        name: vs_application.menu.update_api_host
                         route: vs_wct_api_hosts_update
                         routeParameters:
                             id: int

@@ -60,6 +60,7 @@ services:
             - '../../src/Tests/'
             - '../../src/Controller/'
             - '../../src/Command/'
+            - '../../src/Widgets/'
             - '../../src/AdminPanelKernel.php'
         autowire: true
     

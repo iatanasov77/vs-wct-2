@@ -46,4 +46,10 @@ return [
     Vankosoft\PaymentBundle\VSPaymentBundle::class => ['all' => true],
     Vankosoft\BoricaBundle\VSBoricaBundle::class => ['all' => true],
     Vankosoft\CatalogBundle\VSCatalogBundle::class => ['all' => true],
+    
+    // This Needed Because: Uncaught Doctrine\\ORM\\Mapping\\MappingException:
+    //                      No identifier/primary key specified for Entity "App\\Entity\\Api\\RefreshToken"
+    Vankosoft\ApiBundle\VSApiBundle::class => ['all' => true],
+    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
 ];

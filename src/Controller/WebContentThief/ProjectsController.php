@@ -21,7 +21,7 @@ class ProjectsController extends AbstractCrudController
         $filterForm     = null;
         $filterCategory = null;
         
-        if( $entity && $entity->getId() && $entity->getDetailsLink() ) {
+        if( $entity && $entity->getId() ) {
             $collector      = $this->get( 'vs_wct.xpath_collector' );
             
             $collector->initialize( $entity, null );
@@ -75,6 +75,7 @@ class ProjectsController extends AbstractCrudController
         $currentUser    = $this->get( 'vs_users.security_bridge' )->getUser();
         $entity->setUser( $currentUser );
         
+        //$entity->clearFields();
         foreach ( $form['listingFields']->getData() as $field ) {
             if ( empty( $field->getTitle() ) )
                 continue;
