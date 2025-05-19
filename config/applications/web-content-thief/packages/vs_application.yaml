@@ -66,6 +66,7 @@ vs_application:
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-project-diagram
+                    breadcrumb_route: vs_wct_projects_index
                 childs:
                     projects_categories_list:
                         name: vs_application.menu.list_categories
@@ -106,6 +107,7 @@ vs_application:
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-server
+                    breadcrumb_route: vs_wct_api_hosts_index
                 childs:
                     api_hosts_list:
                         name: vs_application.menu.list_api_hosts
