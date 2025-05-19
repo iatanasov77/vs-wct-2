@@ -1,0 +1,18 @@
+vs_application:
+    menu:
+        browser: Browser
+        test_browser: Test Browser
+        
+        projects: Projects
+        list_categories: List Categories
+        create_category: Create Category
+        update_category: Update Category
+        list_projects: List Projects
+        create_project: Create Project
+        update_project: Update Project
+        project_repertory_preview: Project Repertory Preview
+        
+        api_hosts: Api Hosts
+        list_api_hosts: List Api Hosts
+        create_api_host: Create Api Host
+        update_api_host: Update Api Host
