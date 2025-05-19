@@ -75,6 +75,7 @@ class ProjectsController extends AbstractCrudController
         $currentUser    = $this->get( 'vs_users.security_bridge' )->getUser();
         $entity->setUser( $currentUser );
         
+        //$entity->clearFields();
         foreach ( $form['listingFields']->getData() as $field ) {
             if ( empty( $field->getTitle() ) )
                 continue;

@@ -217,12 +217,19 @@ class Project implements ResourceInterface
         return $this;
     }
 
+    public function clearFields(): self
+    {
+        $this->fields   = new ArrayCollection();
+        
+        return $this;
+    }
+    
     public function getFields(): Collection
     {
         return $this->fields;
     }
 
-    public function addField( ProjectField $field )
+    public function addField( ProjectField $field ): self
     {
         if( ! $this->fields->contains( $field ) ) {
             $field->setProject( $this );
@@ -232,7 +239,7 @@ class Project implements ResourceInterface
         return $this;
     }
 
-    public function removeField( ProjectField $field )
+    public function removeField( ProjectField $field ): self
     {
         if( $this->fields->contains( $field ) ) {
             $this->fields->removeElement( $field );
@@ -246,7 +253,7 @@ class Project implements ResourceInterface
         return $this->mappers;
     }
     
-    public function addMapper( ProjectMapper $mapper )
+    public function addMapper( ProjectMapper $mapper ): self
     {
         if( ! $this->mappers->contains( $mapper ) ) {
             $mapper->setProject( $this );
@@ -256,7 +263,7 @@ class Project implements ResourceInterface
         return $this;
     }
     
-    public function removeMapper( ProjectMapper $mapper )
+    public function removeMapper( ProjectMapper $mapper ): self
     {
         if( $this->mappers->contains( $mapper ) ) {
             $this->mappers->removeElement( $mapper );
@@ -270,7 +277,7 @@ class Project implements ResourceInterface
         return $this->repertories;
     }
     
-    public function addRepertoy( ProjectRepertory $repertory )
+    public function addRepertoy( ProjectRepertory $repertory ): self
     {
         if( ! $this->repertories->contains( $repertory ) ) {
             $repertory->setProject( $this );
@@ -280,7 +287,7 @@ class Project implements ResourceInterface
         return $this;
     }
     
-    public function removeRepertory( ProjectRepertory $repertory )
+    public function removeRepertory( ProjectRepertory $repertory ): self
     {
         if( $this->repertories->contains( $repertory ) ) {
             $this->repertories->removeElement( $repertory );
