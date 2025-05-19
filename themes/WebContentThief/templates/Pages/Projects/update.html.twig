@@ -14,25 +14,6 @@
 
 {% block content %}
 
-    {% if applicationEnvironement == 'dev' %}
-        <div class="card bg-info text-white shadow">
-            <div class="card-body">
-              Test URL's:
-              <hr />
-              <div class="text-white-50 small">Comuter Store: 
-                  <a href="https://computer-store.bg/komputri/dell" class="btnTestBrowse">
-                      https://computer-store.bg/komputri/dell
-                  </a>
-              </div>
-              <div class="text-white-50 small">JAR Computers: 
-                  <a href="https://www.jarcomputers.com/Kompyutri-i-Tableti_cat_1.html?ref=cat" class="btnTestBrowse">
-                      https://www.jarcomputers.com/Kompyutri-i-Tableti_cat_1.html?ref=cat
-                  </a>
-              </div>
-            </div>
-        </div>
-    {% endif %}
-    
     <div class="row">
         {% if item.id %}
             <div class="col-lg-8">
