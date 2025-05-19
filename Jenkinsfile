@@ -181,6 +181,7 @@ ENDSSH
                             
                             ${PHP_BIN} -d memory_limit=-1 bin/console cache:clear
                             ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief cache:clear
+                            ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief-api cache:clear
                             
                             #${PHP_BIN} -d memory_limit=-1 bin/console vankosoft:maintenance --unset-maintenance
                             
@@ -206,6 +207,7 @@ ENDSSH
                             
                             ${PHP_BIN} -d memory_limit=-1 bin/console cache:clear
                             ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief cache:clear
+                            ${PHP_BIN} -d memory_limit=-1 bin/web-content-thief-api cache:clear
                             
                             #SETUP APPLICATION PERMISSIONS
                             chmod -R 0777 ${REMOTE_DIR}
