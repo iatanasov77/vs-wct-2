@@ -3,18 +3,29 @@
 {% block root %}
     <ul class="navbar-nav flex-column">
         {% for id, parentItem in item.children %}
-            <li class="nav-item profile-submenu">
+            {% set langMenu = false %}
+            {% if parentItem.attributes.id is defined and parentItem.attributes.id == 'language' %}
+                {% set langMenu = true %}
+            {% endif %}
+            <li class="nav-item profile-submenu {% if langMenu %}profile-langdropdown{% endif %}">
                 {% if parentItem.extra( 'divider' ) %}
                     <hr class="mt-1 mb-1"/>
                 {% else %}
-                    <a class="dropdown-item" href="{{ parentItem.uri }}"
-                        {% if parentItem.attributes.target %}target="{{ parentItem.attributes.target }}"{% endif %}
-                    >
-                        <i class="{{ parentItem.attributes.iconClass }}"></i>{{ parentItem.name }}
-                    </a>
-                    
-                    {% if parentItem.attributes.id is defined and parentItem.attributes.id == 'language' %}
-                        {{ vs_widget_render( 'admin-profile-menu', ['profile-menu-locales'] ) }}
+                    {% if langMenu %}
+                        <a class="dropdown-item dropdown-toggle"
+                            href="{{ parentItem.uri }}"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <i class="{{ parentItem.attributes.iconClass }}"></i>{{ parentItem.name }}
+                        </a>
+                        {{ vs_widget_render( 'application-profile-menu', ['application-menu-locales'] ) }}
+                    {% else %}
+                        <a class="dropdown-item" href="{{ parentItem.uri }}"
+                            {% if parentItem.attributes.target %}target="{{ parentItem.attributes.target }}"{% endif %}
+                        >
+                            <i class="{{ parentItem.attributes.iconClass }}"></i>{{ parentItem.name }}
+                        </a>
                     {% endif %}
                 {% endif %}
             </li>

@@ -5,6 +5,7 @@ imports:
     - { resource: services/doctrine_extensions.yaml }
     - { resource: services/menu.yaml }
     - { resource: services/uploader.yaml }
+    - { resource: services/widgets.yaml }
     - { resource: services/collector.yaml }
     - { resource: services/deployers.yaml }
     
@@ -61,6 +62,7 @@ services:
             - '../../../src/Tests/'
             - '../../../src/Controller/'
             - '../../../src/Command/'
+            - '../../../src/Widgets/'
             - '../../../src/WebContentThiefKernel.php'
         autowire: true
 
