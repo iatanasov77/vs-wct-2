@@ -1,3 +1,18 @@
+2.2.2	|	Release date: **19.05.2025**
+============================================
+* New Features:
+  - Update Jenkinsfile
+  - Create an API Application for this Project.
+  - Remove Test Links For Dev ENV in Project Update Page.
+  - Translate Application Menu.
+  - Refactoring of Application Theme Assets.
+  - Improve Project Update Page.
+  - Improve SideBar Menu and Breadcrumbs Views.
+  - Create a Widget For Application Locales.
+* Bug-Fixes:
+  - Fix ProjectsController.
+
+
 2.2.1	|	Release date: **18.05.2025**
 ============================================
 * New Features:
