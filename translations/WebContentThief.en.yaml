@@ -73,6 +73,7 @@ vs_wct:
             collection_type: Collection Type
         
         mapper:
+            mapper_fields: Mapper Fields
             deployer: Deployer
             deployer_placeholder: '-- Choose a Deployer --'
             project_field_placeholder: '-- Choose a Project Field --'

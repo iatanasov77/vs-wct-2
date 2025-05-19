@@ -27,8 +27,9 @@
         </div>
     </div>
     
-    <fieldset class="fieldset-project-listing-fields" id="fieldsetMapperFields">
-        <legend class="w-auto">Mapper Fields</legend>
+    <fieldset class="border border-dark rounded p-3" id="fieldsetMapperFields">
+        <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.form.mapper.mapper_fields' | trans( {},'WebContentThief' ) }}</legend>
+        
         <div class="mapperFieldsContainer"
             data-prototype="{% apply escape %}
                 {% include 'Pages/Mappers/Partial/add-field-prototype.html.twig' with {'form': mapperForm.fields.vars.prototype} %}

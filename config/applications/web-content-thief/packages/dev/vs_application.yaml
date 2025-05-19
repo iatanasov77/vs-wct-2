@@ -2,65 +2,74 @@ vs_application:
     menu:
         mainApplicationMenu:
             home:
-                name: Home
+                name: vs_application.menu.home
                 uri: "http://%vankosoft_host%"
                 attributes:
                     iconClass: ri-dashboard-2-line
             
             browser:
-                name: Browser
+                name: vs_application.menu.browser
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-search
                 childs:
                     browser_test_browser:
-                        name: Test Browser
+                        name: vs_application.menu.test_browser
                         route: vs_wct_browser_test_browser
+            
             projects:
-                name: Projects
+                name: vs_application.menu.projects
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-project-diagram
                 childs:
                     projects_categories_list:
-                        name: List Categories
+                        name: vs_application.menu.list_categories
                         route: vs_wct_project_categories_index
                     projects_categories_create:
-                        name: Create Category
+                        name: vs_application.menu.create_category
                         route: vs_wct_project_categories_create
                     projects_categories_update:
-                        name: Update Category
+                        name: vs_application.menu.update_category
                         route: vs_wct_project_categories_update
                         routeParameters:
                           id: int
                         display: false
                     projects_list:
-                        name: List Projects
+                        name: vs_application.menu.list_projects
                         route: vs_wct_projects_index
                     projects_create:
-                        name: Create Project
+                        name: vs_application.menu.create_project
                         route: vs_wct_projects_create
                     projects_update:
-                        name: Update Project
+                        name: vs_application.menu.update_project
                         route: vs_wct_projects_update
                         routeParameters:
                           id: int
                         display: false
+                    
+                    projects_repertory_preview:
+                        name: vs_application.menu.project_repertory_preview
+                        route: vs_wct_project_preview_repertory
+                        routeParameters:
+                            id: int
+                        display: false
+            
             api_hosts:
-                name: Api Hosts
+                name: vs_application.menu.api_hosts
                 uri: "javascript:;"
                 attributes:
                     iconClass: fas fa-server
                 childs:
                     api_hosts_list:
-                        name: List Api Hosts
+                        name: vs_application.menu.list_api_hosts
                         route: vs_wct_api_hosts_index
                     api_hosts_create:
-                        name: Create Api Host
+                        name: vs_application.menu.create_api_host
                         route: vs_wct_api_hosts_create
                         display: true
                     api_hosts_update:
-                        name: Update Api Host
+                        name: vs_application.menu.update_api_host
                         route: vs_wct_api_hosts_update
                         routeParameters:
                           id: int

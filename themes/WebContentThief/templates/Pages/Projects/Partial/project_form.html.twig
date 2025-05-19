@@ -85,6 +85,7 @@
     
     <fieldset class="border border-dark rounded p-3" id="fieldsetProjectListingFields">
         <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.template.listing_page_fields' | trans( {},'WebContentThief' ) }}</legend>
+        
         <div class="fieldsContainer"
             data-prototype="{% apply escape %}
                 {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.listingFields.vars.prototype} %}
@@ -100,6 +101,7 @@
 {% if detailsUrl %}
     <fieldset class="border border-dark rounded p-3" id="fieldsetProjectDetailsFields">
         <legend class="w-auto float-none ps-2 pe-2">{{ 'vs_wct.template.details_page_fields' | trans( {},'WebContentThief' ) }}</legend>
+        
         <div class="fieldsContainer"
             data-prototype="{% apply escape %}
                 {% include 'Pages/Projects/Partial/add-field-prototype.html.twig' with {'form': form.detailsFields.vars.prototype} %}
