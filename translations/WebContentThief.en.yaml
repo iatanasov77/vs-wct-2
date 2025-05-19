@@ -33,6 +33,7 @@ vs_wct:
         download_repertory_items: Download Repertory Items
         delete_repertory_items: Delete Repertory Items
         download_repertory: Download Repertory
+        test_browser: Test Browser
         browser: Browser
         url: URL
         browse: Browse

@@ -1,0 +1,4 @@
+#BrowserContainer .VsSpinner {
+    color: red !important;
+    top: -400px !important;
+}

@@ -1,4 +1,4 @@
-import { VsPath } from '../includes/fos_js_routes.js';
+import { VsPath } from '@/js/includes/fos_js_routes.js';
 
 import * as sylius from '../deployers/sylius';
 import * as magento from '../deployers/magento';

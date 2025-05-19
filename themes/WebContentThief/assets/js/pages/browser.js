@@ -1,5 +1,7 @@
 require( 'jquery-xpath/jquery.xpath.js' );
 
+import { VsSpinnerShow, VsSpinnerHide } from '@/js/includes/VsSpinner/vs_spinner.js';
+
 /**
  * Gets an XPath for an element which describes its hierarchical location.
  */
@@ -47,7 +49,8 @@ $( function ()
 {
     $( '.btnBrowse' ).on( 'click', function ()
     {
-        $( '#browser-spinner' ).show();
+        //$( '#browser-spinner' ).show();
+        VsSpinnerShow( 'remoteBrowser' );
         
         var browserUrl  = $( this ).attr( 'data-browserUrl' );
         var remoteUrl   = $( $( this ).attr( 'data-urlInput' ) ).val();
@@ -64,7 +67,8 @@ $( function ()
 
     $( '#remoteBrowser' ).on( 'load', function ()
     {
-        $( '#browser-spinner' ).hide();
+        //$( '#browser-spinner' ).hide();
+        VsSpinnerHide( 'remoteBrowser' );
         
         var cssUrl = $( this ).attr( 'data-browserCss' );
         var head = $( this ).contents().find( "head" );
