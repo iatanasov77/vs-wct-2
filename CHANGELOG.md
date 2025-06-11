@@ -1,3 +1,10 @@
+2.3.1	|	Release date: **11.06.2025**
+============================================
+* Bug-Fixes:
+  - Fix A Kernel PHP File Name.
+  - Add API Platform Configs
+
+
 2.3.0	|	Release date: **11.06.2025**
 ============================================
 * New Features:
