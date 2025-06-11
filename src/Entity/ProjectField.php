@@ -6,6 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
+/**
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation( "ORM\MappedSuperclass" )
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("ORM\Column")
+ */
 #[ORM\Entity]
 #[ORM\Table(name: "WCT_ProjectFields")]
 class ProjectField implements ResourceInterface

@@ -9,6 +9,10 @@ use Sylius\Component\Resource\Model\TimestampableTrait;
 
 use App\Entity\UserManagement\User;
 
+/**
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation( "ORM\MappedSuperclass" )
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("ORM\Column")
+ */
 #[ORM\Entity]
 #[ORM\Table(name: "WCT_Projects")]
 class Project implements ResourceInterface

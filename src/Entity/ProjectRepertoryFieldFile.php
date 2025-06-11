@@ -3,6 +3,10 @@
 use Doctrine\ORM\Mapping as ORM;
 use Vankosoft\CmsBundle\Model\File;
 
+/**
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation( "ORM\MappedSuperclass" )
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("ORM\Column")
+ */
 #[ORM\Entity]
 #[ORM\Table(name: "WCT_ProjectRepertoryFields_Files")]
 class ProjectRepertoryFieldFile extends File

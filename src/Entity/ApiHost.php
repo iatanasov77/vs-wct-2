@@ -3,6 +3,10 @@
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation( "ORM\MappedSuperclass" )
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("ORM\Column")
+ */
 #[ORM\Entity]
 #[ORM\Table(name: "WCT_ApiHosts")]
 class ApiHost implements ResourceInterface

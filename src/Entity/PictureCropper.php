@@ -13,6 +13,10 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  * https://symfony.com/bundles/LiipImagineBundle/current/index.html
  * https://www.web-hints.com/blog/automatic-resizing-and-cropping-of-images-using-symfony
  */
+/**
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation( "ORM\MappedSuperclass" )
+ * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("ORM\Column")
+ */
 #[ORM\Entity]
 #[ORM\Table(name: "WCT_PictureCroppers")]
 class PictureCropper implements ResourceInterface
