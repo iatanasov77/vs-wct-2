@@ -1,3 +1,10 @@
+2.3.0	|	Release date: **11.06.2025**
+============================================
+* New Features:
+  - Update MariaDb Version in Doctrine Configs for Production Environements.
+  - Update to Vankosoft Core 1.13
+
+
 2.2.2	|	Release date: **19.05.2025**
 ============================================
 * New Features:
