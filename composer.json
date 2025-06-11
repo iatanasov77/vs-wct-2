@@ -21,9 +21,11 @@
         "symfony/notifier": "6.4.*",
         "symfony/runtime": "6.4.*",
         
-        "vankosoft/application": "1.12.*",
-        "vankosoft/catalog-bundle": "^2.3",
+        "vankosoft/application": "1.13.*",
+        "vankosoft/catalog-bundle": "^2.4",
         "vankosoft/api-bundle": "^3.0",
+        
+        "doctrine/dbal": "^3.0",
         
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
